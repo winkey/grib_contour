@@ -24,11 +24,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <libkml/libKML.h>
 
 #include "options.h"
 #include "grib.h"
-#include "buffer.h"
-#include "kml.h"
+
 #include "color.h"
 
 #include "ogrcode.h"
@@ -280,7 +280,7 @@ void add_feature(
 void getpoint (
 	OGRGeometryH	hGeom,
 	int pointnum,						 
-	buffer *points)
+	KML *kml)
 {
 	double x,y,z;
 	
@@ -291,21 +291,21 @@ void getpoint (
 	else if (x < -180)
 		x += ((int) (180 - x)/360)*360;
 	
-	buffer_printf(points, "%.4lg,%.4lg ", x, y);
+	KML_coordinates(kml, 4, &x, &y, NULL);
 	
 	return;
 }
 
 void getpoints (
 	OGRFeatureH hFeat,
-	buffer *points)
+	KML *kml)
 {
 	int i;
 	OGRGeometryH hGeom = OGR_F_GetGeometryRef(hFeat);
 	int numpoints = OGR_G_GetPointCount(hGeom);
 	
 	for (i = 0 ; i < numpoints ; i++)
-		getpoint(hGeom, i, points);
+		getpoint(hGeom, i, kml);
 	
 	return;
 }
@@ -368,13 +368,11 @@ void transform(
 
 void ogr2kml(
 	OGRLayerH hLayer,
-	buffer *kmlbuf,
+	KML *kml,
 	color_scale *cscales)
 {
 	OGRFeatureH hFeat;
 	double value;
-	buffer coordbuf = {};
-	
 					
 	OGR_L_ResetReading(hLayer);
 
@@ -390,20 +388,18 @@ void ogr2kml(
 		
 		/***** kml placemark header *****/
 		
-		kml_placemark_header(kmlbuf, NULL, NULL, color_checkscale(cscales, value));
+		KML_placemark_header(kml, NULL, NULL, color_checkscale(cscales, value));
 		
 		/***** reset the points buffer *****/
 		
-		kml_linestring_header(kmlbuf, 0, 0);
+		KML_linestring_header(kml, 0, 0);
 		
-		getpoints(hFeat, kmlbuf);
+		getpoints(hFeat, kml);
 		
-		kml_linestring_footer(kmlbuf);
-		kml_placemark_footer(kmlbuf);
+		KML_linestring_footer(kml);
+		KML_placemark_footer(kml);
 		OGR_F_Destroy(hFeat);
 	}
-	
-	buffer_free(&coordbuf);
 	
 	return;
 }

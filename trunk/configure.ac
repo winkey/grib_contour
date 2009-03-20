@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(grib_contour, 0.6)
+AC_INIT(grib_contour, 0.8)
 
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -49,13 +49,18 @@ if test $HAVE_DEGRIB = "false"; then
   AC_MSG_FAILURE([degrib not found])
 fi
 
-AC_CHECK_LIB(weathercalc, uv2velocity, HAVE_BASH=true, HAVE_BASH=false)
-if test $HAVE_DEGRIB = "false"; then
+AC_CHECK_LIB(weathercalc, uv2velocity, HAVE_WEATHERCALC=true, HAVE_WEATHERCALC=false)
+if test $HAVE_WEATHERCALC = "false"; then
   AC_MSG_FAILURE([weathercalc not found])
 fi
 
+AC_CHECK_LIB(KML, KML_new, HAVE_LIBKML=true, HAVE_LIBKML=false)
+if test $HAVE_LIBKML = "false"; then
+  AC_MSG_FAILURE([libKML not found])
+fi
+
 AC_CHECK_LIB(gdal, GDALAllRegister, HAVE_GDAL=true, HAVE_GDAL=false)
-if test $HAVE_DEGRIB = "false"; then
+if test $HAVE_GDAL = "false"; then
   AC_MSG_FAILURE([gdal not found])
 fi
 

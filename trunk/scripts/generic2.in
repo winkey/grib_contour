@@ -78,14 +78,15 @@ function mkrootkml {
 function appendkml {
 	name=$1
 	hr=$2
-
+	incr=$3
+	
 	tmpfile=${tmp}/${name}.kml
 	frames=${wwwdisk}/${run}/${name}.kml
 
 	head -n -2 $frames > $tmpfile
 
 	begin=`date -d "$run GMT $hr hours" "+%FT%TZ" -u`
-	end=`date -d "$run GMT $hr hours 03 hours" "+%FT%TZ" -u`
+	end=`date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u`
 
 	echo '  <NetworkLink>' >> $tmpfile
 	echo "    <name>${run}Z + ${hr} ${name}</name>" >> $tmpfile
@@ -138,6 +139,7 @@ function plot {
 	grbmsg=$3
 	interval=$4
 	timee=$5
+	incr=$6
 	
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
@@ -155,7 +157,7 @@ function plot {
 	echo "kml=$kml"
 	nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg -i $interval -s $name -k $kml -z "$zip"
 	
-	appendkml $name $timee
+	appendkml $name $timee $incr
 	
 }
 
@@ -178,6 +180,7 @@ function windplot {
 	vmsg=$5
 	interval=$6
 	timee=$7
+	incr=$8
 	
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
@@ -189,7 +192,7 @@ function windplot {
 	
 	nice -n 10 grib_contour -w -u "${ufile}" -v "${ufile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
 	
-	appendkml $name $timee
+	appendkml $name $timee $incr
 
 
 }

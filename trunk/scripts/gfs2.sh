@@ -42,7 +42,7 @@ then
 		mkrootkml "${level}hgt"
 	fi
 	
-	plot "$path" "${level}hgt" 1 20 $hour
+	plot "$path" "${level}hgt" 1 20 $hour 03
 	rm "$path"
 fi
 
@@ -55,7 +55,7 @@ then
 		mkrootkml "${level}t"
 	fi
 	
-	plot "$path" "${level}t" 1 1 $hour
+	plot "$path" "${level}t" 1 1 $hour 03
 	rm "$path"
 fi
 
@@ -68,7 +68,7 @@ then
 		mkrootkml "${level}rh"
 	fi
 	
-	plot "$path" "${level}rh" 1 5 $hour
+	plot "$path" "${level}rh" 1 5 $hour 03
 	rm "$path"
 fi
 
@@ -81,7 +81,7 @@ then
 		mkrootkml "${level}wind"
 	fi
 	
-	windplot "$path" "$path" "${level}wind" 1.0 1.1 10 $hour
+	windplot "$path" "$path" "${level}wind" 1.0 1.1 10 $hour 03
 	rm "$path"
 fi
 
@@ -94,7 +94,7 @@ then
 		mkrootkml "cape"
 	fi
 	
-	plot "$path" "cape" 1 100 $hour
+	plot "$path" "cape" 1 100 $hour 03
 	rm "$path"
 fi
 
@@ -107,7 +107,7 @@ then
 		mkrootkml "pwat"
 	fi
 	
-	plot "$path" "pwat" 1 4 $hour
+	plot "$path" "pwat" 1 4 $hour 03
 	rm "$path"
 fi
 
@@ -120,7 +120,7 @@ then
 		mkrootkml "pcp"
 	fi
 	
-	plot "$path" "pcp" 1 4 $hour
+	plot "$path" "pcp" 1 4 $hour 03
 	rm "$path"
 fi
 
