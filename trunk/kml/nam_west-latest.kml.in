@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.2">
 <Document>
-	<name>5km nam Alaska</name>
+	<name>5km nam west</name>
 	<visibility>0</visibility>
 	<Folder>
 		<name>perceptible water</name>
@@ -18,11 +18,11 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<open>1</open>
 			<Url>
-				<href>@www@/kml/nam_ak/latest/pwat.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/pwat.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -41,10 +41,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/925t.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/925t.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -63,10 +63,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/925hgt.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/925hgt.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -85,10 +85,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/925rh.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/925rh.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -107,10 +107,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/850t.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/850t.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -129,10 +129,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/850hgt.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/850hgt.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -151,11 +151,11 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<open>1</open>
 			<Url>
-				<href>@www@/kml/nam_ak/18/850rh.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/850rh.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -174,10 +174,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/700t.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/700t.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -196,10 +196,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/700hgt.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/700hgt.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -218,10 +218,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/700rh.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/700rh.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -240,10 +240,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/500t.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/500t.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -262,10 +262,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/500hgt.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/500hgt.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -284,10 +284,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/500rh.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/500rh.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -306,10 +306,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/300t.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/300t.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -328,10 +328,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/300hgt.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/300hgt.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -350,10 +350,10 @@
 			<open>1</open>
 		</Folder>
 		<NetworkLink>
-			<name>18Z hour run</name>
+			<name>latest</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/300rh.kml</href>
+				<href>@www@/weather/kml/nam_west/latest/300rh.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>

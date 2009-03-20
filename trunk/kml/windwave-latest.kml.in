@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+	<name>Wind Wave N Hemesphere</name>
+	<visibility>0</visibility>
+	<Folder>
+		<name>Significant height of wind waves</name>
+		<visibility>0</visibility>
+		<Style>
+			<ListStyle>
+				<listItemType>radioFolder</listItemType>
+				<bgColor>00ffffff</bgColor>
+			</ListStyle>
+		</Style>
+		<Folder>
+			<name>off</name>
+			<visibility>0</visibility>
+		</Folder>
+		<NetworkLink>
+			<name>latest</name>
+			<visibility>0</visibility>
+			<Link>
+				<href>@www@/kml/ww/latest/hghtww.kml</href>
+			</Link>
+		</NetworkLink>
+	</Folder>
+	<Folder>
+		<name>Mean period of wind waves</name>
+		<visibility>0</visibility>
+		<Style>
+			<ListStyle>
+				<listItemType>radioFolder</listItemType>
+				<bgColor>00ffffff</bgColor>
+			</ListStyle>
+		</Style>
+		<Folder>
+			<name>off</name>
+			<visibility>0</visibility>
+		</Folder>
+		<NetworkLink>
+			<name>latest</name>
+			<visibility>0</visibility>
+			<Link>
+				<href>@www@/kml/ww/latest/perdww.kml</href>
+			</Link>
+		</NetworkLink>
+	</Folder>
+	<Folder>
+		<name>Significant height of combination wind waves and swell</name>
+		<visibility>0</visibility>
+		<Style>
+			<ListStyle>
+				<listItemType>radioFolder</listItemType>
+				<bgColor>00ffffff</bgColor>
+			</ListStyle>
+		</Style>
+		<Folder>
+			<name>off</name>
+			<visibility>0</visibility>
+		</Folder>
+		<NetworkLink>
+			<name>latest</name>
+			<visibility>0</visibility>
+			<Link>
+				<href>@www@/kml/ww/latest/htsgw.kml</href>
+			</Link>
+		</NetworkLink>
+	</Folder>
+	<Folder>
+		<name>Wind</name>
+		<visibility>0</visibility>
+		<Style>
+			<ListStyle>
+				<listItemType>radioFolder</listItemType>
+				<bgColor>00ffffff</bgColor>
+			</ListStyle>
+		</Style>
+		<Folder>
+			<name>off</name>
+			<visibility>0</visibility>
+		</Folder>
+		<NetworkLink>
+			<name>latest</name>
+			<visibility>0</visibility>
+			<Link>
+				<href>@www@/kml/ww/latest/wind.kml</href>
+			</Link>
+		</NetworkLink>
+	</Folder>
+</Document>
+</kml>

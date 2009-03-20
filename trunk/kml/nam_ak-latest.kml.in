@@ -44,7 +44,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/925t.kml</href>
+				<href>@www@/kml/nam_ak/latest/925t.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -66,7 +66,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/925hgt.kml</href>
+				<href>@www@/kml/nam_ak/latest/925hgt.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -88,7 +88,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/925rh.kml</href>
+				<href>@www@/kml/nam_ak/latest/925rh.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -110,7 +110,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/850t.kml</href>
+				<href>@www@/kml/nam_ak/latest/850t.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -132,7 +132,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/850hgt.kml</href>
+				<href>@www@/kml/nam_ak/latest/850hgt.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -155,7 +155,7 @@
 			<visibility>0</visibility>
 			<open>1</open>
 			<Url>
-				<href>@www@/kml/nam_ak/18/850rh.kml</href>
+				<href>@www@/kml/nam_ak/latest/850rh.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -177,7 +177,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/700t.kml</href>
+				<href>@www@/kml/nam_ak/latest/700t.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -199,7 +199,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/700hgt.kml</href>
+				<href>@www@/kml/nam_ak/latest/700hgt.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -221,7 +221,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/700rh.kml</href>
+				<href>@www@/kml/nam_ak/latest/700rh.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -243,7 +243,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/500t.kml</href>
+				<href>@www@/kml/nam_ak/latest/500t.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -265,7 +265,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/500hgt.kml</href>
+				<href>@www@/kml/nam_ak/latest/500hgt.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -287,7 +287,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/500rh.kml</href>
+				<href>@www@/kml/nam_ak/latest/500rh.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -309,7 +309,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/300t.kml</href>
+				<href>@www@/kml/nam_ak/latest/300t.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -331,7 +331,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/300hgt.kml</href>
+				<href>@www@/kml/nam_ak/latest/300hgt.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>
@@ -353,7 +353,7 @@
 			<name>18Z hour run</name>
 			<visibility>0</visibility>
 			<Url>
-				<href>@www@/kml/nam_ak/18/300rh.kml</href>
+				<href>@www@/kml/nam_ak/latest/300rh.kml</href>
 			</Url>
 		</NetworkLink>
 	</Folder>

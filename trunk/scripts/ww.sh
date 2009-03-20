@@ -19,7 +19,7 @@ www="http://winkey.org/weather/kml/ww"
 
 path="$1"
 run="$3"
-hour="$4"
+hour=${4#0}
 prod="$5"
 
 tmp="/tmp"
@@ -45,10 +45,11 @@ then
 		then
 			rm -f "${wwwdisk}/latest"
 		fi
-		ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"fi
+		ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
+	fi
 	
-	plot "$path" "hghtww" 1 20 $hour 03
-	rm "$path"
+	plot "$path" "hghtww" 1 .5 $hour 03
+#	rm "$path"
 fi
 
 ##### Mean period of wind waves #####
@@ -61,7 +62,7 @@ then
 	fi
 	
 	plot "$path" "perdww" 1 1 $hour 03
-	rm "$path"
+#	rm "$path"
 fi
 
 ##### Sig hght of comb wind waves/swell #####
@@ -73,8 +74,8 @@ then
 		mkrootkml "htsgw"
 	fi
 	
-	plot "$path" "htsgw" 1 5 $hour 03
-	rm "$path"
+	plot "$path" "htsgw" 1 1 $hour 03
+#	rm "$path"
 fi
 
 ##### plot wind #####
@@ -90,10 +91,10 @@ then
 			mkrootkml "${level}wind"
 		fi
 		
-		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 10 $hour 03
+		windplot "$path" "$vpath" "wind" 1.0 1.0 5 $hour 03
 
-		rm "$path"
-		rm "$vpath"
+#		rm "$path"
+#		rm "$vpath"
 	fi
 fi
 
@@ -108,10 +109,10 @@ then
 			mkrootkml "wind"
 		fi
 		
-		windplot "$upath" "$path" "wind" 1.0 1.0 10 $hour 03
+		windplot "$upath" "$path" "wind" 1.0 1.0 5 $hour 03
 		
-		rm "$path"
-		rm "$upath"
+#		rm "$path"
+#		rm "$upath"
 	fi
 fi
 

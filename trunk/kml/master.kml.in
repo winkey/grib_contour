@@ -87,17 +87,17 @@
 		</Url>
 	</NetworkLink>
 	<NetworkLink>
-		<name>.5 deg Wind Wave N Hemesphere</name>
+		<name>Wind Wave N Hemesphere</name>
 		<visibility>0</visibility>
 		<Url>
 			<href>@www@/kml/windwave.kml</href>
 		</Url>
 	</NetworkLink>
 	<NetworkLink>
-		<name>.5 deg Wind Wave N Hemesphere</name>
+		<name>Satellite Imagery</name>
 		<visibility>0</visibility>
 		<Url>
-			<href>@www@/kml/windwave.kml</href>
+			<href>@www@/kml/satz.kml</href>
 		</Url>
 	</NetworkLink>
 </Document>
