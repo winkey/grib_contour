@@ -9,8 +9,6 @@ pkgdata_DATA = \
 	850thk.scale \
 	700thk.scale \
 	500thk.scale \
-	300thk.scale \
-	200thk.scale \
 	1000rh.scale \
 	925rh.scale \
 	850rh.scale \
@@ -42,11 +40,13 @@ dist_pkgdata_DATA = \
 	300t.scale \
 	500t.scale \
 	850t.scale \
+	1000hgt.scale \
 	925hgt.scale \
 	850hgt.scale \
 	700hgt.scale \
 	500hgt.scale \
 	300hgt.scale \
+	200hgt.scale \
 	200wind.scale \
 	700wind.scale \
 	pmsl.scale \
@@ -73,19 +73,10 @@ dist_pkgdata_DATA = \
 	nogaps.config.sh \
 	ecmwf.config.sh \
 	ukmet.config.sh \
+	rtma_conus.config.sh \
+	rtma_ak.config.sh \
 	sst.config.sh
 
-1000hgt.scale: 925hgt.scale Makefile
-	cp $(srcdir)/925hgt.scale $(srcdir)/1000hgt.scale
-
-200hgt.scale: 300hgt.scale Makefile
-	cp $(srcdir)/300hgt.scale $(srcdir)/200hgt.scale
-
-200thk.scale: 300hgt.scale Makefile
-	cp $(srcdir)/300hgt.scale $(srcdir)/200thk.scale
-
-300thk.scale: 300hgt.scale Makefile
-	cp $(srcdir)/300hgt.scale $(srcdir)/300thk.scale
 
 500thk.scale: 500hgt.scale Makefile
 	cp $(srcdir)/500hgt.scale $(srcdir)/500thk.scale

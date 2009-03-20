@@ -34,14 +34,6 @@ then
 	mkdir -p "${wwwdisk}/${run}"
 fi
 
-if [[ ! -h "${wwwdisk}/latest" ]]
-then
-	rm -f "${wwwdisk}/latest"
-fi
-ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
-
-
-
 ##### plot temp #####
 
 if [[ "$prod" == "TMPK" ]]
@@ -53,9 +45,12 @@ then
 	then
 		rm "$zip"
 	fi
-
+	
+	mkrootkml "t"
+	
 	nice -n 10 grib_contour -g "${path}" -m 1 -i 1.5 -s t -k $kml -z "$zip"
 	
+	appendkml t 00 01
 	rm "$path"
 fi
 
@@ -67,11 +62,15 @@ then
 	kml="dp.kml"
 
 	if [[ -f "$zip" ]]
-	then
+		then
 		rm "$zip"
 	fi
+	
+	mkrootkml "dp"
 
-	nice -n 10 grib_contour -g "${path}" -m 1 -i 1.5 -s dp -k $kml -z "$zip"
+	nice -n 10 grib_contour -g "${path}" -m 1 -i 1.5 -s t -k $kml -z "$zip"
+	
+	appendkml dp 00 01
 	
 	rm "$path"
 fi
@@ -81,7 +80,7 @@ fi
 if [[ "$prod" == "UREL" ]]
 then
 	vpath=$(echo $path | sed s/UREL/VREL/)
-	if [[ -f "$vpath" ]]
+	if [[ -f $vpath ]]
 	then
 
 		zip="${wwwdisk}/${run}/wind.kmz"
@@ -91,9 +90,13 @@ then
 			then
 			rm "$zip"
 		fi
-	
+		
+		mkrootkml "wind"
+		
 		nice -n 10 grib_contour -w -u "$path" -v "$vpath" -U 1.0 -V 1.0 -i 5 -s wind -k $kml -z "$zip"
-
+		
+		appendkml wind 00 01
+		
 		rm "$path"
 		rm "$vpath"
 	fi
@@ -104,9 +107,12 @@ then
 	upath=$(echo $path | sed s/VREL/UREL/)
 	if [[ -f upath ]]
 	then
-
+		
+		mkrootkml "wind"
+		
 		nice -n 10 grib_contour -w -u "$upath" -v "$path" -U 1.0 -V 1.0 -i 5 -s wind -k $kml -z "$zip"
 
+		appendkml wind 00 01
 		
 		rm "$path"
 		rm "$upath"

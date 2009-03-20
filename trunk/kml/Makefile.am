@@ -29,6 +29,7 @@ www_DATA = \
 	rtma_ak.kml \
 	rtma_ak-latest.kml \
 	sst.kml \
+	sst-latest.kml \
 	windwave.kml \
 	windwave-latest.kml \
 	nogaps.kml \
@@ -40,11 +41,7 @@ www_DATA = \
 
 EXTRA_DIST = \
 	master.kml.in \
-	latest.kml.in \
-	rtma_conus.kml.in \
-	rtma_conus-latest.kml.in \
-	rtma_ak.kml.in \
-	rtma_ak-latest.kml.in
+	latest.kml.in
 	
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
 							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
@@ -110,6 +107,18 @@ sst.kml: ../scripts/mkkml_nolevel.sh ../share/sst.config.sh Makefile
 sst-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/sst.config.sh Makefile
 	../scripts/mkkml_nolevel-latest.sh ../share/sst.config.sh
 
+rtma_conus.kml: ../scripts/mkkml_nolevel.sh ../share/rtma_conus.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/rtma_conus.config.sh
+	
+rtma_conus-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/rtma_conus.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/rtma_conus.config.sh
+
+rtma_ak.kml: ../scripts/mkkml_nolevel.sh ../share/rtma_ak.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/rtma_ak.config.sh
+	
+rtma_ak-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/rtma_ak.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/rtma_ak.config.sh
+
 windwave.kml: ../scripts/mkkml_nolevel.sh ../share/windwave.config.sh Makefile
 	../scripts/mkkml_nolevel.sh ../share/windwave.config.sh
 	
@@ -140,17 +149,7 @@ master.kml: master.kml.in Makefile
 latest.kml: latest.kml.in Makefile
 	$(do_subst) < $(srcdir)/latest.kml.in > latest.kml
 
-rtma_conus.kml: rtma_conus.kml.in Makefile
-	$(do_subst) < $(srcdir)/rtma_conus.kml.in > rtma_conus.kml
 
-rtma_conus-latest.kml: rtma_conus-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/rtma_conus-latest.kml.in > rtma_conus-latest.kml
-
-rtma_ak.kml: rtma_ak.kml.in Makefile
-	$(do_subst) < $(srcdir)/rtma_ak.kml.in > rtma_ak.kml
-
-rtma_ak-latest.kml: rtma_ak-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/rtma_ak-latest.kml.in > rtma_ak-latest.kml
 
 
 
