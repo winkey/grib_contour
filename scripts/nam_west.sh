@@ -78,6 +78,18 @@ function doplot {
 
 mktempfiledir "$tmp"
 
+if [[ ! -h "${wwwdisk}/latest" ]]
+then
+	rm -f "${wwwdisk}/latest"
+fi
+ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
+
+if [[ ! -h "${wwwdisk}/latest" ]]
+then
+	rm -f "${wwwdisk}/latest"
+fi
+ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
+
 mkrootkml 925hgt
 mkrootkml 925t
 mkrootkml 925rh

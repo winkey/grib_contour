@@ -143,6 +143,11 @@ then
 	if [[ "$hour" == "00" ]]
 	then
 		mkrootkml "pmsl"
+		if [[ ! -h "${wwwdisk}/latest" ]]
+		then
+			rm -f "${wwwdisk}/latest"
+		fi
+		ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
 	fi
 	
 	plot "$path" "pmsl" 1 200 $hour 01
