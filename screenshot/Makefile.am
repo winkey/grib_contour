@@ -32,6 +32,8 @@ $(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$th
 $(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/ecmwf.config.sh ;      echo "$$screenshots" ; echo "$$thumbs")
 
+
+
 MAINTAINERCLEANFILES = $(EXTRA_DIST)
 
 gfs_%.jpg: ../scripts/mkscreenshot.sh
@@ -53,13 +55,19 @@ nam_ak_%.jpg:
 ruc2_%.jpg: ../scripts/mkscreenshot.sh
 	../scripts/mkscreenshot.sh ../share/ruc2.config.sh
 
-forecaster_%.jpg: ../scripts/mkscreenshot.sh
+forecaster_%.jpg: ../scripts/mkscreenshot_nolevel.sh
 	../scripts/mkscreenshot_nolevel.sh ../share/forecaster.config.sh
 
-sst_%.jpg: ../scripts/mkscreenshot.sh
+sst_%.jpg: ../scripts/mkscreenshot_nolevel.sh
 	../scripts/mkscreenshot_nolevel.sh ../share/sst.config.sh
 
-windwave_%.jpg: ../scripts/mkscreenshot.sh
+rtma_conus_%.jpg: ../scripts/mkscreenshot_nolevel.sh
+	../scripts/mkscreenshot_nolevel.sh ../share/rtma_conus.config.sh
+
+rtma_ak_%.jpg: ../scripts/mkscreenshot_nolevel.sh
+	../scripts/mkscreenshot_nolevel.sh ../share/rtma_ak.config.sh
+
+windwave_%.jpg: ../scripts/mkscreenshot_nolevel.sh
 	../scripts/mkscreenshot_nolevel.sh ../share/windwave.config.sh
 
 nogaps_%.jpg: ../scripts/mkscreenshot.sh

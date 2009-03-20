@@ -20,9 +20,12 @@ www_DATA = \
 	ruc2.php \
 	forecaster.php \
 	sst.php \
+	rtma_conus.php \
+	rtma_ak.php \
 	windwave.php \
 	nogaps.php \
 	ecmwf.php \
+	ukmet.php \
 	gfs.css \
 	nam_conus.css \
 	nam_ak.css \
@@ -33,9 +36,12 @@ www_DATA = \
 	ruc2.css \
 	forecaster.css \
 	sst.css \
+	rtma_conus.css \
+	rtma_ak.css \
 	windwave.css \
 	nogaps.css \
-	ecmwf.css
+	ecmwf.css \
+	ukmet.css
 
 gfs.php: ../scripts/mkpage.sh ../share/gfs.config.sh Makefile
 	../scripts/mkpage.sh ../share/gfs.config.sh
@@ -67,6 +73,12 @@ forecaster.php: ../scripts/mkpage_nolevel.sh ../share/forecaster.config.sh Makef
 sst.php: ../scripts/mkpage_nolevel.sh ../share/sst.config.sh Makefile
 	../scripts/mkpage_nolevel.sh ../share/sst.config.sh
 
+rtma_conus.php: ../scripts/mkpage_nolevel.sh ../share/rtma_conus.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/rtma_conus.config.sh
+
+rtma_ak.php: ../scripts/mkpage_nolevel.sh ../share/rtma_ak.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/rtma_ak.config.sh
+
 windwave.php: ../scripts/mkpage_nolevel.sh ../share/windwave.config.sh Makefile
 	../scripts/mkpage_nolevel.sh ../share/windwave.config.sh
 
@@ -75,6 +87,9 @@ nogaps.php: ../scripts/mkpage.sh ../share/nogaps.config.sh Makefile
 
 ecmwf.php: ../scripts/mkpage.sh ../share/ecmwf.config.sh Makefile
 	../scripts/mkpage.sh ../share/ecmwf.config.sh
+
+ukmet.php: ../scripts/mkpage.sh ../share/ukmet.config.sh Makefile
+	../scripts/mkpage.sh ../share/ukmet.config.sh
 
 %.css: generic.css.in
 	cat generic.css.in > $@
