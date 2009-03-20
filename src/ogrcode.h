@@ -170,9 +170,7 @@ void add_feature(
 	OGRLayerH hDstLayer,
 	OGRFeatureH hDstFeat);
 
-void getpoints (
-	OGRFeatureH hFeat,
-	buffer *points);
+
 
 void transform(
 	OGRSpatialReferenceH hsrcSRS,
@@ -182,6 +180,6 @@ void transform(
 
 void ogr2kml(
 	OGRLayerH hLayer,
-	buffer *kmlbuf,
+	KML *kml,
 	color_scale *cscales);
 #endif /* _OGRCODE_H */

@@ -27,23 +27,18 @@ grib_contour_SOURCES = \
 	gdalcode.h        \
 	grib.h        \
 	ogrcode.h        \
-	kml.c        \
-	buffer.c        \
-	zipbuffer.c        \
-	zipbuffer.h        \
-	buffer.h        \
 	color.c        \
 	color.h        \
-	kml.h        \
 	options.c        \
 	options.h        \
 	contour.c        \
 	contour.h
 
-grib_contour_LDFLAGS = \
+grib_contour_LDFLAGS =          \
 	-lgdal          \
 	-lzip          \
-	-lweathercalc
+	-lweathercalc          \
+	-lKML
 
 
 

@@ -17,17 +17,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gdal_alg.h>
+#include <libkml/libKML.h>
 
 #include "color.h"
 #include "options.h"
 #include "grib.h"
-#include "buffer.h"
 #include "color.h"
 #include "ogrcode.h"
 #include "gdalcode.h"
 #include "contour.h"
-#include "zipbuffer.h"
-#include "kml.h"
+
+
 
 void contour (
 	GDALDatasetH hgdalDS,
@@ -78,23 +78,24 @@ void contour2kml(
 	GDALRasterBandH hBand,
 	OGRLayerH hLayer)
 {
-	buffer kmlbuf = {};
+
 	color_scale *cscale;
+	KML *kml = KML_new(o->kmlfile, o->kmzfile);
 	
 	/***** kml header *****/
 	
-	kml_header(&kmlbuf);
-	
+	KML_header(kml);
+	KML_
 	/***** kml linestyle *****/
 	
 	for (cscale = cscales ; *(cscale->color) ; cscale++) {
-		kml_linestyle(&kmlbuf, cscale->color, cscale->color, "FF", 1);
+		KML_linestyle(kml, cscale->color, cscale->color, "FF", 1);
 	}
 		
 	/***** check to see if it needs transformed *****/
 	
 	if (gds->proj == GDS_LATLON || gds->proj == GDS_GAUSSIAN_LATLON) {
-		ogr2kml(hLayer, &kmlbuf, cscales);
+		ogr2kml(hLayer, kml, cscales);
 	}
 	
 	/***** translate first *****/
@@ -129,7 +130,7 @@ void contour2kml(
 		
 		transform(hSRS, hLayer, hSRS2, hLayer2);
 		
-		ogr2kml(hLayer2, &kmlbuf, cscales);
+		ogr2kml(hLayer2, kml, cscales);
 		
 		/***** cleanup *****/
 		
@@ -138,16 +139,12 @@ void contour2kml(
 		
 	}
 
-	kml_footer(&kmlbuf);
-		
-	struct zip *kmz = zipbuffer_open(o->kmzfile);
+	KML_footer(kml);
 	
-	zipbuffer_add (o->kmlfile, kmz, &kmlbuf);
+	KML_write(kml);
 	
-	zipbuffer_close(kmz);
+	KML_free(kml);
 	
-	buffer_free(&kmlbuf);
-
 	/***** cleanup *****/
 		
 //	OSRDestroySpatialReference(hSRS2);

@@ -30,14 +30,13 @@
 
 #include "options.h"
 #include "grib.h"
-
-#include "buffer.h"
+#include <libkml/libKML.h>
 #include "color.h"
 #include "ogrcode.h"
 #include "gdalcode.h"
 #include "contour.h"
-#include "zipbuffer.h"
-#include "kml.h"
+
+
 
 
 
