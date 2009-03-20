@@ -512,6 +512,90 @@
 			</NetworkLink>
 		</Folder>
 		<Folder>
+			<name>3 Hour Total Rain Precipitation</name>
+			<visibility>0</visibility>
+			<Style>
+				<ListStyle>
+					<listItemType>radioFolder</listItemType>
+					<bgColor>00ffffff</bgColor>
+				</ListStyle>
+			</Style>
+			<Folder>
+				<name>off</name>
+				<visibility>0</visibility>
+			</Folder>
+			<NetworkLink>
+				<name>latest</name>
+				<visibility>0</visibility>
+				<Link>
+					<href>@www@/kml/nam_conus/latest/rain.kml</href>
+				</Link>
+			</NetworkLink>
+		</Folder>
+		<Folder>
+			<name>3 Hour Total Snow Precipitation</name>
+			<visibility>0</visibility>
+			<Style>
+				<ListStyle>
+					<listItemType>radioFolder</listItemType>
+					<bgColor>00ffffff</bgColor>
+				</ListStyle>
+			</Style>
+			<Folder>
+				<name>off</name>
+				<visibility>0</visibility>
+			</Folder>
+			<NetworkLink>
+				<name>latest</name>
+				<visibility>0</visibility>
+				<Link>
+					<href>@www@/kml/nam_conus/latest/snow.kml</href>
+				</Link>
+			</NetworkLink>
+		</Folder>
+		<Folder>
+			<name>3 Hour Total Freezing Precipitation</name>
+			<visibility>0</visibility>
+			<Style>
+				<ListStyle>
+					<listItemType>radioFolder</listItemType>
+					<bgColor>00ffffff</bgColor>
+				</ListStyle>
+			</Style>
+			<Folder>
+				<name>off</name>
+				<visibility>0</visibility>
+			</Folder>
+			<NetworkLink>
+				<name>latest</name>
+				<visibility>0</visibility>
+				<Link>
+					<href>@www@/kml/nam_conus/latest/frez.kml</href>
+				</Link>
+			</NetworkLink>
+		</Folder>
+		<Folder>
+			<name>3 Hour Total Pellet Precipitation</name>
+			<visibility>0</visibility>
+			<Style>
+				<ListStyle>
+					<listItemType>radioFolder</listItemType>
+					<bgColor>00ffffff</bgColor>
+				</ListStyle>
+			</Style>
+			<Folder>
+				<name>off</name>
+				<visibility>0</visibility>
+			</Folder>
+			<NetworkLink>
+				<name>latest</name>
+				<visibility>0</visibility>
+				<Link>
+					<href>@www@/kml/nam_conus/latest/pellet.kml</href>
+				</Link>
+			</NetworkLink>
+		</Folder>
+		<Folder>
 			<name>Convective Available Potential Energy</name>
 			<visibility>0</visibility>
 			<Style>

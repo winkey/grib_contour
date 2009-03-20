@@ -16,9 +16,6 @@
 source /etc/profile
 source ~/.profile
 
-export LD_LIBRARY_PATH="/home/winkey/lib/:${LD_LIBRARY_PATH}"
-
-
 
 if [ "$2" == "" ]
 then

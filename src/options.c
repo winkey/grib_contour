@@ -42,11 +42,15 @@ void get_options(
 {
 	int opt;
 	
-	while (0 < (opt = getopt(argc, argv, "wg:u:v:U:V:m:i:s:k:t:z:h"))) {
+	while (0 < (opt = getopt(argc, argv, "awg:u:v:U:V:m:i:s:k:t:z:h"))) {
 		
 		switch (opt) {
 			case 'w':
 				o->wind = 1;
+				break;
+			
+			case 'a':
+				o->and = 1;
 				break;
 			
 			case 'g':
@@ -106,6 +110,10 @@ void get_options(
 								"USAGE: %s -w <-u u wind grib file> <-v v wind grib file>\n"
 								"[-U u grib msg] [-V v grib msg] <-i interval> <-s color scale>\n"
 								"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
+				fprintf(stderr,
+								"USAGE: %s -a <-u data grib file> <-v 0/1 grib file>\n"
+								"[-U data grib msg] [-V 0/1 grib msg] <-i interval> <-s color scale>\n"
+								"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
 				exit(EXIT_FAILURE);
 		}
 	}
@@ -113,7 +121,7 @@ void get_options(
 	if (!o->wind && !o->gribmsg)
 		o->gribmsg = 1;
 	
-	else if (o->wind) {
+	else if (o->wind ||o->wind ) {
 		if (!o->ugribmsg)
 			o->ugribmsg = 1;
 		if (!o->vgribmsg)
@@ -128,12 +136,23 @@ void get_options(
 						"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
+	
 	else if (o->wind && (!o->ugribfile || !o->vgribfile || !o->interval || !o->scalename || 
 											(!o->kmlfile && !o->tiffile))) {
 	
 		fprintf(stderr,
 						"USAGE: %s -w <-u u wind grib file> <-v v wind grib file>\n"
 						"[-U u grib msg] [-V v grib msg] <-i interval> <-s color scale>\n"
+						"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
+		exit(EXIT_FAILURE);
+	}
+	
+	else if (o->and && (!o->ugribfile || !o->vgribfile || !o->interval || !o->scalename || 
+											(!o->kmlfile && !o->tiffile))) {
+	
+		fprintf(stderr,
+						"USAGE: %s -a <-u data grib file> <-v 0/1 grib file>\n"
+						"[-U data grib msg] [-V 0/1 grib msg] <-i interval> <-s color scale>\n"
 						"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}

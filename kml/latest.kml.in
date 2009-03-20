@@ -119,6 +119,27 @@
 			<href>@www@/kml/satz-latest.kml</href>
 		</Url>
 	</NetworkLink>
+	<Folder>
+		<name>Latest Nexrad Base Reflectivity Mosaic</name>
+		<visibility>0</visibility>
+		<Style>
+			<ListStyle>
+				<listItemType>radioFolder</listItemType>
+				<bgColor>00ffffff</bgColor>
+			</ListStyle>
+		</Style>
+		<NetworkLink>
+			<name>Latest Nexrad Base Reflectivity Mosaic</name>
+			<visibility>1</visibility>
+			<Url>
+				<href>http://@www@/kml/radar/radar.kml</href>
+			</Url>
+		</NetworkLink>
+		<Folder>
+			<name>off</name>
+			<visibility>0</visibility>
+		</Folder>
+	</Folder>
 </Document>
 </kml>
 

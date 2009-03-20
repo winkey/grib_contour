@@ -19,7 +19,8 @@ bin_SCRIPTS = \
 	ruc2.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
-	ww.sh
+	ww.sh \
+	ecmwf.sh
 
 
 CLEANFILES = $(bin_SCRIPTS)
@@ -41,7 +42,8 @@ EXTRA_DIST = \
 	ruc2.in \
 	rtma_ak.in \
 	rtma_conus.in \
-	ww.in
+	ww.in \
+	ecmwf.in
 
 
 dist_bin_SCRIPTS = \
@@ -61,7 +63,8 @@ dist_bin_SCRIPTS = \
 	ruc2.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
-	ww.sh
+	ww.sh \
+	ecmwf.sh
 
 
    
@@ -136,5 +139,9 @@ rtma_conus.sh: rtma_conus.in Makefile
 ww.sh: ww.in Makefile
 	$(do_subst) < $(srcdir)/ww.in > ww.sh
 	chmod +x ww.sh
+
+ecmwf.sh: ecmwf.in Makefile
+	$(do_subst) < $(srcdir)/ecmwf.in > ecmwf.sh
+	chmod +x ecmwf.sh
 
 ## File created by the gnome-build tools

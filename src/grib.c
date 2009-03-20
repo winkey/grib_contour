@@ -295,3 +295,48 @@ float *do_wind_grib(
 	
 	return raster;
 }
+
+float *do_and_grib(
+	options *o,
+	gds_t *gds)
+{
+	FILE *Ufp = NULL;
+	FILE *Vfp = NULL;
+	float *raster;
+	float *Uraster = NULL;
+	float *Vraster = NULL;
+	int i;
+	
+  /***** open the grib file *****/
+  
+  Ufp = grib_open(o->ugribfile, o->ugribmsg, 'e');
+  Vfp = grib_open(o->vgribfile, o->vgribmsg, 'e');
+  
+  /***** read the grib raster into memory *****/
+  
+  Uraster = grib_read(Ufp, gds);
+  Vraster = grib_read(Vfp, gds);
+  
+	/***** close the grib file *****/
+	
+	pclose(Ufp);
+	pclose(Vfp);
+	
+	if (!(raster = malloc(sizeof(float) * gds->Npoints)))
+		ERROR("main");
+	
+	for (i = 0; i < gds->Npoints ; i++) {
+		if (gds->missing && (Uraster[i] == gds->missing_value || Vraster[i] == gds->missing_value))
+			raster[i] = gds->missing_value;
+		else if ((int)Vraster[i])
+			raster[i] = Uraster[i];
+		else
+			raster[i] = 0.0;
+	}
+
+	
+	free(Uraster);
+	free(Vraster);
+	
+	return raster;
+}

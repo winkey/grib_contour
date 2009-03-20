@@ -20,6 +20,7 @@
 
 typedef struct {
 	int wind;
+	int and;
 	char *gribfile;
 	char *ugribfile;
 	char *vgribfile;
