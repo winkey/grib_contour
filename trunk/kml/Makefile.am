@@ -14,6 +14,8 @@ www_DATA = \
 	nam_pr.kml \
 	nam_west.kml \
 	master.kml \
+	rtma_conus.kml \
+	rtma_ak.kml \
 	sst.kml
 
 EXTRA_DIST = \
@@ -27,6 +29,8 @@ EXTRA_DIST = \
 	nam_pr.kml.in \
 	nam_west.kml.in \
 	master.kml.in \
+	rtma_conus.kml.in \
+	rtma_ak.kml.in \
 	sst.kml.in
 	
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
@@ -63,6 +67,12 @@ nam_west.kml: nam_west.kml.in Makefile
 
 master.kml: master.kml.in Makefile
 	$(do_subst) < $(srcdir)/master.kml.in > master.kml
+
+rtma_conus.kml: rtma_conus.kml.in Makefile
+	$(do_subst) < $(srcdir)/rtma_conus.kml.in > rtma_conus.kml
+
+rtma_ak.kml: rtma_ak.kml.in Makefile
+	$(do_subst) < $(srcdir)/rtma_ak.kml.in > rtma_ak.kml
 
 sst.kml: sst.kml.in Makefile
 	$(do_subst) < $(srcdir)/sst.kml.in > sst.kml

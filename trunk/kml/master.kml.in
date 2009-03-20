@@ -72,6 +72,20 @@
 			<href>@www@/kml/sst.kml</href>
 		</Url>
 	</NetworkLink>
+	<NetworkLink>
+		<name>5km Real Time Model Analysis CONUS</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/rtma_conus.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km Real Time Model Analysis Alaska</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/rtma_ak.kml</href>
+		</Url>
+	</NetworkLink>
 </Document>
 </kml>
 
