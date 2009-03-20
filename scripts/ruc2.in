@@ -145,7 +145,7 @@ then
 		mkrootkml "pmsl"
 	fi
 	
-	plot "$path" "pmsl" 1 200 $hour 03
+	plot "$path" "pmsl" 1 200 $hour 01
 	rm "$path"
 fi
 

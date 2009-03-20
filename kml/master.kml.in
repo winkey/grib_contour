@@ -86,6 +86,20 @@
 			<href>@www@/kml/rtma_ak.kml</href>
 		</Url>
 	</NetworkLink>
+	<NetworkLink>
+		<name>.5 deg Wind Wave N Hemesphere</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/windwave.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>.5 deg Wind Wave N Hemesphere</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/windwave.kml</href>
+		</Url>
+	</NetworkLink>
 </Document>
 </kml>
 
