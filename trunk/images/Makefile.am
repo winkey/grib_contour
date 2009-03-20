@@ -40,7 +40,10 @@ www_DATA = \
 	t.png \
 	dp.png \
 	sst.png \
-	wind.png
+	wind.png \
+	hghtww.png \
+	perdww.png \
+	htsgw.png
 
 
 925t.png: ../share/925t.scale Makefile ../scripts/makekey.sh
@@ -135,4 +138,13 @@ sst.png: ../share/sst.scale Makefile ../scripts/makekey.sh
 
 wind.png: ../share/wind.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/wind.scale "%" wind.png
+
+hghtww.png: ../share/hghtww.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/hghtww.scale "m" hghtww.png
+
+perdww.png: ../share/perdww.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/perdww.scale "s" perdww.png
+
+htsgw.png: ../share/htsgw.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/htsgw.scale "m" htsgw.png
 

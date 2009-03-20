@@ -18,7 +18,8 @@ bin_SCRIPTS = \
 	forecaster.sh \
 	ruc2.sh \
 	rtma_ak.sh \
-	rtma_conus.sh
+	rtma_conus.sh \
+	ww.sh
 
 
 CLEANFILES = $(bin_SCRIPTS)
@@ -39,7 +40,8 @@ EXTRA_DIST = \
 	forecaster.in \
 	ruc2.in \
 	rtma_ak.in \
-	rtma_conus.in
+	rtma_conus.in \
+	ww.in
 
 
 dist_bin_SCRIPTS = \
@@ -58,7 +60,8 @@ dist_bin_SCRIPTS = \
 	forecaster.sh \
 	ruc2.sh \
 	rtma_ak.sh \
-	rtma_conus.sh
+	rtma_conus.sh \
+	ww.sh
 
 
    
@@ -130,5 +133,8 @@ rtma_conus.sh: rtma_conus.in Makefile
 	$(do_subst) < $(srcdir)/rtma_conus.in > rtma_conus.sh
 	chmod +x rtma_conus.sh
 
+ww.sh: ww.in Makefile
+	$(do_subst) < $(srcdir)/ww.in > ww.sh
+	chmod +x ww.sh
 
 ## File created by the gnome-build tools

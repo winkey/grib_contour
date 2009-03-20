@@ -16,7 +16,8 @@ www_DATA = \
 	master.kml \
 	rtma_conus.kml \
 	rtma_ak.kml \
-	sst.kml
+	sst.kml \
+	windwave.kml
 
 EXTRA_DIST = \
 	gfs.kml.in \
@@ -31,7 +32,8 @@ EXTRA_DIST = \
 	master.kml.in \
 	rtma_conus.kml.in \
 	rtma_ak.kml.in \
-	sst.kml.in
+	sst.kml.in \
+	windwave.kml.in
 	
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
 							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
@@ -76,6 +78,9 @@ rtma_ak.kml: rtma_ak.kml.in Makefile
 
 sst.kml: sst.kml.in Makefile
 	$(do_subst) < $(srcdir)/sst.kml.in > sst.kml
+
+windwave.kml: windwave.kml.in Makefile
+	$(do_subst) < $(srcdir)/windwave.kml.in > windwave.kml
 
 
 ## File created by the gnome-build tools
