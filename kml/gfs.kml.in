@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.2">
-<Folder>
-	<name>@www@ .5 Degree global GFS</name>
+<Document>
+	<name>.5 Degree global GFS</name>
 	<visibility>0</visibility>
 	<open>1</open>
 	<Folder>
@@ -1014,5 +1014,5 @@
 			</NetworkLink>
 		</Folder>
 	</Folder>
-</Folder>
+</Document>
 </kml>

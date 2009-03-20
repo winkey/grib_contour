@@ -33,6 +33,11 @@ then
 	hour="00"
 fi
 
+if [[ ! -d "${wwwdisk}/${run}" ]]
+then
+	mkdir -p "${wwwdisk}/${run}"
+fi
+
 ##### plot height #####
 
 if [[ "$prod" == "HGHT" ]]

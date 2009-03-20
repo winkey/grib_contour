@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.2">
-<Folder>
-	<name>@www@ 12km nam conus</name>
+<Document>
+	<name>12km nam conus</name>
 	<visibility>0</visibility>
 	<Folder>
 		<name>300mb</name>
@@ -1013,5 +1013,5 @@
 			</NetworkLink>
 		</Folder>
 	</Folder>
-</Folder>
+</Document>
 </kml>

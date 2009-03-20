@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.2">
-<Folder>
-	<name>@www@ 5km nam Alaska</name>
+<Document>
+	<name>5km nam Alaska</name>
 	<visibility>0</visibility>
 	<Folder>
 		<name>perceptible water</name>
@@ -357,5 +357,5 @@
 			</Url>
 		</NetworkLink>
 	</Folder>
-</Folder>
+</Document>
 </kml>

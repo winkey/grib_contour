@@ -35,6 +35,11 @@ then
 	hour="00"
 fi
 
+if [[ ! -d "${wwwdisk}/${run}" ]]
+then
+	mkdir -p "${wwwdisk}/${run}"
+fi
+
 frames=${wwwdisk}/${run}/prob${prod}.kml
 
 if [[ $(($(stat -c %Y ${frames})+21600)) -lt $(date "+%s") ]]
@@ -42,15 +47,15 @@ then
 	mkrootkml "prob${prod}"
 fi
 	
-zip="${wwwdisk}/${run}/prob${prod}ms${hour}.kmz"
-kml="prob${prod}ms${hour}.kml"
+zip="${wwwdisk}/${run}/prob${prod}${hour}.kmz"
+kml="prob${prod}${hour}.kml"
 
 if [[ -f "$zip" ]]
 then
 	rm "$zip"
 fi
 	
-nice -n 10 grib_contour -g "${path}" -m $1 -i 5 -s prob -k $kml -z "$zip"
+nice -n 10 grib_contour -g "${path}" -m 1 -i 5 -s prob -k $kml -z "$zip"
 appendkml "prob${prod}" $hour 06
 	
 rm "$path"
