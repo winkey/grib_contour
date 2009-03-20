@@ -155,3 +155,16 @@ then
 	rm "$path"
 fi
 
+#### plot pmsl #####
+
+if [[ "$prod" == "PMSL" ]]
+then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "pmsl"
+	fi
+	
+	plot "$path" "pmsl" 1 200 $hour 03
+	rm "$path"
+fi
+

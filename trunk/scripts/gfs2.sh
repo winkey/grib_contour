@@ -129,6 +129,19 @@ then
 	rm "$path"
 fi
 
+#### plot pmsl #####
+
+if [[ "$prod" == "PMSL" ]]
+then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "pmsl"
+	fi
+	
+	plot "$path" "pmsl" 1 200 $hour 03
+	rm "$path"
+fi
+
 #grib2/ncep/GFS/#000/200805291200F021/WXTS03/0 - NONE 000197 snow
 #grib2/ncep/GFS/#000/200805291200F021/WXTZ03/0 - NONE 000199 frez rain
 #grib2/ncep/GFS/#000/200805291200F021/WXTR03/0 - NONE 000200 rain

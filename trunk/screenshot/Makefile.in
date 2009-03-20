@@ -13,7 +13,6 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
-
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -30,9 +29,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-subdir = share
-DIST_COMMON = $(dist_pkgdata_DATA) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+subdir = screenshot
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -42,15 +40,6 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 SOURCES =
 DIST_SOURCES =
-am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
-am__vpath_adj = case $$p in \
-    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
-    *) f=$$p;; \
-  esac;
-am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(pkgdatadir)"
-dist_pkgdataDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(dist_pkgdata_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -141,39 +130,6 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-www = @WWW@
-wwwdisk = @WWWDISK@
-dist_pkgdata_DATA = \
-	cape.scale \
-	700t.scale \
-	925t.scale \
-	300t.scale \
-	500t.scale \
-	850t.scale \
-	925rh.scale \
-	850rh.scale \
-	700rh.scale \
-	500rh.scale \
-	300rh.scale \
-	925hgt.scale \
-	850hgt.scale \
-	700hgt.scale \
-	500hgt.scale \
-	300hgt.scale \
-	300wind.scale \
-	500wind.scale \
-	700wind.scale \
-	850wind.scale \
-	925wind.scale \
-	pwat.scale \
-	pmsl.scale \
-	pcp.scale \
-	prob.scale \
-	t.scale \
-	dp.scale \
-	sst.scale \
-	wind.scale
-
 all: all-am
 
 .SUFFIXES:
@@ -186,9 +142,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  share/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  screenshot/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  share/Makefile
+	  $(AUTOMAKE) --gnu  screenshot/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -206,23 +162,6 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-install-dist_pkgdataDATA: $(dist_pkgdata_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(pkgdatadir)" || $(MKDIR_P) "$(DESTDIR)$(pkgdatadir)"
-	@list='$(dist_pkgdata_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(dist_pkgdataDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(pkgdatadir)/$$f'"; \
-	  $(dist_pkgdataDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(pkgdatadir)/$$f"; \
-	done
-
-uninstall-dist_pkgdataDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(dist_pkgdata_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(pkgdatadir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(pkgdatadir)/$$f"; \
-	done
 tags: TAGS
 TAGS:
 
@@ -258,11 +197,8 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(DATA)
+all-am: Makefile
 installdirs:
-	for dir in "$(DESTDIR)$(pkgdatadir)"; do \
-	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
-	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -305,7 +241,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-dist_pkgdataDATA
+install-data-am:
 
 install-dvi: install-dvi-am
 
@@ -339,21 +275,19 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-dist_pkgdataDATA
+uninstall-am:
 
 .MAKE: install-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic distclean \
 	distclean-generic distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am \
-	install-dist_pkgdataDATA install-dvi install-dvi-am \
-	install-exec install-exec-am install-html install-html-am \
-	install-info install-info-am install-man install-pdf \
-	install-pdf-am install-ps install-ps-am install-strip \
-	installcheck installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic pdf \
-	pdf-am ps ps-am uninstall uninstall-am \
-	uninstall-dist_pkgdataDATA
+	install install-am install-data install-data-am install-dvi \
+	install-dvi-am install-exec install-exec-am install-html \
+	install-html-am install-info install-info-am install-man \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-generic pdf pdf-am ps ps-am uninstall uninstall-am
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

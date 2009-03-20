@@ -9,7 +9,9 @@ SUBDIRS = src \
 	share \
 	images \
 	etc \
-	kml
+	kml \
+	screenshot \
+	page
 
 grib_contourdocdir = ${prefix}/doc/grib_contour
 grib_contourdoc_DATA = \

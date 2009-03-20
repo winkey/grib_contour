@@ -31,6 +31,7 @@ www_DATA = \
 	300rh.png \
 	300wind.png \
 	pwat.png \
+	pmsl.png \
 	cape.png \
 	pcp.png \
 	prob17.png \
@@ -107,6 +108,9 @@ cape.png: ../share/cape.scale Makefile ../scripts/makekey.sh
 
 pwat.png: ../share/pwat.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/pwat.scale "kg/m^2" pwat.png
+
+pmsl.png: ../share/pmsl.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/pmsl.scale "pa" pmsl.png
 
 pcp.png: ../share/pcp.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/pcp.scale "kg/m^2" pcp.png

@@ -28,7 +28,10 @@ then
 	mkdir -p "${wwwdisk}/"
 fi
 
-wget "${servb}/sst.${datee}/rtgssthr_grb_0.083_awips.grib2" -O "/tmp/rtgssthr_grb_0.083_awips.grib2"
+if ! wget "${servb}/sst.${datee}/rtgssthr_grb_0.083_awips.grib2" -O "/tmp/rtgssthr_grb_0.083_awips.grib2"
+then
+	exit
+fi
 
 if [[ -f "${wwwdisk}/sst.kmz" ]]
 then
