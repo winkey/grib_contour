@@ -1,6 +1,6 @@
-CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
+CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300) Pa PRES!
 	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
-CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
+CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300) Pa PRES!
 	EXEC	@bindir@/gfs2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS03|WXTZ03|WXTR03|WXTP03|P06M|PMSL)/(0) - NONE!
@@ -70,17 +70,17 @@ HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0
 HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
 	EXEC	@bindir@/ecmwf.sh data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
 
-HDS EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/([0-9]*).mb
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/([0-9]*).mb
 	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.\6mb.grib
 
-HDS EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
 	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.sfc.grib
 
-HDS EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/MSL/
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/MSL/
 	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.MSL.grib
 
-HDS EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/tropopause/
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/tropopause/
 	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.tropopause.grib
 
-HDS EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/max wind lev/
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/max wind lev/
 	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.max_wind_lev.grib

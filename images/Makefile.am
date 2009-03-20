@@ -10,6 +10,10 @@ wwwdisk = @WWWDISK@
 wwwdir = ${wwwdisk}/kml/images
 
 www_DATA = \
+	1000t.png \
+	1000hgt.png \
+	1000rh.png \
+	1000wind.png \
 	925t.png \
 	925hgt.png \
 	925rh.png \
@@ -30,6 +34,9 @@ www_DATA = \
 	300hgt.png \
 	300rh.png \
 	300wind.png \
+	200t.png \
+	200hgt.png \
+	200rh.png \
 	200wind.png \
 	pwat.png \
 	pmsl.png \
@@ -54,8 +61,19 @@ www_DATA = \
 	perdww.png \
 	htsgw.png
 
+1000t.png: ../share/1000t.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/1000t.scale "c" 1000t.png
 
-925t.png: ../share/925t.scale Makefile ../scripts/makekey.sh
+1000hgt.png: ../share/1000hgt.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/1000hgt.scale "m" 1000hgt.png
+
+1000rh.png: ../share/1000rh.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/1000rh.scale "%" 1000rh.png
+
+1000wind.png: ../share/1000wind.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/1000wind.scale "kts" 1000wind.png
+
+925t.png: ../share/t.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/925t.scale "c" 925t.png
 
 925hgt.png: ../share/925hgt.scale Makefile ../scripts/makekey.sh
@@ -114,6 +132,15 @@ www_DATA = \
 
 300wind.png: ../share/300wind.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/300wind.scale "kts" 300wind.png
+
+200t.png: ../share/200t.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/200t.scale "c" 200t.png
+
+200hgt.png: ../share/200hgt.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/200hgt.scale "m" 200hgt.png
+
+200rh.png: ../share/200rh.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/200rh.scale "%" 200rh.png
 
 200wind.png: ../share/200wind.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/200wind.scale "kts" 200wind.png

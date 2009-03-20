@@ -114,7 +114,7 @@ void get_options(
 	o->finterval = 0;
 	o->english = 0;
 	
-	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:k:t:z:eh?"))) {
+	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:k:t:z:q:eh?"))) {
 		
 		switch (opt) {
 			case 'w':
@@ -221,7 +221,9 @@ void get_options(
 			case 'z':
 				o->kmzfile = optarg;
 				break;
-			
+			case 'q':
+				o->quasi = optarg;
+				break;
 			case 'h':
 			case '?':
 			default:
