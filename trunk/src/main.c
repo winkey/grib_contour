@@ -66,6 +66,8 @@ int main(int argc, char **argv)
 	
 	if (o.wind)
 		raster = do_wind_grib(&o, &gds);
+	if (o.and)
+		raster = do_and_grib(&o, &gds);
 	else
 		raster = do_grib(&o, &gds);
 	

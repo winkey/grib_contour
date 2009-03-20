@@ -155,7 +155,8 @@ bin_SCRIPTS = \
 	ruc2.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
-	ww.sh
+	ww.sh \
+	ecmwf.sh
 
 CLEANFILES = $(bin_SCRIPTS)
 EXTRA_DIST = \
@@ -175,7 +176,8 @@ EXTRA_DIST = \
 	ruc2.in \
 	rtma_ak.in \
 	rtma_conus.in \
-	ww.in
+	ww.in \
+	ecmwf.in
 
 dist_bin_SCRIPTS = \
 	generic.sh \
@@ -194,7 +196,8 @@ dist_bin_SCRIPTS = \
 	ruc2.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
-	ww.sh
+	ww.sh \
+	ecmwf.sh
 
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
 							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
@@ -471,6 +474,10 @@ rtma_conus.sh: rtma_conus.in Makefile
 ww.sh: ww.in Makefile
 	$(do_subst) < $(srcdir)/ww.in > ww.sh
 	chmod +x ww.sh
+
+ecmwf.sh: ecmwf.in Makefile
+	$(do_subst) < $(srcdir)/ecmwf.in > ecmwf.sh
+	chmod +x ecmwf.sh
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

@@ -13,14 +13,14 @@ NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(HGHT|TMPK|RELH|UREL|VREL)/(925|850|700|500|300) hPa PRES
 	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
-NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(CAPE|PWTR)/(0) - NONE
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(CAPE|PWTR|PMSL)/(0) - NONE
 	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
-NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(CAPE|PWTR)/(0) - NONE
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(CAPE|PWTR|PMSL)/(0) - NONE
 	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
-NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(WXTS|WXTZ|WXTR|WXTP|P03M|PMSL)/(0) - NONE
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(WXTS|WXTZ|WXTR|WXTP|P03M)/(0) - NONE
 	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
-NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(WXTS|WXTZ|WXTR|WXTP|P03M|PMSL)/(0) - NONE
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(WXTS|WXTZ|WXTR|WXTP|P03M)/(0) - NONE
 	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(POPF03|TSTM03|POP03|POPZ03)/(0) - NONE
@@ -60,4 +60,13 @@ NGRID	^E[A-Z]{3}88 KWBJ .* !grib2/ncep/11/#231/([0-9]{8})([0-9]{2})00F([0-9]*)/(
 	EXEC	@bindir@/ww.sh data/ngrid/ww/231/\1.\2.\3.\4.grib2 \1 \2 \3 \4
 
 
+HDS ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/([0-9]*).mb
+	FILE	data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib
+HDS ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/([0-9]*).mb
+	EXEC	@bindir@/ww.sh data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib \1 \2 \3 \4 \5 \6
+	
+HDS ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
+	FILE	data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib
+HDS ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
+	EXEC	@bindir@/ww.sh data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
 

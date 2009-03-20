@@ -34,6 +34,10 @@ www_DATA = \
 	pmsl.png \
 	cape.png \
 	pcp.png \
+	rain.png \
+	snow.png \
+	frez.png \
+	pellet.png \
 	prob17.png \
 	prob25.png \
 	prob32.png \
@@ -121,6 +125,18 @@ pmsl.png: ../share/pmsl.scale Makefile ../scripts/makekey.sh
 
 pcp.png: ../share/pcp.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/pcp.scale "kg/m^2" pcp.png
+
+rain.png: ../share/rain.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/rain.scale "kg/m^2" rain.png
+
+snow.png: ../share/snow.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/snow.scale "kg/m^2" snow.png
+
+frez.png: ../share/frez.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/frez.scale "kg/m^2" frez.png
+
+pellet.png: ../share/pellet.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/pellet.scale "kg/m^2" pellet.png
 
 prob17.png: ../share/prob.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/prob.scale "%" prob17.png

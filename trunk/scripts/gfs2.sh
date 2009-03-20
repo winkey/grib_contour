@@ -91,7 +91,14 @@ then
 		mkrootkml "${level}wind"
 	fi
 	
-	windplot "$path" "$path" "${level}wind" 1.0 1.1 10 $hour 03
+	if [[ "$level" -gt "500" ]]
+	then
+		interval=5
+	else
+		interval=7
+	fi
+		
+	windplot "$path" "$path" "${level}wind" 1.0 1.1 $interval $hour 03
 	rm "$path"
 fi
 

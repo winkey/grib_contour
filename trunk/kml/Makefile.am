@@ -30,7 +30,9 @@ www_DATA = \
 	rtma_ak-latest.kml \
 	sst.kml \
 	windwave.kml \
-	windwave-latest.kml
+	windwave-latest.kml \
+	ecmwf.kml \
+	ecmwf-latest.kml
 
 EXTRA_DIST = \
 	forecaster.kml.in \
@@ -59,7 +61,9 @@ EXTRA_DIST = \
 	rtma_ak-latest.kml.in \
 	sst.kml.in \
 	windwave.kml.in \
-	windwave-latest.kml.in
+	windwave-latest.kml.in \
+	ecmwf.kml.in \
+	ecmwf-latest.kml.in
 	
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
 							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
@@ -145,6 +149,12 @@ windwave.kml: windwave.kml.in Makefile
 
 windwave-latest.kml: windwave-latest.kml.in Makefile
 	$(do_subst) < $(srcdir)/windwave-latest.kml.in > windwave-latest.kml
+
+ecmwf.kml: ecmwf.kml.in Makefile
+	$(do_subst) < $(srcdir)/ecmwf.kml.in > ecmwf.kml
+
+ecmwf-latest.kml: ecmwf-latest.kml.in Makefile
+	$(do_subst) < $(srcdir)/ecmwf-latest.kml.in > ecmwf-latest.kml
 
 
 ## File created by the gnome-build tools

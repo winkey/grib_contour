@@ -27,6 +27,10 @@ dist_pkgdata_DATA = \
 	pwat.scale \
 	pmsl.scale \
 	pcp.scale \
+	rain.scale \
+	snow.scale \
+	frez.scale \
+	pellet.scale \
 	prob.scale \
 	t.scale \
 	dp.scale \

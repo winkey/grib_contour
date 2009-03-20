@@ -82,7 +82,7 @@ fi
 
 ##### plot wind #####
 
-if [[ "$prod" == "UREL" ]]
+yesif [[ "$prod" == "UREL" ]]
 then
 	vpath=$(echo "$path" | sed s/UREL/VREL/)
 	
@@ -93,7 +93,14 @@ then
 			mkrootkml "${level}wind"
 		fi
 		
-		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 10 $hour 03
+		if [[ "$level" -gt "500" ]]
+		then
+			interval=5
+		else
+			interval=7
+		fi
+		
+		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 $interval $hour 03
 
 		rm "$path"
 		rm "$vpath"
@@ -106,12 +113,19 @@ then
 	
 	if [[ -f "$upath" ]]
 	then
-		if [[ "$hour" == "00" ]]""""
+		if [[ "$hour" == "00" ]]
 		then
 			mkrootkml "${level}wind"
 		fi
 		
-		windplot "$upath" "$path" "${level}wind" 1.0 1.0 10 $hour 03
+		if [[ "$level" -gt "500" ]]
+		then
+			interval=5
+		else
+			interval=7
+		fi
+		
+		windplot "$upath" "$path" "${level}wind" 1.0 1.0 $interval $hour 03
 		
 		rm "$path"
 		rm "$upath"
@@ -156,15 +170,155 @@ then
 	fi
 	
 	plot "$path" "pcp" 1 4 $hour 03
+	
+	## WXTS ##
+	
+	spath=$(echo "$path" | sed s/P03M/WXTS/)
+	
+	if [[ -f "$spath" ]]
+	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "snow"
+		fi
+		
+		andplot "$path" "$spath" "snow" 1.0 1.0 4 $hour 03
+		
+		rm "$spath"
+	fi
+	
+	## WXTZ ##
+	
+	zpath=$(echo "$path" | sed s/P03M/WXTZ/)
+	
+	if [[ -f "$zpath" ]]
+	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "frez"
+		fi
+		
+		andplot "$path" "$zpath" "frez" 1.0 1.0 4 $hour 03
+		
+		rm "$zpath"
+	fi
+	
+	## WXTR ##
+	
+	rpath=$(echo "$path" | sed s/P03M/WXTR/)
+	
+	if [[ -f "$rpath" ]]
+	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "rain"
+		fi
+		
+		andplot "$path" "$rpath" "rain" 1.0 1.0 4 $hour 03
+		
+		rm "$rpath"
+	fi
+	
+	## WXTP ##
+	
+	ppath=$(echo "$path" | sed s/P03M/WXTP/)
+	
+	if [[ -f "$ppath" ]]
+	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "pellet"
+		fi
+		
+		andplot "$path" "$ppath" "pellet" 1.0 1.0 4 $hour 03
+		
+		rm "$ppath"
+	fi
+fi
 
-	rm "$path"
+#### WXTS ####
+
+if [[ "$prod" == "WXTS" ]]
+then
+	ppath=$(echo "$path" | sed s/WXTS/P03M/)
+	
+	if [[ -f "$ppath" ]]
+	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "snow"
+		fi
+		
+		andplot "$ppath" "$path" "snow" 1.0 1.0 4 $hour 03
+		
+		rm "$path"
+	fi
+fi
+
+#### WXTZ ####
+
+if [[ "$prod" == "WXTZ" ]]
+then
+	
+	ppath=$(echo "$path" | sed s/WXTZ/P03M/)
+	
+	if [[ -f "$ppath" ]]
+	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "frez"
+		fi
+		
+		andplot "$ppath" "$path" "frez" 1.0 1.0 4 $hour 03
+		
+		rm "$path"
+	fi
+fi
+
+#### WXTR ####
+
+if [[ "$prod" == "WXTZ" ]]
+then
+	
+	ppath=$(echo "$path" | sed s/WXTR/P03M/)
+	
+	if [[ -f "$ppath" ]]
+	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "rain"
+		fi
+		
+		andplot "$ppath" "$path" "rain" 1.0 1.0 4 $hour 03
+		
+		rm "$path"
+	fi
+fi
+
+#### WXTP ####
+	
+if [[ "$prod" == "WXTZ" ]]
+then
+	ppath=$(echo "$path" | sed s/WXTP/P03M/)
+	
+	if [[ -f "$ppath" ]]
+	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "pellet"
+		fi
+		
+		andplot "$ppath" "$path" "pellet" 1.0 1.0 4 $hour 03
+		
+		rm "$path"
+	fi
 fi
 
 #### plot pmsl #####
 
 if [[ "$prod" == "PMSL" ]]
 then
-	if [[ "$hour" == "00" ]]
+	if [[ "$hour" == "03" ]]
 	then
 		mkrootkml "pmsl"
 	fi
@@ -182,7 +336,7 @@ then
 		mkrootkml "popf"
 	fi
 	
-	plot "$path" "popf" 1 4 $hour 03
+	plot "$path" "popf" 1 10 $hour 03
 
 	rm "$path"
 fi
@@ -196,7 +350,7 @@ then
 		mkrootkml "tstm"
 	fi
 	
-	plot "$path" "tstm" 1 4 $hour 03
+	plot "$path" "tstm" 1 10 $hour 03
 
 	rm "$path"
 fi
@@ -210,7 +364,7 @@ then
 		mkrootkml "pop"
 	fi
 	
-	plot "$path" "pop" 1 4 $hour 03
+	plot "$path" "pop" 1 10 $hour 03
 
 	rm "$path"
 fi
@@ -224,7 +378,7 @@ then
 		mkrootkml "popz"
 	fi
 	
-	plot "$path" "popz" 1 4 $hour 03
+	plot "$path" "popz" 1 10 $hour 03
 
 	rm "$path"
 fi

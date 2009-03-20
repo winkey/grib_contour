@@ -16,6 +16,12 @@
 source /etc/profile
 source ~/.profile
 
+if [ "$2" == "" ]
+then
+	datee=`date -u "+%Y%m%d"`
+else
+	datee=$2
+fi
 
 ################################################################################
 #	function to make a dir for the temporary files
@@ -44,6 +50,7 @@ function mkrootkml {
 	name=$1
 	
 	frames=${wwwdisk}/${run}/${name}.kml
+	
 	
 	echo '<?xml version="1.0" encoding="UTF-8"?>' > $frames
 	echo '<kml xmlns="http://earth.google.com/kml/2.2">' >> $frames
@@ -79,17 +86,32 @@ function appendkml {
 	name=$1
 	hr=$2
 	incr=$3
+	grid=$4
 	
 	tmpfile=${tmp}/${name}.kml
 	frames=${wwwdisk}/${run}/${name}.kml
-
+	
+	##### lock the file #####
+	
+	while ! mkdir "${tmp}/${name}.lock"
+	do
+		sleep 1
+	done
+	
+	if [[ "$grid" != "" ]]
+	then
+		zip="${wwwdisk}/${run}/${grid}.${name}${hr}.kmz"
+	else
+		zip="${wwwdisk}/${run}/${name}${hr}.kmz"
+	fi
+	
 	head -n -2 $frames > $tmpfile
 
 	begin=`date -d "$run GMT $hr hours" "+%FT%TZ" -u`
 	end=`date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u`
 
 	echo '  <NetworkLink>' >> $tmpfile
-	echo "    <name>${run}Z + ${hr} ${name}</name>" >> $tmpfile
+	echo "    <name>${run}Z + ${hr} ${grid}.${name}</name>" >> $tmpfile
 	echo '    <TimeSpan>' >> $tmpfile
 	echo "      <begin>${begin}</begin>" >> $tmpfile
 	echo "      <end>${end}</end>" >> $tmpfile
@@ -97,12 +119,16 @@ function appendkml {
 	echo '    <visibility>1</visibility>' >> $tmpfile
 	echo '    <open>0</open>' >> $tmpfile
 	echo '    <Url>' >> $tmpfile
-	echo "      <href>${www}/${run}/${name}${hr}.kmz</href>" >> $tmpfile
+	echo "      <href>${zip}</href>" >> $tmpfile
 	echo '    </Url>' >> $tmpfile
 	echo '  </NetworkLink>' >> $tmpfile
 
 	tail -n 2 $frames >> $tmpfile
 	mv $tmpfile $frames
+	
+	##### remove the lock #####
+	
+	rmdir "${tmp}/${name}.lock"
 
 }
 
@@ -140,9 +166,16 @@ function plot {
 	interval=$4
 	timee=$5
 	incr=$6
+	grid=$7
 	
-	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
-	kml="${name}${timee}.kml"
+	if [[ "$grid" != "" ]]
+	then
+		zip="${wwwdisk}/${run}/${grid}.${name}${timee}.kmz"
+		kml="${grid}.${name}${timee}.kml"
+	else
+		zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+		kml="${name}${timee}.kml"
+	fi
 	
 	if [[ -f "$zip" ]]
 	then
@@ -155,9 +188,10 @@ function plot {
 	echo "interval=$4"
 	echo "zip=$zip"
 	echo "kml=$kml"
+	echo "grid=$grid"
 	nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg -i $interval -s $name -k $kml -z "$zip"
 	
-	appendkml $name $timee $incr
+	appendkml $name $timee $incr $grid
 	
 }
 
@@ -181,9 +215,16 @@ function windplot {
 	interval=$6
 	timee=$7
 	incr=$8
+	grid=$9
 	
-	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
-	kml="${name}${timee}.kml"
+	if [[ "$grid" != "" ]]
+	then
+		zip="${wwwdisk}/${run}/${grid}.${name}${timee}.kmz"
+		kml="${grid}.${name}${timee}.kml"
+	else
+		zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+		kml="${name}${timee}.kml"
+	fi
 	
 	if [[ -f "$zip" ]]
 	then
@@ -192,8 +233,53 @@ function windplot {
 	
 	nice -n 10 grib_contour -w -u "${ufile}" -v "${ufile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
 	
-	appendkml $name $timee $incr
+	appendkml $name $timee $incr $grid
+	
+}
 
-
+function andplot {
+	ufile=$1
+	vfile=$2
+	name="$3"
+	umsg=$4
+	vmsg=$5
+	interval=$6
+	timee=$7
+	incr=$8
+	grid=$9
+	
+	if [[ "$grid" != "" ]]
+	then
+		zip="${wwwdisk}/${run}/${grid}.${name}${timee}.kmz"
+		kml="${grid}.${name}${timee}.kml"
+	else
+		zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+		kml="${name}${timee}.kml"
+	fi
+	
+	if [[ -f "$zip" ]]
+	then
+		rm "$zip"
+	fi
+	
+	nice -n 10 grib_contour -a -u "${ufile}" -v "${ufile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
+	
+	appendkml $name $timee $incr $grid
+	
 }
  
+
+################################################################################
+#	function to fetch the grib file
+#
+#	args:
+#					$1	the site and path
+#					$2	the filename
+################################################################################
+
+function getgrib {
+	dir=$1
+	file=$2
+	
+	wget "${dir}${file}" -O "${tmp}/${file}"
+}
