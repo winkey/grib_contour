@@ -42,7 +42,7 @@ void get_options(
 {
 	int opt;
 	
-	while (0 < (opt = getopt(argc, argv, "awg:u:v:U:V:m:i:s:k:t:z:h"))) {
+	while (0 < (opt = getopt(argc, argv, "awg:u:v:U:V:m:i:s:k:t:z:h?"))) {
 		
 		switch (opt) {
 			case 'w':
@@ -54,17 +54,17 @@ void get_options(
 				break;
 			
 			case 'g':
-				if (!o->wind)
+				if (!o->wind && !o->and)
 					o->gribfile = optarg;
 				break;
 			
 			case 'u':
-				if (o->wind)
+				if (o->wind || o->and)
 					o->ugribfile = optarg;
 				break;
 			
 			case 'v':
-				if (o->wind)
+				if (o->wind || o->and)
 					o->vgribfile = optarg;
 				break;
 			
@@ -129,7 +129,7 @@ void get_options(
 	}
 		
 	
-	if (!o->wind && (!o->gribfile || !o->interval || !o->scalename ||
+	if (!o->wind && !o->and && (!o->gribfile || !o->interval || !o->scalename ||
 									(!o->kmlfile && !o->tiffile))) {
 		fprintf(stderr,
 						"USAGE: %s <-g grib file> <-m grib msg> <-i interval> <-s color scale>\n"

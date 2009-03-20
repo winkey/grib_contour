@@ -15,7 +15,7 @@
 source /usr/local/bin/generic2.sh
 
 wwwdisk="/home/rush/public_html/weather/kml/ww"
-www="http://winkey.org/weather/kml/ww"
+www="http://atmos.ucsd.edu//kml/ww"
 
 path="$1"
 run="$3"
@@ -49,11 +49,6 @@ then
 	if [[ "$hour" == "00" ]]
 	then
 		mkrootkml "hghtww"
-		if [[ -h "${wwwdisk}/latest" ]]
-		then
-			rm -f "${wwwdisk}/latest"
-		fi
-		ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
 	fi
 	
 	plot "$path" "hghtww" 1 .5 $hour $period

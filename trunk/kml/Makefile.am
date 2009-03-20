@@ -35,93 +35,84 @@ www_DATA = \
 	ecmwf-latest.kml
 
 EXTRA_DIST = \
-	forecaster.kml.in \
-	forecaster-latest.kml.in \
-	gfs.kml.in \
-	gfs-latest.kml.in \
-	nam_conus.kml.in \
-	nam_conus-latest.kml.in \
-	ruc2.kml.in \
-	ruc2-latest.kml.in \
-	nam_ak.kml.in \
-	nam_ak-latest.kml.in \
-	nam_east.kml.in \
-	nam_east-latest.kml.in \
-	nam_hi.kml.in \
-	nam_hi-latest.kml.in \
-	nam_pr.kml.in \
-	nam_pr-latest.kml.in \
-	nam_west.kml.in \
-	nam_west-latest.kml.in \
 	master.kml.in \
 	latest.kml.in \
 	rtma_conus.kml.in \
 	rtma_conus-latest.kml.in \
 	rtma_ak.kml.in \
 	rtma_ak-latest.kml.in \
-	sst.kml.in \
-	windwave.kml.in \
-	windwave-latest.kml.in \
 	ecmwf.kml.in \
 	ecmwf-latest.kml.in
 	
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
 							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
 							 -e 's,[@]www[@],$(www),g'
-     
-forecaster.kml: forecaster.kml.in Makefile
-	$(do_subst) < $(srcdir)/forecaster.kml.in > forecaster.kml
 
-forecaster-latest.kml: forecaster-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/forecaster-latest.kml.in > forecaster-latest.kml
-
-gfs.kml: gfs.kml.in Makefile
-	$(do_subst) < $(srcdir)/gfs.kml.in > gfs.kml
-
-gfs-latest.kml: gfs-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/gfs-latest.kml.in > gfs-latest.kml
-
-nam_conus.kml: nam_conus.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_conus.kml.in > nam_conus.kml
-
-nam_conus-latest.kml: nam_conus-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_conus-latest.kml.in > nam_conus-latest.kml
-
-ruc2.kml: ruc2.kml.in Makefile
-	$(do_subst) < $(srcdir)/ruc2.kml.in > ruc2.kml
-
-ruc2-latest.kml: ruc2-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/ruc2-latest.kml.in > ruc2-latest.kml
-
-nam_ak.kml: nam_ak.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_ak.kml.in > nam_ak.kml
+gfs.kml: ../scripts/mkkml.sh ../share/gfs.config.sh Makefile
+	../scripts/mkkml.sh ../share/gfs.config.sh
 	
-nam_ak-latest.kml: nam_ak-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_ak-latest.kml.in > nam_ak-latest.kml
+gfs-latest.kml: ../scripts/mkkml-latest.sh ../share/gfs.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/gfs.config.sh
 	
-nam_east.kml: nam_east.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_east.kml.in > nam_east.kml
+nam_conus.kml: ../scripts/mkkml.sh ../share/nam_conus.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_conus.config.sh
 
-nam_east-latest.kml: nam_east-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_east-latest.kml.in > nam_east-latest.kml
+nam_conus-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_conus.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_conus.config.sh
 
-nam_hi.kml: nam_hi.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_hi.kml.in > nam_hi.kml
+nam_ak.kml: ../scripts/mkkml.sh ../share/nam_ak.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_ak.config.sh
 
-nam_hi-latest.kml: nam_hi-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_hi-latest.kml.in > nam_hi-latest.kml
+nam_ak-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_ak.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_ak.config.sh
 
-nam_pr.kml: nam_pr.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_pr.kml.in > nam_pr.kml
+nam_east.kml: ../scripts/mkkml.sh ../share/nam_east.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_east.config.sh
 
-nam_pr-latest.kml: nam_pr-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_pr-latest.kml.in > nam_pr-latest.kml
+nam_east-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_east.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_east.config.sh
 
-nam_west.kml: nam_west.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_west.kml.in > nam_west.kml
+nam_hi.kml: ../scripts/mkkml.sh ../share/nam_hi.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_hi.config.sh
 
-nam_west-latest.kml: nam_west-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/nam_west-latest.kml.in > nam_west-latest.kml
+nam_hi-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_hi.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_hi.config.sh
+
+nam_pr.kml: ../scripts/mkkml.sh ../share/nam_pr.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_pr.config.sh
+
+nam_pr-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_pr.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_pr.config.sh
+
+nam_west.kml: ../scripts/mkkml.sh ../share/nam_west.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_west.config.sh
+
+nam_west-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_west.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_west.config.sh
+
+ruc2.kml: ../scripts/mkkml.sh ../share/ruc2.config.sh Makefile
+	../scripts/mkkml.sh ../share/ruc2.config.sh
+	
+ruc2-latest.kml: ../scripts/mkkml-latest.sh ../share/ruc2.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/ruc2.config.sh
+
+forecaster.kml: ../scripts/mkkml_nolevel.sh ../share/forecaster.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/forecaster.config.sh
+	
+forecaster-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/forecaster.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/forecaster.config.sh
+
+sst.kml: ../scripts/mkkml_nolevel.sh ../share/sst.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/sst.config.sh
+	
+sst-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/sst.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/sst.config.sh
+
+windwave.kml: ../scripts/mkkml_nolevel.sh ../share/windwave.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/windwave.config.sh
+	
+windwave-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/windwave.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/windwave.config.sh
 
 master.kml: master.kml.in Makefile
 	$(do_subst) < $(srcdir)/master.kml.in > master.kml
@@ -140,15 +131,6 @@ rtma_ak.kml: rtma_ak.kml.in Makefile
 
 rtma_ak-latest.kml: rtma_ak-latest.kml.in Makefile
 	$(do_subst) < $(srcdir)/rtma_ak-latest.kml.in > rtma_ak-latest.kml
-
-sst.kml: sst.kml.in Makefile
-	$(do_subst) < $(srcdir)/sst.kml.in > sst.kml
-
-windwave.kml: windwave.kml.in Makefile
-	$(do_subst) < $(srcdir)/windwave.kml.in > windwave.kml
-
-windwave-latest.kml: windwave-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/windwave-latest.kml.in > windwave-latest.kml
 
 ecmwf.kml: ecmwf.kml.in Makefile
 	$(do_subst) < $(srcdir)/ecmwf.kml.in > ecmwf.kml

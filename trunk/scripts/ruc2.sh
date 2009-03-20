@@ -16,7 +16,7 @@
 source /usr/local/bin/generic2.sh
 
 wwwdisk="/home/rush/public_html/weather/kml/ruc2"
-www="http://winkey.org/weather/kml/ruc2"
+www="http://atmos.ucsd.edu//kml/ruc2"
 
 #CONDUIT	^data/nccf/com/(ruc/prod/ruc2a.[0-9]*)/ruc2.t([0-9][0-9])z.pgrb20[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
 #	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
@@ -120,7 +120,7 @@ then
 	fi
 	
 	plot "$path" "pwat" 1 4 $hour 01
-	rm "$path"rjhstorm
+	rm "$path"
 fi
 
 #### plot percip #####
@@ -143,11 +143,6 @@ then
 	if [[ "$hour" == "00" ]]
 	then
 		mkrootkml "pmsl"
-		if [[ ! -h "${wwwdisk}/latest" ]]
-		then
-			rm -f "${wwwdisk}/latest"
-		fi
-		ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
 	fi
 	
 	plot "$path" "pmsl" 1 200 $hour 01

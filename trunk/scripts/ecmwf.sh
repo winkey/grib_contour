@@ -16,7 +16,7 @@
 source /usr/local/bin/generic2.sh
 
 wwwdisk="/home/rush/public_html/weather/kml/ecmwf"
-www="http://winkey.org/weather/kml/ecmwf"
+www="http://atmos.ucsd.edu//kml/ecmwf"
 
 
 

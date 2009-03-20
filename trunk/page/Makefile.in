@@ -13,6 +13,7 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -40,6 +41,15 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 SOURCES =
 DIST_SOURCES =
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
+am__installdirs = "$(DESTDIR)$(wwwdir)"
+wwwDATA_INSTALL = $(INSTALL_DATA)
+DATA = $(www_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -130,6 +140,36 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+www = @WWW@
+wwwdisk = @WWWDISK@
+wwwdir = ${wwwdisk}/kml/page
+EXTRA_DIST = \
+	generic.css.in
+
+www_DATA = \
+	gfs.php \
+	nam_conus.php \
+	nam_ak.php \
+	nam_east.php \
+	nam_hi.php \
+	nam_pr.php \
+	nam_west.php \
+	ruc2.php \
+	forecaster.php \
+	sst.php \
+	windwave.php \
+	gfs.css \
+	nam_conus.css \
+	nam_ak.css \
+	nam_east.css \
+	nam_hi.css \
+	nam_pr.css \
+	nam_west.css \
+	ruc2.css \
+	forecaster.css \
+	sst.css \
+	windwave.css
+
 all: all-am
 
 .SUFFIXES:
@@ -162,6 +202,23 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+install-wwwDATA: $(www_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(wwwdir)" || $(MKDIR_P) "$(DESTDIR)$(wwwdir)"
+	@list='$(www_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(wwwDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(wwwdir)/$$f'"; \
+	  $(wwwDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(wwwdir)/$$f"; \
+	done
+
+uninstall-wwwDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(www_DATA)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(wwwdir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(wwwdir)/$$f"; \
+	done
 tags: TAGS
 TAGS:
 
@@ -197,8 +254,11 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile
+all-am: Makefile $(DATA)
 installdirs:
+	for dir in "$(DESTDIR)$(wwwdir)"; do \
+	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -241,7 +301,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-wwwDATA
 
 install-dvi: install-dvi-am
 
@@ -275,7 +335,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am:
+uninstall-am: uninstall-wwwDATA
 
 .MAKE: install-am install-strip
 
@@ -285,10 +345,47 @@ uninstall-am:
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
 	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic pdf pdf-am ps ps-am uninstall uninstall-am
+	install-strip install-wwwDATA installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
+	uninstall-am uninstall-wwwDATA
 
+
+gfs.php: ../scripts/mkpage.sh ../share/gfs.config.sh Makefile
+	../scripts/mkpage.sh ../share/gfs.config.sh
+
+nam_conus.php: ../scripts/mkpage.sh ../share/nam_conus.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_conus.config.sh
+
+nam_ak.php: ../scripts/mkpage.sh ../share/nam_ak.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_ak.config.sh
+
+nam_east.php: ../scripts/mkpage.sh ../share/nam_east.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_east.config.sh
+
+nam_hi.php: ../scripts/mkpage.sh ../share/nam_hi.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_hi.config.sh
+
+nam_pr.php: ../scripts/mkpage.sh ../share/nam_pr.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_pr.config.sh
+
+nam_west.php: ../scripts/mkpage.sh ../share/nam_west.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_west.config.sh
+
+ruc2.php: ../scripts/mkpage.sh ../share/ruc2.config.sh Makefile
+	../scripts/mkpage.sh ../share/ruc2.config.sh
+
+forecaster.php: ../scripts/mkpage_nolevel.sh ../share/forecaster.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/forecaster.config.sh
+
+sst.php: ../scripts/mkpage_nolevel.sh ../share/sst.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/sst.config.sh
+
+windwave.php: ../scripts/mkpage_nolevel.sh ../share/windwave.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/windwave.config.sh
+
+%.css: generic.css.in
+	cat generic.css.in > $@
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

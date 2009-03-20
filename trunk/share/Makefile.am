@@ -42,7 +42,17 @@ dist_pkgdata_DATA = \
 	pop.scale \
 	popf.scale \
 	popz.scale \
-	tstm.scale
-
-## File created by the gnome-build tools
+	tstm.scale \
+	forecaster.config.sh \
+	gfs.config.sh \
+	nam_conus.config.sh \
+	ruc2.config.sh \
+	nam_ak.config.sh \
+	nam_east.config.sh \
+	nam_hi.config.sh \
+	nam_pr.config.sh \
+	nam_west.config.sh \
+	windwave.config.sh \
+	sst.config.sh
+	
 

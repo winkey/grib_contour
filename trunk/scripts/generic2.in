@@ -71,6 +71,16 @@ function mkrootkml {
 	echo '  <description></description>' >> $frames
 	echo '</Folder>' >> $frames
 	echo '</kml>' >> $frames
+
+	##### check the latest link #####
+	
+	link=$(readlink "${wwwdisk}/latest")
+
+	if [[ "$link" != "$hour" ]]
+	then
+		ln -sf "${wwwdisk}/${run}" "${wwwdisk}/latest"	
+	fi
+
 }
 
 ################################################################################
@@ -100,9 +110,9 @@ function appendkml {
 	
 	if [[ "$grid" != "" ]]
 	then
-		zip="${wwwdisk}/${run}/${grid}.${name}${hr}.kmz"
+		zip="${www}/${run}/${grid}.${name}${hr}.kmz"
 	else
-		zip="${wwwdisk}/${run}/${name}${hr}.kmz"
+		zip="${www}/${run}/${name}${hr}.kmz"
 	fi
 	
 	head -n -2 $frames > $tmpfile
@@ -207,8 +217,8 @@ function plot {
 ################################################################################
 
 function windplot {
-	ufile=$1
-	vfile=$2
+	ufile="$1"
+	vfile="$2"
 	name="$3"
 	umsg=$4
 	vmsg=$5
@@ -231,15 +241,15 @@ function windplot {
 		rm "$zip"
 	fi
 	
-	nice -n 10 grib_contour -w -u "${ufile}" -v "${ufile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
+	nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
 	
 	appendkml $name $timee $incr $grid
 	
 }
 
 function andplot {
-	ufile=$1
-	vfile=$2
+	ufile="$1"
+	vfile="$2"
 	name="$3"
 	umsg=$4
 	vmsg=$5
@@ -262,7 +272,7 @@ function andplot {
 		rm "$zip"
 	fi
 	
-	nice -n 10 grib_contour -a -u "${ufile}" -v "${ufile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
+	nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
 	
 	appendkml $name $timee $incr $grid
 	

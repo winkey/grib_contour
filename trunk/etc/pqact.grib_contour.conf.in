@@ -60,13 +60,13 @@ NGRID	^E[A-Z]{3}88 KWBJ .* !grib2/ncep/11/#231/([0-9]{8})([0-9]{2})00F([0-9]*)/(
 	EXEC	@bindir@/ww.sh data/ngrid/ww/231/\1.\2.\3.\4.grib2 \1 \2 \3 \4
 
 
-HDS ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/([0-9]*).mb
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/([0-9]*).mb
 	FILE	data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib
-HDS ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/([0-9]*).mb
-	EXEC	@bindir@/ww.sh data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib \1 \2 \3 \4 \5 \6
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/([0-9]*).mb
+	EXEC	@bindir@/ecmwf.sh data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib \1 \2 \3 \4 \5 \6
 	
-HDS ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
 	FILE	data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib
-HDS ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
-	EXEC	@bindir@/ww.sh data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
+	EXEC	@bindir@/ecmwf.sh data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
 

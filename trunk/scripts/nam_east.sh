@@ -18,9 +18,9 @@ source /usr/local/bin/generic.sh
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/nam/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/nam/prod/"
 wwwdisk="/home/rush/public_html/weather/kml/nam_east"
-www="http://winkey.org/weather/kml/nam_east/"
+www="http://atmos.ucsd.edu//kml/nam_east/"
 
-times=`seq 0 3 48`
+times=`seq -f "%02g" 0 1 48`
 
 if [[ ! -d "${wwwdisk}/${run}" ]]
 then
@@ -32,45 +32,53 @@ function doplot {
 	run=$2
 	timee=$3
 	
-	gribfile="eastarw.t${run}z.awpreg${timee}.tm00.grib2"
+	gribfile="eastnmm.t${run}z.awpreg${timee}.tm00.grib2"
 	
 	if ! getgrib "${servb}hiresw.${datee}/" "$gribfile"
 	then
 		return
 	fi
 	
-	plot $gribfile 925hgt 88 20 $timee&
-	plot $gribfile 925t 89 1 $timee&
-	plot $gribfile 925rh 87 5 $timee&
-	windplot $gribfile 925wind 91 10 $timee&
+	plot $gribfile 925hgt 104 20 $timee&
+	plot $gribfile 925t 105 1 $timee&
+	plot $gribfile 925rh 103 5 $timee&
+	windplot $gribfile $gribfile 925wind 107 108 5 $timee&
 	wait
 	
-	plot $gribfile 850hgt 83 20 $timee&
-	plot $gribfile 850t 84 1 $timee&
-	plot $gribfile 850rh 82 5 $timee&
-	windplot $gribfile 850wind 86 10 $timee&
+	plot $gribfile 850hgt 98 20 $timee&
+	plot $gribfile 850t 99 1 $timee&
+	plot $gribfile 850rh 97 5 $timee&
+	windplot $gribfile $gribfile 850wind 101 102 5 $timee&
 	wait
 
-	plot $gribfile 700hgt 78 20 $timee&
-	plot $gribfile 700t 79 1 $timee&
-	plot $gribfile 700rh 77 5 $timee&
-	windplot $gribfile 700wind 81 10 $timee&
+	plot $gribfile 700hgt 92 20 $timee&
+	plot $gribfile 700t 93 1 $timee&
+	plot $gribfile 700rh 91 5 $timee&
+	windplot $gribfile $gribfile 700wind 95 96 5 $timee&
 	wait
 
-	plot $gribfile 500hgt 73 20 $timee&
-	plot $gribfile 500t 74 1 $timee&
-	plot $gribfile 500rh 72 5 $timee&
-	windplot $gribfile 500wind 76 10 $timee&
+	plot $gribfile 500hgt 86 20 $timee&
+	plot $gribfile 500t 87 1 $timee&
+	plot $gribfile 500rh 85 5 $timee&
+	windplot $gribfile $gribfile 500wind 89.0 90.0 10 $timee&
 	wait
 
-	plot $gribfile 300hgt 63 20 $timee&
-	plot $gribfile 300t 64 1 $timee&
-	plot $gribfile 300rh 62 5 $timee&
-	windplot $gribfile 300wind 66 10 $timee&
+	plot $gribfile 300hgt 74 20 $timee&
+	plot $gribfile 300t 75 1 $timee&
+	plot $gribfile 300rh 73 5 $timee&
+	windplot $gribfile $gribfile 300wind 77.0 78.0 10 $timee&
 	wait
 	
-	plot $gribfile pwat 19 2 $timee&
-	plot $gribfile cape 17 200 $timee&
+	plot $gribfile pwat 18 2 $timee&
+	plot $gribfile cape 20 200 $timee&
+  plot $gribfile pmsl 2 200 $timee&
+  plot $gribfile pcp 12 4 $timee&
+	wait
+	
+	andplot $gribfile "$path" "snow" 12 14 4 $timee&
+	andplot $gribfile "$path" "frez" 12 16 4 $timee&
+	andplot $gribfile "$path" "rain" 12 17 4 $timee&
+	andplot $gribfile "$path" "pellet" 12 15 $timee&
 	wait
 	
 	#cleanup
@@ -117,11 +125,6 @@ mkrootkml cape
 
 for i in $times
 do
-	if [[ "$i" == "0" || "$i" == "3" || "$i" == "6" || "$i" == "9" ]]
-	then
-		i="0$i"
-	fi
-	
 	time doplot $datee $run $i
 done
 
