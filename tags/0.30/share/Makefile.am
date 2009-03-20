@@ -1,0 +1,155 @@
+
+www = @WWW@
+wwwdisk = @WWWDISK@
+
+pkgdata_DATA = \
+	1000hgt.scale \
+	200hgt.scale \
+	925thk.scale \
+	850thk.scale \
+	700thk.scale \
+	500thk.scale \
+	300thk.scale \
+	200thk.scale \
+	1000rh.scale \
+	925rh.scale \
+	850rh.scale \
+	700rh.scale \
+	500rh.scale \
+	300rh.scale \
+	200rh.scale \
+	rain.scale \
+	snow.scale \
+	frez.scale \
+	pellet.scale \
+	pwat.scale \
+	pop.scale \
+	popf.scale \
+	popz.scale \
+	tstm.scale \
+	300wind.scale \
+	500wind.scale \
+	850wind.scale \
+	925wind.scale \
+	1000wind.scale \
+	200t.scale \
+	925t.scale \
+	1000t.scale
+	
+dist_pkgdata_DATA = \
+	cape.scale \
+	700t.scale \
+	300t.scale \
+	500t.scale \
+	850t.scale \
+	925hgt.scale \
+	850hgt.scale \
+	700hgt.scale \
+	500hgt.scale \
+	300hgt.scale \
+	200wind.scale \
+	700wind.scale \
+	pmsl.scale \
+	pcp.scale \
+	prob.scale \
+	t.scale \
+	dp.scale \
+	sst.scale \
+	wind.scale \
+	rh.scale \
+	hghtww.scale \
+	perdww.scale \
+	htsgw.scale \
+	forecaster.config.sh \
+	gfs.config.sh \
+	nam_conus.config.sh \
+	ruc2.config.sh \
+	nam_ak.config.sh \
+	nam_east.config.sh \
+	nam_hi.config.sh \
+	nam_pr.config.sh \
+	nam_west.config.sh \
+	windwave.config.sh \
+	nogaps.config.sh \
+	ecmwf.config.sh \
+	ukmet.config.sh \
+	sst.config.sh
+
+1000hgt.scale: 925hgt.scale Makefile
+	cp $(srcdir)/925hgt.scale $(srcdir)/1000hgt.scale
+
+200hgt.scale: 300hgt.scale Makefile
+	cp $(srcdir)/300hgt.scale $(srcdir)/200hgt.scale
+
+200thk.scale: 300hgt.scale Makefile
+	cp $(srcdir)/300hgt.scale $(srcdir)/200thk.scale
+
+300thk.scale: 300hgt.scale Makefile
+	cp $(srcdir)/300hgt.scale $(srcdir)/300thk.scale
+
+500thk.scale: 500hgt.scale Makefile
+	cp $(srcdir)/500hgt.scale $(srcdir)/500thk.scale
+
+700thk.scale: 700hgt.scale Makefile
+	cp $(srcdir)/700hgt.scale $(srcdir)/700thk.scale
+
+850thk.scale: 850hgt.scale Makefile
+	cp $(srcdir)/850hgt.scale $(srcdir)/850thk.scale
+
+925thk.scale: 925hgt.scale Makefile
+	cp $(srcdir)/925hgt.scale $(srcdir)/925thk.scale
+
+%rh.scale: rh.scale Makefile
+	cat rh.scale > $@
+
+rain.scale: pcp.scale Makefile
+	cp $(srcdir)/pcp.scale $(srcdir)/rain.scale
+
+snow.scale: pcp.scale Makefile
+	cp $(srcdir)/pcp.scale $(srcdir)/snow.scale
+
+frez.scale: pcp.scale Makefile
+	cp $(srcdir)/pcp.scale $(srcdir)/frez.scale
+
+pellet.scale: pcp.scale Makefile
+	cp $(srcdir)/pcp.scale $(srcdir)/pellet.scale
+
+pwat.scale: pcp.scale Makefile
+	cp $(srcdir)/pcp.scale $(srcdir)/pwat.scale
+
+pop.scale: prob.scale Makefile
+	cp $(srcdir)/prob.scale $(srcdir)/pop.scale
+
+popf.scale: prob.scale Makefile
+	cp $(srcdir)/prob.scale $(srcdir)/popf.scale
+
+popz.scale: prob.scale Makefile
+	cp $(srcdir)/prob.scale $(srcdir)/popz.scale
+
+tstm.scale: prob.scale Makefile
+	cp $(srcdir)/prob.scale $(srcdir)/tstm.scale
+
+300wind.scale: 200wind.scale Makefile
+	cp $(srcdir)/200wind.scale $(srcdir)/300wind.scale
+
+500wind.scale: 200wind.scale Makefile
+	cp $(srcdir)/200wind.scale $(srcdir)/500wind.scale
+
+850wind.scale: 700wind.scale Makefile
+	cp $(srcdir)/700wind.scale $(srcdir)/850wind.scale
+
+925wind.scale: 700wind.scale Makefile
+	cp $(srcdir)/700wind.scale $(srcdir)/925wind.scale
+
+1000wind.scale: 700wind.scale Makefile
+	cp $(srcdir)/700wind.scale $(srcdir)/1000wind.scale
+
+200t.scale: 300t.scale Makefile
+	cp $(srcdir)/300t.scale $(srcdir)/200t.scale
+
+925t.scale: t.scale Makefile
+	cp $(srcdir)/t.scale $(srcdir)/925t.scale
+
+1000t.scale: t.scale Makefile
+	cp $(srcdir)/t.scale $(srcdir)/1000t.scale
+
