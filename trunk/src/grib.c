@@ -249,6 +249,7 @@ float *do_grib(
 {
 	FILE *fp = NULL;
 	float *raster;
+	int i;
 	
   /***** open the grib file *****/
   
@@ -264,6 +265,12 @@ float *do_grib(
   
   raster = grib_read(fp, gds);
   
+	/***** correct the data if specified *****/
+	
+	if (o->datacorrection != 0.0)
+		for (i = 0; i < gds->Npoints ; i++)
+			raster[i] += o->datacorrection;
+	
 	/***** close the grib file *****/
 	
 	pclose(fp);
@@ -423,7 +430,6 @@ float *do_diff_grib(
 			raster[i] = gds->missing_value;
 		else {
 			raster[i] = Uraster[i] - Vraster[i];
-		
 		}
 	}
 

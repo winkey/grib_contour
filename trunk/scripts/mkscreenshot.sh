@@ -70,7 +70,10 @@ function shot {
 echo "$levels" | while read lev_n lev_fn
 do
 
-  echo "$products" | while read prod_n prod_fn
+  ##### products #####
+	
+	ref="products$lev_n"
+  echo "${!ref}" | while read prod_n prod_fn
   do
     
     fn="${wd}/${name}_${lev_n}${prod_n}.jpg"

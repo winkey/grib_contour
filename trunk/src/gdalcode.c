@@ -245,7 +245,9 @@ OGRSpatialReferenceH set_projection(
 			
 			else {
 				MinY = MIN(gds->Lat2, gds->Lat1);
-				MinX = MIN(gds->Lon2, gds->Lon1);
+				//MinX = MIN(gds->Lon2, gds->Lon1);
+				//MinY = gds->Lat1;
+				MinX = gds->Lon1;
 			}
 			break;
 		

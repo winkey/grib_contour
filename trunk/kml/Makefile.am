@@ -34,7 +34,9 @@ www_DATA = \
 	nogaps.kml \
 	nogaps-latest.kml \
 	ecmwf.kml \
-	ecmwf-latest.kml
+	ecmwf-latest.kml \
+	ukmet.kml \
+	ukmet-latest.kml
 
 EXTRA_DIST = \
 	master.kml.in \
@@ -125,6 +127,12 @@ ecmwf.kml: ../scripts/mkkml.sh ../share/ecmwf.config.sh Makefile
 	
 ecmwf-latest.kml: ../scripts/mkkml-latest.sh ../share/ecmwf.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/ecmwf.config.sh
+
+ukmet.kml: ../scripts/mkkml.sh ../share/ukmet.config.sh Makefile
+	../scripts/mkkml.sh ../share/ukmet.config.sh
+	
+ukmet-latest.kml: ../scripts/mkkml-latest.sh ../share/ukmet.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/ukmet.config.sh
 
 master.kml: master.kml.in Makefile
 	$(do_subst) < $(srcdir)/master.kml.in > master.kml

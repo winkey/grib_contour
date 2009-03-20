@@ -1,3 +1,4 @@
+#!/bin/sh
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -25,12 +26,18 @@ levels="200 200 mb
 700 700 mb
 850 850 mb"
 
-products="wind Wind
-t Temperature (850mb only)
-rh Relative Humidity (850mb and 700mb only)
-hgt Heights (500mb and 700mb only)"
+products200="wind Wind"
 
-levels2="0 0 - none"
+products500="wind Wind
+hgt Heights"
+
+products700="wind Wind
+rh Relative Humidity
+hgt Heights"
+
+products850="wind Wind
+t Temperature
+rh Relative Humidity"
 
 products2="pmsl Mean Sea Level Pressure"
 
@@ -40,7 +47,8 @@ times="00 00Z
 screenshots=$(
   echo "$levels" | while read lev_n lev_fn
   do
-    echo "$products" | while read prod_n prod_fn
+		ref="products$lev_n"
+    echo "${!ref}" | while read prod_n prod_fn
     do
       echo ${name}_${lev_n}${prod_n}.jpg
     done
@@ -57,7 +65,8 @@ screenshots=$(
 thumbs=$(
   echo "$levels" | while read lev_n lev_fn
   do
-    echo "$products" | while read prod_n prod_fn
+		ref="products$lev_n"
+    echo "${!ref}" | while read prod_n prod_fn
     do
       echo ${name}_${lev_n}${prod_n}.png
     done

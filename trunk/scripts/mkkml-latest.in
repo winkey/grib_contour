@@ -43,7 +43,8 @@ EOF
   
   ##### products #####
 
-  echo "$products" | while read prod_n prod_fn
+	ref="products$lev_n"
+  echo "${!ref}" | while read prod_n prod_fn
   do
 
 cat >> "$outfile" <<EOF

@@ -34,6 +34,7 @@ typedef struct {
 	int english;
 	char *scalename;
 	float scalecorrection;
+	float datacorrection;
 	char *kmlfile;
 	char *kmzfile;
 	char *tiffile;

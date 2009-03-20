@@ -43,7 +43,8 @@ EOF
   
   ##### products #####
 
-  echo "$products" | while read prod_n prod_fn
+	ref="products$lev_n"
+  echo "${!ref}" | while read prod_n prod_fn
   do
 
 cat >> "$outfile" <<EOF
@@ -73,7 +74,7 @@ cat >> "$outfile" <<EOF
         <visibility>0</visibility>
         <open>0</open>
         <Link>
-          <href>http://atmos.ucsd.edu/kml/${name}/${time_n}/${lev_n}${prod_n}.kml</href>
+          <href>/home/rush/public_html/weather/kml/${name}/${time_n}/${lev_n}${prod_n}.kml</href>
         </Link>
       </NetworkLink>
 EOF
@@ -130,7 +131,7 @@ cat >> "$outfile" <<EOF
         <visibility>0</visibility>
         <open>0</open>
         <Link>
-          <href>http://atmos.ucsd.edu/kml/${name}/${time_n}/${prod_n}.kml</href>
+          <href>/home/rush/public_html/weather/kml/${name}/${time_n}/${prod_n}.kml</href>
         </Link>
       </NetworkLink>
 EOF

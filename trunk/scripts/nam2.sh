@@ -16,7 +16,7 @@
 source /usr/local/bin/generic2.sh
 
 wwwdisk="/home/rush/public_html/weather/kml/nam_conus"
-www="http://atmos.ucsd.edu/kml/nam_conus"
+www="/home/rush/public_html/weather/kml/nam_conus"
 
 
 path="$1"

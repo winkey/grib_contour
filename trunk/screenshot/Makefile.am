@@ -17,7 +17,7 @@ $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$th
 $(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/ecmwf.config.sh ;     echo "$$screenshots" ; echo "$$thumbs")
+$(shell source ../share/ecmwf.config.sh ;      echo "$$screenshots" ; echo "$$thumbs")
 
 www_DATA := \
 $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
@@ -30,7 +30,9 @@ $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$th
 $(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/ecmwf.config.sh ;     echo "$$screenshots" ; echo "$$thumbs")
+$(shell source ../share/ecmwf.config.sh ;      echo "$$screenshots" ; echo "$$thumbs")
+
+MAINTAINERCLEANFILES = $(EXTRA_DIST)
 
 gfs_%.jpg: ../scripts/mkscreenshot.sh
 	@echo $(www_DATA)

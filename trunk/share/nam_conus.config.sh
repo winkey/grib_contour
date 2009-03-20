@@ -26,7 +26,27 @@ levels="300 300 mb
 850 850 mb
 925 925 mb"
 
-products="wind Wind
+products300="wind Wind
+t Temperature
+rh Relative Humidity
+hgt Heights"
+
+products500="wind Wind
+t Temperature
+rh Relative Humidity
+hgt Heights"
+
+products700="wind Wind
+t Temperature
+rh Relative Humidity
+hgt Heights"
+
+products850="wind Wind
+t Temperature
+rh Relative Humidity
+hgt Heights"
+
+products925="wind Wind
 t Temperature
 rh Relative Humidity
 hgt Heights"
@@ -54,7 +74,8 @@ times="00 00Z
 screenshots=$(
   echo "$levels" | while read lev_n lev_fn
   do
-    echo "$products" | while read prod_n prod_fn
+		ref="products$lev_n"
+    echo "${!ref}" | while read prod_n prod_fn
     do
       echo ${name}_${lev_n}${prod_n}.jpg
     done
@@ -71,7 +92,8 @@ screenshots=$(
 thumbs=$(
   echo "$levels" | while read lev_n lev_fn
   do
-    echo "$products" | while read prod_n prod_fn
+		ref="products$lev_n"
+    echo "${!ref}" | while read prod_n prod_fn
     do
       echo ${name}_${lev_n}${prod_n}.png
     done
