@@ -35,7 +35,11 @@ levels2="0 0 - none"
 
 products2="pwat Perceptible Water
 pmsl Mean Sea Level Pressure
-pcp Precipitation Rate
+pcp 6 Hour Total Precipitation
+rain 6 Hour Total Rain Precipitation
+snow 6 Hour Total Snow Precipitation
+frez 6 Hour Total Freezing Precipitation
+pellet 6 Hour Total Pellet Precipitation
 cape Convective Available Potential Energy"
 
 times="00 00Z

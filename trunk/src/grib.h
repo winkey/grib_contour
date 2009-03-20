@@ -37,6 +37,8 @@ typedef struct {
 	char radius_units[21];
 	int Nx;
 	int Ny;
+	float xDir;
+	float yDir;
 	float Lat1;
 	float Lon1;
 	float Lat2;
@@ -106,14 +108,24 @@ float *grib_read(
 
 float *do_grib(
 	options *o,
+	char *gribfile,
+	float gribmsg,
 	gds_t *gds);
 
 float *do_wind_grib(
 	options *o,
+	char *ugribfile,
+	char *vgribfile,
+	float ugribmsg,
+	float vgribmsg,
 	gds_t *gds);
 
 float *do_and_grib(
 	options *o,
+	char *ugribfile,
+	char *vgribfile,
+	float ugribmsg,
+	float vgribmsg,
 	gds_t *gds);
 
 

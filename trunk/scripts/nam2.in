@@ -150,7 +150,7 @@ then
 		mkrootkml "pwat"
 	fi
 	
-	plot "$path" "pwat" 1 4 $hour 03
+	plot "$path" "pwat" 1 4 $hour 03 "-I"
 	
 	rm "$path"
 fi
@@ -164,7 +164,7 @@ then
 		mkrootkml "pcp"
 	fi
 	
-	plot "$path" "pcp" 1 4 $hour 03
+	plot "$path" "pcp" 1 4 $hour 03 "-I"
 	
 	## WXTS ##
 	
@@ -177,7 +177,7 @@ then
 			mkrootkml "snow"
 		fi
 		
-		andplot "$path" "$spath" "snow" 1.0 1.0 4 $hour 03
+		andplot "$path" "$spath" "snow" 1.0 1.0 4 $hour 03 "-I"
 		
 		rm "$spath"
 	fi
@@ -193,7 +193,7 @@ then
 			mkrootkml "frez"
 		fi
 		
-		andplot "$path" "$zpath" "frez" 1.0 1.0 4 $hour 03
+		andplot "$path" "$zpath" "frez" 1.0 1.0 4 $hour 03 "-I"
 		
 		rm "$zpath"
 	fi
@@ -209,7 +209,7 @@ then
 			mkrootkml "rain"
 		fi
 		
-		andplot "$path" "$rpath" "rain" 1.0 1.0 4 $hour 03
+		andplot "$path" "$rpath" "rain" 1.0 1.0 4 $hour 03 "-I"
 		
 		rm "$rpath"
 	fi
@@ -225,7 +225,7 @@ then
 			mkrootkml "pellet"
 		fi
 		
-		andplot "$path" "$ppath" "pellet" 1.0 1.0 4 $hour 03
+		andplot "$path" "$ppath" "pellet" 1.0 1.0 4 $hour 03 "-I"
 		
 		rm "$ppath"
 	fi
@@ -244,7 +244,7 @@ then
 			mkrootkml "snow"
 		fi
 		
-		andplot "$ppath" "$path" "snow" 1.0 1.0 4 $hour 03
+		andplot "$ppath" "$path" "snow" 1.0 1.0 4 $hour 03 "-I"
 		
 		rm "$path"
 	fi
@@ -264,7 +264,7 @@ then
 			mkrootkml "frez"
 		fi
 		
-		andplot "$ppath" "$path" "frez" 1.0 1.0 4 $hour 03
+		andplot "$ppath" "$path" "frez" 1.0 1.0 4 $hour 03 "-I"
 		
 		rm "$path"
 	fi
@@ -284,7 +284,7 @@ then
 			mkrootkml "rain"
 		fi
 		
-		andplot "$ppath" "$path" "rain" 1.0 1.0 4 $hour 03
+		andplot "$ppath" "$path" "rain" 1.0 1.0 4 $hour 03 "-I"
 		
 		rm "$path"
 	fi
@@ -303,7 +303,7 @@ then
 			mkrootkml "pellet"
 		fi
 		
-		andplot "$ppath" "$path" "pellet" 1.0 1.0 4 $hour 03
+		andplot "$ppath" "$path" "pellet" 1.0 1.0 4 $hour 03 "-I"
 		
 		rm "$path"
 	fi

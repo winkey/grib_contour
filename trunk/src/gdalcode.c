@@ -103,7 +103,7 @@ void gdal_set_projection(
 	char *wkt;
 	
 	OSRExportToWkt(hSRS, &wkt);
-	if (DEBUG) fprintf (stderr, "%s\n", wkt);
+	//if (DEBUG) fprintf (stderr, "%s\n", wkt);
 	GDALSetProjection(hDS, wkt);
 	
 	free (wkt);
@@ -187,12 +187,39 @@ OGRSpatialReferenceH set_projection(
 		
 		case GDS_LATLON:
 		case GDS_GAUSSIAN_LATLON:
-		  OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
+		  OSRSetWellKnownGeogCS(hSRS, "WGS84");
 			//OSRSetGeogCS(hSRS, "Sphere", NULL, "Sphere", gds->radius * 1000 , 0.0,
 			//						 "Greenwich", 0.0, NULL, 0.0);
 			gdal_set_projection(hDS, hSRS);
 			
-			if ((int)(gds->Lat1 * 100) % 100) {
+			/***** is the pixel size correct? *****/
+			/*
+			if (((gds->Lat1 - gds->Lat2) / gds->Ny) - gds->Dy > .00001 ||
+					((gds->Lat1 - gds->Lat2) / gds->Ny) - gds->Dy < .00001) {
+				if (gds->Lon1 == 180.000000 && gds->Lon2 < 0)
+					gds->Lon1 *= -1;
+				
+				double Lat1 = MIN(gds->Lat1, gds->Lat2);
+				double Lat2 = MAX(gds->Lat1, gds->Lat2);
+				double Lon1 = MIN(gds->Lon1, gds->Lon2);
+				double Lon2 = MAX(gds->Lon1, gds->Lon2);
+				
+				gds->Dy = (Lat2 - Lat1) / gds->Ny;
+				gds->Dx = (Lon2 - Lon1) / gds->Nx;
+				printf("gds->Lat1, %f, gds->Lat2 %f\n", gds->Lat1, gds->Lat2);
+				printf("Lat1, %f, Lat2 %f\n", Lat1, Lat2);
+				printf("gds->Lon1, %f, gds->Lon2 %f\n", gds->Lon1, gds->Lon2);
+				printf("Lon1, %f, Lon2 %f\n", Lat1, Lat2);
+				printf("gds->Dx %f, gds->Dy %f\n", gds->Dx, gds->Dy);
+				
+				
+			}
+			*/
+			/***** is it center of pixel? *****/
+		
+#warning fixme
+			if ((int)(gds->Lat1 * 100) % 100 && 0) {
+				printf("correcting center of p[ixel issue\n");
 				gds->Lat1 += gds->Dy / 2.0;
 				gds->Lon1 -= gds->Dx / 2.0;
 				gds->Lat2 -= gds->Dy / 2.0;
@@ -275,7 +302,10 @@ OGRSpatialReferenceH set_projection(
 		
 	}
 	
-	if (DEBUG) printf("minx=%g miny=%g\n", MinX, MinY);
+	if (DEBUG) {
+		printf("minx=%g miny=%g\n", MinX, MinY);
+		//printf("%s\n", GDALGetProjectionRef(hDS));
+	}
 	
 	/***** cleanup *****/
 	

@@ -108,7 +108,6 @@ void contour2kml(
 	options *o,
 	color_scale *cscales,
 	OGRSpatialReferenceH hSRS,
-	GDALRasterBandH hBand,
 	OGRLayerH hLayer)
 {
 

@@ -120,14 +120,24 @@ size_t grib_gds(
 	}
 	
 	else if (1 == sscanf(line, "Output grid, scan i/x direction | %20[a-zA-Z]", junk)) {
-		if (strcmp(junk, "positive"))
+		if (strcmp(junk, "positive")) {
 			gds->Dx *= -1;
+			gds->xDir = -1;
+		}
+		else 
+			gds->xDir = 1;
+		
 		if (DEBUG) fprintf (stderr, "Dx %f\n", gds->Dx);
 	}
 	
 	else if (1 == sscanf(line, "Output grid, scan j/y direction | %20[a-zA-Z]", junk)) {
-		if (strcmp(junk, "positive"))
+		if (strcmp(junk, "positive")) {
 			gds->Dy *= -1;
+			gds->yDir = -1;
+		}
+		else 
+			gds->yDir = 1;
+		
 		if (DEBUG) fprintf (stderr, "Dy %f\n", gds->Dy);
 	}
 	
@@ -233,6 +243,8 @@ float *grib_read(
 
 float *do_grib(
 	options *o,
+	char *gribfile,
+	float gribmsg,
 	gds_t *gds)
 {
 	FILE *fp = NULL;
@@ -240,7 +252,13 @@ float *do_grib(
 	
   /***** open the grib file *****/
   
-  fp = grib_open(o->gribfile, o->gribmsg, 'm');
+	if (o->english) {
+		fp = grib_open(gribfile, gribmsg, 'e');
+  }
+  else {
+		fp = grib_open(gribfile, gribmsg, 'm');
+  }
+
   
   /***** read the grib raster into memory *****/
   
@@ -255,6 +273,10 @@ float *do_grib(
 
 float *do_wind_grib(
 	options *o,
+	char *ugribfile,
+	char *vgribfile,
+	float ugribmsg,
+	float vgribmsg,
 	gds_t *gds)
 {
 	FILE *Ufp = NULL;
@@ -265,9 +287,15 @@ float *do_wind_grib(
 	int i;
 	
   /***** open the grib file *****/
-  
-  Ufp = grib_open(o->ugribfile, o->ugribmsg, 'e');
-  Vfp = grib_open(o->vgribfile, o->vgribmsg, 'e');
+	
+  if (o->english) {
+		Ufp = grib_open(ugribfile, ugribmsg, 'e');
+		Vfp = grib_open(vgribfile, vgribmsg, 'e');
+	}
+  else {
+		Ufp = grib_open(ugribfile, ugribmsg, 'm');
+		Vfp = grib_open(vgribfile, vgribmsg, 'm');
+	}
   
   /***** read the grib raster into memory *****/
   
@@ -298,6 +326,10 @@ float *do_wind_grib(
 
 float *do_and_grib(
 	options *o,
+	char *ugribfile,
+	char *vgribfile,
+	float ugribmsg,
+	float vgribmsg,
 	gds_t *gds)
 {
 	FILE *Ufp = NULL;
@@ -308,10 +340,16 @@ float *do_and_grib(
 	int i;
 	
   /***** open the grib file *****/
-  
-  Ufp = grib_open(o->ugribfile, o->ugribmsg, 'm');
-  Vfp = grib_open(o->vgribfile, o->vgribmsg, 'm');
-  
+	
+  if (o->english) {
+		Ufp = grib_open(ugribfile, ugribmsg, 'e');
+		Vfp = grib_open(vgribfile, vgribmsg, 'e');
+	}
+  else {
+		Ufp = grib_open(ugribfile, ugribmsg, 'm');
+		Vfp = grib_open(vgribfile, vgribmsg, 'm');
+	}
+		
   /***** read the grib raster into memory *****/
   
   Uraster = grib_read(Ufp, gds);

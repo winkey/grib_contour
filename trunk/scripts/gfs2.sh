@@ -119,21 +119,163 @@ then
 		mkrootkml "pwat"
 	fi
 	
-	plot "$path" "pwat" 1 4 $hour 03
+	plot "$path" "pwat" 1 4 $hour 03 "-I"
 	rm "$path"
 fi
 
-#### plot percip #####
+##### plot percip #####
 
-if [[ "$prod" == "PR03" ]]
+if [[ "$prod" == "P06M" ]]
 then
-	if [[ "$hour" == "03" ]]
+	if [[ "$hour" == "06" ]]
 	then
 		mkrootkml "pcp"
 	fi
 	
-	plot "$path" "pcp" 1 1 $hour 03
-	rm "$path"
+	plot "$path" "pcp" 1 4 $hour 06 "-I"
+	
+	## WXTS ##
+	
+	spath=$(echo "$path" | sed s/P06M/WXTS06/')
+	
+	if [[ -f "$spath" ]]
+	then
+		if [[ "$hour" == "06" ]]
+		then
+			mkrootkml "snow"
+		fi
+		
+		andplot "$path" "$spath" "snow" 1.0 1.0 4 $hour 06 "-I"
+		
+		rm "$spath"
+	fi
+	
+	## WXTZ ##
+	
+	zpath=$(echo "$path" | sed s/P06M/WXTZ06/)
+	
+	if [[ -f "$zpath" ]]
+	then
+		if [[ "$hour" == "06" ]]
+		then
+			mkrootkml "frez"
+		fi
+		
+		andplot "$path" "$zpath" "frez" 1.0 1.0 4 $hour 06 "-I"
+		
+		rm "$zpath"
+	fi
+	
+	## WXTR ##
+	
+	rpath=$(echo "$path" | sed s/P06M/WXTR06/)
+	
+	if [[ -f "$rpath" ]]
+	then
+		if [[ "$hour" == "06" ]]
+		then
+			mkrootkml "rain"
+		fi
+		
+		andplot "$path" "$rpath" "rain" 1.0 1.0 4 $hour 06 "-I"
+		
+		rm "$rpath"
+	fi
+	
+	## WXTP ##
+	
+	ppath=$(echo "$path" | sed s/P06M/WXTP06/)
+	
+	if [[ -f "$ppath" ]]
+	then
+		if [[ "$hour" == "06" ]]
+		then
+			mkrootkml "pellet"
+		fi
+		
+		andplot "$path" "$ppath" "pellet" 1.0 1.0 4 $hour 06 "-I"
+		
+		rm "$ppath"
+	fi
+fi
+
+#### WXTS ####
+
+if [[ "$prod" == "WXTS06" ]]
+then
+	
+	ppath=$(echo "$path" | sed s/WXTS06/P06M/)
+	
+	if [[ -f "$ppath" ]]
+	then
+		if [[ "$hour" == "06" ]]
+		then
+			mkrootkml "snow"
+		fi
+		
+		andplot "$ppath" "$path" "snow" 1.0 1.0 4 $hour 06 "-I"
+		
+		rm "$path"
+	fi
+fi
+
+#### WXTZ ####
+
+if [[ "$prod" == "WXTZ06" ]]
+then
+	
+	ppath=$(echo "$path" | sed s/WXTZ06/P06M/)
+	
+	if [[ -f "$ppath" ]]
+	then
+		if [[ "$hour" == "06" ]]
+		then
+			mkrootkml "frez"
+		fi
+		
+		andplot "$ppath" "$path" "frez" 1.0 1.0 4 $hour 06 "-I"
+		
+		rm "$path"
+	fi
+fi
+
+#### WXTR ####
+
+if [[ "$prod" == "WXTR06" ]]
+then
+	
+	ppath=$(echo "$path" | sed s/WXTR06/P06M/)
+	
+	if [[ -f "$ppath" ]]
+	then
+		if [[ "$hour" == "06" ]]
+		then
+			mkrootkml "rain"
+		fi
+		
+		andplot "$ppath" "$path" "rain" 1.0 1.0 4 $hour 06 "-I"
+		
+		rm "$path"
+	fi
+fi
+
+#### WXTP ####
+	
+if [[ "$prod" == "WXTP06" ]]
+then
+	ppath=$(echo "$path" | sed s/WXTP06/P06M/)
+	
+	if [[ -f "$ppath" ]]
+	then
+		if [[ "$hour" == "06" ]]
+		then
+			mkrootkml "pellet"
+		fi
+		
+		andplot "$ppath" "$path" "pellet" 1.0 1.0 4 $hour 06 "-I"
+		
+		rm "$path"
+	fi
 fi
 
 #### plot pmsl #####
@@ -149,9 +291,4 @@ then
 	rm "$path"
 fi
 
-#grib2/ncep/GFS/#000/200805291200F021/WXTS03/0 - NONE 000197 snow
-#grib2/ncep/GFS/#000/200805291200F021/WXTZ03/0 - NONE 000199 frez rain
-#grib2/ncep/GFS/#000/200805291200F021/WXTR03/0 - NONE 000200 rain
-#grib2/ncep/GFS/#000/200805291200F021/WXTP03/0 - NONE 000198 hail
-#grib2/ncep/GFS/#000/200805291200F021/PR03/0 - NONE 000193 precip
 

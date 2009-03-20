@@ -45,7 +45,7 @@ binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
 am_grib_contour_OBJECTS = main.$(OBJEXT) grib.$(OBJEXT) \
 	gdalcode.$(OBJEXT) ogrcode.$(OBJEXT) color.$(OBJEXT) \
-	options.$(OBJEXT) contour.$(OBJEXT)
+	options.$(OBJEXT) contour.$(OBJEXT) merge.$(OBJEXT)
 grib_contour_OBJECTS = $(am_grib_contour_OBJECTS)
 grib_contour_DEPENDENCIES =
 grib_contour_LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -177,7 +177,9 @@ grib_contour_SOURCES = \
 	options.c        \
 	options.h        \
 	contour.c        \
-	contour.h
+	contour.h        \
+	merge.c        \
+	merge.h
 
 grib_contour_LDFLAGS = \
 	-lgdal          \
@@ -257,6 +259,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdalcode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grib.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/merge.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ogrcode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/options.Po@am__quote@
 

@@ -43,8 +43,9 @@ void get_options(
 	int opt;
 	o->scalecorrection = 1;
 	o->finterval = 0;
+	o->english = 0;
 	
-	while (0 < (opt = getopt(argc, argv, "awg:u:v:U:V:m:i:s:S:k:t:z:Ih?"))) {
+	while (0 < (opt = getopt(argc, argv, "aw:g:u:v:U:V:m:i:Is:S:k:t:z:eh?"))) {
 		
 		switch (opt) {
 			case 'w':
@@ -57,17 +58,32 @@ void get_options(
 			
 			case 'g':
 				if (!o->wind && !o->and)
-					o->gribfile = optarg;
+					o->gribfile[o->gcount] = optarg;
+					o->gcount++;
+					if (o->gcount > 100) {
+						fprintf(stderr, "error only 99 datasets suported\n");
+						exit(EXIT_FAILURE);
+					}
 				break;
 			
 			case 'u':
 				if (o->wind || o->and)
-					o->ugribfile = optarg;
+					o->ugribfile[o->ucount] = optarg;
+					o->ucount++;
+					if (o->ucount > 100) {
+						fprintf(stderr, "error only 99 datasets suported\n");
+						exit(EXIT_FAILURE);
+					}
 				break;
 			
 			case 'v':
 				if (o->wind || o->and)
-					o->vgribfile = optarg;
+					o->vgribfile[o->vcount] = optarg;
+					o->vcount++;
+					if (o->vcount > 100) {
+						fprintf(stderr, "error only 99 datasets suported\n");
+						exit(EXIT_FAILURE);
+					}
 				break;
 			
 			case 'm':
@@ -88,6 +104,10 @@ void get_options(
 			
 			case 'I':
 				o->finterval = 1;
+				break;
+			
+			case 'e':
+				o->english = 1;
 				break;
 			
 			case 's':
@@ -114,16 +134,16 @@ void get_options(
 			case '?':
 			default:
 				fprintf(stderr,
-								"USAGE: %s <-g grib file> [-m grib msg] <-i interval> <-s color scale>\n"
-								"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
+								"USAGE: %s <-g grib file> [-m grib msg] <-i interval> [-I] <-s color scale>\n"
+								"[-S scale multiplyer] <-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
 				fprintf(stderr,
 								"USAGE: %s -w <-u u wind grib file> <-v v wind grib file>\n"
-								"[-U u grib msg] [-V v grib msg] <-i interval> <-s color scale>\n"
-								"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
+								"[-U u grib msg] [-V v grib msg] <-i interval> [-I] <-s color scale>\n"
+								"[-S scale multiplyer] <-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
 				fprintf(stderr,
 								"USAGE: %s -a <-u data grib file> <-v 0/1 grib file>\n"
-								"[-U data grib msg] [-V 0/1 grib msg] <-i interval> <-s color scale>\n"
-								"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
+								"[-U data grib msg] [-V 0/1 grib msg] <-i interval> [-I] <-s color scale>\n"
+								"[-S scale multiplyer] <-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
 				exit(EXIT_FAILURE);
 		}
 	}
@@ -138,12 +158,16 @@ void get_options(
 			o->vgribmsg = 1;
 	}
 		
+	if (!o->wind && o->ucount != o->vcount) {
+		fprintf(stderr, "ERROR: you must have the same number of u and v datasets\n");
+		exit(EXIT_FAILURE);
+	}
 	
 	if (!o->wind && !o->and && (!o->gribfile || !o->interval || !o->scalename ||
 									(!o->kmlfile && !o->tiffile))) {
 		fprintf(stderr,
-						"USAGE: %s <-g grib file> <-m grib msg> <-i interval> <-s color scale>\n"
-						"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
+						"USAGE: %s <-g grib file> <-m grib msg> <-i interval> [-I] <-s color scale>\n"
+						"[-S scale multiplyer] <-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
 	
@@ -152,8 +176,8 @@ void get_options(
 	
 		fprintf(stderr,
 						"USAGE: %s -w <-u u wind grib file> <-v v wind grib file>\n"
-						"[-U u grib msg] [-V v grib msg] <-i interval> <-s color scale>\n"
-						"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
+						"[-U u grib msg] [-V v grib msg] <-i interval> [-I] <-s color scale>\n"
+						"[-S scale multiplyer] <-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
 	
@@ -162,8 +186,8 @@ void get_options(
 	
 		fprintf(stderr,
 						"USAGE: %s -a <-u data grib file> <-v 0/1 grib file>\n"
-						"[-U data grib msg] [-V 0/1 grib msg] <-i interval> <-s color scale>\n"
-						"<-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
+						"[-U data grib msg] [-V 0/1 grib msg] <-i interval> [-I] <-s color scale>\n"
+						"[-S scale multiplyer] <-k kml file> <-z kmz file> OR <-t <tiff file>\n", argv[0]);
 		exit(EXIT_FAILURE);
 	}
 
