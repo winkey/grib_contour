@@ -34,7 +34,11 @@ dist_pkgdata_DATA = \
 	wind.scale \
 	hghtww.scale \
 	perdww.scale \
-	htsgw.scale
+	htsgw.scale \
+	pop.scale \
+	popf.scale \
+	popz.scale \
+	tstm.scale
 
 ## File created by the gnome-build tools
 

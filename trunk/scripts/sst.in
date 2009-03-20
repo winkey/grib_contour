@@ -49,7 +49,7 @@ echo '<kml xmlns="http://earth.google.com/kml/2.2">' >> $frames
 echo '<Folder>' >> $frames
 echo '	<ScreenOverlay>' >> $frames
 echo '		<name>Key</name>' >> $frames
-echo '		<visibility>0</visibility>' >> $frames
+echo '		<visibility>1</visibility>' >> $frames
 echo '		<Icon>' >> $frames
 echo "			<href>${www}/../images/sst.png</href>" >> $frames
 echo '		</Icon>' >> $frames
@@ -61,7 +61,7 @@ echo '	</ScreenOverlay>' >> $frames
 echo '  <name>frames</name>' >> $frames
 echo '  <description></description>' >> $frames
 echo '  <NetworkLink>' >> $frames
-echo '    <visibility>0</visibility>' >> $frames
+echo '    <visibility>1</visibility>' >> $frames
 echo '    <open>0</open>' >> $frames
 echo '    <Url>' >> $frames
 echo "      <href>${www}/sst.kmz</href>" >> $frames

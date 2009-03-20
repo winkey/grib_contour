@@ -107,14 +107,14 @@
 	</NetworkLink>
 	<NetworkLink>
 		<name>Wind Wave N Hemesphere</name>
-		<visibility>0</visibility>
+		<visibility>1</visibility>
 		<Url>
 			<href>@www@/kml/windwave-latest.kml</href>
 		</Url>
 	</NetworkLink>
 	<NetworkLink>
 		<name>Satellite Imagery</name>
-		<visibility>0</visibility>
+		<visibility>1</visibility>
 		<Url>
 			<href>@www@/kml/satz-latest.kml</href>
 		</Url>

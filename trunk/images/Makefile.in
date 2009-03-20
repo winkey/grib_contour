@@ -171,6 +171,10 @@ www_DATA = \
 	prob17.png \
 	prob25.png \
 	prob32.png \
+	pop.png \
+	popf.png \
+	popz.png \
+	tstm.png \
 	t.png \
 	dp.png \
 	sst.png \
@@ -440,6 +444,18 @@ prob25.png: ../share/prob.scale Makefile ../scripts/makekey.sh
 
 prob32.png: ../share/prob.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/prob.scale "%" prob32.png
+
+pop.png: ../share/pop.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/pop.scale "%" pop.png
+
+popf.png: ../share/popf.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/popf.scale "%" popf.png
+
+popz.png: ../share/popz.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/popz.scale "%" popz.png
+
+tstm.png: ../share/tstm.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/tstm.scale "%" tstm.png
 
 t.png: ../share/t.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/t.scale "%" t.png
