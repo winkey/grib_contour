@@ -102,6 +102,14 @@ float *grib_read(
 	FILE *fp,
 	gds_t *gds);
 
+float *do_grib(
+	options *o,
+	gds_t *gds);
+
+float *do_wind_grib(
+	options *o,
+	gds_t *gds);
+
 #endif /* _GRIB_H */
 
  

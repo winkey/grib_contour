@@ -16,19 +16,6 @@
 source /etc/profile
 source ~/.profile
 
-export LD_LIBRARY_PATH="/home/winkey/lib/:${LD_LIBRARY_PATH}"
-
-
-
-if [ "$2" == "" ]
-then
-	datee=`date -u "+%Y%m%d"`
-else
-	datee=$2
-fi
-
-run=$1
-tmp="/tmp/$(basename ${0}).$run"
 
 ################################################################################
 #	function to make a dir for the temporary files
@@ -160,7 +147,13 @@ function plot {
 		rm "$zip"
 	fi
 	
-	grib_contour -g "${tmp}/${gribfile}" -m $grbmsg -i $interval -s $name -k $kml -z "$zip"
+	echo "gribfile=$gribfile"
+	echo "grbmsg=$3"
+	echo "name=$2"
+	echo "interval=$4"
+	echo "zip=$zip"
+	echo "kml=$kml"
+	nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg -i $interval -s $name -k $kml -z "$zip"
 	
 	appendkml $name $timee
 	
@@ -186,7 +179,6 @@ function windplot {
 	interval=$6
 	timee=$7
 	
-	
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
 	
@@ -195,24 +187,10 @@ function windplot {
 		rm "$zip"
 	fi
 	
-	grib_contour -w -u "${ufile}" -v "${ufile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
+	nice -n 10 grib_contour -w -u "${ufile}" -v "${ufile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
 	
 	appendkml $name $timee
 
 
 }
-
-################################################################################
-#	function to fetch the grib file
-#
-#	args:
-#					$1	the site and path
-#					$2	the filename
-################################################################################
-
-function getgrib {
-	dir=$1
-	file=$2
-	
-	wget "${dir}${file}" -O "${tmp}/${file}"
-}
+ 

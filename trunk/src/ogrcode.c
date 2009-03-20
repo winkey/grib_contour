@@ -25,8 +25,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "options.h"
 #include "grib.h"
 #include "buffer.h"
+#include "kml.h"
+#include "color.h"
+
 #include "ogrcode.h"
 
 #define DEBUG 0
@@ -185,14 +189,16 @@ OGRCoordinateTransformationH *create_coord_transform(
 		fprintf (stderr, "ERROR can't create transformation\n");
 		exit(EXIT_FAILURE);
 	}
-		
-	char *wkt;
 	
-	OSRExportToWkt(hSrcSRS, &wkt);
-	if (DEBUG) fprintf(stderr, "SrcWKT =\n%s\n\n", wkt);
+	if (DEBUG) {
+		char *wkt;
 	
-	OSRExportToWkt(hDstSRS, &wkt);
-	if (DEBUG) fprintf(stderr, "DstWKT =\n%s\n\n", wkt);
+		OSRExportToWkt(hSrcSRS, &wkt);
+		fprintf(stderr, "SrcWKT =\n%s\n\n", wkt);
+	
+		OSRExportToWkt(hDstSRS, &wkt);
+		fprintf(stderr, "DstWKT =\n%s\n\n", wkt);
+	}
 	
 	return hTransform;
 }
@@ -356,6 +362,48 @@ void transform(
 	/***** cleanup *****/
 	
 	OCTDestroyCoordinateTransformation(hTransform);
+	
+	return;
+}
+
+void ogr2kml(
+	OGRLayerH hLayer,
+	buffer *kmlbuf,
+	color_scale *cscales)
+{
+	OGRFeatureH hFeat;
+	double value;
+	buffer coordbuf = {};
+	
+					
+	OGR_L_ResetReading(hLayer);
+
+	/***** loop while theres features *****/
+			
+	while((hFeat = OGR_L_GetNextFeature(hLayer))) {
+	
+		CPLErrorReset();
+		
+		/***** the second field contains the data value *****/
+		
+		value = OGR_F_GetFieldAsDouble(hFeat, 1);
+		
+		/***** kml placemark header *****/
+		
+		kml_placemark_header(kmlbuf, NULL, NULL, color_checkscale(cscales, value));
+		
+		/***** reset the points buffer *****/
+		
+		kml_linestring_header(kmlbuf, 0, 0);
+		
+		getpoints(hFeat, kmlbuf);
+		
+		kml_linestring_footer(kmlbuf);
+		kml_placemark_footer(kmlbuf);
+		OGR_F_Destroy(hFeat);
+	}
+	
+	buffer_free(&coordbuf);
 	
 	return;
 }

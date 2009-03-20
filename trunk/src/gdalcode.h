@@ -67,6 +67,25 @@ GDALRasterBandH get_band(
 	GDALDatasetH hDS,
 	int band_num);
 
+GDALDatasetH do_gdal(
+	float *raster,
+	gds_t *gds,
+	OGRSpatialReferenceH *hSrcSRS,
+	GDALRasterBandH *hBand);
+
+/*******************************************************************************
+	function to get a gdal driver by its name
+	
+	args:
+						name			the name of the driver
+	
+	returns:
+						the gdal driver
+*******************************************************************************/
+
+GDALDriverH gdal_get_driver_by_name (
+	char *name);
+
 #endif /* _GDALCODE_H */
 
  

@@ -31,7 +31,8 @@ www_DATA = \
 	300rh.png \
 	300wind.png \
 	pwat.png \
-	cape.png
+	cape.png \
+	pcp.png
 
 
 925t.png: ../share/925t.scale Makefile ../scripts/makekey.sh
@@ -95,8 +96,11 @@ www_DATA = \
 	../scripts/makekey.sh ../share/300wind.scale "kts" 300wind.png
 
 cape.png: ../share/cape.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/cape.scale "kts" cape.png
+	../scripts/makekey.sh ../share/cape.scale "J/kg" cape.png
 
 pwat.png: ../share/pwat.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pwat.scale "kts" pwat.png
+	../scripts/makekey.sh ../share/pwat.scale "kg/m^2" pwat.png
+
+pcp.png: ../share/pcp.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/pcp.scale "kg/m^2" pcp.png
 

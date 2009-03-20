@@ -7,7 +7,8 @@ wwwdisk = @WWWDISK@
 SUBDIRS = src \
 	scripts\
 	share \
-	images
+	images \
+	etc
 
 grib_contourdocdir = ${prefix}/doc/grib_contour
 grib_contourdoc_DATA = \
