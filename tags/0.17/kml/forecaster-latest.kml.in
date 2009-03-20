@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+	<name>hurricane wind speed probability</name>
+	<visibility>0</visibility>
+	<Folder>
+		<name>probability of winds over 17 meters/sec</name>
+		<visibility>0</visibility>
+		<Style>
+			<ListStyle>
+				<listItemType>radioFolder</listItemType>
+				<bgColor>00ffffff</bgColor>
+			</ListStyle>
+		</Style>
+		<Folder>
+			<name>off</name>
+			<visibility>0</visibility>
+		</Folder>
+		<NetworkLink>
+			<name>latest</name>
+			<visibility>0</visibility>
+			<Link>
+				<href>@www@/kml/forecaster/latest/prob17.kml</href>
+			</Link>
+		</NetworkLink>
+	</Folder>
+	<Folder>
+		<name>probability of winds over 25 meters/sec</name>
+		<visibility>1</visibility>
+		<Style>
+			<ListStyle>
+				<listItemType>radioFolder</listItemType>
+				<bgColor>00ffffff</bgColor>
+			</ListStyle>
+		</Style>
+		<NetworkLink>
+			<name>latest</name>
+			<visibility>1</visibility>
+			<Link>
+				<href>@www@/kml/forecaster/latest/prob25.kml</href>
+			</Link>
+		</NetworkLink>
+		<Folder>
+			<name>off</name>
+			<visibility>0</visibility>
+		</Folder>
+	</Folder>
+	<Folder>
+		<name>probability of winds over 32 meters/sec</name>
+		<visibility>0</visibility>
+		<Style>
+			<ListStyle>
+				<listItemType>radioFolder</listItemType>
+				<bgColor>00ffffff</bgColor>
+			</ListStyle>
+		</Style>
+		<Folder>
+			<name>off</name>
+			<visibility>0</visibility>
+		</Folder>
+		<NetworkLink>
+			<name>latest</name>
+			<visibility>0</visibility>
+			<Link>
+				<href>@www@/kml/forecaster/latest/prob32.kml</href>
+			</Link>
+		</NetworkLink>
+	</Folder>
+</Document>
+</kml>
