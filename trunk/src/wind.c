@@ -149,7 +149,7 @@ int main(int argc, char **argv)
   
   /***** open the grib file *****/
   
-  fp = grib_open(argv[1], atof(argv[2]), 'm');
+  fp = grib_open(argv[1], atof(argv[2]), 'e');
   
   /***** read the grib raster into memory *****/
   
@@ -161,7 +161,7 @@ int main(int argc, char **argv)
 	
 	/***** open the grib file *****/
   
-  fp = grib_open(argv[1], atof(argv[3]), 'm');
+  fp = grib_open(argv[1], atof(argv[3]), 'e');
   
   /***** read the grib raster into memory *****/
   
