@@ -28,6 +28,11 @@ tmp="/tmp"
 
 hour="${hour:1}"
 
+if [[ ! -d "${wwwdisk}/${run}" ]]
+then
+	mkdir -p "${wwwdisk}/${run}"
+fi
+
 ##### plot height #####
 
 if [[ "$prod" == "HGHT" ]]
@@ -74,15 +79,16 @@ fi
 
 if [[ "$prod" == "UREL" ]]
 then
-	vpath=`echo $path | sed `s/UREL/VREL/`
-	if [[ -f $vpath ]]
+	vpath=$(echo "$path" | sed s/UREL/VREL/)
+	
+	if [[ -f "$vpath" ]]
 	then
 		if [[ "$hour" == "00" ]]
 		then
 			mkrootkml "${level}wind"
 		fi
 		
-		windplot "$path" "$vpath" "${level}wind" 1.0 1.1 10 $hour 03
+		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 10 $hour 03
 
 		rm "$path"
 		rm "$vpath"
@@ -91,15 +97,16 @@ fi
 
 if [[ "$prod" == "VREL" ]]
 then
-	upath=`echo $path | sed `s/VREL/UREL/`
-	if [[ -f upath ]]
+	upath=$(echo "$path" | sed s/VREL/UREL/)
+	
+	if [[ -f "$upath" ]]
 	then
-		if [[ "$hour" == "00" ]]
+		if [[ "$hour" == "00" ]]""""
 		then
 			mkrootkml "${level}wind"
 		fi
 		
-		windplot "$upath" "$path" "${level}wind" 1.0 1.1 10 $hour 03
+		windplot "$upath" "$path" "${level}wind" 1.0 1.0 10 $hour 03
 		
 		rm "$path"
 		rm "$upath"

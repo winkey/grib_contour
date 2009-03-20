@@ -35,7 +35,10 @@ www_DATA = \
 	pcp.png \
 	prob17.png \
 	prob25.png \
-	prob32.png
+	prob32.png \
+	t.png \
+	dp.png \
+	wind.png
 
 
 925t.png: ../share/925t.scale Makefile ../scripts/makekey.sh
@@ -115,4 +118,13 @@ prob25.png: ../share/prob.scale Makefile ../scripts/makekey.sh
 
 prob32.png: ../share/prob.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/prob.scale "%" prob32.png
+
+t.png: ../share/t.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/t.scale "%" t.png
+
+dp.png: ../share/dp.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/dp.scale "%" dp.png
+
+wind.png: ../share/wind.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/wind.scale "%" wind.png
 

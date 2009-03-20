@@ -15,7 +15,9 @@ bin_SCRIPTS = \
 	nam2.sh \
 	makekey.sh \
 	forecaster.sh \
-	ruc2.sh
+	ruc2.sh \
+	rtma_nhem.sh \
+	rtma_conus.sh
 
 
 CLEANFILES = $(bin_SCRIPTS)
@@ -33,7 +35,9 @@ EXTRA_DIST = \
 	nam2.in \
 	makekey.in \
 	forecaster.in \
-	ruc2.in
+	ruc2.in \
+	rtma_nhem.in \
+	rtma_conus.in
 
 
 dist_bin_SCRIPTS = \
@@ -49,7 +53,9 @@ dist_bin_SCRIPTS = \
 	nam2.sh \
 	makekey.sh \
 	forecaster.sh \
-	ruc2.sh
+	ruc2.sh \
+	rtma_nhem.sh \
+	rtma_conus.sh
 
 
    
@@ -108,6 +114,14 @@ forecaster.sh: forecaster.in Makefile
 makekey.sh: makekey.in Makefile
 	$(do_subst) < $(srcdir)/makekey.in > makekey.sh
 	chmod +x makekey.sh
+
+rtma_nhem.sh: rtma_nhem.in Makefile
+	$(do_subst) < $(srcdir)/rtma_nhem.in > rtma_nhem.sh
+	chmod +x rtma_nhem.sh
+
+rtma_conus.sh: rtma_conus.in Makefile
+	$(do_subst) < $(srcdir)/rtma_conus.in > rtma_conus.sh
+	chmod +x rtma_conus.sh
 
 
 ## File created by the gnome-build tools

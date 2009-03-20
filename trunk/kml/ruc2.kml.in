@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.2">
-<Folder>
-	<name>@www@ 20km ruc2 conus</name>
+<Document>
+	<name>20km ruc2 conus</name>
 	<visibility>0</visibility>
 	<Folder>
 		<name>300mb</name>
@@ -4039,5 +4039,5 @@
 			</NetworkLink>
 		</Folder>
 	</Folder>
-</Folder>
+</Document>
 </kml>

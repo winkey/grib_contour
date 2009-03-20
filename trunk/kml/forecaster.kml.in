@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.2">
-<Folder>
-	<name>@www@ hurricane wind speed probability</name>
+<Document>
+	<name>hurricane wind speed probability</name>
 	<visibility>0</visibility>
 	<Folder>
 		<name>probability of winds over 17 meters/sec</name>
@@ -130,5 +130,5 @@
 			</Link>
 		</NetworkLink>
 	</Folder>
-</Folder>
+</Document>
 </kml>

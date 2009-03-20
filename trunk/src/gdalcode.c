@@ -211,7 +211,7 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin(hSRS, hSrsSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * (gds->Nx / 2)), gds->Dx, 0.0,
+			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
 											 MinY- (gds->Dy * gds->Ny), gds->Dy, 0.0);
 			break;
 		
@@ -224,7 +224,7 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin(hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * (gds->Nx / 2)), gds->Dx, 0.0,
+			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
 											 MinY, gds->Dy, 0.0);
 			break;
 		
@@ -238,7 +238,7 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin( hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * (gds->Nx / 2)), gds->Dx, 0.0,
+			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
 											 MinY, gds->Dy, 0.0);
 			break;
 		
@@ -250,7 +250,7 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin( hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * (gds->Nx / 2)), gds->Dx, 0.0,
+			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
 											 MinY- (gds->Dy * gds->Ny), gds->Dy, 0.0);
 			break;
 		
@@ -262,7 +262,7 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin( hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * (gds->Nx / 2)), gds->Dx, 0.0,
+			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
 											 MinY- (gds->Dy * gds->Ny), gds->Dy, 0.0);
 			break;
 		
@@ -274,7 +274,7 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin( hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * (gds->Nx / 2)), gds->Dx, 0.0,
+			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
 											 MinY- (gds->Dy * gds->Ny), gds->Dy, 0.0);
 			break;
 		
