@@ -1,9 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 ## Created by Anjuta
 
+www = @WWW@
+wwwdisk = @WWWDISK@
+
 SUBDIRS = src \
 	scripts\
-	share
+	share \
+	images
 
 grib_contourdocdir = ${prefix}/doc/grib_contour
 grib_contourdoc_DATA = \

@@ -1,11 +1,15 @@
 
+www = @WWW@
+wwwdisk = @WWWDISK@
+
 bin_SCRIPTS = generic.sh \
 	gfs.sh \
 	nam_west.sh \
 	nam_east.sh \
 	nam_hi.sh \
 	nam_ak.sh \
-	nam_pr.sh
+	nam_pr.sh \
+	makekey.sh
 
 
 CLEANFILES = $(bin_SCRIPTS)
@@ -16,7 +20,8 @@ EXTRA_DIST = generic.in \
 	nam_east.in \
 	nam_hi.in \
 	nam_ak.in \
-	nam_pr.in
+	nam_pr.in \
+	makekey.in
 
 dist_bin_SCRIPTS = generic.sh \
 	gfs.sh \
@@ -24,10 +29,13 @@ dist_bin_SCRIPTS = generic.sh \
 	nam_east.sh \
 	nam_hi.sh \
 	nam_ak.sh \
-	nam_pr.sh
+	nam_pr.sh \
+	makekey.sh
 
    
-do_subst = sed -e 's,[@]bindir[@],$(bindir),g'
+do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
+							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
+							 -e 's,[@]www[@],$(www),g'
      
 generic.sh: generic.in Makefile
 	$(do_subst) < $(srcdir)/generic.in > generic.sh
@@ -45,6 +53,10 @@ nam_east.sh: nam_east.in Makefile
 	$(do_subst) < $(srcdir)/nam_east.in > nam_east.sh
 	chmod +x nam_east.sh
 
+nam_pr.sh: nam_pr.in Makefile
+	$(do_subst) < $(srcdir)/nam_pr.in > nam_pr.sh
+	chmod +x nam_pr.sh
+
 nam_hi.sh: nam_hi.in Makefile
 	$(do_subst) < $(srcdir)/nam_hi.in > nam_hi.sh
 	chmod +x nam_hi.sh
@@ -53,9 +65,9 @@ nam_ak.sh: nam_ak.in Makefile
 	$(do_subst) < $(srcdir)/nam_ak.in > nam_ak.sh
 	chmod +x nam_ak.sh
 
-nam_pr.sh: nam_pr.in Makefile
-	$(do_subst) < $(srcdir)/nam_pr.in > nam_pr.sh
-	chmod +x nam_pr.sh
+makekey.sh: makekey.in Makefile
+	$(do_subst) < $(srcdir)/makekey.in > makekey.sh
+	chmod +x makekey.sh
 
 
 ## File created by the gnome-build tools

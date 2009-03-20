@@ -2,11 +2,15 @@
 
 ## Created by Anjuta
 
+www = @WWW@
+wwwdisk = @WWWDISK@
+
 INCLUDES = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
-	-DPACKAGE_DATA_DIR=\""$(datadir)"\" 
-
+	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
+	-DPACKAGE_PKG_DATA_DIR=\""$(pkgdatadir)"\" 
+	
 AM_CFLAGS =\
 	 -Wall\
 	 -g

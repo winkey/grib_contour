@@ -17,8 +17,8 @@ source /usr/local/bin/generic.sh
 
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/nam/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/nam/prod/"
-wwwdisk="/var/www/apache2-default/weather/kml/nam_east"
-www="http://hypercube.telascience.org/weather/kml/nam_east/"
+wwwdisk="/home/rush/public_html/weather/kml/nam_east"
+www="http://winkey.org/weather/kml/nam_east/"
 
 times=`seq 0 3 48`
 
@@ -62,14 +62,15 @@ function doplot {
 	plot $gribfile 300t 64 1 $timee&
 	plot $gribfile 300rh 62 5 $timee&
 	windplot $gribfile 300wind 66 10 $timee&
-	
 	wait
-	plot $gribfile pwat 19 1 $timee
-	plot $gribfile cape 17 50 $timee
+	
+	plot $gribfile pwat 19 2 $timee&
+	plot $gribfile cape 17 200 $timee&
+	wait
 	
 	#cleanup
 	
-	rm "${tmp}/*"
+	rm "${tmp}/${gribfile}"
 	
 }
 

@@ -98,6 +98,8 @@ ECHO_T = @ECHO_T@
 EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 GREP = @GREP@
+HAVE_BASH = @HAVE_BASH@
+HAVE_DEGRIB = @HAVE_DEGRIB@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
@@ -122,6 +124,8 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
+WWW = @WWW@
+WWWDISK = @WWWDISK@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -163,9 +167,12 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
+www = @WWW@
+wwwdisk = @WWWDISK@
 SUBDIRS = src \
 	scripts\
-	share
+	share \
+	images
 
 grib_contourdocdir = ${prefix}/doc/grib_contour
 grib_contourdoc_DATA = \

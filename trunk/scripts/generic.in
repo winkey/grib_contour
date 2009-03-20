@@ -65,7 +65,7 @@ function mkrootkml {
   echo '		<name>Key</name>' >> $frames
   echo '		<visibility>0</visibility>' >> $frames
   echo '		<Icon>' >> $frames
-  echo "			<href>${www}/../images/${name}.jpg</href>" >> $frames
+  echo "			<href>${www}/../images/${name}.png</href>" >> $frames
   echo '		</Icon>' >> $frames
   echo '		<overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>' >> $frames
   echo '		<screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>' >> $frames
