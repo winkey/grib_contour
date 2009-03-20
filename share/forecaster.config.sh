@@ -24,9 +24,10 @@ products="prob17 Probability of Winds Over 17 meters/sec
 prob25 Probability of Winds Over 25 meters/sec
 prob32 Probability of Winds Over 32 meters/sec"
 
-levels2=""
-
-products2=""
+times="00 00Z
+06 06Z
+12 12Z
+18 18Z"
 
 screenshots=$(
   echo "$products" | while read prod_n prod_fn

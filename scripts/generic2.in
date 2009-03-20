@@ -16,6 +16,8 @@
 source /etc/profile
 source ~/.profile
 
+script=$(basename ${0})
+
 if [ "$2" == "" ]
 then
 	datee=`date -u "+%Y%m%d"`
@@ -23,6 +25,30 @@ else
 	datee=$2
 fi
 
+##### get the number of cpu's #####
+
+cpus=$(cat /proc/cpuinfo | grep "^processor" | wc -l)
+
+################################################################################
+#
+# function to proccess a list of jobs
+#
+# 
+
+function do_jobs {
+
+	for job in "${joblist[@]}"
+	do
+		while [[ $(jobs | wc -l) -ge $cpus ]]
+		do
+			sleep 2
+		done
+	
+		$job &
+	done
+
+}
+	
 ################################################################################
 #	function to make a dir for the temporary files
 #
@@ -51,35 +77,36 @@ function mkrootkml {
 	
 	frames=${wwwdisk}/${run}/${name}.kml
 	
-	
-	echo '<?xml version="1.0" encoding="UTF-8"?>' > $frames
-	echo '<kml xmlns="http://earth.google.com/kml/2.2">' >> $frames
-	echo '<Folder>' >> $frames
-	echo '	<ScreenOverlay>' >> $frames
-  echo '		<name>Key</name>' >> $frames
-  echo '		<visibility>1</visibility>' >> $frames
-  echo '		<Icon>' >> $frames
-  echo "			<href>${www}/../images/${name}.png</href>" >> $frames
-  echo '		</Icon>' >> $frames
-  echo '		<overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>' >> $frames
-  echo '		<screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>' >> $frames
-  echo '		<rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>' >> $frames
-  echo '		<size x="0" y="0" xunits="fraction" yunits="fraction"/>' >> $frames
-  echo '	</ScreenOverlay>' >> $frames
-
-	echo '  <name>frames</name>' >> $frames
-	echo '  <description></description>' >> $frames
-	echo '</Folder>' >> $frames
-	echo '</kml>' >> $frames
+	cat > $frames << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Folder>
+  <ScreenOverlay>
+    <name>Key</name>
+    <visibility>1</visibility>
+		<Icon>
+      <href>${www}/../images/${name}.png</href>
+    </Icon>
+    <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+    <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+    <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+    <size x="0" y="0" xunits="fraction" yunits="fraction"/>
+  </ScreenOverlay>
+  <name>frames</name>
+    <description></description>
+</Folder>
+</kml>
+EOF
 
 	##### check the latest link #####
 	
-	link=$(readlink "${wwwdisk}/latest")
-
-	if [[ "$link" != "$hour" ]]
+	if [ !-h "${wwwdisk}/latest" ]
 	then
-		ln -sf "${wwwdisk}/${run}" "${wwwdisk}/latest"	
+		rm ${wwwdisk}/latest
 	fi
+
+	ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"	
+
 
 }
 
@@ -98,15 +125,9 @@ function appendkml {
 	incr=$3
 	grid=$4
 	
-	tmpfile=${tmp}/${name}.kml
+	tmpfile=/tmp/$script.$run.$name.kml
 	frames=${wwwdisk}/${run}/${name}.kml
-	
-	##### lock the file #####
-	
-	while ! mkdir "${tmp}/${name}.lock"
-	do
-		sleep 1
-	done
+	lock="/tmp/$script.$run.$name.lock"
 	
 	if [[ "$grid" != "" ]]
 	then
@@ -114,31 +135,40 @@ function appendkml {
 	else
 		zip="${www}/${run}/${name}${hr}.kmz"
 	fi
+
+	##### lock the file #####
+	
+	while ! mkdir "$lock"
+	do
+		sleep 1
+	done
 	
 	head -n -2 $frames > $tmpfile
 
 	begin=`date -d "$run GMT $hr hours" "+%FT%TZ" -u`
 	end=`date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u`
 
-	echo '  <NetworkLink>' >> $tmpfile
-	echo "    <name>${run}Z + ${hr} ${grid}.${name}</name>" >> $tmpfile
-	echo '    <TimeSpan>' >> $tmpfile
-	echo "      <begin>${begin}</begin>" >> $tmpfile
-	echo "      <end>${end}</end>" >> $tmpfile
-	echo '    </TimeSpan>' >> $tmpfile
-	echo '    <visibility>1</visibility>' >> $tmpfile
-	echo '    <open>0</open>' >> $tmpfile
-	echo '    <Url>' >> $tmpfile
-	echo "      <href>${zip}</href>" >> $tmpfile
-	echo '    </Url>' >> $tmpfile
-	echo '  </NetworkLink>' >> $tmpfile
+cat >> $tmpfile << EOF
+  <NetworkLink>
+    <name>${run}Z + ${hr} ${grid}.${name}</name>
+    <TimeSpan>
+      <begin>${begin}</begin>
+      <end>${end}</end>
+    </TimeSpan>
+    <visibility>1</visibility>
+    <open>0</open>
+    <Url>
+      <href>${zip}</href>
+    </Url>
+  </NetworkLink>
+EOF
 
 	tail -n 2 $frames >> $tmpfile
 	mv $tmpfile $frames
 	
 	##### remove the lock #####
 	
-	rmdir "${tmp}/${name}.lock"
+	rmdir "$lock"
 
 }
 
@@ -290,6 +320,7 @@ function andplot {
 function getgrib {
 	dir=$1
 	file=$2
+	ddir=$3
 	
-	wget "${dir}${file}" -O "${tmp}/${file}"
+	wget "${dir}${file}" -O "${ddir}/${file}"
 }
