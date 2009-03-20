@@ -32,7 +32,7 @@
 #include "grib.h"
 #include "error.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 /*******************************************************************************
 	function to open the grib file
@@ -282,8 +282,13 @@ float *do_wind_grib(
 	if (!(raster = malloc(sizeof(float) * gds->Npoints)))
 		ERROR("main");
 	
-	for (i = 0; i < gds->Npoints ; i++)
-		raster[i] = uv2velocity(Uraster[i], Vraster[i]);
+	for (i = 0; i < gds->Npoints ; i++) {
+		if (gds->missing && (Uraster[i] == gds->missing_value || Vraster[i] == gds->missing_value))
+			raster[i] = gds->missing_value;
+		else
+			raster[i] = uv2velocity(Uraster[i], Vraster[i]);
+	}
+
 	
 	free(Uraster);
 	free(Vraster);

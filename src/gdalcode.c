@@ -201,29 +201,31 @@ OGRSpatialReferenceH set_projection(
 				gds->Dy = (gds->Lat1 - gds->Lat2) / gds->Ny;
 				gds->Dx = (gds->Lon1 + gds->Lon2) / gds->Nx;
 			
-				if (gds->Lat2 < gds->Lat1) {
-					MinX = gds->Lon2;
+				if (gds->Lat2 < gds->Lat1)
 					MinY = gds->Lat2;
-				}
-				else {
-					MinX = gds->Lon1;
+				else
 					MinY = gds->Lat1;
-				}
 				
-				gds->Dx = 360.0 / (double)gds->Nx;
+				if (gds->Lon2 < gds->Lon1)
+					MinX = gds->Lon2;
+				else
+					MinX = gds->Lon1;
+					
+				//gds->Dx = (gds->Lon1 - gds->Lon2) / (double)gds->Nx;
 				set_geotransform(hDS, MinX + gds->Dx / 2.0, gds->Dx, 0.0,
 											    		MinY + gds->Dy / 2.0, gds->Dy, 0.0);
 			}
 			
 			else {
-				if (gds->Lat2 < gds->Lat1) {
-					MinX = gds->Lon2;
+				if (gds->Lat2 < gds->Lat1)
 					MinY = gds->Lat2;
-				}
-				else {
-					MinX = gds->Lon1;
+				else
 					MinY = gds->Lat1;
-				}
+				
+				if (gds->Lon2 < gds->Lon1)
+					MinX = gds->Lon2;
+				else
+					MinX = gds->Lon1;
 				
 				set_geotransform(hDS, MinX, gds->Dx, 0.0,
 											    		MinY, gds->Dy, 0.0);
