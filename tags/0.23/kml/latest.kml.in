@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+	<name>x@www@</name>
+	<visibility>1</visibility>
+	<ScreenOverlay>
+		<name>logo</name>
+		<visibility>1</visibility>
+		<Icon>
+			<href>http://atmos.ucsd.edu/images/sdsu.gif</href>
+		</Icon>
+		<overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+		<screenXY x="0" y="37" xunits="fraction" yunits="insetPixels"/>
+  </ScreenOverlay>
+	<ScreenOverlay>
+		<name>logo</name>
+		<visibility>1</visibility>
+		<Icon>
+			<href>http://atmos.ucsd.edu/images/calit2_logo_32.png</href>
+		</Icon>
+		<overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+		<screenXY x="0" y="90" xunits="fraction" yunits="insetPixels"/>
+  </ScreenOverlay>
+	<NetworkLink>
+		<name>hurricane wind speed probability</name>
+		<visibility>1</visibility>
+		<Url>
+			<href>@www@/kml/forecaster-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>.5 Degree global GFS</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/gfs-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>12km nam conus</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_conus-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>20km ruc2 conus</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/ruc2-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km nam Alaska</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_ak-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km nam east</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_east-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km nam Hawaii</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_hi-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km nam Puerto Rico</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_pr-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km nam west</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_west-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>Sea Surface Temperature</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/sst.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km Real Time Model Analysis CONUS</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/rtma_conus-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km Real Time Model Analysis Alaska</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/rtma_ak-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>Wind Wave N Hemesphere</name>
+		<visibility>1</visibility>
+		<Url>
+			<href>@www@/kml/windwave-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>Satellite Imagery</name>
+		<visibility>1</visibility>
+		<Url>
+			<href>@www@/kml/satz-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>1 deg Global NOGAPS</name>
+		<visibility>1</visibility>
+		<Url>
+			<href>@www@/kml/nogaps-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<Folder>
+		<name>Latest Nexrad Base Reflectivity Mosaic</name>
+		<visibility>0</visibility>
+		<Style>
+			<ListStyle>
+				<listItemType>radioFolder</listItemType>
+				<bgColor>00ffffff</bgColor>
+			</ListStyle>
+		</Style>
+		<NetworkLink>
+			<name>Latest Nexrad Base Reflectivity Mosaic</name>
+			<Url>
+				<href>http://@www@/kml/radar/N0R.kml</href>
+			</Url>
+		</NetworkLink>
+		<Folder>
+			<name>off</name>
+			<visibility>0</visibility>
+		</Folder>
+	</Folder>
+</Document>
+</kml>
+
+	

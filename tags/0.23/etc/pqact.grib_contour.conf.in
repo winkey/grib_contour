@@ -1,0 +1,72 @@
+CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
+	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
+CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
+	EXEC	@bindir@/gfs2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
+
+CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS03|WXTZ03|WXTR03|WXTP03|PR03|PMSL)/(0) - NONE!
+	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
+CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS03|WXTZ03|WXTR03|WXTP03|PR03|PMSL)/(0) - NONE!
+	EXEC	@bindir@/gfs2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
+
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(HGHT|TMPK|RELH|UREL|VREL)/(925|850|700|500|300) hPa PRES
+	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(HGHT|TMPK|RELH|UREL|VREL)/(925|850|700|500|300) hPa PRES
+	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
+
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(CAPE|PWTR|PMSL)/(0) - NONE
+	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(CAPE|PWTR|PMSL)/(0) - NONE
+	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
+
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(WXTS|WXTZ|WXTR|WXTP|P03M)/(0) - NONE
+	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(WXTS|WXTZ|WXTR|WXTP|P03M)/(0) - NONE
+	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
+
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(POPF03|TSTM03|POP03|POPZ03)/(0) - NONE
+	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(POPF03|TSTM03|POP03|POPZ03)/(0) - NONE
+	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
+
+
+NGRID	^[LM]DG[A-Z]98 KNHC .* !grib2/ncep/FORECASTER/#000/([0-9]{8})([0-9][0-9])00F([0-9]{3})/SPED[0-9]*00(17|25|32)P.*
+	FILE	data/ngrid/forecaster/\1\2.\2.\3.\4.grib2
+NGRID	^[LM]DG[A-Z]98 KNHC .* !grib2/ncep/FORECASTER/#000/([0-9]{8})([0-9][0-9])00F([0-9]{3})/SPED[0-9]*00(17|25|32)P.*
+	EXEC	-wait /usr/local/bin/forecaster.sh data/ngrid/forecaster/\1\2.\2.\3.\4.grib2 \2 \3 \4
+
+CONDUIT	^data/nccf/com/(ruc/prod/ruc2a.[0-9]*)/ruc2.t([0-9][0-9])z.pgrb20[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
+	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
+CONDUIT	^data/nccf/com/(ruc/prod/ruc2a.[0-9]*)/ruc2.t([0-9][0-9])z.pgrb20[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
+	EXEC	@bindir@/ruc2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
+
+CONDUIT	^data/nccf/com/(ruc/prod/ruc2a.[0-9]*)/ruc2.t([0-9][0-9])z.pgrb20[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(CAPE|PWTR|MMSL)/(0) - NONE!
+	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
+CONDUIT	^data/nccf/com/(ruc/prod/ruc2a.[0-9]*)/ruc2.t([0-9][0-9])z.pgrb20[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(CAPE|PWTR|MMSL)/(0) - NONE!
+	EXEC	@bindir@/ruc2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
+
+NGRID	^L[A-Z][AM]A98 KWBR .* !grib2/ncep/RTMA/#201/([0-9]{8})([0-9]{2})00F000/(DRCT|SPED|UREL|VREL|TMPK|DWPK)/
+	FILE	data/ngrid/rtma/201/\1\2.\2.\3.grib2
+NGRID	^L[A-Z][AM]A98 KWBR .* !grib2/ncep/RTMA/#201/([0-9]{8})([0-9]{2})00F000/(DRCT|SPED|UREL|VREL|TMPK|DWPK)/
+	EXEC	@bindir@/rtma_ak.sh data/ngrid/rtma/201/\1\2.\2.\3.grib2 \2 \3
+
+NGRID	^L[A-Z][AM]A98 KWBR .* !grib2/ncep/RTMA/#227/([0-9]{8})([0-9]{2})00F000/(DRCT|SPED|UREL|VREL|TMPK|DWPK)/
+	FILE	data/ngrid/rtma/227/\1\2.\2.\3.grib2
+NGRID	^L[A-Z][AM]A98 KWBR .* !grib2/ncep/RTMA/#227/([0-9]{8})([0-9]{2})00F000/(DRCT|SPED|UREL|VREL|TMPK|DWPK)/
+	EXEC	@bindir@/rtma_conus.sh data/ngrid/rtma/227/\1\2.\2.\3.grib2 \2 \3
+
+NGRID	^E[A-Z]{3}88 KWBJ .* !grib2/ncep/11/#231/([0-9]{8})([0-9]{2})00F([0-9]*)/(HGHTWW|PERDWW|HTSGW|UREL|VREL)/0 - NONE
+	FILE	data/ngrid/ww/231/\1.\2.\3.\4.grib2
+NGRID	^E[A-Z]{3}88 KWBJ .* !grib2/ncep/11/#231/([0-9]{8})([0-9]{2})00F([0-9]*)/(HGHTWW|PERDWW|HTSGW|UREL|VREL)/0 - NONE
+	EXEC	@bindir@/ww.sh data/ngrid/ww/231/\1.\2.\3.\4.grib2 \1 \2 \3 \4
+
+
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/([0-9]*).mb
+	FILE	data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/([0-9]*).mb
+	EXEC	@bindir@/ecmwf.sh data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib \1 \2 \3 \4 \5 \6
+	
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
+	FILE	data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib
+#HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
+#	EXEC	@bindir@/ecmwf.sh data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
+
