@@ -53,6 +53,7 @@ dist_pkgdata_DATA = \
 	nam_pr.config.sh \
 	nam_west.config.sh \
 	windwave.config.sh \
+	nogaps.config.sh \
 	sst.config.sh
 	
 

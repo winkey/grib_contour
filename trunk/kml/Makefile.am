@@ -31,6 +31,8 @@ www_DATA = \
 	sst.kml \
 	windwave.kml \
 	windwave-latest.kml \
+	nogaps.kml \
+	nogaps-latest.kml \
 	ecmwf.kml \
 	ecmwf-latest.kml
 
@@ -113,6 +115,12 @@ windwave.kml: ../scripts/mkkml_nolevel.sh ../share/windwave.config.sh Makefile
 	
 windwave-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/windwave.config.sh Makefile
 	../scripts/mkkml_nolevel-latest.sh ../share/windwave.config.sh
+
+nogaps.kml: ../scripts/mkkml.sh ../share/nogaps.config.sh Makefile
+	../scripts/mkkml.sh ../share/nogaps.config.sh
+	
+nogaps-latest.kml: ../scripts/mkkml-latest.sh ../share/nogaps.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nogaps.config.sh
 
 master.kml: master.kml.in Makefile
 	$(do_subst) < $(srcdir)/master.kml.in > master.kml

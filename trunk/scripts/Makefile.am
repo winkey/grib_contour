@@ -19,6 +19,7 @@ bin_SCRIPTS = \
 	ruc2.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
+	nogaps.sh \
 	ww.sh \
 	ecmwf.sh \
 	mkkml.sh \
@@ -51,6 +52,7 @@ EXTRA_DIST = \
 	ruc2.in \
 	rtma_ak.in \
 	rtma_conus.in \
+	nogaps.in \
 	ww.in \
 	ecmwf.in \
 	mkkml.in \
@@ -84,6 +86,7 @@ dist_bin_SCRIPTS = \
 	rtma_ak.sh \
 	rtma_conus.sh \
 	ww.sh \
+	nogaps.sh \
 	ecmwf.sh \
 	mkkml.sh \
 	mkpage.sh \
@@ -168,6 +171,10 @@ rtma_conus.sh: rtma_conus.in Makefile
 ww.sh: ww.in Makefile
 	$(do_subst) < $(srcdir)/ww.in > ww.sh
 	chmod +x ww.sh
+
+nogaps.sh: nogaps.in Makefile
+	$(do_subst) < $(srcdir)/nogaps.in > nogaps.sh
+	chmod +x nogaps.sh
 
 ecmwf.sh: ecmwf.in Makefile
 	$(do_subst) < $(srcdir)/ecmwf.in > ecmwf.sh

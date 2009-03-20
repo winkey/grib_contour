@@ -16,7 +16,7 @@
 source /etc/profile
 source ~/.profile
 
-export PATH="$PATH:/usr/local/bin"
+export PATH="$PATH:@bindir@"
 
 script=$(basename ${0})
 
