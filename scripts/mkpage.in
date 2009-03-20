@@ -47,6 +47,18 @@ EOF
   
   done
 done
+
+echo "$products2" | while read prod_n prod_fn
+do
+
+cat >> "$outfile" <<EOF
+  <div>
+    <h4>${lev_fn} ${prod_fn}</a></h4>
+    <a href="kml/screenshot/${name}_${prod_n}.jpg">
+      <img src="kml/screenshot/${name}_${prod_n}.png" alt=screenshot>
+    </a>
+  </div>
+EOF
+  
+done
 echo "</div>" >> "$outfile"
-
-

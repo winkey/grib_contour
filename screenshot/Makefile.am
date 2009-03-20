@@ -10,6 +10,8 @@ EXTRA_DIST = \
 $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nam_east.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_west.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_ak.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
@@ -19,6 +21,8 @@ www_DATA := \
 $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nam_east.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_west.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_ak.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
@@ -33,6 +37,12 @@ nam_conus_%.jpg:
 
 nam_east_%.jpg: 
 	../scripts/mkscreenshot.sh ../share/nam_east.config.sh
+
+nam_west_%.jpg: 
+	../scripts/mkscreenshot.sh ../share/nam_west.config.sh
+
+nam_ak_%.jpg: 
+	../scripts/mkscreenshot.sh ../share/nam_ak.config.sh
 
 ruc2_%.jpg: ../scripts/mkscreenshot.sh
 	../scripts/mkscreenshot.sh ../share/ruc2.config.sh

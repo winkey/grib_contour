@@ -27,9 +27,9 @@ www="@www@/kml/sst"
 gribfile="rtgssthr_grb_0.083_awips.grib2"
 
 
-if [[ ! -d "${wwwdisk}/" ]]
+if [[ ! -d "${wwwdisk}/${run}" ]]
 then
-	mkdir -p "${wwwdisk}/"
+	mkdir -p "${wwwdisk}/${run}"
 fi
 
 if ! getgrib "${servb}/sst.${datee}" "$gribfile"
@@ -37,10 +37,12 @@ then
 	exit
 fi
 
+gribfile="/tmp/${gribfile}"
+
 mkrootkml "${level}sst"
 
-plot "${tmp}/${gribfile}" "sst" 1 .75 0 24
+plot "${gribfile}" "sst" 1 .75 0 24
 
-rm "${tmp}/${gribfile}"
+rm "${gribfile}"
 
 

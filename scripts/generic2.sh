@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -15,6 +15,8 @@
 
 source /etc/profile
 source ~/.profile
+
+export PATH="$PATH:/usr/local/bin"
 
 script=$(basename ${0})
 
@@ -100,12 +102,12 @@ EOF
 
 	##### check the latest link #####
 	
-	if [ !-h "${wwwdisk}/latest" ]
+	if [ ! -h "${wwwdisk}/latest" ]
 	then
 		rm ${wwwdisk}/latest
 	fi
 
-	ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"	
+	ln -s "${wwwdisk}/${run}" -T "${wwwdisk}/latest"	
 
 
 }
