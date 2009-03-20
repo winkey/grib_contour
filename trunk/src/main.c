@@ -30,6 +30,7 @@
 
 #include "options.h"
 #include "grib.h"
+#include "gribdump.h"
 #include <libkml/libKML.h>
 #include "color.h"
 #include "ogrcode.h"
@@ -74,33 +75,66 @@ int main(int argc, char **argv)
 	
 	/***** get the raster(s) *****/
 	
-	if (o.wind) {
-		for (i = 0; i < o.count ; i++) {
-			fprintf(stderr, "do_wind_grib\n");
-			raster[i] = do_wind_grib(&o, o.ugribfile[i], o.ugribfile[i],
-															 o.ugribmsg[i], o.vgribmsg[i], gds + i);
+	if (!o.quasi) {
+		if (o.wind) {
+			for (i = 0; i < o.count ; i++) {
+				fprintf(stderr, "do_wind_grib\n");
+				raster[i] = do_wind_grib(&o, o.ugribfile[i], o.ugribfile[i],
+																 o.ugribmsg[i], o.vgribmsg[i], gds + i);
+			}
+		}
+		else if (o.and) {
+			for (i = 0; i < o.count ; i++) {
+				fprintf(stderr, "do_and_grib\n");
+				raster[i] = do_and_grib(&o, o.ugribfile[i], o.ugribfile[i],
+																o.ugribmsg[i], o.vgribmsg[i], gds + i);
+			}
+		}
+		else if (o.diff) {
+			for (i = 0; i < o.count ; i++) {
+				fprintf(stderr, "do_diff_grib\n");
+				raster[i] = do_diff_grib(&o, o.ugribfile[i], o.ugribfile[i],
+																o.ugribmsg[i], o.vgribmsg[i], gds + i);
+			}
+		}
+		else {
+			for (i = 0; i < o.count ; i++) {
+				fprintf(stderr, "do_grib\n");
+				raster[i] = do_grib(&o, o.gribfile[i], o.gribmsg[i], gds + i);
+			}
 		}
 	}
-	else if (o.and) {
-		for (i = 0; i < o.count ; i++) {
-			fprintf(stderr, "do_and_grib\n");
-			raster[i] = do_and_grib(&o, o.ugribfile[i], o.ugribfile[i],
-															o.ugribmsg[i], o.vgribmsg[i], gds + i);
-		}
-	}
-	else if (o.diff) {
-		for (i = 0; i < o.count ; i++) {
-			fprintf(stderr, "do_diff_grib\n");
-			raster[i] = do_diff_grib(&o, o.ugribfile[i], o.ugribfile[i],
-															o.ugribmsg[i], o.vgribmsg[i], gds + i);
-		}
-	}
+	
 	else {
-		for (i = 0; i < o.count ; i++) {
-			fprintf(stderr, "do_grib\n");
-			raster[i] = do_grib(&o, o.gribfile[i], o.gribmsg[i], gds + i);
+		if (o.wind) {
+			for (i = 0; i < o.count ; i++) {
+				fprintf(stderr, "do_wind_grib\n");
+				raster[i] = do_wind_gribdump(&o, o.ugribfile[i], o.ugribfile[i],
+																 o.ugribmsg[i], o.vgribmsg[i], o.quasi, gds + i);
+			}
+		}
+		else if (o.and) {
+			for (i = 0; i < o.count ; i++) {
+				fprintf(stderr, "do_and_grib\n");
+				raster[i] = do_and_gribdump(&o, o.ugribfile[i], o.ugribfile[i],
+																o.ugribmsg[i], o.vgribmsg[i], o.quasi, gds + i);
+			}
+		}
+		else if (o.diff) {
+			for (i = 0; i < o.count ; i++) {
+				fprintf(stderr, "do_diff_grib\n");
+				raster[i] = do_diff_gribdump(&o, o.ugribfile[i], o.ugribfile[i],
+																o.ugribmsg[i], o.vgribmsg[i], o.quasi, gds + i);
+			}
+		}
+		else {
+			for (i = 0; i < o.count ; i++) {
+				fprintf(stderr, "do_grib\n");
+				raster[i] = do_gribdump(&o, o.gribfile[i], o.gribmsg[i], o.quasi, gds + i);
+			}
 		}
 	}
+	
 	/***** get the color scale *****/
 	
 	fprintf(stderr, "color_getscale\n");

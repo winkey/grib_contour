@@ -42,9 +42,7 @@ EXTRA_DIST = \
 	rtma_conus.kml.in \
 	rtma_conus-latest.kml.in \
 	rtma_ak.kml.in \
-	rtma_ak-latest.kml.in \
-	ecmwf.kml.in \
-	ecmwf-latest.kml.in
+	rtma_ak-latest.kml.in
 	
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
 							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
@@ -122,6 +120,12 @@ nogaps.kml: ../scripts/mkkml.sh ../share/nogaps.config.sh Makefile
 nogaps-latest.kml: ../scripts/mkkml-latest.sh ../share/nogaps.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/nogaps.config.sh
 
+ecmwf.kml: ../scripts/mkkml.sh ../share/ecmwf.config.sh Makefile
+	../scripts/mkkml.sh ../share/ecmwf.config.sh
+	
+ecmwf-latest.kml: ../scripts/mkkml-latest.sh ../share/ecmwf.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/ecmwf.config.sh
+
 master.kml: master.kml.in Makefile
 	$(do_subst) < $(srcdir)/master.kml.in > master.kml
 
@@ -140,11 +144,6 @@ rtma_ak.kml: rtma_ak.kml.in Makefile
 rtma_ak-latest.kml: rtma_ak-latest.kml.in Makefile
 	$(do_subst) < $(srcdir)/rtma_ak-latest.kml.in > rtma_ak-latest.kml
 
-ecmwf.kml: ecmwf.kml.in Makefile
-	$(do_subst) < $(srcdir)/ecmwf.kml.in > ecmwf.kml
-
-ecmwf-latest.kml: ecmwf-latest.kml.in Makefile
-	$(do_subst) < $(srcdir)/ecmwf-latest.kml.in > ecmwf-latest.kml
 
 
 ## File created by the gnome-build tools

@@ -296,6 +296,35 @@ function andplot {
 	
 }
  
+function diffplot {
+	ufile="$1"
+	vfile="$2"
+	name="$3"
+	umsg=$4
+	vmsg=$5
+	interval=$6
+	timee=$7
+	incr=$8
+	extra="$7"
+	
+	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+	kml="${name}${timee}.kml"
+	
+	if [[ -f "$zip" ]]
+	then
+		rm "$zip"
+	fi
+	
+	nice -n 10 grib_contour -d -u "${ufile}" -v "${vfile}" \
+													-U $umsg -V $vmsg \
+													-i $interval -s $name \
+													-k $kml -z "$zip" \
+													$extra
+	
+	appendkml $name $timee $incr $grid
+	
+}
+ 
 
 ################################################################################
 #	function to fetch the grib file

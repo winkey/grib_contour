@@ -34,7 +34,9 @@ grib_contour_SOURCES = \
 	contour.c        \
 	contour.h        \
 	merge.c        \
-	merge.h
+	merge.h        \
+	gribdump.c        \
+	gribdump.h
 
 grib_contour_LDFLAGS =          \
 	-lgdal          \
