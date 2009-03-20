@@ -1,11 +1,10 @@
 /***************************************************************************
- *            ogrcode.c
+ *            ogrcode.h
  *
  *  Wed Jan 16 11:25:01 2008
  *  Copyright  2008  winkey
  *  <rush@winkey.org>
  ****************************************************************************/
-
 /*
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,14 +20,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
+ 
+#ifndef _OGRCODE_H
+#define _OGRCODE_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <gdal.h>
+#include <cpl_conv.h>
+#include <ogr_api.h>
+#include <ogr_srs_api.h>
 
-#include "grib.h"
-#include "ogrcode.h"
-
-#define DEBUG 0
 
 /*******************************************************************************
 	function to get the spacial referance from a raster
@@ -41,17 +41,7 @@
 *******************************************************************************/
 
 OGRSpatialReferenceH get_srs(
-	GDALDatasetH hband)
-{
-	OGRSpatialReferenceH hSRS = NULL;
-	
-	const char *wkt = GDALGetProjectionRef(hband);
-	
-	if(wkt && *wkt)
-		hSRS = OSRNewSpatialReference(wkt);
-	
-	return hSRS;
-}
+	GDALDatasetH hband);
 
 /*******************************************************************************
 	function to fetch a ogr driver
@@ -60,22 +50,11 @@ OGRSpatialReferenceH get_srs(
 						driver		the name of the ogr driver
 	
 	returns:
-						the ogr driver
+						OGRSFDriverH
 *******************************************************************************/
 
 OGRSFDriverH get_driver(
-	char *driver)
-{
-	
-	OGRSFDriverH hDriver = NULL;
-	
-	if(!(hDriver = OGRGetDriverByName(driver))) {
-		fprintf(stderr, "ERROR: Unable to find the %s driver\n", driver);
-		exit(EXIT_FAILURE);
-	}
-	
-	return hDriver;
-}
+	char *driver);
 
 /*******************************************************************************
 	create the ogr output data source
@@ -90,17 +69,7 @@ OGRSFDriverH get_driver(
 
 OGRDataSourceH create_datasource(
 	OGRSFDriverH hDriver,
-	char *dst_file)
-{
-	OGRDataSourceH hDS = NULL;
-		
-	if (!(hDS = OGR_Dr_CreateDataSource(hDriver, dst_file, NULL))) {
-		fprintf(stderr, "ERROR: Unable to to create data source: %s\n", dst_file);
-		exit(EXIT_FAILURE);
-	}
-	
-	return hDS;
-}
+	char *dst_file);
 
 /*******************************************************************************
 	function to create the ogr layer
@@ -119,17 +88,8 @@ OGRLayerH create_layer(
 	OGRDataSourceH hDS,
 	const char *name,
 	OGRSpatialReferenceH hSRS,
-	OGRwkbGeometryType type)
-{
-	OGRLayerH hLayer;
-	
-	if (!(hLayer = OGR_DS_CreateLayer(hDS, name, hSRS, type, NULL))) {
-		fprintf(stderr, "ERROR: Unable to create layer\n");
-		exit(EXIT_FAILURE);
-	}
-	
-	return hLayer;
-}
+	OGRwkbGeometryType type);
+
 
 /*******************************************************************************
 	function to create a ogr field
@@ -150,19 +110,8 @@ void create_field(
 	OGRFieldType eType,
 	int width,
 	int precision,
-	OGRLayerH hLayer)
-{
-	printf("create field %s %i\n", name, width);
-	OGRFieldDefnH hFld = OGR_Fld_Create(name, eType);
-	OGR_Fld_SetWidth(hFld, width);
-	if (eType != OFTInteger)
-		OGR_Fld_SetPrecision(hFld, precision);
-	OGR_L_CreateField(hLayer, hFld, FALSE);
-	OGR_Fld_Destroy(hFld);
-	
-	return;
-}
-	
+	OGRLayerH hLayer);
+
 /*******************************************************************************
 	function to set up coord transformation
 	
@@ -176,25 +125,7 @@ void create_field(
 
 OGRCoordinateTransformationH *create_coord_transform(
 	OGRSpatialReferenceH hSrcSRS,
-	OGRSpatialReferenceH hDstSRS)
-{																									
-	OGRCoordinateTransformationH *hTransform = NULL;
-	
-	if (!(hTransform = OCTNewCoordinateTransformation(hSrcSRS, hDstSRS))) {
-		fprintf (stderr, "ERROR can't create transformation\n");
-		exit(EXIT_FAILURE);
-	}
-		
-	char *wkt;
-	
-	OSRExportToWkt(hSrcSRS, &wkt);
-	if (DEBUG) fprintf(stderr, "SrcWKT =\n%s\n\n", wkt);
-	
-	OSRExportToWkt(hDstSRS, &wkt);
-	if (DEBUG) fprintf(stderr, "DstWKT =\n%s\n\n", wkt);
-	
-	return hTransform;
-}
+	OGRSpatialReferenceH hDstSRS);
 
 /*******************************************************************************
 	function to translate a feature from one ogr format to another
@@ -209,16 +140,7 @@ OGRCoordinateTransformationH *create_coord_transform(
 
 void translate_feature(
 	OGRFeatureH hDstFeat,
-	OGRFeatureH hSrcFeat)
-{
-	
-	if (OGR_F_SetFrom(hDstFeat, hSrcFeat, TRUE) != OGRERR_NONE) {
-		fprintf(stderr, "WARNING: Unable to translate feature %ld\n",
-						OGR_F_GetFID(hSrcFeat));
-	}
-	
-	return;
-}
+	OGRFeatureH hSrcFeat);
 
 /*******************************************************************************
 	function to transform the geometry of a feature
@@ -232,19 +154,7 @@ void translate_feature(
 
 void transform_feature(
 	OGRFeatureH hDstFeat,
-	OGRCoordinateTransformationH *hTransform)
-{
-	OGRGeometryH *Dstgeom = NULL;
-	
-	if ((Dstgeom = OGR_F_GetGeometryRef(hDstFeat))) {
-		if (OGRERR_NONE != OGR_G_Transform(Dstgeom, hTransform)) {
-			fprintf(stderr, "WARNING: Failed to transform feature %ld.\n",
-							OGR_F_GetFID(hDstFeat));
-		}
-	}
-	
-	return;
-}
+	OGRCoordinateTransformationH *hTransform);
 
 /*******************************************************************************
 	function to add a new feature to a layer
@@ -258,15 +168,8 @@ void transform_feature(
 
 void add_feature(
 	OGRLayerH hDstLayer,
-	OGRFeatureH hDstFeat)
-{
-	
-	if (OGR_L_CreateFeature(hDstLayer, hDstFeat) != OGRERR_NONE) {
-		fprintf(stderr, "WARNING: Failed to transform feature %ld.\n",
-						OGR_F_GetFID(hDstFeat));
-	}
-	
-	return;
-}
+	OGRFeatureH hDstFeat);
 
-		
+
+
+#endif /* _OGRCODE_H */

@@ -28,6 +28,7 @@
 #include <errno.h>
 
 #include "grib.h"
+#include "error.h"
 
 #define DEBUG 1
 
@@ -55,10 +56,8 @@ FILE *grib_open(
 						"degrib -in \"%s\" -out stdout -C -Unit %c -msg %f -Csv",
 						gribfile, unit, msg);
 	
-	if (!(result = popen(cmd, "r"))) {
-		fprintf(stderr, "ERROR: grib_open: %s", strerror(errno));
-		exit(EXIT_FAILURE);
-	}
+	if (!(result = popen(cmd, "r")))
+		ERROR("grib_open");
 	
 	return result;
 }
@@ -194,10 +193,8 @@ float *grib_read(
 		
 		else if (!strncmp (line, "GDS | ", 6))
 			if (grib_gds(line + 6, gds))
-				if (!(result = malloc(sizeof(float) * gds->Npoints))) {
-					fprintf(stderr, "ERROR: grib_read: %s", strerror(errno));
-					exit(EXIT_FAILURE);
-				}
+				if (!(result = malloc(sizeof(float) * gds->Npoints)))
+					ERROR("grib_read");
 	}
 	
 	return result;

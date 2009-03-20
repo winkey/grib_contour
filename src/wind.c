@@ -28,11 +28,13 @@
 #include <stdlib.h>
 
 #include <gdal_alg.h>
+#include <wind.h>
 
 #include "grib.h"
 #include "gdalcode.h"
 #include "ogrcode.h"
 
+#include "error.h"
 
 OGRLayerH contour (
 	OGRSpatialReferenceH hSRS,
@@ -124,6 +126,10 @@ int main(int argc, char **argv)
   FILE *fp = NULL;
   float *raster = NULL;
 	
+	float *Uraster = NULL;
+	float *Vraster = NULL;
+	int i;
+	
   gds_t gds = {};
 	
   GDALDatasetH hDS;
@@ -135,23 +141,48 @@ int main(int argc, char **argv)
   
   /***** check args *****/
   
-  if (argc < 5 || argc > 5) {
-	fprintf(stderr, "USAGE: %s <grib file> <grib msg> <interval> <kml file>\n",
+  if (argc < 6 || argc > 6) {
+	fprintf(stderr, "USAGE: %s <grib file> <grib U msg> <grib V msg> <interval> <kml file>\n",
 			argv[0]);
 	exit(EXIT_FAILURE);
   }
   
   /***** open the grib file *****/
   
-  fp = grib_open(argv[1], atoi(argv[2]), 'm');
+  fp = grib_open(argv[1], atof(argv[2]), 'm');
   
   /***** read the grib raster into memory *****/
   
-  raster = grib_read(fp, &gds);
+  Uraster = grib_read(fp, &gds);
   
 	/***** close the grib file *****/
 	
 	pclose(fp);
+	
+	/***** open the grib file *****/
+  
+  fp = grib_open(argv[1], atof(argv[3]), 'm');
+  
+  /***** read the grib raster into memory *****/
+  
+  Vraster = grib_read(fp, &gds);
+  
+	/***** close the grib file *****/
+	
+	pclose(fp);
+	
+	if (!(raster = malloc(sizeof(float) * gds.Npoints)))
+		ERROR("main");
+	
+	for (i = 0; i < gds.Npoints ; i++) {
+		raster[i] = uv2velocity(Uraster[i], Vraster[i]);
+	}
+	
+	free(Uraster);
+	free(Vraster);
+	
+	
+	
 	
   /***** open the raster in memory as a gdal data set *****/
   
@@ -176,13 +207,13 @@ int main(int argc, char **argv)
 	
 	/***** create the datasource *****/
 	
-	OGRDataSourceH hKmlDS = create_datasource(hKmlDriver, argv[4]);
+	OGRDataSourceH hKmlDS = create_datasource(hKmlDriver, argv[5]);
 	
 	/***** check to see if we can go strait to kml *****/
 	
 	if (gds.proj == GDS_LATLON || gds.proj == GDS_GAUSSIAN_LATLON) {
 		
-		contour (hKmlSRS, hKmlDS, atof(argv[3]), hBand, 2, 3);
+		contour (hKmlSRS, hKmlDS, atof(argv[4]), hBand, 2, 3);
 		
 	}
 	
@@ -204,11 +235,11 @@ int main(int argc, char **argv)
 	
 		/***** create the datasource *****/
 	
-		OGRDataSourceH hMemDS = create_datasource(hMemDriver, argv[4]);
+		OGRDataSourceH hMemDS = create_datasource(hMemDriver, argv[5]);
 		
 		/***** contour *****/
 		
-		OGRLayerH hMemLayer = contour (hMemSRS, hMemDS, atof(argv[3]), hBand, 0, 1);
+		OGRLayerH hMemLayer = contour (hMemSRS, hMemDS, atof(argv[4]), hBand, 0, 1);
 		
 		/***** create the layer to trasnslate too *****/
 		
