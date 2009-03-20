@@ -158,6 +158,26 @@ size_t grib_gds(
 }
 
 /*******************************************************************************
+	function to read a info line
+*******************************************************************************/
+void grib_info(
+	char *line,
+	gds_t *gds)
+{
+	
+	if (1 == sscanf(line, "Missing value management | %i", &(gds->missing))) {
+		if (DEBUG) fprintf (stderr, "missing %i\n", gds->missing);
+	}
+	
+	else if (1 == sscanf(line, "Primary missing value | %lg", &(gds->missing_value))) {
+		if (DEBUG) fprintf (stderr, "missing_value %lg\n", gds->missing_value);
+	}
+	
+	return;
+}
+
+	
+/*******************************************************************************
 	function to read a grib file
 	
 	args:
@@ -193,11 +213,20 @@ float *grib_read(
 		
 		/***** is it a GDS line? *****/
 		
-		else if (!strncmp (line, "GDS | ", 6))
+		else if (!strncmp (line, "GDS | ", 6)) {
 			if (grib_gds(line + 6, gds))
 				if (!(result = malloc(sizeof(float) * gds->Npoints)))
 					ERROR("grib_read");
-	}
+		}
+		
+		/***** is it a Info line? *****/
+		
+		else if (!strncmp (line, "Info | ", 7))
+			grib_info(line + 7, gds);
+				
+
+	} 
+	
 	
 	return result;
 }

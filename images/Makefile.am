@@ -32,7 +32,10 @@ www_DATA = \
 	300wind.png \
 	pwat.png \
 	cape.png \
-	pcp.png
+	pcp.png \
+	prob17.png \
+	prob25.png \
+	prob32.png
 
 
 925t.png: ../share/925t.scale Makefile ../scripts/makekey.sh
@@ -103,4 +106,13 @@ pwat.png: ../share/pwat.scale Makefile ../scripts/makekey.sh
 
 pcp.png: ../share/pcp.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/pcp.scale "kg/m^2" pcp.png
+
+prob17.png: ../share/prob.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/prob.scale "%" prob17.png
+
+prob25.png: ../share/prob.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/prob.scale "%" prob25.png
+
+prob32.png: ../share/prob.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/prob.scale "%" prob32.png
 

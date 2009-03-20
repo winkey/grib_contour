@@ -25,7 +25,9 @@ void contour (
 	OGRLayerH *hLayer,
 	double interval,
 	int id,
-	int elev);
+	int elev,
+	int missing,
+	int missing_value);
 
 void contour2kml(
 	gds_t *gds,

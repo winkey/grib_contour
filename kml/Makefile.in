@@ -30,7 +30,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-subdir = images
+subdir = kml
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -142,34 +142,34 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 www = @WWW@
 wwwdisk = @WWWDISK@
-wwwdir = ${wwwdisk}/kml/images
+wwwdir = ${wwwdisk}/kml
 www_DATA = \
-	925t.png \
-	925hgt.png \
-	925rh.png \
-	925wind.png \
-	850t.png \
-	850hgt.png \
-	850rh.png \
-	850wind.png \
-	700t.png \
-	700hgt.png \
-	700rh.png \
-	700wind.png \
-	500t.png \
-	500hgt.png \
-	500rh.png \
-	500wind.png \
-	300t.png \
-	300hgt.png \
-	300rh.png \
-	300wind.png \
-	pwat.png \
-	cape.png \
-	pcp.png \
-	prob17.png \
-	prob25.png \
-	prob32.png
+	gfs.kml \
+	nam_conus.kml \
+	ruc2.kml \
+	forecaster.kml \
+	nam_ak.kml \
+	nam_east.kml \
+	nam_hi.kml \
+	nam_pr.kml \
+	nam_west.kml \
+	master.kml
+
+EXTRA_DIST = \
+	gfs.kml.in \
+	nam_conus.kml.in \
+	ruc2.kml.in \
+	forecaster.kml.in \
+	nam_ak.kml.in \
+	nam_east.kml.in \
+	nam_hi.kml.in \
+	nam_pr.kml.in \
+	nam_west.kml.in \
+	master.kml.in
+
+do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
+							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
+							 -e 's,[@]www[@],$(www),g'
 
 all: all-am
 
@@ -183,9 +183,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  images/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kml/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  images/Makefile
+	  $(AUTOMAKE) --gnu  kml/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -352,83 +352,36 @@ uninstall-am: uninstall-wwwDATA
 	uninstall-am uninstall-wwwDATA
 
 
-925t.png: ../share/925t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925t.scale "c" 925t.png
+gfs.kml: gfs.kml.in Makefile
+	$(do_subst) < $(srcdir)/gfs.kml.in > gfs.kml
+	chmod +x gfs.kml
 
-925hgt.png: ../share/925hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925hgt.scale "m" 925hgt.png
+nam_conus.kml: nam_conus.kml.in Makefile
+	$(do_subst) < $(srcdir)/nam_conus.kml.in > nam_conus.kml
 
-925rh.png: ../share/925rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925rh.scale "%" 925rh.png
+ruc2.kml: ruc2.kml.in Makefile
+	$(do_subst) < $(srcdir)/ruc2.kml.in > ruc2.kml
 
-925wind.png: ../share/925wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925wind.scale "kts" 925wind.png
+forecaster.kml: forecaster.kml.in Makefile
+	$(do_subst) < $(srcdir)/forecaster.kml.in > forecaster.kml
 
-850t.png: ../share/850t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850t.scale "c" 850t.png
+nam_ak.kml: nam_ak.kml.in Makefile
+	$(do_subst) < $(srcdir)/nam_ak.kml.in > nam_ak.kml
 
-850hgt.png: ../share/850hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850hgt.scale "m" 850hgt.png
+nam_east.kml: nam_east.kml.in Makefile
+	$(do_subst) < $(srcdir)/nam_east.kml.in > nam_east.kml
 
-850rh.png: ../share/850rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850rh.scale "%" 850rh.png
+nam_hi.kml: nam_hi.kml.in Makefile
+	$(do_subst) < $(srcdir)/nam_hi.kml.in > nam_hi.kml
 
-850wind.png: ../share/850wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850wind.scale "kts" 850wind.png
+nam_pr.kml: nam_pr.kml.in Makefile
+	$(do_subst) < $(srcdir)/nam_pr.kml.in > nam_pr.kml
 
-700t.png: ../share/700t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700t.scale "c" 700t.png
+nam_west.kml: nam_west.kml.in Makefile
+	$(do_subst) < $(srcdir)/nam_west.kml.in > nam_west.kml
 
-700hgt.png: ../share/700hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700hgt.scale "m" 700hgt.png
-
-700rh.png: ../share/700rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700rh.scale "%" 700rh.png
-
-700wind.png: ../share/700wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700wind.scale "kts" 700wind.png
-
-500t.png: ../share/500t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500t.scale "c" 500t.png
-
-500hgt.png: ../share/500hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500hgt.scale "m" 500hgt.png
-
-500rh.png: ../share/500rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500rh.scale "%" 500rh.png
-
-500wind.png: ../share/500wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500wind.scale "kts" 500wind.png
-
-300t.png: ../share/300t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300t.scale "c" 300t.png
-
-300hgt.png: ../share/300hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300hgt.scale "m" 300hgt.png
-
-300rh.png: ../share/300rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300rh.scale "%" 300rh.png
-
-300wind.png: ../share/300wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300wind.scale "kts" 300wind.png
-
-cape.png: ../share/cape.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/cape.scale "J/kg" cape.png
-
-pwat.png: ../share/pwat.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pwat.scale "kg/m^2" pwat.png
-
-pcp.png: ../share/pcp.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pcp.scale "kg/m^2" pcp.png
-
-prob17.png: ../share/prob.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/prob.scale "%" prob17.png
-
-prob25.png: ../share/prob.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/prob.scale "%" prob25.png
-
-prob32.png: ../share/prob.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/prob.scale "%" prob32.png
+master.kml: master.kml.in Makefile
+	$(do_subst) < $(srcdir)/master.kml.in > master.kml
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

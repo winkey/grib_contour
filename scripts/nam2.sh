@@ -115,7 +115,7 @@ then
 		mkrootkml "cape"
 	fi
 	
-	plot "$path" "cape" 1 100 $hour 03
+	plot "$path" "cape" 1 200 $hour 03
 	
 	rm "$path"
 fi

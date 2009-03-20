@@ -51,6 +51,8 @@ typedef struct {
 	float tan_Lat2;
 	float S_lat;
 	float S_lon;
+	int missing;
+	double missing_value;
 } gds_t;
 
 /*******************************************************************************
