@@ -13,7 +13,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
 name=nam_hi
-fullname="5 km Resolution Hawaii NAM Forecast Model"
+fullname="0.045 Degree Resolution Hawaii NAM Forecast Model"
 
 description='Data from <a href=\"http://www.ncep.noaa.gov/\">
 National Centers for Environmental Prediction</a> 

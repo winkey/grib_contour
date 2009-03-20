@@ -9,6 +9,7 @@ wwwdir = ${wwwdisk}/kml/screenshot
 EXTRA_DIST = \
 $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_east.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
@@ -17,6 +18,7 @@ $(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$th
 www_DATA := \
 $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_east.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
@@ -28,6 +30,9 @@ gfs_%.jpg: ../scripts/mkscreenshot.sh
 
 nam_conus_%.jpg: 
 	../scripts/mkscreenshot.sh ../share/nam_conus.config.sh
+
+nam_east_%.jpg: 
+	../scripts/mkscreenshot.sh ../share/nam_east.config.sh
 
 ruc2_%.jpg: ../scripts/mkscreenshot.sh
 	../scripts/mkscreenshot.sh ../share/ruc2.config.sh

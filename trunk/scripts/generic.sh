@@ -74,6 +74,14 @@ function mkrootkml {
 	echo '  <description></description>' >> $frames
 	echo '</Folder>' >> $frames
 	echo '</kml>' >> $frames
+	
+	if ! -h "${wwwdisk}/latest"
+	then
+		rm ${wwwdisk}/latest
+	fi
+
+	ln -sf "${wwwdisk}/${run}" "${wwwdisk}/latest"	
+
 }
 
 ################################################################################
@@ -192,7 +200,7 @@ function windplot {
 		rm "$zip"
 	fi
 	
-	grib_contour -w -u "${ufile}" -v "${vfile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
+	echo grib_contour -w -u "${tmp}/${ufile}" -v "${tmp}/${vfile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
 	
 	appendkml $name $timee
 
@@ -228,7 +236,7 @@ function andplot {
 		rm "$zip"
 	fi
 	
-	grib_contour -a -u "${ufile}" -v "${vfile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
+	grib_contour -a -u "${tmp}/${ufile}" -v "${tmp}/${vfile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
 	
 	appendkml $name $timee
 

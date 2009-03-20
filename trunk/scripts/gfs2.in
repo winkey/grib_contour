@@ -132,7 +132,7 @@ then
 		mkrootkml "pcp"
 	fi
 	
-	plot "$path" "pcp" 1 4 $hour 03
+	plot "$path" "pcp" 1 1 $hour 03
 	rm "$path"
 fi
 
