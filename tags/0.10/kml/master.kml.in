@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Document>
+	<name>@www@</name>
+	<NetworkLink>
+		<name>hurricane wind speed probability</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/forecaster.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>.5 Degree global GFS</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/gfs.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>12km nam conus</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_conus.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>20km ruc2 conus</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/ruc2.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km nam Alaska</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_ak.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km nam east</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_east.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km nam Hawaii</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_hi.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km nam Puerto Rico</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_pr.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>5km nam west</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/nam_west.kml</href>
+		</Url>
+	</NetworkLink>
+</Document>
+</kml>
+
+	
