@@ -22,6 +22,10 @@ www="http://winkey.org/weather/kml/nam_pr/"
 
 times=`seq 0 3 48`
 
+if [[ ! -d "${wwwdisk}/${run}" ]]
+then
+	mkdir -p "${wwwdisk}/${run}"
+fi
 
 function doplot {
 	datee=$1

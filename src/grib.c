@@ -26,7 +26,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <wind.h>
 
+#include "options.h"
 #include "grib.h"
 #include "error.h"
 
@@ -198,4 +200,64 @@ float *grib_read(
 	}
 	
 	return result;
+}
+
+float *do_grib(
+	options *o,
+	gds_t *gds)
+{
+	FILE *fp = NULL;
+	float *raster;
+	
+  /***** open the grib file *****/
+  
+  fp = grib_open(o->gribfile, o->gribmsg, 'm');
+  
+  /***** read the grib raster into memory *****/
+  
+  raster = grib_read(fp, gds);
+  
+	/***** close the grib file *****/
+	
+	pclose(fp);
+	
+	return raster;
+}
+
+float *do_wind_grib(
+	options *o,
+	gds_t *gds)
+{
+	FILE *Ufp = NULL;
+	FILE *Vfp = NULL;
+	float *raster;
+	float *Uraster = NULL;
+	float *Vraster = NULL;
+	int i;
+	
+  /***** open the grib file *****/
+  
+  Ufp = grib_open(o->ugribfile, o->ugribmsg, 'e');
+  Vfp = grib_open(o->vgribfile, o->vgribmsg, 'e');
+  
+  /***** read the grib raster into memory *****/
+  
+  Uraster = grib_read(Ufp, gds);
+  Vraster = grib_read(Vfp, gds);
+  
+	/***** close the grib file *****/
+	
+	pclose(Ufp);
+	pclose(Vfp);
+	
+	if (!(raster = malloc(sizeof(float) * gds->Npoints)))
+		ERROR("main");
+	
+	for (i = 0; i < gds->Npoints ; i++)
+		raster[i] = uv2velocity(Uraster[i], Vraster[i]);
+	
+	free(Uraster);
+	free(Vraster);
+	
+	return raster;
 }

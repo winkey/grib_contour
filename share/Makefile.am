@@ -24,7 +24,8 @@ dist_pkgdata_DATA = \
 	700wind.scale \
 	850wind.scale \
 	925wind.scale \
-	pwat.scale
+	pwat.scale \
+	pcp.scale
 
 ## File created by the gnome-build tools
 

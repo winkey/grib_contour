@@ -48,12 +48,12 @@ fi
 ##### get label start pos #####
 
 lablen=`echo -n $lable | wc -c`
-stx=$(($width-6*$lablen))
+stx=$(($width - 7 - 4 * $lablen))
 
 
 
 
-args=(-size ${width}x36 xc:white -font Monotype-Corsiva)
+args=(-size ${width}x36 xc:white )
 
 while read value color
 do
@@ -68,7 +68,7 @@ do
 	if [ "$(($xx-4-$len*4))" -gt "$last" ] && [ "$(($xx+4+$len*4))" -lt "$stx" ]
 	then
 		tx=$(($xx-4*$mylen))
-		args=("${args[@]}" -pointsize 16 -fill black -draw "text ${tx},35 '${value}'")
+		args=("${args[@]}" -pointsize 14 -fill black -draw "text ${tx},34 '${value}'")
 		last=$(($xx+4*$len))
 	fi
 	
@@ -77,7 +77,7 @@ done < $scale
 
 ##### draw label #####
 
-args=("${args[@]}" -pointsize 14 -fill black -draw "text ${stx},33 '${lable}'")
+args=("${args[@]}" -pointsize 12 -fill black -draw "text ${stx},33 '${lable}'")
 
 
 ##### build the image #####

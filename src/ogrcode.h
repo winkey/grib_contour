@@ -179,5 +179,9 @@ void transform(
 	OGRLayerH hsrcLayer,
 	OGRSpatialReferenceH hdstSRS,
 	OGRLayerH hdstLayer);
-	
+
+void ogr2kml(
+	OGRLayerH hLayer,
+	buffer *kmlbuf,
+	color_scale *cscales);
 #endif /* _OGRCODE_H */

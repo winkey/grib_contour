@@ -30,6 +30,7 @@
 #include <ogr_api.h>
 #include <ogr_srs_api.h>
 
+#include "options.h"
 #include "grib.h"
 #include "gdalcode.h"
 #include "error.h"
@@ -312,3 +313,75 @@ GDALRasterBandH get_band(
 	
 	return band;
 }
+
+GDALDatasetH do_gdal(
+	float *raster,
+	gds_t *gds,
+	OGRSpatialReferenceH *hSrcSRS,
+	GDALRasterBandH *hBand)
+{
+	
+	/***** open the raster in memory as a gdal data set *****/
+  
+  GDALDatasetH hDS = raster_open_mem(raster, gds->Nx, gds->Ny);
+  
+  /***** set the projection *****/
+  
+  *hSrcSRS = set_projection(hDS, gds);
+  
+	/***** get the raster band *****/
+	
+	*hBand = get_band(hDS, 1);
+	
+	return hDS;
+}
+
+/*******************************************************************************
+	function to get a gdal driver by its name
+	
+	args:
+						name			the name of the driver
+	
+	returns:
+						the gdal driver
+*******************************************************************************/
+
+GDALDriverH gdal_get_driver_by_name (
+	char *name)
+{
+	GDALDriverH hDriver;
+	
+	if(!(hDriver = GDALGetDriverByName(name)))
+		ERROR("gdal_get_driver_by_name");
+	
+	return hDriver;
+}
+
+/*******************************************************************************
+	function to create a new gdal dataset
+	
+	args:
+						hDriver			the gdal driver
+						filename		the file to create
+						xsize				the width of the raster
+						ysize				the height of the raster
+	
+	returns:
+						the gdal driver
+*******************************************************************************/
+/*
+GDALDatasetH gdal_create(
+	GDALDriverH hDriver,
+	char *filename,
+	int xsize,
+	int ysize,
+		GDALDataType  	eBandType,
+		char **  	papszOptions
+												 
+												 
+    GDALDatasetH hDstDS;        
+    char **papszOptions = NULL;
+
+    hDstDS = GDALCreate( hDriver, filename, xsize, ysize, 3, GDT_Byte, 
+                         papszOptions );
+*/

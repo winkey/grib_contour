@@ -15,31 +15,8 @@ AM_CFLAGS =\
 	 -Wall\
 	 -g
 
-bin_PROGRAMS = grib_contour \
-	grib_wind_contour
-
-grib_wind_contour_SOURCES = \
-	buffer.c           \
-	buffer.h           \
-	color.c           \
-	color.h           \
-	error.h           \
-	gdalcode.c           \
-	gdalcode.h           \
-	grib.c           \
-	grib.h           \
-	kml.c           \
-	kml.h           \
-	ogrcode.c           \
-	ogrcode.h           \
-	wind.c           \
-	zipbuffer.c           \
-	zipbuffer.h
-
-grib_wind_contour_LDFLAGS =        \
-	-lweathercalc        \
-	-lgdal        \
-	-lzip
+bin_PROGRAMS = \
+	grib_contour
 
 grib_contour_SOURCES = \
 	main.c        \
@@ -57,11 +34,18 @@ grib_contour_SOURCES = \
 	buffer.h        \
 	color.c        \
 	color.h        \
-	kml.h
+	kml.h        \
+	options.c        \
+	options.h        \
+	contour.c        \
+	contour.h
 
 grib_contour_LDFLAGS = \
 	-lgdal          \
-	-lzip
+	-lzip          \
+	-lweathercalc
+
+
 
 grib_contour_LDADD = 
 

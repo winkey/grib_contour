@@ -160,7 +160,7 @@ function plot {
 		rm "$zip"
 	fi
 	
-	grib_contour "${tmp}/${gribfile}" $grbmsg $interval $name $kml "$zip"
+	grib_contour -g "${tmp}/${gribfile}" -m $grbmsg -i $interval -s $name -k $kml -z "$zip"
 	
 	appendkml $name $timee
 	
@@ -178,11 +178,14 @@ function plot {
 ################################################################################
 
 function windplot {
-	gribfile=$1
-	name="$2"
-	grbmsg=$3
-	interval=$4
-	timee=$5
+	ufile=$1
+	vfile=$2
+	name="$3"
+	umsg=$4
+	vmsg=$5
+	interval=$6
+	timee=$7
+	
 	
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
@@ -192,7 +195,7 @@ function windplot {
 		rm "$zip"
 	fi
 	
-	grib_wind_contour "${tmp}/${gribfile}" $grbmsg $interval $name $kml "$zip"
+	grib_contour -w -u "${ufile}" -v "${ufile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
 	
 	appendkml $name $timee
 
