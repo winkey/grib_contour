@@ -16,7 +16,7 @@
 source /usr/local/bin/generic2.sh
 
 wwwdisk="/home/rush/public_html/weather/kml/nam_conus"
-www="/home/rush/public_html/weather/kml/nam_conus"
+www="http://atmos.ucsd.edu/kml/nam_conus"
 
 
 path="$1"
@@ -33,6 +33,34 @@ then
 	mkdir -p "${wwwdisk}/${run}"
 fi
 
+function thick {
+	spath="${path/HGHT.1000/HGHT.${1}}"
+	if [[ -f $spath ]]
+	then
+		if [[ $hour == "00" ]]
+		then
+			mkrootkml ${1}thk
+		fi
+		diffplot "$spath" "$path" ${1}thk 1 1 20 $hour 03
+		
+		
+	fi
+}
+
+function thick2 {
+	spath="${path/HGHT.${1}/HGHT.1000}"
+	if [[ -f $spath ]]
+	then
+		if [[ $hour == "00" ]]
+		then
+			mkrootkml ${1}thk
+		fi
+		diffplot "$path" "$spath" ${1}thk 1 1 20 $hour 03
+		
+		
+	fi
+}
+
 ##### plot height #####
 
 if [[ "$prod" == "HGHT" ]]
@@ -43,8 +71,22 @@ then
 	fi
 	
 	plot "$path" "${level}hgt" 1 20 $hour 03
-
-	rm "$path"
+	
+	##### plot thickness #####
+	
+	if [[ $level == 1000 ]]
+	then
+		thick 925
+		thick 850
+		thick 700
+		thick 500
+	else
+		if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
+		then
+			
+			thick2 $level
+		fi
+	fi
 fi
 
 ##### plot temp #####
@@ -70,7 +112,7 @@ then
 		mkrootkml "${level}rh"
 	fi
 	
-	plot "$path" "${level}rh" 1 5 $hour 03
+	plot "$path" "${level}rh" 1 10 $hour 03
 
 	rm "$path"
 fi

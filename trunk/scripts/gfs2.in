@@ -118,7 +118,7 @@ then
 		mkrootkml "${level}rh"
 	fi
 	
-	plot "$path" "${level}rh" 1 5 $hour 03
+	plot "$path" "${level}rh" 1 10 $hour 03
 	rm "$path"
 fi
 

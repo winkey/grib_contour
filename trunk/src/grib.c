@@ -373,7 +373,7 @@ float *do_and_grib(
 	for (i = 0; i < gds->Npoints ; i++) {
 		if (gds->missing && (Uraster[i] == gds->missing_value || Vraster[i] == gds->missing_value))
 			raster[i] = gds->missing_value;
-		else if ((int)Vraster[i])
+		else if (either)
 			raster[i] = Uraster[i];
 		else
 			raster[i] = 0.0;
