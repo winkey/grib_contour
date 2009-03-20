@@ -152,7 +152,7 @@ void create_field(
 	int precision,
 	OGRLayerH hLayer)
 {
-	printf("create field %s %i\n", name, width);
+
 	OGRFieldDefnH hFld = OGR_Fld_Create(name, eType);
 	OGR_Fld_SetWidth(hFld, width);
 	if (eType != OFTInteger)

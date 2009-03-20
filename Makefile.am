@@ -1,7 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 ## Created by Anjuta
 
-SUBDIRS = src 
+SUBDIRS = src \
+	scripts
 
 grib_contourdocdir = ${prefix}/doc/grib_contour
 grib_contourdoc_DATA = \

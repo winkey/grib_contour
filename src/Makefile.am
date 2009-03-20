@@ -12,7 +12,11 @@ AM_CFLAGS =\
 	 -g
 
 bin_PROGRAMS = grib_contour \
-	grib_wind_contour
+	grib_wind_contour\
+	fixcolor
+
+fixcolor_SOURCES = \
+	fixcolor.c
 
 grib_wind_contour_SOURCES = \
 	gdalcode.c         \
@@ -42,4 +46,5 @@ grib_contour_LDFLAGS = \
 	-lgdal
 
 grib_contour_LDADD = 
+
 

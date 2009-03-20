@@ -30,7 +30,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = grib_contour$(EXEEXT) grib_wind_contour$(EXEEXT)
+bin_PROGRAMS = grib_contour$(EXEEXT) grib_wind_contour$(EXEEXT) \
+	fixcolor$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -43,6 +44,9 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
+am_fixcolor_OBJECTS = fixcolor.$(OBJEXT)
+fixcolor_OBJECTS = $(am_fixcolor_OBJECTS)
+fixcolor_LDADD = $(LDADD)
 am_grib_contour_OBJECTS = main.$(OBJEXT) grib.$(OBJEXT) \
 	gdalcode.$(OBJEXT) ogrcode.$(OBJEXT)
 grib_contour_OBJECTS = $(am_grib_contour_OBJECTS)
@@ -62,8 +66,10 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(grib_contour_SOURCES) $(grib_wind_contour_SOURCES)
-DIST_SOURCES = $(grib_contour_SOURCES) $(grib_wind_contour_SOURCES)
+SOURCES = $(fixcolor_SOURCES) $(grib_contour_SOURCES) \
+	$(grib_wind_contour_SOURCES)
+DIST_SOURCES = $(fixcolor_SOURCES) $(grib_contour_SOURCES) \
+	$(grib_wind_contour_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -161,6 +167,9 @@ AM_CFLAGS = \
 	 -Wall\
 	 -g
 
+fixcolor_SOURCES = \
+	fixcolor.c
+
 grib_wind_contour_SOURCES = \
 	gdalcode.c         \
 	grib.c         \
@@ -245,6 +254,9 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+fixcolor$(EXEEXT): $(fixcolor_OBJECTS) $(fixcolor_DEPENDENCIES) 
+	@rm -f fixcolor$(EXEEXT)
+	$(LINK) $(fixcolor_OBJECTS) $(fixcolor_LDADD) $(LIBS)
 grib_contour$(EXEEXT): $(grib_contour_OBJECTS) $(grib_contour_DEPENDENCIES) 
 	@rm -f grib_contour$(EXEEXT)
 	$(grib_contour_LINK) $(grib_contour_OBJECTS) $(grib_contour_LDADD) $(LIBS)
@@ -258,6 +270,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fixcolor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdalcode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grib.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@

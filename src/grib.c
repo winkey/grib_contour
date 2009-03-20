@@ -30,7 +30,7 @@
 #include "grib.h"
 #include "error.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 /*******************************************************************************
 	function to open the grib file
@@ -53,7 +53,7 @@ FILE *grib_open(
 	char cmd[1000] = {};
 	
 	snprintf (cmd, sizeof(cmd),
-						"degrib -in \"%s\" -out stdout -C -Unit %c -msg %f -Csv",
+						"degrib -in \"%s\" -out stdout -C -Unit %c -msg %.1f -Csv",
 						gribfile, unit, msg);
 	
 	if (!(result = popen(cmd, "r")))
