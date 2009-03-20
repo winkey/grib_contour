@@ -6,6 +6,7 @@ bin_SCRIPTS = \
 	generic.sh \
 	generic2.sh \
 	gfs.sh \
+	sst.sh \
 	gfs2.sh \
 	nam_west.sh \
 	nam_east.sh \
@@ -26,6 +27,7 @@ EXTRA_DIST = \
 	generic.in \
 	generic2.in \
 	gfs.in \
+	sst.in \
 	gfs2.in \
 	nam_west.in \
 	nam_east.in \
@@ -44,6 +46,7 @@ dist_bin_SCRIPTS = \
 	generic.sh \
 	generic2.sh \
 	gfs.sh \
+	sst.sh \
 	gfs2.sh \
 	nam_west.sh \
 	nam_east.sh \
@@ -74,6 +77,10 @@ generic2.sh: generic2.in Makefile
 gfs.sh: gfs.in Makefile
 	$(do_subst) < $(srcdir)/gfs.in > gfs.sh
 	chmod +x gfs.sh
+
+sst.sh: sst.in Makefile
+	$(do_subst) < $(srcdir)/sst.in > sst.sh
+	chmod +x sst.sh
 
 gfs2.sh: gfs2.in Makefile
 	$(do_subst) < $(srcdir)/gfs2.in > gfs2.sh

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.2">
 <Document>
-	<name>@www@</name>
+	<name>x@www@</name>
 	<NetworkLink>
 		<name>hurricane wind speed probability</name>
 		<visibility>0</visibility>
@@ -63,6 +63,13 @@
 		<visibility>0</visibility>
 		<Url>
 			<href>@www@/kml/nam_west.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>Sea Surface Temperature</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/sst.kml</href>
 		</Url>
 	</NetworkLink>
 </Document>
