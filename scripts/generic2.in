@@ -102,7 +102,7 @@ EOF
 
 	##### check the latest link #####
 	
-	if [ ! -h "${wwwdisk}/latest" ]
+	if [ -h "${wwwdisk}/latest" ]
 	then
 		rm ${wwwdisk}/latest
 	fi
@@ -208,30 +208,20 @@ function plot {
 	interval=$4
 	timee=$5
 	incr=$6
-	grid=$7
-	
-	if [[ "$grid" != "" ]]
-	then
-		zip="${wwwdisk}/${run}/${grid}.${name}${timee}.kmz"
-		kml="${grid}.${name}${timee}.kml"
-	else
-		zip="${wwwdisk}/${run}/${name}${timee}.kmz"
-		kml="${name}${timee}.kml"
-	fi
+	extra="$7"
+
+	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+	kml="${name}${timee}.kml"
 	
 	if [[ -f "$zip" ]]
 	then
 		rm "$zip"
 	fi
 	
-	echo "gribfile=$gribfile"
-	echo "grbmsg=$3"
-	echo "name=$2"
-	echo "interval=$4"
-	echo "zip=$zip"
-	echo "kml=$kml"
-	echo "grid=$grid"
-	nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg -i $interval -s $name -k $kml -z "$zip"
+	nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg \
+													-i $interval -s $name \
+													-k $kml -z "$zip" \
+													$extra
 	
 	appendkml $name $timee $incr $grid
 	
@@ -257,23 +247,21 @@ function windplot {
 	interval=$6
 	timee=$7
 	incr=$8
-	grid=$9
-	
-	if [[ "$grid" != "" ]]
-	then
-		zip="${wwwdisk}/${run}/${grid}.${name}${timee}.kmz"
-		kml="${grid}.${name}${timee}.kml"
-	else
-		zip="${wwwdisk}/${run}/${name}${timee}.kmz"
-		kml="${name}${timee}.kml"
-	fi
+	extra="$7"
+
+	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+	kml="${name}${timee}.kml"
 	
 	if [[ -f "$zip" ]]
 	then
 		rm "$zip"
 	fi
 	
-	nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
+	nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" \
+													-U $umsg -V $vmsg \
+													-i $interval -s $name \
+													-k $kml -z "$zip" \
+													$extra
 	
 	appendkml $name $timee $incr $grid
 	
@@ -288,23 +276,21 @@ function andplot {
 	interval=$6
 	timee=$7
 	incr=$8
-	grid=$9
+	extra="$7"
 	
-	if [[ "$grid" != "" ]]
-	then
-		zip="${wwwdisk}/${run}/${grid}.${name}${timee}.kmz"
-		kml="${grid}.${name}${timee}.kml"
-	else
-		zip="${wwwdisk}/${run}/${name}${timee}.kmz"
-		kml="${name}${timee}.kml"
-	fi
+	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+	kml="${name}${timee}.kml"
 	
 	if [[ -f "$zip" ]]
 	then
 		rm "$zip"
 	fi
 	
-	nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
+	nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" \
+													-U $umsg -V $vmsg \
+													-i $interval -s $name \
+													-k $kml -z "$zip" \
+													$extra
 	
 	appendkml $name $timee $incr $grid
 	

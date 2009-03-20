@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 		
 		/***** get the color scale *****/
 		
-		cscales = color_getscale(o.scalename);
+		cscales = color_getscale(&o);
 		
 		
 		hDS = do_gdal(raster, &gds, &hSRS, &hBand);
@@ -88,7 +88,7 @@ int main(int argc, char **argv)
 		
 		/***** make a linestring *****/
 		
-		contour (hDS, hSRS, &hogrDS, &hLayer, o.interval, 0, 1, gds.missing, gds.missing_value);
+		contour (hDS, hSRS, &hogrDS, &hLayer, &o, 0, 1, &gds, cscales);
 		
 		
 		contour2kml(&gds, &o, cscales, hSRS, hBand, hLayer);

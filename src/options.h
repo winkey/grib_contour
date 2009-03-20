@@ -28,7 +28,9 @@ typedef struct {
 	float ugribmsg;
 	float vgribmsg;
 	float interval;
+	int finterval;
 	char *scalename;
+	float scalecorrection;
 	char *kmlfile;
 	char *kmzfile;
 	char *tiffile;

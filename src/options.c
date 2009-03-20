@@ -41,8 +41,10 @@ void get_options(
 	options *o)
 {
 	int opt;
+	o->scalecorrection = 1;
+	o->finterval = 0;
 	
-	while (0 < (opt = getopt(argc, argv, "awg:u:v:U:V:m:i:s:k:t:z:h?"))) {
+	while (0 < (opt = getopt(argc, argv, "awg:u:v:U:V:m:i:s:S:k:t:z:Ih?"))) {
 		
 		switch (opt) {
 			case 'w':
@@ -84,8 +86,16 @@ void get_options(
 				o->interval = atof(optarg);
 				break;
 			
+			case 'I':
+				o->finterval = 1;
+				break;
+			
 			case 's':
 				o->scalename = optarg;
+				break;
+			
+			case 'S':
+				o->scalecorrection = atof(optarg);
 				break;
 			
 			case 'k':

@@ -23,11 +23,11 @@ void contour (
 	OGRSpatialReferenceH hSRS,
 	OGRDataSourceH *hogrDS,
 	OGRLayerH *hLayer,
-	double interval,
+	options *o,
 	int id,
 	int elev,
-	int missing,
-	int missing_value);
+	gds_t *gds,
+	color_scale *cscales);
 
 void contour2kml(
 	gds_t *gds,

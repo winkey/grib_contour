@@ -40,7 +40,7 @@ cat >> "$outfile" <<EOF
   <div>
     <h4>${lev_fn} ${prod_fn}</a></h4>
     <a href="kml/screenshot/${name}_${lev_n}${prod_n}.jpg">
-      <img src="kml/screenshot/${name}_${lev_n}${prod_n}.png" alt=screenshot>
+      <img class=screenshot src="kml/screenshot/${name}_${lev_n}${prod_n}.png" alt=screenshot>
     </a>
   </div>
 EOF
