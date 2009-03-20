@@ -13,7 +13,8 @@ www_DATA = \
 	nam_hi.kml \
 	nam_pr.kml \
 	nam_west.kml \
-	master.kml
+	master.kml \
+	sst.kml
 
 EXTRA_DIST = \
 	gfs.kml.in \
@@ -25,7 +26,8 @@ EXTRA_DIST = \
 	nam_hi.kml.in \
 	nam_pr.kml.in \
 	nam_west.kml.in \
-	master.kml.in
+	master.kml.in \
+	sst.kml.in
 	
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
 							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
@@ -61,6 +63,9 @@ nam_west.kml: nam_west.kml.in Makefile
 
 master.kml: master.kml.in Makefile
 	$(do_subst) < $(srcdir)/master.kml.in > master.kml
+
+sst.kml: sst.kml.in Makefile
+	$(do_subst) < $(srcdir)/sst.kml.in > sst.kml
 
 
 ## File created by the gnome-build tools

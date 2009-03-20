@@ -29,6 +29,7 @@ dist_pkgdata_DATA = \
 	prob.scale \
 	t.scale \
 	dp.scale \
+	sst.scale \
 	wind.scale
 
 ## File created by the gnome-build tools
