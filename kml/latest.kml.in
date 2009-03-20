@@ -119,6 +119,13 @@
 			<href>@www@/kml/satz-latest.kml</href>
 		</Url>
 	</NetworkLink>
+	<NetworkLink>
+		<name>2.5 deg Global ECMWF</name>
+		<visibility>1</visibility>
+		<Url>
+			<href>@www@/kml/ecmwf-latest.kml</href>
+		</Url>
+	</NetworkLink>
 	<Folder>
 		<name>Latest Nexrad Base Reflectivity Mosaic</name>
 		<visibility>0</visibility>
@@ -130,7 +137,6 @@
 		</Style>
 		<NetworkLink>
 			<name>Latest Nexrad Base Reflectivity Mosaic</name>
-			<visibility>1</visibility>
 			<Url>
 				<href>http://@www@/kml/radar/radar.kml</href>
 			</Url>

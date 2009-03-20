@@ -280,7 +280,7 @@ float *do_wind_grib(
 	pclose(Vfp);
 	
 	if (!(raster = malloc(sizeof(float) * gds->Npoints)))
-		ERROR("main");
+		ERROR("do_wind_grib");
 	
 	for (i = 0; i < gds->Npoints ; i++) {
 		if (gds->missing && (Uraster[i] == gds->missing_value || Vraster[i] == gds->missing_value))
@@ -309,8 +309,8 @@ float *do_and_grib(
 	
   /***** open the grib file *****/
   
-  Ufp = grib_open(o->ugribfile, o->ugribmsg, 'e');
-  Vfp = grib_open(o->vgribfile, o->vgribmsg, 'e');
+  Ufp = grib_open(o->ugribfile, o->ugribmsg, 'm');
+  Vfp = grib_open(o->vgribfile, o->vgribmsg, 'm');
   
   /***** read the grib raster into memory *****/
   
@@ -323,7 +323,7 @@ float *do_and_grib(
 	pclose(Vfp);
 	
 	if (!(raster = malloc(sizeof(float) * gds->Npoints)))
-		ERROR("main");
+		ERROR("do_and_grib");
 	
 	for (i = 0; i < gds->Npoints ; i++) {
 		if (gds->missing && (Uraster[i] == gds->missing_value || Vraster[i] == gds->missing_value))

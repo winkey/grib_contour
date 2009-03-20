@@ -156,7 +156,15 @@ bin_SCRIPTS = \
 	rtma_ak.sh \
 	rtma_conus.sh \
 	ww.sh \
-	ecmwf.sh
+	ecmwf.sh \
+	mkkml.sh \
+	mkpage.sh \
+	mkkml-latest.sh \
+	mkscreenshot.sh \
+	mkkml_nolevel.sh \
+	mkpage_nolevel.sh \
+	mkkml_nolevel-latest.sh \
+	mkscreenshot_nolevel.sh
 
 CLEANFILES = $(bin_SCRIPTS)
 EXTRA_DIST = \
@@ -177,7 +185,15 @@ EXTRA_DIST = \
 	rtma_ak.in \
 	rtma_conus.in \
 	ww.in \
-	ecmwf.in
+	ecmwf.in \
+	mkkml.in \
+	mkpage.in \
+	mkkml-latest.in \
+	mkscreenshot.in \
+	mkkml_nolevel.in \
+	mkpage_nolevel.in \
+	mkkml_nolevel-latest.in \
+	mkscreenshot_nolevel.in
 
 dist_bin_SCRIPTS = \
 	generic.sh \
@@ -197,7 +213,15 @@ dist_bin_SCRIPTS = \
 	rtma_ak.sh \
 	rtma_conus.sh \
 	ww.sh \
-	ecmwf.sh
+	ecmwf.sh \
+	mkkml.sh \
+	mkpage.sh \
+	mkkml-latest.sh \
+	mkscreenshot.sh \
+	mkkml_nolevel.sh \
+	mkpage_nolevel.sh \
+	mkkml_nolevel-latest.sh \
+	mkscreenshot_nolevel.sh
 
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
 							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
@@ -478,6 +502,38 @@ ww.sh: ww.in Makefile
 ecmwf.sh: ecmwf.in Makefile
 	$(do_subst) < $(srcdir)/ecmwf.in > ecmwf.sh
 	chmod +x ecmwf.sh
+
+mkkml.sh: mkkml.in Makefile
+	$(do_subst) < $(srcdir)/mkkml.in > mkkml.sh
+	chmod +x mkkml.sh
+
+mkpage.sh: mkpage.in Makefile
+	$(do_subst) < $(srcdir)/mkpage.in > mkpage.sh
+	chmod +x mkpage.sh
+
+mkkml-latest.sh: mkkml-latest.in Makefile
+	$(do_subst) < $(srcdir)/mkkml-latest.in > mkkml-latest.sh
+	chmod +x mkkml-latest.sh
+
+mkscreenshot.sh: mkscreenshot.in
+	$(do_subst) < $(srcdir)/mkscreenshot.in > mkscreenshot.sh
+	chmod +x mkscreenshot.sh
+
+mkkml_nolevel.sh: mkkml_nolevel.in Makefile
+	$(do_subst) < $(srcdir)/mkkml_nolevel.in > mkkml_nolevel.sh
+	chmod +x mkkml_nolevel.sh
+
+mkpage_nolevel.sh: mkpage_nolevel.in Makefile
+	$(do_subst) < $(srcdir)/mkpage_nolevel.in > mkpage_nolevel.sh
+	chmod +x mkpage_nolevel.sh
+
+mkkml_nolevel-latest.sh: mkkml_nolevel-latest.in Makefile
+	$(do_subst) < $(srcdir)/mkkml_nolevel-latest.in > mkkml_nolevel-latest.sh
+	chmod +x mkkml_nolevel-latest.sh
+
+mkscreenshot_nolevel.sh: mkscreenshot_nolevel.in
+	$(do_subst) < $(srcdir)/mkscreenshot_nolevel.in > mkscreenshot_nolevel.sh
+	chmod +x mkscreenshot_nolevel.sh
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

@@ -112,6 +112,11 @@ float *do_wind_grib(
 	options *o,
 	gds_t *gds);
 
+float *do_and_grib(
+	options *o,
+	gds_t *gds);
+
+
 #endif /* _GRIB_H */
 
  

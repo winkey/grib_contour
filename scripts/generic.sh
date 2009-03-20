@@ -95,7 +95,7 @@ function appendkml {
 	head -n -2 $frames > $tmpfile
 
 	begin=`date -d "$run GMT $hr hours" "+%FT%TZ" -u`
-	end=`date -d "$run GMT $hr hours 03 hours" "+%FT%TZ" -u`
+	end=`date -d "$run GMT $hr hours 01 hours" "+%FT%TZ" -u`
 
 	echo '  <NetworkLink>' >> $tmpfile
 	echo "    <name>${run}Z + ${hr} ${name}</name>" >> $tmpfile
@@ -192,7 +192,43 @@ function windplot {
 		rm "$zip"
 	fi
 	
-	grib_contour -w -u "${ufile}" -v "${ufile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
+	grib_contour -w -u "${ufile}" -v "${vfile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
+	
+	appendkml $name $timee
+
+
+}
+
+################################################################################
+#  function to plot the and data
+#
+#	 args:
+#					$1	the grib file to plot
+#					$2	the name of the product ie: 925hgt
+#					$3	the grib msg #
+#					$4	interval apart the contours are
+#					$5	the forcast hour in the run
+################################################################################
+
+function andplot {
+	ufile=$1
+	vfile=$2
+	name="$3"
+	umsg=$4
+	vmsg=$5
+	interval=$6
+	timee=$7
+	
+	
+	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+	kml="${name}${timee}.kml"
+	
+	if [[ -f "$zip" ]]
+	then
+		rm "$zip"
+	fi
+	
+	grib_contour -a -u "${ufile}" -v "${vfile}" -U $umsg -V $vmsg -i $interval -s $name -k $kml -z "$zip"
 	
 	appendkml $name $timee
 
