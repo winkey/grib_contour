@@ -37,6 +37,12 @@ then
 	mkdir -p "${wwwdisk}/${run}"
 fi
 
+if [[ ! -h "${wwwdisk}/latest" ]]
+then
+	rm -f "${wwwdisk}/latest"
+fi
+ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
+
 ##### plot temp #####
 
 if [[ "$prod" == "TMPK" ]]

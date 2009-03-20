@@ -45,6 +45,11 @@ then
 	if [[ "$hour" == "00" ]]
 	then
 		mkrootkml "${level}hgt"
+		if [[ ! -h "${wwwdisk}/latest" ]]
+		then
+			rm -f "${wwwdisk}/latest"
+		fi
+		ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
 	fi
 	
 	plot "$path" "${level}hgt" 1 20 $hour 03
