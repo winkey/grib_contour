@@ -36,7 +36,9 @@ void contour (
 	OGRLayerH *hLayer,
 	double interval,
 	int id,
-	int elev)
+	int elev,
+	int missing,
+	int missing_value)
 {
 	/***** get the raster band *****/
 	
@@ -65,7 +67,7 @@ void contour (
 	/***** contour *****/
 	
 	GDALContourGenerate(hBand, interval, 0.0, 0, NULL,
-											FALSE, 0.0, *hLayer, id, elev, NULL, NULL);
+											missing, missing_value, *hLayer, id, elev, NULL, NULL);
 	
 	return;
 }
@@ -85,7 +87,7 @@ void contour2kml(
 	/***** kml header *****/
 	
 	KML_header(kml);
-	KML_
+
 	/***** kml linestyle *****/
 	
 	for (cscale = cscales ; *(cscale->color) ; cscale++) {

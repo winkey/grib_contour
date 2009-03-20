@@ -13,7 +13,9 @@ bin_SCRIPTS = \
 	nam_ak.sh \
 	nam_pr.sh \
 	nam2.sh \
-	makekey.sh
+	makekey.sh \
+	forecaster.sh \
+	ruc2.sh
 
 
 CLEANFILES = $(bin_SCRIPTS)
@@ -29,7 +31,10 @@ EXTRA_DIST = \
 	nam_ak.in \
 	nam_pr.in \
 	nam2.in \
-	makekey.in
+	makekey.in \
+	forecaster.in \
+	ruc2.in
+
 
 dist_bin_SCRIPTS = \
 	generic.sh \
@@ -42,7 +47,10 @@ dist_bin_SCRIPTS = \
 	nam_ak.sh \
 	nam_pr.sh \
 	nam2.sh \
-	makekey.sh
+	makekey.sh \
+	forecaster.sh \
+	ruc2.sh
+
 
    
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
@@ -88,6 +96,14 @@ nam_ak.sh: nam_ak.in Makefile
 nam2.sh: nam2.in Makefile
 	$(do_subst) < $(srcdir)/nam2.in > nam2.sh
 	chmod +x nam2.sh
+
+ruc2.sh: ruc2.in Makefile
+	$(do_subst) < $(srcdir)/ruc2.in > ruc2.sh
+	chmod +x ruc2.sh
+
+forecaster.sh: forecaster.in Makefile
+	$(do_subst) < $(srcdir)/forecaster.in > forecaster.sh
+	chmod +x forecaster.sh
 
 makekey.sh: makekey.in Makefile
 	$(do_subst) < $(srcdir)/makekey.in > makekey.sh

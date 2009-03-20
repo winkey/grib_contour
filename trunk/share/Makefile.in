@@ -166,7 +166,8 @@ dist_pkgdata_DATA = \
 	850wind.scale \
 	925wind.scale \
 	pwat.scale \
-	pcp.scale
+	pcp.scale \
+	prob.scale
 
 all: all-am
 
