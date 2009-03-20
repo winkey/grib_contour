@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <errno.h>
 
+#include "options.h"
 #include "color.h"
 #include "error.h"
 
@@ -38,7 +39,7 @@
 *******************************************************************************/
 
 color_scale *color_getscale(
-	char *name)
+	options *o)
 {
 	char filename[1024];
 	FILE *fp;
@@ -49,7 +50,8 @@ color_scale *color_getscale(
 	color_scale *scales = NULL;
 	color_scale *temp = NULL;
 	
-	snprintf(filename, sizeof(filename), "%s/%s.scale", PACKAGE_PKG_DATA_DIR, name);
+	snprintf(filename, sizeof(filename), "%s/%s.scale",
+					 PACKAGE_PKG_DATA_DIR, o->scalename);
 	
 	if (!(fp = fopen(filename, "r")))
 		ERROR("color_getscale");
@@ -77,6 +79,7 @@ color_scale *color_getscale(
 		}
 		
 		if (2 == sscanf(line, "%f %6[0-9a-fA-F]", &((scales[used]).value), (scales[used]).color)) {
+			scales[used].value *= o->scalecorrection;
 			scales[used].color[6] = 0;
 			used++;
 		}

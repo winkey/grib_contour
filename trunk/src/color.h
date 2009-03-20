@@ -35,7 +35,7 @@ typedef struct {
 *******************************************************************************/
 
 color_scale *color_getscale(
-	char *name);
+	options *o);
 
 /*******************************************************************************
 	function to get a color from a scale

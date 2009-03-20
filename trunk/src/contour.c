@@ -19,13 +19,14 @@
 #include <gdal_alg.h>
 #include <libkml/libKML.h>
 
-#include "color.h"
 #include "options.h"
+#include "color.h"
 #include "grib.h"
 #include "color.h"
 #include "ogrcode.h"
 #include "gdalcode.h"
 #include "contour.h"
+#include "error.h"
 
 
 
@@ -34,11 +35,11 @@ void contour (
 	OGRSpatialReferenceH hSRS,
 	OGRDataSourceH *hogrDS,
 	OGRLayerH *hLayer,
-	double interval,
+	options *o,
 	int id,
 	int elev,
-	int missing,
-	int missing_value)
+	gds_t *gds,
+	color_scale *cscales)
 {
 	/***** get the raster band *****/
 	
@@ -66,8 +67,38 @@ void contour (
 	
 	/***** contour *****/
 	
-	GDALContourGenerate(hBand, interval, 0.0, 0, NULL,
-											missing, missing_value, *hLayer, id, elev, NULL, NULL);
+	if (!o->finterval) {
+		GDALContourGenerate(hBand, o->interval, 0.0, 0, NULL,
+												gds->missing, gds->missing_value,
+												*hLayer, id, elev, NULL, NULL);
+	}
+	else {
+		color_scale *scale;
+		int num_fintervals = 0;
+		double *fintervals;
+		int i;
+		
+		/**** count the intervals ****/
+			
+		for (scale = cscales ; *(scale->color) != 0 ; scale++)
+			num_fintervals++;
+		
+		/***** alocate *****/
+		
+		if (!(fintervals = malloc(num_fintervals * sizeof(fintervals))))
+			ERROR("contour");
+		
+		/***** copy *****/
+		
+		for (i = 0, scale = cscales ; *(scale->color) != 0; scale++, i++)
+			fintervals[i] = scale->value;
+		
+		/***** contour *****/
+		
+		GDALContourGenerate(hBand, 0, 0.0, num_fintervals, fintervals,
+												gds->missing, gds->missing_value,
+												*hLayer, id, elev, NULL, NULL);
+	}
 	
 	return;
 }

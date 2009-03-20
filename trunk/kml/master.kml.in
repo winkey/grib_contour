@@ -101,10 +101,10 @@
 		</Url>
 	</NetworkLink>
 	<NetworkLink>
-		<name>2.5 deg global ECMWF</name>
+		<name>1 deg global NOGAPS</name>
 		<visibility>0</visibility>
 		<Url>
-			<href>@www@/kml/ecmwf.kml</href>
+			<href>@www@/kml/nogaps.kml</href>
 		</Url>
 	</NetworkLink>
 </Document>

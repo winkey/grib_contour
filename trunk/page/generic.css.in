@@ -3,9 +3,15 @@
   border-style: solid;
   border-width: 1px;
 }
+
 .data div {
 float: left;
 }
+
+.screenshot {
+  position: relative;
+}
+
 .clearme {
 clear: both;
 }

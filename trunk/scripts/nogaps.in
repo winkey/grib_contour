@@ -25,7 +25,7 @@ run=$1
 
 times="$(seq -f "%03g" 0 3 24) $(seq -f "%03g" 30 6 84) $(seq -f "%03g" 96 12 144)"
 
-if [[ ! -d "${wwwdisk}/${run}" ]]
+if ! [[ -d "${wwwdisk}/${run}" ]]
 then
 	mkdir -p "${wwwdisk}/${run}"
 fi
@@ -43,11 +43,11 @@ function doplot {
 	
 	gribfile="/tmp/${gribfile}"
   
-	if [[ ${timee#0} -lt 24 ]]
+	if [[ $((10#$timee)) -lt 24 ]]
 	then
 		incr=3
 	else
-		if [[ ${timee#0} -lt 84 ]]
+		if [[ $((10#$timee)) -lt 84 ]]
 		then
 			incr=6
 		else
@@ -62,42 +62,40 @@ function doplot {
 	gribindex=$(degrib $gribfile -I | cut -d "," -f 1,4-5 | sed 's/=".*"//')
 	
 
-$(sgrib "HGT, 925-ISBL")
-
-  plot $gribfile 925hgt $(sgrib "HGT, 925-ISBL") 20 $timee $incr &
+	plot $gribfile 925hgt $(sgrib "HGT, 925-ISBL") 20 $timee $incr &
 	plot $gribfile 925t $(sgrib "TMP, 1000-ISBL") 1 $timee $incr &
-	plot $gribfile 925rh $(sgrib "RH, 1000-ISBL") 5 $timee $incr &
+	plot $gribfile 925rh $(sgrib "RH, 1000-ISBL") .05 $timee $incr "-S 0.01" &
 	windplot $gribfile $gribfile 925wind $(sgrib "UGRD, 925-ISBL") $(sgrib "VGRD, 925-ISBL") 5 $timee $incr &
 	wait
 	
 	plot $gribfile 850hgt $(sgrib "HGT, 850-ISBL") 20 $timee $incr &
 	plot $gribfile 850t $(sgrib "TMP, 850-ISBL") 1 $timee $incr &
-	plot $gribfile 850rh $(sgrib "RH, 850-ISBL") 5 $timee $incr &
+	plot $gribfile 850rh $(sgrib "RH, 850-ISBL") .05 $timee $incr "-S 0.01" &
 	windplot $gribfile $gribfile 850wind $(sgrib "UGRD, 850-ISBL") $(sgrib "VGRD, 850-ISBL") 5 $timee $incr &
 	wait
 
 	plot $gribfile 700hgt $(sgrib "HGT, 700-ISBL") 20 $timee $incr &
 	plot $gribfile 700t $(sgrib "TMP, 700-ISBL") 1 $timee $incr &
-	plot $gribfile 700rh $(sgrib "RH, 700-ISBL") 5 $timee $incr &
+	plot $gribfile 700rh $(sgrib "RH, 700-ISBL") .05 $timee $incr "-S 0.01" &
 	windplot $gribfile $gribfile 700wind $(sgrib "UGRD, 700-ISBL") $(sgrib "VGRD, 700-ISBL") 5 $timee $incr &
 	wait
 
 	plot $gribfile 500hgt $(sgrib "HGT, 500-ISBL") 20 $timee $incr &
 	plot $gribfile 500t $(sgrib "TMP, 500-ISBL") 1 $timee $incr &
-	plot $gribfile 500rh $(sgrib "RH, 500-ISBL") 5 $timee $incr &
+	plot $gribfile 500rh $(sgrib "RH, 500-ISBL") .05 $timee $incr "-S 0.01" &
 	windplot $gribfile $gribfile 500wind $(sgrib "UGRD, 500-ISBL") $(sgrib "VGRD, 500-ISBL") 10 $timee $incr &
 	wait
 
 	plot $gribfile 300hgt $(sgrib "HGT, 300-ISBL") 20 $timee $incr &
 	plot $gribfile 300t $(sgrib "TMP, 300-ISBL") 1 $timee $incr &
-	plot $gribfile 300rh $(sgrib "RH, 300-ISBL") 5 $timee $incr &
+	plot $gribfile 300rh $(sgrib "RH, 300-ISBL") .05 $timee $incr "-S 0.01" &
 	windplot $gribfile $gribfile 300wind $(sgrib "UGRD, 300-ISBL") $(sgrib "VGRD, 300-ISBL") 10 $timee $incr &
 	wait
 	
 	plot $gribfile pmsl $(sgrib "HGT, 300-ISBL") 200 $timee $incr &
 	if [[ "$timee" != "000" ]]
 	then
-		plot $gribfile pcp 2 1 $timee 01 &
+		plot $gribfile pcp 2 1 $timee $incr &
 	fi
 	wait
 	
@@ -138,8 +136,6 @@ mkrootkml 300wind
 mkrootkml pmsl
 mkrootkml pcp
 
-
-  
 for i in $times
 do
 	time doplot $datee $run $i
