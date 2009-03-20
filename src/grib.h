@@ -128,6 +128,13 @@ float *do_and_grib(
 	float vgribmsg,
 	gds_t *gds);
 
+float *do_diff_grib(
+	options *o,
+	char *ugribfile,
+	char *vgribfile,
+	float ugribmsg,
+	float vgribmsg,
+	gds_t *gds);
 
 #endif /* _GRIB_H */
 

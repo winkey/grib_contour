@@ -181,7 +181,7 @@ OGRSpatialReferenceH set_projection(
 {
 	OGRSpatialReferenceH hSRS = OSRNewSpatialReference(NULL);
 	OGRSpatialReferenceH hSrsSRS = OSRNewSpatialReference(NULL);
-	double MinX, MinY;
+	double MinX, MinY, MaxX, MaxY;
 	
 	switch(gds->proj) {
 		
@@ -192,10 +192,17 @@ OGRSpatialReferenceH set_projection(
 			//						 "Greenwich", 0.0, NULL, 0.0);
 			gdal_set_projection(hDS, hSRS);
 			
+			/***** check right lon *****/
+			
+			if (gds->Lon1 == 180 && gds->Lon2 < 0 && gds->Lon1 + gds->Dy * gds->Ny != gds->Lon2)
+				gds->Lon1 *= -1;
+		
+				
 			/***** is the pixel size correct? *****/
-			/*
-			if (((gds->Lat1 - gds->Lat2) / gds->Ny) - gds->Dy > .00001 ||
-					((gds->Lat1 - gds->Lat2) / gds->Ny) - gds->Dy < .00001) {
+		/*
+			
+			if (MAX(gds->Lat1, gds->Lat2) / MIN(gds->Lat1, gds->Lat2) - gds->Dy > .00001) {
+					
 				if (gds->Lon1 == 180.000000 && gds->Lon2 < 0)
 					gds->Lon1 *= -1;
 				
@@ -228,34 +235,17 @@ OGRSpatialReferenceH set_projection(
 				gds->Dy = (gds->Lat1 - gds->Lat2) / gds->Ny;
 				gds->Dx = (gds->Lon1 + gds->Lon2) / gds->Nx;
 			
-				if (gds->Lat2 < gds->Lat1)
-					MinY = gds->Lat2;
-				else
-					MinY = gds->Lat1;
+				MinY = MIN(gds->Lat2, gds->Lat1);
+				MinX = MIN(gds->Lon2, gds->Lon1);
 				
-				if (gds->Lon2 < gds->Lon1)
-					MinX = gds->Lon2;
-				else
-					MinX = gds->Lon1;
-					
-				//gds->Dx = (gds->Lon1 - gds->Lon2) / (double)gds->Nx;
-				set_geotransform(hDS, MinX + gds->Dx / 2.0, gds->Dx, 0.0,
-											    		MinY + gds->Dy / 2.0, gds->Dy, 0.0);
+				MinX += gds->Dx / 2.0;
+				MinY += gds->Dy / 2.0;
+
 			}
 			
 			else {
-				if (gds->Lat2 < gds->Lat1)
-					MinY = gds->Lat2;
-				else
-					MinY = gds->Lat1;
-				
-				if (gds->Lon2 < gds->Lon1)
-					MinX = gds->Lon2;
-				else
-					MinX = gds->Lon1;
-				
-				set_geotransform(hDS, MinX, gds->Dx, 0.0,
-											    		MinY, gds->Dy, 0.0);
+				MinY = MIN(gds->Lat2, gds->Lat1);
+				MinX = MIN(gds->Lon2, gds->Lon1);
 			}
 			break;
 		
@@ -268,8 +258,6 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin(hSRS, hSrsSRS, &MinX, &MinY);
-			set_geotransform(hDS, MinX, gds->Dx, 0.0,
-														MinY, gds->Dy, 0.0);
 			break;
 		
 		case GDS_POLAR:
@@ -281,8 +269,6 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin(hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, MinX, gds->Dx, 0.0,
-														MinY, gds->Dy, 0.0);
 			break;
 		
 		case GDS_LAMBERT:
@@ -295,16 +281,15 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin( hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, MinX, gds->Dx, 0.0,
-														MinY, gds->Dy, 0.0);
-			printf("Minx=%lg Miny=%lg Dx=%g Dy=%g nx=%i ny=%i\n", MinX, MinY, gds->Dx, gds->Dy, gds->Nx, gds->Ny);
 			break;
 		
 	}
+
+	set_geotransform(hDS, MinX, gds->Dx, 0.0,
+									      MinY, gds->Dy, 0.0);
 	
 	if (DEBUG) {
 		printf("minx=%g miny=%g\n", MinX, MinY);
-		//printf("%s\n", GDALGetProjectionRef(hDS));
 	}
 	
 	/***** cleanup *****/

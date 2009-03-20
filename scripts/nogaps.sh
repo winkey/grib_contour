@@ -18,7 +18,7 @@ source /usr/local/bin/generic2.sh
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/nam/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf_backup/pub/data/model/grid/grib/nogaps/"
 wwwdisk="/home/rush/public_html/weather/kml/nogaps"
-www="http://atmos.ucsd.edu//kml/nogaps/"
+www="/home/rush/public_html/weather//kml/nogaps/"
 
 
 run=$1
