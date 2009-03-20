@@ -73,21 +73,21 @@ function doplot {
 	windplot $gribfile $gribfile 300wind 77.0 78.0 10 $timee 01 &
 	wait
 	
-	plot $gribfile pwat 18 4 $timee 01 &
+	plot $gribfile pwat 18 4 $timee 01 "-I" &
 	plot $gribfile cape 20 200 $timee 01 &
 	plot $gribfile pmsl 2 200 $timee 01 &
 	if [[ "$timee" != "00" ]] && [[ "$timee" != "01" ]]
 	then
-		plot $gribfile pcp 12 1 $timee 01 &
+		plot $gribfile pcp 12 1 $timee 01 "-I" &
 	fi
 	wait
 	
 	if [[ "$timee" != "00" ]] && [[ "$timee" != "01" ]]
 	then
-		andplot $gribfile $gribfile "snow" 12 14 1 $timee 01 &
-		andplot $gribfile $gribfile "frez" 12 16 1 $timee 01 &
-		andplot $gribfile $gribfile "rain" 12 17 1 $timee 01 &
-		andplot $gribfile $gribfile "pellet" 12 1 $timee 01 &
+		andplot $gribfile $gribfile "snow" 12 14 1 $timee 01 "-I" &
+		andplot $gribfile $gribfile "frez" 12 16 1 $timee 01 "-I" &
+		andplot $gribfile $gribfile "rain" 12 17 1 $timee 01 "-I" &
+		andplot $gribfile $gribfile "pellet" 12 1 $timee 01 "-I" &
 		wait
 	fi
 	

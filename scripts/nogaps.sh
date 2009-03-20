@@ -95,7 +95,7 @@ function doplot {
 	plot $gribfile pmsl $(sgrib "HGT, 300-ISBL") 200 $timee $incr &
 	if [[ "$timee" != "000" ]]
 	then
-		plot $gribfile pcp 2 1 $timee $incr &
+		plot $gribfile pcp 2 1 $timee $incr "-I" &
 	fi
 	wait
 	

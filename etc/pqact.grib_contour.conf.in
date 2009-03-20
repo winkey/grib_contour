@@ -3,9 +3,9 @@ CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
 	EXEC	@bindir@/gfs2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
-CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS03|WXTZ03|WXTR03|WXTP03|PR03|PMSL)/(0) - NONE!
+CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS03|WXTZ03|WXTR03|WXTP03|P06M|PMSL)/(0) - NONE!
 	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
-CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS03|WXTZ03|WXTR03|WXTP03|PR03|PMSL)/(0) - NONE!
+CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS03|WXTZ03|WXTR03|WXTP03|P06M|PMSL)/(0) - NONE!
 	EXEC	@bindir@/gfs2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(HGHT|TMPK|RELH|UREL|VREL)/(925|850|700|500|300) hPa PRES

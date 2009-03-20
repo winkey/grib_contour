@@ -14,29 +14,13 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
  
-#ifndef _CONTOUR_H
-#define _CONTOUR_H
+#ifndef _MERGE_H
+#define _MERGE_H
 
+GDALDatasetH merge(GDALDatasetH *datasets,
+									int missing,
+									double missing_value);
 
-void contour (
-	GDALDatasetH hgdalDS,
-	OGRSpatialReferenceH hSRS,
-	OGRDataSourceH *hogrDS,
-	OGRLayerH *hLayer,
-	options *o,
-	int id,
-	int elev,
-	gds_t *gds,
-	color_scale *cscales);
-
-void contour2kml(
-	gds_t *gds,
-	options *o,
-	color_scale *cscales,
-	OGRSpatialReferenceH hSRS,
-	OGRLayerH hLayer);
-
-
-#endif /* _CONTOUR_H */
+#endif /* _MERGE_H */
 
  

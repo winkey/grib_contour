@@ -35,65 +35,123 @@
 #include "ogrcode.h"
 #include "gdalcode.h"
 #include "contour.h"
+#include "merge.h"
 
 
-
+#define DEBUG 1
 
 
 int main(int argc, char **argv)
 {
-		options o = {};
-		
-		float *raster = NULL;
-		gds_t gds = {};
-		GDALDatasetH hDS;
-		GDALRasterBandH hBand;
-		OGRSpatialReferenceH hSRS;
-		color_scale *cscales;
-		OGRDataSourceH hogrDS;
-		OGRLayerH hLayer;
-		
-		/***** init *****/
-		
-		GDALAllRegister();
-		OGRRegisterAll();
-		
-		/***** check args *****/
-		
-		get_options(argc, argv, &o);
-		
-		/***** get the raster *****/
-		
-		if (o.wind)
-				raster = do_wind_grib(&o, &gds);
-		else if (o.and)
-				raster = do_and_grib(&o, &gds);
-		else
-				raster = do_grib(&o, &gds);
-		
-		/***** get the color scale *****/
-		
-		cscales = color_getscale(&o);
-		
-		
-		hDS = do_gdal(raster, &gds, &hSRS, &hBand);
-		
-		if (o.tiffile) {
-				
-				/***** make an image *****/
-				
+	options o = {};
+	
+	float *raster[100] = {};
+	gds_t gds[100] = {};
+	
+	GDALDatasetH hDS[100] = {};
+	GDALRasterBandH hBand[100] = {};
+	OGRSpatialReferenceH hSRS[100] = {};
+	
+	GDALDatasetH t_hDS = NULL;
+	GDALRasterBandH t_hBand;
+	OGRSpatialReferenceH t_hSRS = NULL;
+	
+	color_scale *cscales;
+	OGRDataSourceH hogrDS;
+	OGRLayerH hLayer;
+	int i;
+	
+	/***** init *****/
+	
+	fprintf(stderr, "doing init\n");
+	GDALAllRegister();
+	OGRRegisterAll();
+	
+	/***** check args *****/
+	
+	fprintf(stderr, "get_options\n");
+	get_options(argc, argv, &o);
+	
+	/***** get the raster(s) *****/
+	
+	if (o.wind) {
+		for (i = 0; i < o.ucount ; i++) {
+			fprintf(stderr, "do_wind_grib\n");
+			raster[i] = do_wind_grib(&o, o.ugribfile[i], o.ugribfile[i],
+															 o.ugribmsg, o.vgribmsg, gds + i);
 		}
+		o.gcount = o.ucount;
+	}
+	else if (o.and) {
+		for (i = 0; i < o.ucount ; i++) {
+			fprintf(stderr, "do_and_grib\n");
+			raster[i] = do_and_grib(&o, o.ugribfile[i], o.ugribfile[i],
+															o.ugribmsg, o.vgribmsg, gds + i);
+		}
+		o.gcount = o.ucount;
+	}
+	else {
+		for (i = 0; i < o.gcount ; i++) {
+			fprintf(stderr, "do_grib\n");
+			raster[i] = do_grib(&o, o.gribfile[i], o.gribmsg, gds + i);
+		}
+	}
+	/***** get the color scale *****/
+	
+	fprintf(stderr, "color_getscale\n");
+	cscales = color_getscale(&o);
+	
+	/***** convert to gdal dataset(s) *****/
+	
+	for (i = 0; i < o.gcount ; i++) {
+		fprintf(stderr, "do_gdal\n");
+		hDS[i] = do_gdal(raster[i], gds + i, hSRS + i, hBand + i);
+	}
+	
+	/***** merge data? *****/
+	
+	if (o.gcount > 1) {
+		fprintf(stderr, "%i merge\n", o.gcount);
+		t_hDS = merge(hDS, gds->missing, gds->missing_value);
+		t_hBand = GDALGetRasterBand(t_hDS, 1);
+		t_hSRS = OSRNewSpatialReference(GDALGetProjectionRef(t_hDS));
+		//t_hSRS = *hSRS;
+	}
+	
+	/***** nope *****/
+	
+	else {
+		t_hDS = *hDS;
+		t_hSRS = *hSRS;
+		t_hBand = *hBand;
+	}
+		
+	if (o.tiffile) {
+		char *ccopt[] = {
+			"TILED=YES",
+			NULL
+		};
+		fprintf(stderr, "createcopy\n");
+		GDALDatasetH tiff = GDALCreateCopy(GDALGetDriverByName("gtiff"),
+																			 o.tiffile,
+																			 t_hDS,
+																			 0, /*bStrict*/
+																			 ccopt,
+																			 GDALTermProgress,
+																			 NULL);
+		GDALClose(tiff);
+		
+	}
 		
 	if (o.kmlfile) {
 		
 		/***** make a linestring *****/
 		
-		contour (hDS, hSRS, &hogrDS, &hLayer, &o, 0, 1, &gds, cscales);
+		fprintf(stderr, "contour\n");
+		contour (t_hDS, t_hSRS, &hogrDS, &hLayer, &o, 0, 1, gds, cscales);
 		
-		
-		contour2kml(&gds, &o, cscales, hSRS, hBand, hLayer);
-			
-		OSRDestroySpatialReference(hSRS);
+		fprintf(stderr, "contour2kml\n");
+		contour2kml(gds, &o, cscales, t_hSRS, hLayer);
 		
 		OGR_DS_Destroy(hogrDS);
 		
@@ -104,9 +162,19 @@ int main(int argc, char **argv)
 	
 	/***** cleaup raster stuff *****/
 	
-	GDALClose(hDS);
+	if (o.gcount) {
+		for (i = 0; i < o.gcount ; i++) {
+			OSRDestroySpatialReference(hSRS[i]);
+			GDALClose(hDS[i]);
+			free(raster[i]);
+		}
+	}
+	else {
+		OSRDestroySpatialReference(*hSRS);
+		GDALClose(*hDS);
+		free(*raster);
+	}
 	
-	free(raster);
 	GDALDestroyDriverManager();
 	
 	return EXIT_SUCCESS;

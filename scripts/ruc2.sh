@@ -119,7 +119,7 @@ then
 		mkrootkml "pwat"
 	fi
 	
-	plot "$path" "pwat" 1 4 $hour 01
+	plot "$path" "pwat" 1 4 $hour 01 "-I"
 	rm "$path"
 fi
 

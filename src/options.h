@@ -21,14 +21,18 @@
 typedef struct {
 	int wind;
 	int and;
-	char *gribfile;
-	char *ugribfile;
-	char *vgribfile;
+	int gcount;
+	int ucount;
+	int vcount;
+	char *gribfile[100];
+	char *ugribfile[100];
+	char *vgribfile[100];
 	float gribmsg;
 	float ugribmsg;
 	float vgribmsg;
 	float interval;
 	int finterval;
+	int english;
 	char *scalename;
 	float scalecorrection;
 	char *kmlfile;
