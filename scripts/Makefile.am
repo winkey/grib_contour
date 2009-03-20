@@ -17,7 +17,7 @@ bin_SCRIPTS = \
 	makekey.sh \
 	forecaster.sh \
 	ruc2.sh \
-	rtma_nhem.sh \
+	rtma_ak.sh \
 	rtma_conus.sh
 
 
@@ -38,7 +38,7 @@ EXTRA_DIST = \
 	makekey.in \
 	forecaster.in \
 	ruc2.in \
-	rtma_nhem.in \
+	rtma_ak.in \
 	rtma_conus.in
 
 
@@ -57,7 +57,7 @@ dist_bin_SCRIPTS = \
 	makekey.sh \
 	forecaster.sh \
 	ruc2.sh \
-	rtma_nhem.sh \
+	rtma_ak.sh \
 	rtma_conus.sh
 
 
@@ -122,9 +122,9 @@ makekey.sh: makekey.in Makefile
 	$(do_subst) < $(srcdir)/makekey.in > makekey.sh
 	chmod +x makekey.sh
 
-rtma_nhem.sh: rtma_nhem.in Makefile
-	$(do_subst) < $(srcdir)/rtma_nhem.in > rtma_nhem.sh
-	chmod +x rtma_nhem.sh
+rtma_ak.sh: rtma_ak.in Makefile
+	$(do_subst) < $(srcdir)/rtma_ak.in > rtma_ak.sh
+	chmod +x rtma_ak.sh
 
 rtma_conus.sh: rtma_conus.in Makefile
 	$(do_subst) < $(srcdir)/rtma_conus.in > rtma_conus.sh

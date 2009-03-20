@@ -35,7 +35,7 @@
 #include "gdalcode.h"
 #include "error.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 /*******************************************************************************
 	function to open the raster file
@@ -228,8 +228,8 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin(hSRS, hSrsSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
-											 MinY- (gds->Dy * gds->Ny), gds->Dy, 0.0);
+			set_geotransform(hDS, MinX, gds->Dx, 0.0,
+														MinY, gds->Dy, 0.0);
 			break;
 		
 		case GDS_POLAR:
@@ -241,8 +241,8 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin(hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
-											 MinY, gds->Dy, 0.0);
+			set_geotransform(hDS, MinX, gds->Dx, 0.0,
+														MinY, gds->Dy, 0.0);
 			break;
 		
 		case GDS_LAMBERT:
@@ -255,44 +255,9 @@ OGRSpatialReferenceH set_projection(
 			MinY = gds->Lat1;
 			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
 			transform_origin( hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
-											 MinY, gds->Dy, 0.0);
-			break;
-		
-		case GDS_ORTHOGRAPHIC:
-			OSRSetGeogCS(hSRS, "Sphere", NULL, "Sphere", gds->radius * 1000 , 0.0,
-								"Greenwich", 0.0, NULL, 0.0);
-			gdal_set_projection(hDS, hSRS);
-			MinX = gds->Lon1;
-			MinY = gds->Lat1;
-			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
-			transform_origin( hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
-											 MinY- (gds->Dy * gds->Ny), gds->Dy, 0.0);
-			break;
-		
-		case GDS_EQUATOR_EQUIDIST:
-			OSRSetGeogCS(hSRS, "Sphere", NULL, "Sphere", gds->radius * 1000 , 0.0,
-								"Greenwich", 0.0, NULL, 0.0);
-			gdal_set_projection(hDS, hSRS);
-			MinX = gds->Lon1;
-			MinY = gds->Lat1;
-			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
-			transform_origin( hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
-											 MinY- (gds->Dy * gds->Ny), gds->Dy, 0.0);
-			break;
-		
-		case GDS_AZIMUTH_RANGE:
-			OSRSetGeogCS(hSRS, "Sphere", NULL, "Sphere", gds->radius * 1000 , 0.0,
-								"Greenwich", 0.0, NULL, 0.0);
-			gdal_set_projection(hDS, hSRS);
-			MinX = gds->Lon1;
-			MinY = gds->Lat1;
-			OSRSetWellKnownGeogCS(hSrsSRS, "WGS84");
-			transform_origin( hSrsSRS, hSRS, &MinX, &MinY);
-			set_geotransform(hDS, -(gds->Dx * ((float)gds->Nx / 2.0f)), gds->Dx, 0.0,
-											 MinY- (gds->Dy * gds->Ny), gds->Dy, 0.0);
+			set_geotransform(hDS, MinX, gds->Dx, 0.0,
+														MinY, gds->Dy, 0.0);
+			printf("Minx=%lg Miny=%lg Dx=%g Dy=%g nx=%i ny=%i\n", MinX, MinY, gds->Dx, gds->Dy, gds->Nx, gds->Ny);
 			break;
 		
 	}
