@@ -927,6 +927,53 @@
 			</NetworkLink>
 		</Folder>
 		<Folder>
+			<name>Mean Sea Level Pressure</name>
+			<visibility>0</visibility>
+			<open>1</open>
+			<Style>
+				<ListStyle>
+					<listItemType>radioFolder</listItemType>
+					<bgColor>00ffffff</bgColor>
+				</ListStyle>
+			</Style>
+			<Folder>
+				<name>off</name>
+				<visibility>0</visibility>
+			</Folder>
+			<NetworkLink>
+				<name>00Z</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/gfs/00/pmsl.kml</href>
+				</Link>
+			</NetworkLink>
+			<NetworkLink>
+				<name>06Z</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/gfs/06/pmsl.kml</href>
+				</Link>
+			</NetworkLink>
+			<NetworkLink>
+				<name>12Z</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/gfs/12/pmsl.kml</href>
+				</Link>
+			</NetworkLink>
+			<NetworkLink>
+				<name>18Z</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/gfs/18/pmsl.kml</href>
+				</Link>
+			</NetworkLink>
+		</Folder>
+		<Folder>
 			<name>Precipitation Rate</name>
 			<visibility>0</visibility>
 			<Style>

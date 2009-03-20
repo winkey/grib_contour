@@ -120,7 +120,7 @@ then
 	fi
 	
 	plot "$path" "pwat" 1 4 $hour 01
-	rm "$path"
+	rm "$path"rjhstorm
 fi
 
 #### plot percip #####
@@ -136,5 +136,17 @@ then
 	rm "$path"
 fi
 
+#### plot mmsl #####
+
+if [[ "$prod" == "MMSL" ]]
+then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "pmsl"
+	fi
+	
+	plot "$path" "pmsl" 1 200 $hour 03
+	rm "$path"
+fi
 
 

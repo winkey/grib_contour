@@ -193,30 +193,41 @@ OGRSpatialReferenceH set_projection(
 			gdal_set_projection(hDS, hSRS);
 			
 			if ((int)(gds->Lat1 * 100) % 100) {
-					gds->Lat1 += gds->Dy / 2.0;
-					gds->Lon1 -= gds->Dx / 2.0;
-					gds->Lat2 -= gds->Dy / 2.0;
-					gds->Lon2 += gds->Dx / 2.0;
-					
-					gds->Dy = (gds->Lat1 - gds->Lat2) / gds->Ny;
-					gds->Dx = (gds->Lon1 + gds->Lon2) / gds->Nx;
+				gds->Lat1 += gds->Dy / 2.0;
+				gds->Lon1 -= gds->Dx / 2.0;
+				gds->Lat2 -= gds->Dy / 2.0;
+				gds->Lon2 += gds->Dx / 2.0;
+				
+				gds->Dy = (gds->Lat1 - gds->Lat2) / gds->Ny;
+				gds->Dx = (gds->Lon1 + gds->Lon2) / gds->Nx;
+			
+				if (gds->Lat2 < gds->Lat1) {
+					MinX = gds->Lon2;
+					MinY = gds->Lat2;
 				}
-			
-			printf("lat1=%lg lon1=%lg lat2=%lg lon2=%lg dx=%lg dy=%lg\n", gds->Lat1, gds->Lon1,
-						 gds->Lat2, gds->Lon2, gds->Dx, gds->Dy);
-			
-			if (gds->Lat2 < gds->Lat1) {
-				MinX = gds->Lon2;
-				MinY = gds->Lat2;
+				else {
+					MinX = gds->Lon1;
+					MinY = gds->Lat1;
+				}
+				
+				gds->Dx = 360.0 / (double)gds->Nx;
+				set_geotransform(hDS, MinX + gds->Dx / 2.0, gds->Dx, 0.0,
+											    		MinY + gds->Dy / 2.0, gds->Dy, 0.0);
 			}
+			
 			else {
-				MinX = gds->Lon1;
-				MinY = gds->Lat1;
+				if (gds->Lat2 < gds->Lat1) {
+					MinX = gds->Lon2;
+					MinY = gds->Lat2;
+				}
+				else {
+					MinX = gds->Lon1;
+					MinY = gds->Lat1;
+				}
+				
+				set_geotransform(hDS, MinX, gds->Dx, 0.0,
+											    		MinY, gds->Dy, 0.0);
 			}
-			
-			gds->Dx = 360.0 / (double)gds->Nx;
-			set_geotransform(hDS, MinX + gds->Dx / 2.0, gds->Dx, 0.0,
-											      MinY + gds->Dy / 2.0, gds->Dy, 0.0);
 			break;
 		
 		case GDS_MERCATOR:

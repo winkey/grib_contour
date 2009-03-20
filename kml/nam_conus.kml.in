@@ -924,6 +924,52 @@
 			</NetworkLink>
 		</Folder>
 		<Folder>
+			<name>PMean Sea Level Pressure</name>
+			<visibility>0</visibility>
+			<Style>
+				<ListStyle>
+					<listItemType>radioFolder</listItemType>
+					<bgColor>00ffffff</bgColor>
+				</ListStyle>
+			</Style>
+			<Folder>
+				<name>off</name>
+				<visibility>0</visibility>
+			</Folder>
+			<NetworkLink>
+				<name>00Z</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/nam_conus/00/pmsl.kml</href>
+				</Link>
+			</NetworkLink>
+			<NetworkLink>
+				<name>06Z</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/nam_conus/06/pmsl.kml</href>
+				</Link>
+			</NetworkLink>
+			<NetworkLink>
+				<name>12Z</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/nam_conus/12/pmsl.kml</href>
+				</Link>
+			</NetworkLink>
+			<NetworkLink>
+				<name>18Z</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/nam_conus/18/pmsl.kml</href>
+				</Link>
+			</NetworkLink>
+		</Folder>
+		<Folder>
 			<name>3 Hour Total Precipitation</name>
 			<visibility>0</visibility>
 			<Style>

@@ -25,6 +25,7 @@ dist_pkgdata_DATA = \
 	850wind.scale \
 	925wind.scale \
 	pwat.scale \
+	pmsl.scale \
 	pcp.scale \
 	prob.scale \
 	t.scale \
