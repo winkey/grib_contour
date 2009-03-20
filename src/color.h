@@ -30,6 +30,8 @@ typedef struct {
 
 	returns:
 							the scale
+	
+	NOTE: you must free() the result when your done with it
 *******************************************************************************/
 
 color_scale *color_getscale(

@@ -30,9 +30,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-subdir = scripts
-DIST_COMMON = $(dist_bin_SCRIPTS) $(srcdir)/Makefile.am \
-	$(srcdir)/Makefile.in
+subdir = images
+DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -40,12 +39,17 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
-am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(bindir)"
-binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
-dist_binSCRIPT_INSTALL = $(INSTALL_SCRIPT)
-SCRIPTS = $(bin_SCRIPTS) $(dist_bin_SCRIPTS)
 SOURCES =
 DIST_SOURCES =
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
+am__installdirs = "$(DESTDIR)$(wwwdir)"
+wwwDATA_INSTALL = $(INSTALL_DATA)
+DATA = $(www_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -138,37 +142,30 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 www = @WWW@
 wwwdisk = @WWWDISK@
-bin_SCRIPTS = generic.sh \
-	gfs.sh \
-	nam_west.sh \
-	nam_east.sh \
-	nam_hi.sh \
-	nam_ak.sh \
-	nam_pr.sh \
-	makekey.sh
-
-CLEANFILES = $(bin_SCRIPTS)
-EXTRA_DIST = generic.in \
-	gfs.in \
-	nam_west.in \
-	nam_east.in \
-	nam_hi.in \
-	nam_ak.in \
-	nam_pr.in \
-	makekey.in
-
-dist_bin_SCRIPTS = generic.sh \
-	gfs.sh \
-	nam_west.sh \
-	nam_east.sh \
-	nam_hi.sh \
-	nam_ak.sh \
-	nam_pr.sh \
-	makekey.sh
-
-do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
-							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
-							 -e 's,[@]www[@],$(www),g'
+wwwdir = ${wwwdisk}/kml/images
+www_DATA = \
+	925t.png \
+	925hgt.png \
+	925rh.png \
+	925wind.png \
+	850t.png \
+	850hgt.png \
+	850rh.png \
+	850wind.png \
+	700t.png \
+	700hgt.png \
+	700rh.png \
+	700wind.png \
+	500t.png \
+	500hgt.png \
+	500rh.png \
+	500wind.png \
+	300t.png \
+	300hgt.png \
+	300rh.png \
+	300wind.png \
+	pwat.png \
+	cape.png
 
 all: all-am
 
@@ -182,9 +179,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  scripts/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  images/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  scripts/Makefile
+	  $(AUTOMAKE) --gnu  images/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -202,43 +199,22 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-install-binSCRIPTS: $(bin_SCRIPTS)
+install-wwwDATA: $(www_DATA)
 	@$(NORMAL_INSTALL)
-	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
-	@list='$(bin_SCRIPTS)'; for p in $$list; do \
+	test -z "$(wwwdir)" || $(MKDIR_P) "$(DESTDIR)$(wwwdir)"
+	@list='$(www_DATA)'; for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  if test -f $$d$$p; then \
-	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
-	    echo " $(binSCRIPT_INSTALL) '$$d$$p' '$(DESTDIR)$(bindir)/$$f'"; \
-	    $(binSCRIPT_INSTALL) "$$d$$p" "$(DESTDIR)$(bindir)/$$f"; \
-	  else :; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(wwwDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(wwwdir)/$$f'"; \
+	  $(wwwDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(wwwdir)/$$f"; \
 	done
 
-uninstall-binSCRIPTS:
+uninstall-wwwDATA:
 	@$(NORMAL_UNINSTALL)
-	@list='$(bin_SCRIPTS)'; for p in $$list; do \
-	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
-	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
-	done
-install-dist_binSCRIPTS: $(dist_bin_SCRIPTS)
-	@$(NORMAL_INSTALL)
-	test -z "$(bindir)" || $(MKDIR_P) "$(DESTDIR)$(bindir)"
-	@list='$(dist_bin_SCRIPTS)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  if test -f $$d$$p; then \
-	    f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
-	    echo " $(dist_binSCRIPT_INSTALL) '$$d$$p' '$(DESTDIR)$(bindir)/$$f'"; \
-	    $(dist_binSCRIPT_INSTALL) "$$d$$p" "$(DESTDIR)$(bindir)/$$f"; \
-	  else :; fi; \
-	done
-
-uninstall-dist_binSCRIPTS:
-	@$(NORMAL_UNINSTALL)
-	@list='$(dist_bin_SCRIPTS)'; for p in $$list; do \
-	  f=`echo "$$p" | sed 's|^.*/||;$(transform)'`; \
-	  echo " rm -f '$(DESTDIR)$(bindir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(bindir)/$$f"; \
+	@list='$(www_DATA)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(wwwdir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(wwwdir)/$$f"; \
 	done
 tags: TAGS
 TAGS:
@@ -275,9 +251,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(SCRIPTS)
+all-am: Makefile $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(bindir)"; do \
+	for dir in "$(DESTDIR)$(wwwdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -297,7 +273,6 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
-	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -323,11 +298,11 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-wwwDATA
 
 install-dvi: install-dvi-am
 
-install-exec-am: install-binSCRIPTS install-dist_binSCRIPTS
+install-exec-am:
 
 install-html: install-html-am
 
@@ -357,54 +332,87 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-binSCRIPTS uninstall-dist_binSCRIPTS
+uninstall-am: uninstall-wwwDATA
 
 .MAKE: install-am install-strip
 
 .PHONY: all all-am check check-am clean clean-generic distclean \
 	distclean-generic distdir dvi dvi-am html html-am info info-am \
-	install install-am install-binSCRIPTS install-data \
-	install-data-am install-dist_binSCRIPTS install-dvi \
+	install install-am install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
 	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic pdf pdf-am ps ps-am uninstall uninstall-am \
-	uninstall-binSCRIPTS uninstall-dist_binSCRIPTS
+	install-strip install-wwwDATA installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
+	uninstall-am uninstall-wwwDATA
 
 
-generic.sh: generic.in Makefile
-	$(do_subst) < $(srcdir)/generic.in > generic.sh
-	chmod +x generic.sh
+925t.png: ../share/925t.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/925t.scale "c" 925t.png
 
-gfs.sh: gfs.in Makefile
-	$(do_subst) < $(srcdir)/gfs.in > gfs.sh
-	chmod +x gfs.sh
+925hgt.png: ../share/925hgt.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/925hgt.scale "m" 925hgt.png
 
-nam_west.sh: nam_west.in Makefile
-	$(do_subst) < $(srcdir)/nam_west.in > nam_west.sh
-	chmod +x nam_west.sh
+925rh.png: ../share/925rh.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/925rh.scale "%" 925rh.png
 
-nam_east.sh: nam_east.in Makefile
-	$(do_subst) < $(srcdir)/nam_east.in > nam_east.sh
-	chmod +x nam_east.sh
+925wind.png: ../share/925wind.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/925wind.scale "kts" 925wind.png
 
-nam_pr.sh: nam_pr.in Makefile
-	$(do_subst) < $(srcdir)/nam_pr.in > nam_pr.sh
-	chmod +x nam_pr.sh
+850t.png: ../share/850t.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/850t.scale "c" 850t.png
 
-nam_hi.sh: nam_hi.in Makefile
-	$(do_subst) < $(srcdir)/nam_hi.in > nam_hi.sh
-	chmod +x nam_hi.sh
+850hgt.png: ../share/850hgt.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/850hgt.scale "m" 850hgt.png
 
-nam_ak.sh: nam_ak.in Makefile
-	$(do_subst) < $(srcdir)/nam_ak.in > nam_ak.sh
-	chmod +x nam_ak.sh
+850rh.png: ../share/850rh.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/850rh.scale "%" 850rh.png
 
-makekey.sh: makekey.in Makefile
-	$(do_subst) < $(srcdir)/makekey.in > makekey.sh
-	chmod +x makekey.sh
+850wind.png: ../share/850wind.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/850wind.scale "kts" 850wind.png
+
+700t.png: ../share/700t.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/700t.scale "c" 700t.png
+
+700hgt.png: ../share/700hgt.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/700hgt.scale "m" 700hgt.png
+
+700rh.png: ../share/700rh.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/700rh.scale "%" 700rh.png
+
+700wind.png: ../share/700wind.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/700wind.scale "kts" 700wind.png
+
+500t.png: ../share/500t.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/500t.scale "c" 500t.png
+
+500hgt.png: ../share/500hgt.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/500hgt.scale "m" 500hgt.png
+
+500rh.png: ../share/500rh.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/500rh.scale "%" 500rh.png
+
+500wind.png: ../share/500wind.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/500wind.scale "kts" 500wind.png
+
+300t.png: ../share/300t.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/300t.scale "c" 300t.png
+
+300hgt.png: ../share/300hgt.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/300hgt.scale "m" 300hgt.png
+
+300rh.png: ../share/300rh.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/300rh.scale "%" 300rh.png
+
+300wind.png: ../share/300wind.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/300wind.scale "kts" 300wind.png
+
+cape.png: ../share/cape.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/cape.scale "kts" cape.png
+
+pwat.png: ../share/pwat.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/pwat.scale "kts" pwat.png
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

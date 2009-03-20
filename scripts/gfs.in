@@ -15,11 +15,10 @@
 
 source @bindir@/generic.sh
 
-fwtools="/home/winkey/FWTools-1.3.2/bin_safe/"
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/gfs/prod/"
-wwwdisk="/var/www/apache2-default/weather/kml/gfs"
-www="http://hypercube.telascience.org/weather/kml/gfs"
+wwwdisk="@wwwdisk@/kml/gfs"
+www="@www@/kml/gfs"
 
 times=`seq 0 3 180`
 
@@ -45,7 +44,7 @@ function getgrib_curl {
 	idx="gfs.t${run}z.pgrb2f${timee}.idx"
 	
 	get_inv.pl "${servb}gfs.${datee}${run}/${idx}" |\
-	 grep -e ":HGT:\(925\|850\|700\|500\|300\) mb:\|TMP:\(925\|850\|700\|500\|300\) mb:\|RH:\(925\|850\|700\|500\|300\) mb:\|UGRD:\(925\|850\|700\|500\|300\) mb:\|VGRD:\(925\|850\|700\|500\|300\) mb:\|PWAT" |\
+	 grep -e ":HGT:\(925\|850\|700\|500\|300\) mb:\|TMP:\(925\|850\|700\|500\|300\) mb:\|RH:\(925\|850\|700\|500\|300\) mb:\|UGRD:\(925\|850\|700\|500\|300\) mb:\|VGRD:\(925\|850\|700\|500\|300\) mb:\|PWAT\|CAPE" |\
 	 get_grib.pl "${servb}gfs.${datee}${run}/${fil}" "${tmp}/${fil}"
 }
 
@@ -90,19 +89,20 @@ function doplot {
 	plot $gribfile 300t 2 1 $timee&
 	plot $gribfile 300rh 3 5 $timee&
 	windplot $gribfile 300wind 4 10 $timee&
-	
 	wait
-	plot $gribfile pwat 21 1 $timee
-	plot $gribfile cape 191 50 $timee
+	
+	plot $gribfile pwat 22 2 $timee&
+	plot $gribfile cape 21 200 $timee&
+	wait
 	
 	#cleanup
 	
-	rm "${tmp}/*"
+	rm "${tmp}/${gribfile}"
 	
 }
 
 mktempfiledir "$tmp"
-cd "$fwtools"
+
 
 mkrootkml 925hgt
 mkrootkml 925t
