@@ -56,7 +56,9 @@ products1000="hgt Heights"
 products2="pmsl Mean Sea Level Pressure"
 
 times="00 00Z
-12 12Z"
+06 06Z
+12 12Z
+18 18Z"
 
 screenshots=$(
   echo "$levels" | while read lev_n lev_fn

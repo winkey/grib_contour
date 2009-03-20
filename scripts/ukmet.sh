@@ -16,7 +16,7 @@
 source /usr/local/bin/generic2.sh
 
 wwwdisk="/home/rush/public_html/weather/kml/ukmet"
-www="/home/rush/public_html/weather/kml/ukmet"
+www="http://atmos.ucsd.edu/kml/ukmet"
 
 
 

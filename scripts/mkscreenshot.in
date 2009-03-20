@@ -29,7 +29,7 @@ function shot {
     sleep 1
   done
 	
-  sleep 20
+  sleep 10
 	
   ##### save screenshot #####
 	
