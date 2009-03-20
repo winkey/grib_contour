@@ -23,6 +23,11 @@ NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(WXTS|WXTZ|WXTR|WXTP|P03M|PMSL)/(0) - NONE
 	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(POPF03|TSTM03|POP03|POPZ03)/(0) - NONE
+	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
+NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(POPF03|TSTM03|POP03|POPZ03)/(0) - NONE
+	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
+
 
 NGRID	^[LM]DG[A-Z]98 KNHC .* !grib2/ncep/FORECASTER/#000/([0-9]{8})([0-9][0-9])00F([0-9]{3})/SPED[0-9]*00(17|25|32)P.*
 	FILE	data/ngrid/forecaster/\1\2.\2.\3.\4.grib2

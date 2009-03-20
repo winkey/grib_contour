@@ -29,6 +29,14 @@ then
 	hour="00"
 fi
 
+if [[ "${hour#0}" -gt "69" ]]
+then
+	period="06"
+else
+	period="03"
+fi
+
+
 if [[ ! -d "${wwwdisk}/${run}" ]]
 then
 	mkdir -p "${wwwdisk}/${run}"
@@ -41,14 +49,14 @@ then
 	if [[ "$hour" == "00" ]]
 	then
 		mkrootkml "hghtww"
-		if [[ ! -h "${wwwdisk}/latest" ]]
+		if [[ -h "${wwwdisk}/latest" ]]
 		then
 			rm -f "${wwwdisk}/latest"
 		fi
 		ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
 	fi
 	
-	plot "$path" "hghtww" 1 .5 $hour 03
+	plot "$path" "hghtww" 1 .5 $hour $period
 #	rm "$path"
 fi
 
@@ -61,7 +69,7 @@ then
 		mkrootkml "perdww"
 	fi
 	
-	plot "$path" "perdww" 1 1 $hour 03
+	plot "$path" "perdww" 1 1 $hour $period
 #	rm "$path"
 fi
 
@@ -74,7 +82,7 @@ then
 		mkrootkml "htsgw"
 	fi
 	
-	plot "$path" "htsgw" 1 1 $hour 03
+	plot "$path" "htsgw" 1 1 $hour $period
 #	rm "$path"
 fi
 
@@ -88,10 +96,10 @@ then
 	then
 		if [[ "$hour" == "00" ]]
 		then
-			mkrootkml "${level}wind"
+			mkrootkml "wind"
 		fi
 		
-		windplot "$path" "$vpath" "wind" 1.0 1.0 5 $hour 03
+		windplot "$path" "$vpath" "wind" 1.0 1.0 5 $hour $period
 
 #		rm "$path"
 #		rm "$vpath"
@@ -109,7 +117,7 @@ then
 			mkrootkml "wind"
 		fi
 		
-		windplot "$upath" "$path" "wind" 1.0 1.0 5 $hour 03
+		windplot "$upath" "$path" "wind" 1.0 1.0 5 $hour $period
 		
 #		rm "$path"
 #		rm "$upath"

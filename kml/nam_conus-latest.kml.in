@@ -533,6 +533,94 @@
 				</Link>
 			</NetworkLink>
 		</Folder>
+		<Folder>
+			<name>Probability of Precipitation</name>
+			<visibility>0</visibility>
+			<Style>
+				<ListStyle>
+					<listItemType>radioFolder</listItemType>
+					<bgColor>00ffffff</bgColor>
+				</ListStyle>
+			</Style>
+			<Folder>
+				<name>off</name>
+				<visibility>0</visibility>
+			</Folder>
+			<NetworkLink>
+				<name>latest</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/nam_conus/latest/pop.kml</href>
+				</Link>
+			</NetworkLink>
+		</Folder>
+		<Folder>
+			<name>Probability of Frozen Precipitation</name>
+			<visibility>0</visibility>
+			<Style>
+				<ListStyle>
+					<listItemType>radioFolder</listItemType>
+					<bgColor>00ffffff</bgColor>
+				</ListStyle>
+			</Style>
+			<Folder>
+				<name>off</name>
+				<visibility>0</visibility>
+			</Folder>
+			<NetworkLink>
+				<name>latest</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/nam_conus/latest/popz.kml</href>
+				</Link>
+			</NetworkLink>
+		</Folder>
+		<Folder>
+			<name>Probability of Freezing Precipitation</name>
+			<visibility>0</visibility>
+			<Style>
+				<ListStyle>
+					<listItemType>radioFolder</listItemType>
+					<bgColor>00ffffff</bgColor>
+				</ListStyle>
+			</Style>
+			<Folder>
+				<name>off</name>
+				<visibility>0</visibility>
+			</Folder>
+			<NetworkLink>
+				<name>latest</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/nam_conus/latest/popf.kml</href>
+				</Link>
+			</NetworkLink>
+		</Folder>
+		<Folder>
+			<name>Probability of Thunderstorm</name>
+			<visibility>0</visibility>
+			<Style>
+				<ListStyle>
+					<listItemType>radioFolder</listItemType>
+					<bgColor>00ffffff</bgColor>
+				</ListStyle>
+			</Style>
+			<Folder>
+				<name>off</name>
+				<visibility>0</visibility>
+			</Folder>
+			<NetworkLink>
+				<name>latest</name>
+				<visibility>0</visibility>
+				<open>1</open>
+				<Link>
+					<href>@www@/kml/nam_conus/latest/tstm.kml</href>
+				</Link>
+			</NetworkLink>
+		</Folder>
 	</Folder>
 </Document>
 </kml>

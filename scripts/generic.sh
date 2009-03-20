@@ -63,7 +63,7 @@ function mkrootkml {
 	echo '<Folder>' >> $frames
 	echo '	<ScreenOverlay>' >> $frames
   echo '		<name>Key</name>' >> $frames
-  echo '		<visibility>0</visibility>' >> $frames
+  echo '		<visibility>1</visibility>' >> $frames
   echo '		<Icon>' >> $frames
   echo "			<href>${www}/../images/${name}.png</href>" >> $frames
   echo '		</Icon>' >> $frames
@@ -106,7 +106,7 @@ function appendkml {
 	echo "      <begin>${begin}</begin>" >> $tmpfile
 	echo "      <end>${end}</end>" >> $tmpfile
 	echo '    </TimeSpan>' >> $tmpfile
-	echo '    <visibility>0</visibility>' >> $tmpfile
+	echo '    <visibility>1</visibility>' >> $tmpfile
 	echo '    <open>0</open>' >> $tmpfile
 	echo '    <Url>' >> $tmpfile
 	echo "      <href>${www}/${run}/${name}${hr}.kmz</href>" >> $tmpfile

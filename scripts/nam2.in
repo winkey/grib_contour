@@ -173,3 +173,59 @@ then
 	rm "$path"
 fi
 
+##### plot POPF03 #####
+
+if [[ "$prod" == "POPF03" ]]
+then
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "popf"
+	fi
+	
+	plot "$path" "popf" 1 4 $hour 03
+
+	rm "$path"
+fi
+
+##### plot TSTM03 #####
+
+if [[ "$prod" == "TSTM03" ]]
+then
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "tstm"
+	fi
+	
+	plot "$path" "tstm" 1 4 $hour 03
+
+	rm "$path"
+fi
+
+##### plot POP03 #####
+
+if [[ "$prod" == "POP03" ]]
+then
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "pop"
+	fi
+	
+	plot "$path" "pop" 1 4 $hour 03
+
+	rm "$path"
+fi
+
+##### plot POPZ03 #####
+
+if [[ "$prod" == "POPZ03" ]]
+then
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "popz"
+	fi
+	
+	plot "$path" "popz" 1 4 $hour 03
+
+	rm "$path"
+fi
+
