@@ -170,6 +170,14 @@ void add_feature(
 	OGRLayerH hDstLayer,
 	OGRFeatureH hDstFeat);
 
+void getpoints (
+	OGRFeatureH hFeat,
+	buffer *points);
 
-
+void transform(
+	OGRSpatialReferenceH hsrcSRS,
+	OGRLayerH hsrcLayer,
+	OGRSpatialReferenceH hdstSRS,
+	OGRLayerH hdstLayer);
+	
 #endif /* _OGRCODE_H */

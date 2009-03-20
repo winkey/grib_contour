@@ -26,6 +26,7 @@
 #include <stdlib.h>
 
 #include "grib.h"
+#include "buffer.h"
 #include "ogrcode.h"
 
 #define DEBUG 0
@@ -159,7 +160,7 @@ void create_field(
 		OGR_Fld_SetPrecision(hFld, precision);
 	OGR_L_CreateField(hLayer, hFld, FALSE);
 	OGR_Fld_Destroy(hFld);
-	
+
 	return;
 }
 	
@@ -262,7 +263,7 @@ void add_feature(
 {
 	
 	if (OGR_L_CreateFeature(hDstLayer, hDstFeat) != OGRERR_NONE) {
-		fprintf(stderr, "WARNING: Failed to transform feature %ld.\n",
+		fprintf(stderr, "WARNING: Failed to add feature %ld.\n",
 						OGR_F_GetFID(hDstFeat));
 	}
 	
@@ -270,3 +271,91 @@ void add_feature(
 }
 
 		
+void getpoint (
+	OGRGeometryH	hGeom,
+	int pointnum,						 
+	buffer *points)
+{
+	double x,y,z;
+	
+	OGR_G_GetPoint(hGeom, pointnum, &x, &y, &z);
+	
+	if (x > 180)
+		x -= ((int) ((x+180)/360)*360);
+	else if (x < -180)
+		x += ((int) (180 - x)/360)*360;
+	
+	buffer_printf(points, "%.4lg,%.4lg ", x, y);
+	
+	return;
+}
+
+void getpoints (
+	OGRFeatureH hFeat,
+	buffer *points)
+{
+	int i;
+	OGRGeometryH hGeom = OGR_F_GetGeometryRef(hFeat);
+	int numpoints = OGR_G_GetPointCount(hGeom);
+	
+	for (i = 0 ; i < numpoints ; i++)
+		getpoint(hGeom, i, points);
+	
+	return;
+}
+
+void transform(
+	OGRSpatialReferenceH hsrcSRS,
+	OGRLayerH hsrcLayer,
+	OGRSpatialReferenceH hdstSRS,
+	OGRLayerH hdstLayer)
+{
+
+	/***** Setup coordinate transformation *****/
+	
+	OGRCoordinateTransformationH *hTransform = 
+		create_coord_transform(hsrcSRS, hdstSRS);
+	
+	/***** reset the source layer *****/
+	
+	OGR_L_ResetReading(hsrcLayer);
+	
+	/***** loop while theres features *****/
+	
+	OGRFeatureH hsrcFeat;
+	
+	while((hsrcFeat = OGR_L_GetNextFeature(hsrcLayer))) {
+		
+		CPLErrorReset();
+		
+		/***** make a new feature *****/
+		
+		OGRFeatureH hdstFeat = OGR_F_Create(OGR_L_GetLayerDefn(hdstLayer));
+		
+		/***** translate feature *****/
+		
+		translate_feature(hdstFeat, hsrcFeat);
+		
+		
+		/***** transform the feature if it translated *****/
+		
+		transform_feature(hdstFeat, hTransform);
+		
+		CPLErrorReset();
+		
+		/***** create the new feature in the layer *****/
+		
+		add_feature(hdstLayer, hdstFeat);
+		
+		/***** cleanup *****/
+		
+		OGR_F_Destroy(hsrcFeat);
+		OGR_F_Destroy(hdstFeat);
+	}
+	
+	/***** cleanup *****/
+	
+	OCTDestroyCoordinateTransformation(hTransform);
+	
+	return;
+}

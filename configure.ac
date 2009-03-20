@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(grib_contour, 0.3)
+AC_INIT(grib_contour, 0.4)
 
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -26,6 +26,7 @@ AC_HEADER_STDC
 AC_OUTPUT([
 Makefile
 scripts/Makefile
+share/Makefile
 src/Makefile
 
 ])

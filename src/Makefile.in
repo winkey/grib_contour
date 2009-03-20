@@ -30,8 +30,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = grib_contour$(EXEEXT) grib_wind_contour$(EXEEXT) \
-	fixcolor$(EXEEXT)
+bin_PROGRAMS = grib_contour$(EXEEXT) grib_wind_contour$(EXEEXT)
 subdir = src
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -44,17 +43,16 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_fixcolor_OBJECTS = fixcolor.$(OBJEXT)
-fixcolor_OBJECTS = $(am_fixcolor_OBJECTS)
-fixcolor_LDADD = $(LDADD)
 am_grib_contour_OBJECTS = main.$(OBJEXT) grib.$(OBJEXT) \
-	gdalcode.$(OBJEXT) ogrcode.$(OBJEXT)
+	gdalcode.$(OBJEXT) ogrcode.$(OBJEXT) kml.$(OBJEXT) \
+	buffer.$(OBJEXT) zipbuffer.$(OBJEXT) color.$(OBJEXT)
 grib_contour_OBJECTS = $(am_grib_contour_OBJECTS)
 grib_contour_DEPENDENCIES =
 grib_contour_LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
 	$(grib_contour_LDFLAGS) $(LDFLAGS) -o $@
-am_grib_wind_contour_OBJECTS = gdalcode.$(OBJEXT) grib.$(OBJEXT) \
-	ogrcode.$(OBJEXT) wind.$(OBJEXT)
+am_grib_wind_contour_OBJECTS = buffer.$(OBJEXT) color.$(OBJEXT) \
+	gdalcode.$(OBJEXT) grib.$(OBJEXT) kml.$(OBJEXT) \
+	ogrcode.$(OBJEXT) wind.$(OBJEXT) zipbuffer.$(OBJEXT)
 grib_wind_contour_OBJECTS = $(am_grib_wind_contour_OBJECTS)
 grib_wind_contour_LDADD = $(LDADD)
 grib_wind_contour_LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -66,10 +64,8 @@ COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 CCLD = $(CC)
 LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
-SOURCES = $(fixcolor_SOURCES) $(grib_contour_SOURCES) \
-	$(grib_wind_contour_SOURCES)
-DIST_SOURCES = $(fixcolor_SOURCES) $(grib_contour_SOURCES) \
-	$(grib_wind_contour_SOURCES)
+SOURCES = $(grib_contour_SOURCES) $(grib_wind_contour_SOURCES)
+DIST_SOURCES = $(grib_contour_SOURCES) $(grib_wind_contour_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -167,22 +163,28 @@ AM_CFLAGS = \
 	 -Wall\
 	 -g
 
-fixcolor_SOURCES = \
-	fixcolor.c
-
 grib_wind_contour_SOURCES = \
-	gdalcode.c         \
-	grib.c         \
-	ogrcode.c         \
-	wind.c         \
-	error.h         \
-	gdalcode.h         \
-	grib.h         \
-	ogrcode.h
+	buffer.c           \
+	buffer.h           \
+	color.c           \
+	color.h           \
+	error.h           \
+	gdalcode.c           \
+	gdalcode.h           \
+	grib.c           \
+	grib.h           \
+	kml.c           \
+	kml.h           \
+	ogrcode.c           \
+	ogrcode.h           \
+	wind.c           \
+	zipbuffer.c           \
+	zipbuffer.h
 
 grib_wind_contour_LDFLAGS = \
-	-lgdal               \
-	-lweathercalc
+	-lweathercalc        \
+	-lgdal        \
+	-lzip
 
 grib_contour_SOURCES = \
 	main.c        \
@@ -192,10 +194,19 @@ grib_contour_SOURCES = \
 	error.h        \
 	gdalcode.h        \
 	grib.h        \
-	ogrcode.h
+	ogrcode.h        \
+	kml.c        \
+	buffer.c        \
+	zipbuffer.c        \
+	zipbuffer.h        \
+	buffer.h        \
+	color.c        \
+	color.h        \
+	kml.h
 
 grib_contour_LDFLAGS = \
-	-lgdal
+	-lgdal          \
+	-lzip
 
 grib_contour_LDADD = 
 all: all-am
@@ -254,9 +265,6 @@ uninstall-binPROGRAMS:
 
 clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
-fixcolor$(EXEEXT): $(fixcolor_OBJECTS) $(fixcolor_DEPENDENCIES) 
-	@rm -f fixcolor$(EXEEXT)
-	$(LINK) $(fixcolor_OBJECTS) $(fixcolor_LDADD) $(LIBS)
 grib_contour$(EXEEXT): $(grib_contour_OBJECTS) $(grib_contour_DEPENDENCIES) 
 	@rm -f grib_contour$(EXEEXT)
 	$(grib_contour_LINK) $(grib_contour_OBJECTS) $(grib_contour_LDADD) $(LIBS)
@@ -270,12 +278,15 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fixcolor.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/buffer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/color.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdalcode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grib.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/kml.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ogrcode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/wind.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zipbuffer.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
