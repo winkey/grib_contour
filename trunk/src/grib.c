@@ -378,3 +378,58 @@ float *do_and_grib(
 	
 	return raster;
 }
+
+float *do_diff_grib(
+	options *o,
+	char *ugribfile,
+	char *vgribfile,
+	float ugribmsg,
+	float vgribmsg,
+	gds_t *gds)
+{
+	FILE *Ufp = NULL;
+	FILE *Vfp = NULL;
+	float *raster;
+	float *Uraster = NULL;
+	float *Vraster = NULL;
+	int i;
+	
+  /***** open the grib file *****/
+	
+  if (o->english) {
+		Ufp = grib_open(ugribfile, ugribmsg, 'e');
+		Vfp = grib_open(vgribfile, vgribmsg, 'e');
+	}
+  else {
+		Ufp = grib_open(ugribfile, ugribmsg, 'm');
+		Vfp = grib_open(vgribfile, vgribmsg, 'm');
+	}
+		
+  /***** read the grib raster into memory *****/
+  
+  Uraster = grib_read(Ufp, gds);
+  Vraster = grib_read(Vfp, gds);
+  
+	/***** close the grib file *****/
+	
+	pclose(Ufp);
+	pclose(Vfp);
+	
+	if (!(raster = malloc(sizeof(float) * gds->Npoints)))
+		ERROR("do_diff_grib");
+	
+	for (i = 0; i < gds->Npoints ; i++) {
+		if (gds->missing && (Uraster[i] == gds->missing_value || Vraster[i] == gds->missing_value))
+			raster[i] = gds->missing_value;
+		else {
+			raster[i] = Uraster[i] - Vraster[i];
+		
+		}
+	}
+
+	
+	free(Uraster);
+	free(Vraster);
+	
+	return raster;
+}

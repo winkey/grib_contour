@@ -70,7 +70,7 @@ cat >> "$outfile" <<EOF
         <visibility>0</visibility>
         <open>0</open>
         <Link>
-          <href>http://atmos.ucsd.edu//kml/${name}/latest/${lev_n}${prod_n}.kml</href>
+          <href>/home/rush/public_html/weather//kml/${name}/latest/${lev_n}${prod_n}.kml</href>
         </Link>
       </NetworkLink>
 EOF
@@ -123,7 +123,7 @@ cat >> "$outfile" <<EOF
         <visibility>0</visibility>
         <open>0</open>
         <Link>
-          <href>http://atmos.ucsd.edu//kml/${name}/latest/${prod_n}.kml</href>
+          <href>/home/rush/public_html/weather//kml/${name}/latest/${prod_n}.kml</href>
         </Link>
       </NetworkLink>
 EOF

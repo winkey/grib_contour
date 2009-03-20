@@ -19,6 +19,7 @@ dist_pkgdata_DATA = \
 	700hgt.scale \
 	500hgt.scale \
 	300hgt.scale \
+	200wind.scale \
 	300wind.scale \
 	500wind.scale \
 	700wind.scale \

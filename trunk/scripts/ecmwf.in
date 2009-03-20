@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -39,22 +39,43 @@ then
 	mkdir -p "${wwwdisk}/${run}"
 fi
 
+
+
+
 ##### plot height #####
 
 if [[ "$prod" == "HGT" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}hgt"
-		if [[ ! -h "${wwwdisk}/latest" ]]
-		then
-			rm -f "${wwwdisk}/latest"
-		fi
-		ln -s "${wwwdisk}/${run}" "${wwwdisk}/latest"
-	fi
 	
-	plot "$path" "${level}hgt" 1 20 $hour 24 $grid
-	rm "$path"
+	unset paths i
+	for grid in 001 002 003 004 009 010 011 012
+	do
+		tpath=$(echo "$path" | sed s:/0[0-1][0-9][.]:/$grid.:)
+		if [[ -f "$tpath" ]]
+		then
+			paths[i++]="-g"
+			paths[i++]="$tpath"
+		fi
+	done
+	
+	if [[ "$i" == "16" ]]
+	then
+		zip="${wwwdisk}/${run}/${level}hgt${hour}.kmz"
+		kml="${level}hgt${hour}.kml"
+	
+		if [[ -f "$zip" ]]
+		then
+			rm "$zip"
+		fi
+		
+		nice -n 10 grib_contour "${paths[@]}" -i 20 -s ${level}hgt -k "$kml" -z "$zip"
+
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "${level}hgt"
+		fi
+		appendkml ${level}hgt $hour 24
+	fi
 fi
 
 ##### plot temp #####
@@ -66,32 +87,103 @@ then
 		mkrootkml "${level}t"
 	fi
 	
-	plot "$path" "${level}t" 1 1 $hour 03 $grid
-	rm "$path"
+	unset paths i
+	for grid in 001 002 003 004 009 010 011 012
+	do
+		tpath=$(echo "$path" | sed s:/0[0-1][0-9][.]:/$grid.:)
+		if [[ -f "$tpath" ]]
+		then
+			paths[i++]="-g"
+			paths[i++]="$tpath"
+		fi
+	done
+	
+	if [[ "$i" == "16" ]]
+	then
+		zip="${wwwdisk}/${run}/${level}t${hour}.kmz"
+		kml="${level}t${hour}.kml"
+	
+		if [[ -f "$zip" ]]
+		then
+			rm "$zip"
+		fi
+		
+		nice -n 10 grib_contour "${paths[@]}" -i 1 -s ${level}t -k "$kml" -z "$zip"
+
+		appendkml ${level}t $hour 24
+	fi
 fi
 
 ##### plot rh #####
 
 if [[ "$prod" == "RH" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}rh"
-	fi
 	
-	plot "$path" "${level}rh" 1 5 $hour 03 $grid
-	rm "$path"
+	unset paths i
+	for grid in 001 002 003 004 009 010 011 012
+	do
+		tpath=$(echo "$path" | sed s:/0[0-1][0-9][.]:/$grid.:)
+		if [[ -f "$tpath" ]]
+		then
+			paths[i++]="-g"
+			paths[i++]="$tpath"
+		fi
+	done
+	
+	if [[ "$i" == "16" ]]
+	then
+		zip="${wwwdisk}/${run}/${level}rh${hour}.kmz"
+		kml="${level}rh${hour}.kml"
+	
+		if [[ -f "$zip" ]]
+		then
+			rm "$zip"
+		fi
+		
+		nice -n 10 grib_contour "${paths[@]}" -i 5 -s ${level}rh -k "$kml" -z "$zip"
+
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "${level}rh"
+		fi
+		appendkml ${level}rh $hour 24
+	fi
 fi
+
+##### wind #####
 
 if [[ "$prod" == "UGRD" ]]
 then
-	vpath=$(echo "$path" | sed s/UGRD/VREL/)
+	vpath=$(echo "$path" | sed s/UGRD/VGRD/)
 	
-	if [[ -f "$vpath" ]]
-	then
-		if [[ "$hour" == "00" ]]
+	unset paths i
+	for grid in 001 002 003 004 009 010 011 012
+	do
+		tpath=$(echo "$path" | sed s:/0[0-1][0-9][.]:/$grid.:)
+		if [[ -f "$tpath" ]]
 		then
-			mkrootkml "${level}wind"
+			paths[i++]="-u"
+			paths[i++]="$tpath"
+		fi
+	done
+	for grid in 001 002 003 004 009 010 011 012
+	do
+		tpath=$(echo "$vpath" | sed s:/0[0-1][0-9][.]:/$grid.:)
+		if [[ -f "$tpath" ]]
+		then
+			paths[i++]="-v"
+			paths[i++]="$tpath"
+		fi
+	done
+		
+	if [[ "$i" == "32" ]]
+	then
+		zip="${wwwdisk}/${run}/${level}wind${hour}.kmz"
+		kml="${level}wind${hour}.kml"
+	
+		if [[ -f "$zip" ]]
+		then
+			rm "$zip"
 		fi
 		
 		if [[ "$level" -gt "500" ]]
@@ -101,22 +193,49 @@ then
 			interval=7
 		fi
 		
-		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 $interval $hour 03 $grid
+		nice -n 10 grib_contour -w "${paths[@]}" -i $interval -s ${level}wind -k "$kml" -z "$zip"
 
-		rm "$path"
-		rm "$vpath"
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "${level}wind"
+		fi
+	
+		appendkml ${level}wind $hour 24
 	fi
 fi
 
-if [[ "$prod" == "VREL" ]]
+if [[ "$prod" == "VGRD" ]]
 then
 	upath=$(echo "$path" | sed s/VGRD/UGRD/)
 	
-	if [[ -f "$upath" ]]
-	then
-		if [[ "$hour" == "00" ]]
+	unset paths i
+	for grid in 001 002 003 004 009 010 011 012
+	do
+		tpath=$(echo "$path" | sed s:/0[0-1][0-9][.]:/$grid.:)
+		if [[ -f "$tpath" ]]
 		then
-			mkrootkml "${level}wind"
+			paths[i++]="-v"
+			paths[i++]="$tpath"
+		fi
+	done
+	for grid in 001 002 003 004 009 010 011 012
+	do
+		tpath=$(echo "$upath" | sed s:/0[0-1][0-9][.]:/$grid.:)
+		if [[ -f "$tpath" ]]
+		then
+			paths[i++]="-u"
+			paths[i++]="$tpath"
+		fi
+	done
+		
+	if [[ "$i" == "32" ]]
+	then
+		zip="${wwwdisk}/${run}/${level}wind${hour}.kmz"
+		kml="${level}wind${hour}.kml"
+	
+		if [[ -f "$zip" ]]
+		then
+			rm "$zip"
 		fi
 		
 		if [[ "$level" -gt "500" ]]
@@ -126,10 +245,14 @@ then
 			interval=7
 		fi
 		
-		windplot "$upath" "$path" "${level}wind" 1.0 1.0 $interval $hour 03 $grid
-		
-		rm "$path"
-		rm "$upath"
+		nice -n 10 grib_contour -w "${paths[@]}" -i $interval -s ${level}wind -k "$kml" -z "$zip"
+
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "${level}wind"
+		fi
+
+		appendkml ${level}wind $hour 24
 	fi
 fi
 
@@ -137,13 +260,37 @@ fi
 
 if [[ "$prod" == "PRMSL" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "pmsl"
-	fi
+	unset paths i
+	for g in 001 002 003 004 009 010 011 012
+	do
+		tpath=$(echo "$path" | sed s:/0[0-1][0-9][.]:/$g.:)
+		if [[ -f "$tpath" ]]
+		then
+			paths[i++]="-g"
+			paths[i++]="$tpath"
+		fi
+	done
 	
-	plot "$path" "pmsl" 1 200 $hour 03 $grid
-	rm "$path"
+	if [[ "$i" == "16" ]]
+	then
+		zip="${wwwdisk}/${run}/pmsl${hour}.kmz"
+		kml="pmsl${hour}.kml"
+	
+		if [[ -f "$zip" ]]
+		then
+			rm "$zip"
+		fi
+		
+		echo nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -k "$kml" -z "$zip"
+		nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -k "$kml" -z "$zip"
+
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "pmsl"
+		fi
+	
+		appendkml pmsl $hour 24
+	fi
 fi
 
 

@@ -48,10 +48,10 @@ ported to c by Brian Case rush@winkey.org 12-12-2008
 /******************************************************************************/
 
 typedef struct {
-	double ulx;
-	double uly;
-	double lrx;
-	double lry;
+	double urx;
+	double ury;
+	double llx;
+	double lly;
 } corners;
 
 typedef struct {
@@ -62,7 +62,7 @@ typedef struct {
 	GDALDataType band_type;
 	const char *projection;
 	double geotransform[6];
-	corners ul_lr;
+	corners c;
 	GDALColorTableH ct;
 } file_info;
 
@@ -289,6 +289,7 @@ int raster_copy(
 	
 	/* write the data */
 	
+	
 	GDALRasterIO  (t_band, GF_Write,
 								 t_xoff, t_yoff,
 								 t_xsize, t_ysize,
@@ -323,11 +324,13 @@ int init_from_dataset(file_info *fi, GDALDatasetH ds) {
 
 	GDALGetGeoTransform(ds, fi->geotransform);
 	
-	fi->ul_lr.ulx = fi->geotransform[0];
-	fi->ul_lr.uly = fi->geotransform[3];
-	fi->ul_lr.lrx = fi->ul_lr.ulx + (fi->geotransform[1] * fi->xsize);
-	fi->ul_lr.lry = fi->ul_lr.uly + (fi->geotransform[5] * fi->ysize);
-
+	fi->c.llx = fi->geotransform[0];
+	fi->c.lly = fi->geotransform[3];
+	fi->c.urx = fi->c.llx + (fi->geotransform[1] * (fi->xsize));
+	fi->c.ury = fi->c.lly + (fi->geotransform[5] * (fi->ysize));
+		printf("LL:(%lg,%lg)   UR:(%lg,%lg)\n",
+				 fi->c.llx, fi->c.lly,
+				 fi->c.urx, fi->c.ury);
 	fi->ct = GDALGetRasterColorTable (band);
 	
 	return 1;
@@ -358,9 +361,9 @@ void datasets_to_fileinfos(file_info *file_infos, GDALDatasetH *datasets) {
 void report(file_info *fi) {
 	printf("File Size: %dx%dx%d\n", fi->xsize, fi->ysize, fi->bands);
 	printf("Pixel Size: %lg x %lg\n", fi->geotransform[1], fi->geotransform[5]);
-	printf("UL:(%lg,%lg)   LR:(%lg,%lg)\n",
-				 fi->ul_lr.ulx, fi->ul_lr.uly,
-				 fi->ul_lr.lrx, fi->ul_lr.lry);
+	printf("LL:(%lg,%lg)   UR:(%lg,%lg)\n",
+				 fi->c.llx, fi->c.lly,
+				 fi->c.urx, fi->c.ury);
 	
 	return;
 }
@@ -368,7 +371,7 @@ void report(file_info *fi) {
 /******************************************************************************/
 int fi_copy_into(file_info *fi,
 								 GDALDatasetH t_fh,
-								 corners t_ul_lr,
+								 corners c,
 								 int s_band,
 								 int t_band,
 								 double nodata_arg)
@@ -392,10 +395,7 @@ int fi_copy_into(file_info *fi,
 	*/
 	
 	double t_geotransform[6];
-	double tgw_ulx;
-	double tgw_lrx;
-	double tgw_uly;
-	double tgw_lry;
+	corners tw;
 	int tw_xoff;
 	int tw_yoff;
 	int tw_xsize;
@@ -409,47 +409,54 @@ int fi_copy_into(file_info *fi,
 
 
 	/* figure out intersection region */
-	tgw_ulx = MAX(t_ul_lr.ulx, fi->ul_lr.ulx);
-	tgw_lrx = MIN(t_ul_lr.lrx, fi->ul_lr.lrx);
-	if (t_geotransform[5] < 0) {
-		tgw_uly = MIN(t_ul_lr.uly, fi->ul_lr.uly);
-		tgw_lry = MAX(t_ul_lr.lry, fi->ul_lr.lry);
+	tw.llx = MAX(c.llx, fi->c.llx);
+	tw.urx = MIN(c.urx, fi->c.urx);
+	if (t_geotransform[5] > 0) {
+		tw.lly = MAX(c.lly, fi->c.lly);
+		tw.ury = MIN(c.ury, fi->c.ury);
 	}
 	else {
-		tgw_uly = MAX(t_ul_lr.uly, fi->ul_lr.uly);
-		tgw_lry = MIN(t_ul_lr.lry, fi->ul_lr.lry);
+		tw.lly = MIN(c.lly, fi->c.lly);
+		tw.ury = MAX(c.ury, fi->c.ury);
 	}
-        
+  
 	/* do they even intersect? */
-	if (tgw_ulx >= tgw_lrx)
+	if (tw.llx >= tw.urx)
 		return 1;
 	
-	if (t_geotransform[5] < 0 && tgw_uly <= tgw_lry)
+	if (t_geotransform[5] < 0 && tw.lly <= tw.ury)
 		return 1;
 	
-	if (t_geotransform[5] > 0 && tgw_uly >= tgw_lry)
+	if (t_geotransform[5] > 0 && tw.lly >= tw.ury)
 		return 1;
-            
+      
 	/* compute target window in pixel coordinates. */
-	tw_xoff = ((tgw_ulx - t_geotransform[0]) / t_geotransform[1] + 0.1);
-	tw_yoff = ((tgw_uly - t_geotransform[3]) / t_geotransform[5] + 0.1);
-	tw_xsize = ((tgw_lrx - t_geotransform[0])/t_geotransform[1] + 0.5) - tw_xoff;
-	tw_ysize = ((tgw_lry - t_geotransform[3])/t_geotransform[5] + 0.5) - tw_yoff;
+	tw_xoff = ((tw.llx - t_geotransform[0]) / t_geotransform[1] + 0.1);
+	tw_yoff = ((tw.lly - t_geotransform[3]) / t_geotransform[5] + 0.1);
+	tw_xsize = ((tw.urx - t_geotransform[0])/t_geotransform[1] + 0.5) - tw_xoff;
+	tw_ysize = ((tw.ury - t_geotransform[3])/t_geotransform[5] + 0.5) - tw_yoff;
 
+	fprintf(stderr, "Target Window LL:(%lg,%lg)   UR:(%lg,%lg)\n",
+					tw.llx, tw.lly, tw.urx, tw.ury);
+	fprintf(stderr, "Target Window off:(%i,%i)   size:(%i,%i)\n",
+					tw_xoff, tw_yoff, tw_xsize, tw_ysize);
+	
 	if (tw_xsize < 1 || tw_ysize < 1)
 		return 1;
+
+/* Compute source window in pixel coordinates. */
+	sw_xoff = ((tw.llx - fi->geotransform[0]) / fi->geotransform[1]);
+	sw_yoff = ((tw.lly - fi->geotransform[3]) / fi->geotransform[5]);
+	sw_xsize = ((tw.urx - fi->geotransform[0]) / fi->geotransform[1] + 0.5) - sw_xoff;
+	sw_ysize = ((tw.ury - fi->geotransform[3]) / fi->geotransform[5] + 0.5) - sw_yoff;
 	
-	/* Compute source window in pixel coordinates. */
-	sw_xoff = ((tgw_ulx - fi->geotransform[0]) / fi->geotransform[1]);
-	sw_yoff = ((tgw_uly - fi->geotransform[3]) / fi->geotransform[5]);
-	sw_xsize = ((tgw_lrx - fi->geotransform[0]) / fi->geotransform[1] + 0.5) - sw_xoff;
-	sw_ysize = ((tgw_lry - fi->geotransform[3]) / fi->geotransform[5] + 0.5) - sw_yoff;
-	
+	fprintf(stderr, "Source Window off:(%i,%i)   size:(%i,%i)\n",
+					sw_xoff, sw_yoff, sw_xsize, sw_ysize);
+
 	if (sw_xsize < 1 || sw_ysize < 1)
 		return 1;
 	
 	/* copy the selected region. */
-	
 	return raster_copy(fi->ds, sw_xoff, sw_yoff,
 										 sw_xsize, sw_ysize, s_band,
 										 t_fh, tw_xoff, tw_yoff,
@@ -484,7 +491,7 @@ GDALDatasetH merge(GDALDatasetH *datasets,
 	char *format = "MEM";
 	char *out_file = "somememfile";
 	
-	corners t_ul_lr = {};
+	corners c = {};
 	
 	double psize_x;
 	double psize_y;
@@ -521,16 +528,16 @@ GDALDatasetH merge(GDALDatasetH *datasets,
 	/* Collect information on all the source files. */
 	datasets_to_fileinfos(file_infos, datasets);
 	
-	t_ul_lr.ulx = file_infos[0].ul_lr.ulx;
-	t_ul_lr.uly = file_infos[0].ul_lr.uly;
-	t_ul_lr.lrx = file_infos[0].ul_lr.lrx;
-	t_ul_lr.lry = file_infos[0].ul_lr.lry;
+	c.llx = file_infos[0].c.llx;
+	c.lly = file_infos[0].c.lly;
+	c.urx = file_infos[0].c.urx;
+	c.ury = file_infos[0].c.ury;
 	
 	for (fi = file_infos + 1; fi->ds ; fi++) {
-		t_ul_lr.ulx = MIN(t_ul_lr.ulx, fi->ul_lr.ulx);
-		t_ul_lr.uly = MAX(t_ul_lr.uly, fi->ul_lr.uly);
-		t_ul_lr.lrx = MAX(t_ul_lr.lrx, fi->ul_lr.lrx);
-		t_ul_lr.lry = MIN(t_ul_lr.lry, fi->ul_lr.lry);
+		c.llx = MIN(c.llx, fi->c.llx);
+		c.lly = MIN(c.lly, fi->c.lly);
+		c.urx = MAX(c.urx, fi->c.urx);
+		c.ury = MAX(c.ury, fi->c.ury);
 	}
 	
 	psize_x = file_infos[0].geotransform[1];
@@ -540,21 +547,21 @@ GDALDatasetH merge(GDALDatasetH *datasets,
 	
 	/* Create output file if it does not already exist. */
 	
-	double geotransform[6] = {t_ul_lr.ulx, psize_x, 0, t_ul_lr.uly, 0, psize_y};
+	double geotransform[6] = {c.llx, psize_x, 0, c.lly, 0, psize_y};
 
-	xsize = ((t_ul_lr.lrx - t_ul_lr.ulx) / geotransform[1] + 0.5);
-	ysize = ((t_ul_lr.lry - t_ul_lr.uly) / geotransform[5] + 0.5);
+	xsize = ((c.urx - c.llx) / geotransform[1] + 0.5);
+	ysize = ((c.ury - c.lly) / geotransform[5] + 0.5);
 	
-	//xsize = abs(xsize);
-	//ysize = abs(ysize);
-	
+	xsize = abs(xsize);
+	ysize = abs(ysize);
+
 	bands = file_infos[0].bands;
 	
 	if (DEBUG) {
-		fprintf(stderr, "Target UL:(%lg,%lg)   LR:(%lg,%lg)\n",
-						t_ul_lr.ulx, t_ul_lr.uly, t_ul_lr.lrx, t_ul_lr.lry);
+		fprintf(stderr, "Target LL:(%lg,%lg)   UR:(%lg,%lg)\n",
+						c.llx, c.lly, c.urx, c.ury);
 		fprintf(stderr, "target File Size: %dx%dx%d\n", xsize, ysize, bands);
-	//	fprintf(stderr, "Target projection: %s\n", GDALGetProjectionRef(t_fh));
+		//fprintf(stderr, "Target projection: %s\n", GDALGetProjectionRef(t_fh));
 		fprintf(stderr, "Target geotrandform:\n");
 		fprintf(stderr, "                     Origin = (%.15f,%.15f)\n",
 						geotransform[0], geotransform[3]);
@@ -590,25 +597,12 @@ GDALDatasetH merge(GDALDatasetH *datasets,
 		int band = 1;
 		if (DEBUG)
 			report(fi);
-		printf("%i\n", bands);
+		
 		for (band = 1 ; band < bands + 1 ; band++) {
-			fi_copy_into(fi, t_fh, t_ul_lr, band, band, nodata);
+			
+			fi_copy_into(fi, t_fh, c, band, band, nodata);
 		}
 	}
-	
-	if (DEBUG) {
-		fprintf(stderr, "Target UL:(%lg,%lg)   LR:(%lg,%lg)\n",
-						t_ul_lr.ulx, t_ul_lr.uly, t_ul_lr.lrx, t_ul_lr.lry);
-		fprintf(stderr, "target File Size: %dx%dx%d\n", xsize, ysize, bands);
-		fprintf(stderr, "Target projection: %s\n", GDALGetProjectionRef(t_fh));
-		fprintf(stderr, "Target geotrandform:\n");
-		fprintf(stderr, "                     Origin = (%.15f,%.15f)\n",
-						geotransform[0], geotransform[3]);
-		fprintf(stderr, "                     Pixel Size = (%.15f,%.15f)\n",
-						geotransform[1], geotransform[5]);
-		fprintf(stderr, "                     Rotation = (%.15f,%.15f)\n",
-						geotransform[2], geotransform[4]);
-	}	
 	
 	return t_fh;
 }

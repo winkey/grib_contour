@@ -75,25 +75,30 @@ int main(int argc, char **argv)
 	/***** get the raster(s) *****/
 	
 	if (o.wind) {
-		for (i = 0; i < o.ucount ; i++) {
+		for (i = 0; i < o.count ; i++) {
 			fprintf(stderr, "do_wind_grib\n");
 			raster[i] = do_wind_grib(&o, o.ugribfile[i], o.ugribfile[i],
-															 o.ugribmsg, o.vgribmsg, gds + i);
+															 o.ugribmsg[i], o.vgribmsg[i], gds + i);
 		}
-		o.gcount = o.ucount;
 	}
 	else if (o.and) {
-		for (i = 0; i < o.ucount ; i++) {
+		for (i = 0; i < o.count ; i++) {
 			fprintf(stderr, "do_and_grib\n");
 			raster[i] = do_and_grib(&o, o.ugribfile[i], o.ugribfile[i],
-															o.ugribmsg, o.vgribmsg, gds + i);
+															o.ugribmsg[i], o.vgribmsg[i], gds + i);
 		}
-		o.gcount = o.ucount;
+	}
+	else if (o.diff) {
+		for (i = 0; i < o.count ; i++) {
+			fprintf(stderr, "do_diff_grib\n");
+			raster[i] = do_diff_grib(&o, o.ugribfile[i], o.ugribfile[i],
+															o.ugribmsg[i], o.vgribmsg[i], gds + i);
+		}
 	}
 	else {
-		for (i = 0; i < o.gcount ; i++) {
+		for (i = 0; i < o.count ; i++) {
 			fprintf(stderr, "do_grib\n");
-			raster[i] = do_grib(&o, o.gribfile[i], o.gribmsg, gds + i);
+			raster[i] = do_grib(&o, o.gribfile[i], o.gribmsg[i], gds + i);
 		}
 	}
 	/***** get the color scale *****/
@@ -103,15 +108,14 @@ int main(int argc, char **argv)
 	
 	/***** convert to gdal dataset(s) *****/
 	
-	for (i = 0; i < o.gcount ; i++) {
+	for (i = 0; i < o.count ; i++) {
 		fprintf(stderr, "do_gdal\n");
 		hDS[i] = do_gdal(raster[i], gds + i, hSRS + i, hBand + i);
 	}
 	
 	/***** merge data? *****/
 	
-	if (o.gcount > 1) {
-		fprintf(stderr, "%i merge\n", o.gcount);
+	if (o.count > 1) {
 		t_hDS = merge(hDS, gds->missing, gds->missing_value);
 		t_hBand = GDALGetRasterBand(t_hDS, 1);
 		t_hSRS = OSRNewSpatialReference(GDALGetProjectionRef(t_hDS));
@@ -162,8 +166,8 @@ int main(int argc, char **argv)
 	
 	/***** cleaup raster stuff *****/
 	
-	if (o.gcount) {
-		for (i = 0; i < o.gcount ; i++) {
+	if (o.count) {
+		for (i = 0; i < o.count ; i++) {
 			OSRDestroySpatialReference(hSRS[i]);
 			GDALClose(hDS[i]);
 			free(raster[i]);

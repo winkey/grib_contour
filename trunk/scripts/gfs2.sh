@@ -16,7 +16,7 @@
 source /usr/local/bin/generic2.sh
 
 wwwdisk="/home/rush/public_html/weather/kml/gfs"
-www="http://atmos.ucsd.edu//kml/gfs"
+www="/home/rush/public_html/weather//kml/gfs"
 
 #CONDUIT ^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
 #	EXEC	/usr/local/bin/gfs2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
@@ -136,7 +136,7 @@ then
 	
 	## WXTS ##
 	
-	spath=$(echo "$path" | sed s/P06M/WXTS06/')
+	spath=$(echo "$path" | sed s/P06M/WXTS06/)
 	
 	if [[ -f "$spath" ]]
 	then
@@ -147,7 +147,7 @@ then
 		
 		andplot "$path" "$spath" "snow" 1.0 1.0 4 $hour 06 "-I"
 		
-		rm "$spath"
+		#rm "$spath"
 	fi
 	
 	## WXTZ ##
@@ -163,7 +163,7 @@ then
 		
 		andplot "$path" "$zpath" "frez" 1.0 1.0 4 $hour 06 "-I"
 		
-		rm "$zpath"
+		#rm "$zpath"
 	fi
 	
 	## WXTR ##
@@ -179,7 +179,7 @@ then
 		
 		andplot "$path" "$rpath" "rain" 1.0 1.0 4 $hour 06 "-I"
 		
-		rm "$rpath"
+		#rm "$rpath"
 	fi
 	
 	## WXTP ##
@@ -195,7 +195,7 @@ then
 		
 		andplot "$path" "$ppath" "pellet" 1.0 1.0 4 $hour 06 "-I"
 		
-		rm "$ppath"
+		#rm "$ppath"
 	fi
 fi
 
@@ -215,7 +215,7 @@ then
 		
 		andplot "$ppath" "$path" "snow" 1.0 1.0 4 $hour 06 "-I"
 		
-		rm "$path"
+		#rm "$path"
 	fi
 fi
 
@@ -235,7 +235,7 @@ then
 		
 		andplot "$ppath" "$path" "frez" 1.0 1.0 4 $hour 06 "-I"
 		
-		rm "$path"
+		#rm "$path"
 	fi
 fi
 
@@ -255,7 +255,7 @@ then
 		
 		andplot "$ppath" "$path" "rain" 1.0 1.0 4 $hour 06 "-I"
 		
-		rm "$path"
+		#rm "$path"
 	fi
 fi
 
@@ -274,7 +274,7 @@ then
 		
 		andplot "$ppath" "$path" "pellet" 1.0 1.0 4 $hour 06 "-I"
 		
-		rm "$path"
+		#rm "$path"
 	fi
 fi
 

@@ -164,6 +164,7 @@ www_DATA = \
 	300hgt.png \
 	300rh.png \
 	300wind.png \
+	200wind.png \
 	pwat.png \
 	pmsl.png \
 	cape.png \
@@ -427,6 +428,9 @@ uninstall-am: uninstall-wwwDATA
 
 300wind.png: ../share/300wind.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/300wind.scale "kts" 300wind.png
+
+200wind.png: ../share/200wind.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/200wind.scale "kts" 200wind.png
 
 cape.png: ../share/cape.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/cape.scale "J/kg" cape.png

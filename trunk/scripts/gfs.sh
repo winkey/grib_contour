@@ -18,7 +18,7 @@ source /usr/local/bin/generic.sh
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/gfs/prod/"
 wwwdisk="/home/rush/public_html/weather/kml/gfs"
-www="http://atmos.ucsd.edu//kml/gfs"
+www="/home/rush/public_html/weather//kml/gfs"
 
 times=`seq 0 3 180`
 
