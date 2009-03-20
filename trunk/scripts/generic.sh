@@ -153,23 +153,16 @@ function plot {
 	timee=$5
 	
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
-	kml="${tmp}/${name}${timee}.kml"
-	color="${tmp}/${name}${timee}.fixcolor.kml"
-
-	my_mkfifo "$kml"
-	zip "$zip" "$kml"&
+	kml="${name}${timee}.kml"
 	
-	my_mkfifo "$color"
-	fixcolor "$name" "$color" > "$kml"&
-
-	grib_contour "${tmp}/${gribfile}" $grbmsg $interval "$color"
+	if [[ -f "$zip" ]]
+	then
+		rm "$zip"
+	fi
+	
+	grib_contour "${tmp}/${gribfile}" $grbmsg $interval $name $kml "$zip"
 	
 	appendkml $name $timee
-	
-	##### cleanup #####
-	
-	rm "$color"
-	rm "$kml"
 	
 }
 
@@ -179,38 +172,31 @@ function plot {
 #	 args:
 #					$1	the grib file to plot
 #					$2	the name of the product ie: 925hgt
-#					$3	the grib U msg #
-#					$4	the grib U msg #
-#					$5	interval apart the contours are
-#					$6	the forcast hour in the run
+#					$3	the grib msg #
+#					$4	interval apart the contours are
+#					$5	the forcast hour in the run
 ################################################################################
 
 function windplot {
 	gribfile=$1
 	name="$2"
-	Ugrbmsg=$3
-	Vgrbmsg=$4
-	interval=$5
-	timee=$6
+	grbmsg=$3
+	interval=$4
+	timee=$5
 	
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
-	kml="${tmp}/${name}${timee}.kml"
-	color="${tmp}/${name}${timee}.fixcolor.kml"
+	kml="${name}${timee}.kml"
 	
-	my_mkfifo "$kml"
-	zip "$zip" "$kml"&
+	if [[ -f "$zip" ]]
+	then
+		rm "$zip"
+	fi
 	
-	my_mkfifo "$color"
-	fixcolor "$name" "$color" > "$kml"&
-	
-	grib_wind_contour "${tmp}/${gribfile}" $Ugrbmsg $Vgrbmsg $interval "$color"
+	grib_wind_contour "${tmp}/${gribfile}" $grbmsg $interval $name $kml "$zip"
 	
 	appendkml $name $timee
 
-	##### cleanup #####
-	
-	rm "$color"
-	rm "$kml"
+
 }
 
 ################################################################################

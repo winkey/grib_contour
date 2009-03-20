@@ -2,7 +2,8 @@
 ## Created by Anjuta
 
 SUBDIRS = src \
-	scripts
+	scripts\
+	share
 
 grib_contourdocdir = ${prefix}/doc/grib_contour
 grib_contourdoc_DATA = \

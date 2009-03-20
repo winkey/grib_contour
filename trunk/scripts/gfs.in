@@ -65,34 +65,35 @@ function doplot {
 	plot $gribfile 925hgt 17 20 $timee&
 	plot $gribfile 925t 18 1 $timee&
 	plot $gribfile 925rh 19 5 $timee&
-	windplot $gribfile 925wind 20.0 20.1 10 $timee&
+	windplot $gribfile 925wind 20 10 $timee&
 	wait
 	
 	plot $gribfile 850hgt 13 20 $timee&
 	plot $gribfile 850t 14 1 $timee&
 	plot $gribfile 850rh 15 5 $timee&
-	windplot $gribfile 850wind 16.0 16.1 10 $timee&
+	windplot $gribfile 850wind 16 10 $timee&
 	wait
 
 	plot $gribfile 700hgt 9 20 $timee&
 	plot $gribfile 700t 10 1 $timee&
 	plot $gribfile 700rh 11 5 $timee&
-	windplot $gribfile 700wind 12.0 12.1 10 $timee&
+	windplot $gribfile 700wind 12 10 $timee&
 	wait
 
 	plot $gribfile 500hgt 5 20 $timee&
 	plot $gribfile 500t 6 1 $timee&
 	plot $gribfile 500rh 7 5 $timee&
-	windplot $gribfile 500wind 8.0 8.1 10 $timee&
+	windplot $gribfile 500wind 8 10 $timee&
 	wait
 
 	plot $gribfile 300hgt 1 20 $timee&
 	plot $gribfile 300t 2 1 $timee&
 	plot $gribfile 300rh 3 5 $timee&
-	windplot $gribfile 300wind 4.0 4.1 10 $timee&
+	windplot $gribfile 300wind 4 10 $timee&
 	
 	wait
 	plot $gribfile pwat 21 1 $timee
+	plot $gribfile cape 191 50 $timee
 	
 	#cleanup
 	
@@ -129,6 +130,7 @@ mkrootkml 300rh
 mkrootkml 300wind
 
 mkrootkml pwat
+mkrootkml cape
 
 for i in $times
 do

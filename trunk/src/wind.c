@@ -24,17 +24,65 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 #include <stdio.h>
 #include <stdlib.h>
-
-#include <gdal_alg.h>
+#include <string.h>
+#include <errno.h>
 #include <wind.h>
-
-#include "grib.h"
-#include "gdalcode.h"
-#include "ogrcode.h"
+#include <gdal_alg.h>
 
 #include "error.h"
+#include "grib.h"
+#include "gdalcode.h"
+#include "buffer.h"
+#include "ogrcode.h"
+#include "color.h"
+#include "zipbuffer.h"
+#include "kml.h"
+
+
+void ogr2kml(
+	OGRLayerH hLayer,
+	buffer *kmlbuf,
+	color_scale *cscales)
+{
+	OGRFeatureH hFeat;
+	double value;
+	buffer coordbuf = {};
+	
+					
+	OGR_L_ResetReading(hLayer);
+
+	/***** loop while theres features *****/
+			
+	while((hFeat = OGR_L_GetNextFeature(hLayer))) {
+	
+		CPLErrorReset();
+		
+		/***** the second field contains the data value *****/
+		
+		value = OGR_F_GetFieldAsDouble(hFeat, 1);
+		
+		/***** kml placemark header *****/
+		
+		kml_placemark_header(kmlbuf, NULL, NULL, color_checkscale(cscales, value));
+		
+		kml_linestring_header(kmlbuf, 0, 0);
+		
+		getpoints(hFeat, kmlbuf);
+		
+		kml_linestring_footer(kmlbuf);
+		
+		
+		OGR_F_Destroy(hFeat);
+	}
+	
+	buffer_free(&coordbuf);
+	
+	return;
+}
+	
 
 OGRLayerH contour (
 	OGRSpatialReferenceH hSRS,
@@ -65,74 +113,80 @@ OGRLayerH contour (
 	return hLayer;
 }
 
-void transform(
-	OGRSpatialReferenceH hMemSRS,
-	OGRSpatialReferenceH hKmlSRS,
-	OGRLayerH hMemLayer,
-	OGRLayerH hKmlLayer)
-{
-	/***** Setup coordinate transformation *****/
-	
-	OGRCoordinateTransformationH *hTransform = 
-		create_coord_transform(hMemSRS, hKmlSRS);
-	
-	/***** reset the source layer *****/
-	
-	OGR_L_ResetReading(hMemLayer);
-	
-	/***** loop while theres features *****/
-	
-	OGRFeatureH hSrcFeat;
-	
-	while((hSrcFeat = OGR_L_GetNextFeature(hMemLayer))) {
-		
-		CPLErrorReset();
-		
-		/***** make a new feature *****/
-		
-		OGRFeatureH hDstFeat = OGR_F_Create(OGR_L_GetLayerDefn(hKmlLayer));
-		
-		/***** translate feature *****/
-		
-		translate_feature(hDstFeat, hSrcFeat);
-		
-		
-		/***** transform the feature if it translated *****/
-		
-		transform_feature(hDstFeat, hTransform);
-		
-		CPLErrorReset();
-		
-		/***** create the new feature in the layer *****/
-		
-		add_feature(hKmlLayer, hDstFeat);
-		
-		/***** cleanup *****/
-		
-		OGR_F_Destroy(hSrcFeat);
-		OGR_F_Destroy(hDstFeat);
-	}
-	
-	/***** cleanup *****/
-	
-	OCTDestroyCoordinateTransformation(hTransform);
-	
-	return;
-}
 
-
-int main(int argc, char **argv)
-{
-  FILE *fp = NULL;
-  float *raster = NULL;
 	
+float *do_grib(
+	char *gribfile,
+	int msg,
+	gds_t *gds)
+{
+	FILE *Ufp = NULL;
+	FILE *Vfp = NULL;
+	float *raster;
 	float *Uraster = NULL;
 	float *Vraster = NULL;
 	int i;
 	
-  gds_t gds = {};
+  /***** open the grib file *****/
+  
+  Ufp = grib_open(gribfile, msg, 'm');
+  Vfp = grib_open(gribfile, ((float)msg) + .1, 'm');
+  
+  /***** read the grib raster into memory *****/
+  
+  Uraster = grib_read(Ufp, gds);
+  Vraster = grib_read(Vfp, gds);
+  
+	/***** close the grib file *****/
 	
-  GDALDatasetH hDS;
+	pclose(Ufp);
+	pclose(Vfp);
+	
+	if (!(raster = malloc(sizeof(float) * gds->Npoints)))
+		ERROR("main");
+	
+	for (i = 0; i < gds->Npoints ; i++)
+		raster[i] = uv2velocity(Uraster[i], Vraster[i]);
+	
+	free(Uraster);
+	free(Vraster);
+	
+	return raster;
+}
+
+GDALDatasetH do_gdal(
+	float *raster,
+	gds_t *gds,
+	OGRSpatialReferenceH *hSrcSRS,
+	GDALRasterBandH *hBand)
+{
+	
+	/***** open the raster in memory as a gdal data set *****/
+  
+  GDALDatasetH hDS = raster_open_mem(raster, gds->Nx, gds->Ny);
+  
+  /***** set the projection *****/
+  
+  *hSrcSRS = set_projection(hDS, gds);
+  
+	/***** get the raster band *****/
+	
+	*hBand = get_band(hDS, 1);
+	
+	return hDS;
+}
+
+int main(int argc, char **argv)
+{
+  
+  float *raster = NULL;
+	gds_t gds = {};
+	GDALDatasetH hDS;
+	GDALRasterBandH hBand;
+	OGRSpatialReferenceH hSRS;
+	color_scale *cscales;
+	color_scale *cscale;
+	buffer kmlbuf = {};
 	
 	/***** init *****/
 	
@@ -141,133 +195,100 @@ int main(int argc, char **argv)
   
   /***** check args *****/
   
-  if (argc < 6 || argc > 6) {
-	fprintf(stderr, "USAGE: %s <grib file> <grib U msg> <grib V msg> <interval> <kml file>\n",
+  if (argc < 7 || argc > 7) {
+	fprintf(stderr, "USAGE: %s <grib file> <grib msg> <interval> <color scale> <kml file> <kmz file>\n",
 			argv[0]);
 	exit(EXIT_FAILURE);
   }
   
-  /***** open the grib file *****/
-  
-  fp = grib_open(argv[1], atof(argv[2]), 'e');
-  
-  /***** read the grib raster into memory *****/
-  
-  Uraster = grib_read(fp, &gds);
-  
-	/***** close the grib file *****/
+	raster = do_grib(argv[1], atoi(argv[2]), &gds);
 	
-	pclose(fp);
-	
-	/***** open the grib file *****/
+	hDS = do_gdal(raster, &gds, &hSRS, &hBand);
   
-  fp = grib_open(argv[1], atof(argv[3]), 'e');
-  
-  /***** read the grib raster into memory *****/
-  
-  Vraster = grib_read(fp, &gds);
-  
-	/***** close the grib file *****/
-	
-	pclose(fp);
-	
-	if (!(raster = malloc(sizeof(float) * gds.Npoints)))
-		ERROR("main");
-	
-	for (i = 0; i < gds.Npoints ; i++) {
-		raster[i] = uv2velocity(Uraster[i], Vraster[i]);
-	}
-	
-	free(Uraster);
-	free(Vraster);
-	
-	
-	
-	
-  /***** open the raster in memory as a gdal data set *****/
-  
-  hDS = raster_open_mem(raster, gds.Nx, gds.Ny);
-  
-  /***** set the projection *****/
-  
-  OGRSpatialReferenceH hSrcSRS = set_projection(hDS, &gds);
-  
-	/***** get the raster band *****/
-	
-	GDALRasterBandH hBand = get_band(hDS, 1);
 	
 	/***** set the spatial reference for kml *****/
 		
-	OGRSpatialReferenceH hKmlSRS = OSRNewSpatialReference(NULL);
-	OSRSetWellKnownGeogCS(hKmlSRS, "WGS84");
+	OGRSpatialReferenceH hSRS2 = OSRNewSpatialReference(NULL);
+	OSRSetWellKnownGeogCS(hSRS2, "WGS84");
 	
 	/***** get the ogr driver *****/
 	
-	OGRSFDriverH hKmlDriver = get_driver("KML");
+	OGRSFDriverH hMemDriver = get_driver("Memory");
 	
 	/***** create the datasource *****/
 	
-	OGRDataSourceH hKmlDS = create_datasource(hKmlDriver, argv[5]);
+	OGRDataSourceH hogrDS = create_datasource(hMemDriver, "hMemDS");
+		
+	/***** contour *****/
+		
+	OGRLayerH hLayer = contour (hSRS, hogrDS, atof(argv[3]), hBand, 0, 1);
 	
-	/***** check to see if we can go strait to kml *****/
+	/***** kml header *****/
+	
+	kml_header(&kmlbuf);
+	
+	/***** get the color scale *****/
+	
+	cscales = color_getscale(argv[4]);
+	
+	/***** kml linestyle *****/
+	
+	for (cscale = cscales ; *(cscale->color) ; cscale++) {
+		kml_linestyle(&kmlbuf, cscale->color, cscale->color, "FF", 1);
+	}
+		
+	/***** check to see if it needs transformed *****/
 	
 	if (gds.proj == GDS_LATLON || gds.proj == GDS_GAUSSIAN_LATLON) {
-		
-		contour (hKmlSRS, hKmlDS, atof(argv[4]), hBand, 2, 3);
-		
+		ogr2kml(hLayer, &kmlbuf, cscales);
 	}
 	
-	/***** ok not a simple lat lon raster *****/
-	
+	/***** translate first *****/
 	else {
 		
-		/***** set the spatial reference for mem *****/
-		
-		OGRSpatialReferenceH hMemSRS = hSrcSRS;
-		char *wkt;
-		
-		OSRExportToWkt(hMemSRS, &wkt);
-		//fprintf(stderr, "SrcWKT =\n%s\n\n", wkt);
-		
-		/***** get the ogr driver *****/
-	
-		OGRSFDriverH hMemDriver = get_driver("Memory");
-	
 		/***** create the datasource *****/
-	
-		OGRDataSourceH hMemDS = create_datasource(hMemDriver, argv[5]);
 		
-		/***** contour *****/
-		
-		OGRLayerH hMemLayer = contour (hMemSRS, hMemDS, atof(argv[4]), hBand, 0, 1);
+		OGRDataSourceH hogrDS2 = create_datasource(hMemDriver, "hDS2");
 		
 		/***** create the layer to trasnslate too *****/
 		
-		OGRLayerH hKmlLayer = create_layer(hKmlDS, "contour", hKmlSRS, wkbLineString);
+		OGRLayerH hLayer2 = create_layer(hogrDS2, "contour", hSRS2, wkbLineString);
 		
-			/***** id field *****/
+		/***** id field *****/
 	
-		create_field("ID", OFTInteger, 8, 0, hKmlLayer);
+		create_field("ID", OFTInteger, 8, 0, hLayer2);
 		
 		/***** value field *****/
 		
-		create_field("elev", OFTReal, 12, 3, hKmlLayer);
-
-		/***** transform from mem to kml *****/
+		create_field("elev", OFTReal, 12, 3, hLayer2);
 		
-		transform(hMemSRS, hKmlSRS, hMemLayer, hKmlLayer);
+		/***** transform *****/
+		
+		transform(hSRS, hLayer, hSRS2, hLayer2);
+		
+		ogr2kml(hLayer2, &kmlbuf, cscales);
 		
 		/***** cleanup *****/
 		
-		OGR_DS_Destroy(hMemDS);
+		OGR_DS_Destroy(hogrDS2);
 	}
+
+	kml_footer(&kmlbuf);
+	
+	struct zip *kmz = zipbuffer_open(argv[6]);
+	
+	zipbuffer_add (argv[5], kmz, &kmlbuf);
+	
+	zipbuffer_close(kmz);
+	
+	buffer_free(&kmlbuf);
 
 	/***** cleanup *****/
 		
-	OSRDestroySpatialReference(hSrcSRS);
-	OSRDestroySpatialReference(hKmlSRS);
+	OSRDestroySpatialReference(hSRS);
+	OSRDestroySpatialReference(hSRS2);
 	
-	OGR_DS_Destroy(hKmlDS);
+	OGR_DS_Destroy(hogrDS);
 	
 	OGRCleanupAll();
 	/***** cleaup raster stuff *****/
@@ -279,3 +300,4 @@ int main(int argc, char **argv)
 	
   return EXIT_SUCCESS;
 }
+
