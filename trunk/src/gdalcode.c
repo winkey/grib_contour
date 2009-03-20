@@ -32,6 +32,7 @@
 
 #include "grib.h"
 #include "gdalcode.h"
+#include "error.h"
 
 #define DEBUG 1
 
@@ -59,10 +60,8 @@ GDALDatasetH raster_open_mem(
 					 "MEM:::DATAPOINTER=%p,PIXELS=%i,LINES=%i,BANDS=1,DATATYPE=Float32",
 					 raster, width, height);
 	
-	if (!(result = GDALOpen(myfilename, GA_ReadOnly))) {
-		fprintf(stderr, "ERROR: raster_open: %s", strerror(errno));
-		exit(EXIT_FAILURE);
-	}
+	if (!(result = GDALOpen(myfilename, GA_ReadOnly)))
+		ERROR("raster_open");
 	
 	return result;
 }
@@ -106,6 +105,7 @@ void gdal_set_projection(
 	if (DEBUG) fprintf (stderr, "%s\n", wkt);
 	GDALSetProjection(hDS, wkt);
 	
+	free (wkt);
 	return;
 }
 
@@ -280,6 +280,10 @@ OGRSpatialReferenceH set_projection(
 	}
 	
 	if (DEBUG) printf("minx=%g miny=%g\n", MinX, MinY);
+	
+	/***** cleanup *****/
+	
+	OSRDestroySpatialReference(hSrsSRS);
 	
 	return hSRS;
 }
