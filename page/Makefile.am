@@ -21,6 +21,7 @@ www_DATA = \
 	forecaster.php \
 	sst.php \
 	windwave.php \
+	nogaps.php \
 	gfs.css \
 	nam_conus.css \
 	nam_ak.css \
@@ -31,7 +32,8 @@ www_DATA = \
 	ruc2.css \
 	forecaster.css \
 	sst.css \
-	windwave.css
+	windwave.css \
+	nogaps.css
 
 gfs.php: ../scripts/mkpage.sh ../share/gfs.config.sh Makefile
 	../scripts/mkpage.sh ../share/gfs.config.sh
@@ -65,6 +67,9 @@ sst.php: ../scripts/mkpage_nolevel.sh ../share/sst.config.sh Makefile
 
 windwave.php: ../scripts/mkpage_nolevel.sh ../share/windwave.config.sh Makefile
 	../scripts/mkpage_nolevel.sh ../share/windwave.config.sh
+
+nogaps.php: ../scripts/mkpage.sh ../share/nogaps.config.sh Makefile
+	../scripts/mkpage.sh ../share/nogaps.config.sh
 
 %.css: generic.css.in
 	cat generic.css.in > $@

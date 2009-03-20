@@ -146,24 +146,26 @@ wwwdir = ${wwwdisk}/kml/screenshot
 EXTRA_DIST = \
 $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/nam_east.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/nam_west.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/nam_ak.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_east.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_west.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_ak.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs")
+$(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs")
 
 www_DATA := \
 $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/nam_east.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/nam_west.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/nam_ak.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_east.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_west.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_ak.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs")
+$(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs")
 
 all: all-am
 
@@ -373,6 +375,9 @@ sst_%.jpg: ../scripts/mkscreenshot.sh
 
 windwave_%.jpg: ../scripts/mkscreenshot.sh
 	../scripts/mkscreenshot_nolevel.sh ../share/windwave.config.sh
+
+nogaps_%.jpg: ../scripts/mkscreenshot.sh
+	../scripts/mkscreenshot.sh ../share/nogaps.config.sh
 
 %.png: %.jpg
 	convert $< -resize 198x159 $@

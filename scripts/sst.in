@@ -15,7 +15,7 @@
 source /etc/profile
 source @bindir@/generic2.sh
 
-export PATH="$PATH:@bindir@
+
 
 run="00"
 
@@ -32,7 +32,7 @@ then
 	mkdir -p "${wwwdisk}/${run}"
 fi
 
-if ! getgrib "${servb}/sst.${datee}" "$gribfile"
+if ! getgrib "${servb}/sst.${datee}/" "$gribfile" "/tmp"
 then
 	exit
 fi
