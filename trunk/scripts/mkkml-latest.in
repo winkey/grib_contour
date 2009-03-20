@@ -101,7 +101,7 @@ EOF
 
 cat >> "$outfile" <<EOF
     <Folder>
-      <name>${prod_fd}</name>
+      <name>${prod_fn}</name>
       <visibility>0</visibility>
       <Style>
         <ListStyle>

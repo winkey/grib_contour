@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -35,14 +35,16 @@ function doplot {
 	run=$2
 	timee=$3
 	
-	gribfile="eastnmm.t${run}z.awpreg${timee}.tm00.grib2"
+	gribfile="aknmm.t${run}z.awpreg${timee}.tm00.grib2"
 	
 	if ! getgrib "${servb}hiresw.${datee}/" "$gribfile" "/tmp"
 	then
 		return
 	fi
 	
-	gribfile="/tmp/${gribfile}"	plot $gribfile 925hgt 104 20 $timee 01 &
+	gribfile="/tmp/${gribfile}"
+  
+  plot $gribfile 925hgt 104 20 $timee 01 &
 	plot $gribfile 925t 105 1 $timee 01 &
 	plot $gribfile 925rh 103 5 $timee 01 &
 	windplot $gribfile $gribfile 925wind 107 108 5 $timee 01 &

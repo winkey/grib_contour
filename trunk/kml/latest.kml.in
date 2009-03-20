@@ -138,7 +138,7 @@
 		<NetworkLink>
 			<name>Latest Nexrad Base Reflectivity Mosaic</name>
 			<Url>
-				<href>http://@www@/kml/radar/radar.kml</href>
+				<href>http://@www@/kml/radar/N0R.kml</href>
 			</Url>
 		</NetworkLink>
 		<Folder>
