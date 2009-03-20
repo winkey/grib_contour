@@ -126,6 +126,20 @@
 			<href>@www@/kml/nogaps-latest.kml</href>
 		</Url>
 	</NetworkLink>
+		<NetworkLink>
+		<name>2.5 deg global ECMWF</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/ecmwf-latest.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>2.5 deg global UKMET</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/ukmet-latest.kml</href>
+		</Url>
+	</NetworkLink>
 	<Folder>
 		<name>Latest Nexrad Base Reflectivity Mosaic</name>
 		<visibility>0</visibility>

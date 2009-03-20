@@ -107,6 +107,20 @@
 			<href>@www@/kml/nogaps.kml</href>
 		</Url>
 	</NetworkLink>
+	<NetworkLink>
+		<name>2.5 deg global ECMWF</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/ecmwf.kml</href>
+		</Url>
+	</NetworkLink>
+	<NetworkLink>
+		<name>2.5 deg global UKMET</name>
+		<visibility>0</visibility>
+		<Url>
+			<href>@www@/kml/ukmet.kml</href>
+		</Url>
+	</NetworkLink>
 </Document>
 </kml>
 

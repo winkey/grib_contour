@@ -15,18 +15,22 @@ www_DATA = \
 	1000rh.png \
 	1000wind.png \
 	925t.png \
+	925thk.png \
 	925hgt.png \
 	925rh.png \
 	925wind.png \
 	850t.png \
+	850thk.png \
 	850hgt.png \
 	850rh.png \
 	850wind.png \
 	700t.png \
+	700thk.png \
 	700hgt.png \
 	700rh.png \
 	700wind.png \
 	500t.png \
+	500thk.png \
 	500hgt.png \
 	500rh.png \
 	500wind.png \
@@ -76,6 +80,9 @@ www_DATA = \
 925t.png: ../share/t.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/925t.scale "c" 925t.png
 
+925thk.png: ../share/925thk.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/925thk.scale "m" 925thk.png
+
 925hgt.png: ../share/925hgt.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/925hgt.scale "m" 925hgt.png
 
@@ -87,6 +94,9 @@ www_DATA = \
 
 850t.png: ../share/850t.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/850t.scale "c" 850t.png
+
+850thk.png: ../share/850thk.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/850thk.scale "m" 850thk.png
 
 850hgt.png: ../share/850hgt.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/850hgt.scale "m" 850hgt.png
@@ -100,6 +110,9 @@ www_DATA = \
 700t.png: ../share/700t.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/700t.scale "c" 700t.png
 
+700thk.png: ../share/700thk.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/700thk.scale "m" 700thk.png
+
 700hgt.png: ../share/700hgt.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/700hgt.scale "m" 700hgt.png
 
@@ -111,6 +124,9 @@ www_DATA = \
 
 500t.png: ../share/500t.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/500t.scale "c" 500t.png
+
+500thk.png: ../share/500thk.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/500thk.scale "c" 500thk.png
 
 500hgt.png: ../share/500hgt.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/500hgt.scale "m" 500hgt.png

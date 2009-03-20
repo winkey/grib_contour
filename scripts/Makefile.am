@@ -22,6 +22,7 @@ bin_SCRIPTS = \
 	nogaps.sh \
 	ww.sh \
 	ecmwf.sh \
+	ukmet.sh \
 	mkkml.sh \
 	mkpage.sh \
 	mkkml-latest.sh \
@@ -55,6 +56,7 @@ EXTRA_DIST = \
 	nogaps.in \
 	ww.in \
 	ecmwf.in \
+	ukmet.in \
 	mkkml.in \
 	mkpage.in \
 	mkkml-latest.in \
@@ -88,6 +90,7 @@ dist_bin_SCRIPTS = \
 	ww.sh \
 	nogaps.sh \
 	ecmwf.sh \
+	ukmet.sh \
 	mkkml.sh \
 	mkpage.sh \
 	mkkml-latest.sh \
@@ -179,6 +182,10 @@ nogaps.sh: nogaps.in Makefile
 ecmwf.sh: ecmwf.in Makefile
 	$(do_subst) < $(srcdir)/ecmwf.in > ecmwf.sh
 	chmod +x ecmwf.sh
+
+ukmet.sh: ukmet.in Makefile
+	$(do_subst) < $(srcdir)/ukmet.in > ukmet.sh
+	chmod +x ukmet.sh
 
 mkkml.sh: mkkml.in Makefile
 	$(do_subst) < $(srcdir)/mkkml.in > mkkml.sh

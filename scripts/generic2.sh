@@ -295,7 +295,7 @@ function andplot {
 	appendkml $name $timee $incr $grid
 	
 }
- 
+
 function diffplot {
 	ufile="$1"
 	vfile="$2"
@@ -305,7 +305,7 @@ function diffplot {
 	interval=$6
 	timee=$7
 	incr=$8
-	extra="$7"
+	extra="$9"
 	
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
@@ -341,3 +341,4 @@ function getgrib {
 	
 	wget "${dir}${file}" -O "${ddir}/${file}"
 }
+

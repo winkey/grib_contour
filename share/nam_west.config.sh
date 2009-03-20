@@ -27,7 +27,23 @@ levels="300 300 mb
 850 850 mb
 925 925 mb"
 
-products="t Temperature
+products300="t Temperature
+rh Relative Humidity
+hgt Heights"
+
+products500="t Temperature
+rh Relative Humidity
+hgt Heights"
+
+products700="t Temperature
+rh Relative Humidity
+hgt Heights"
+
+products850="t Temperature
+rh Relative Humidity
+hgt Heights"
+
+products925="t Temperature
 rh Relative Humidity
 hgt Heights"
 
@@ -42,12 +58,13 @@ snow 1 Hour Total Snow Precipitation
 frez 1 Hour Total Freezing Precipitation
 pellet 1 Hour Total Pellet Precipitation"
 
-times="06 06Z"
+times="18 18Z"
 
 screenshots=$(
   echo "$levels" | while read lev_n lev_fn
   do
-    echo "$products" | while read prod_n prod_fn
+		ref="products$lev_n"
+    echo "${!ref}" | while read prod_n prod_fn
     do
       echo ${name}_${lev_n}${prod_n}.jpg
     done
@@ -64,7 +81,8 @@ screenshots=$(
 thumbs=$(
   echo "$levels" | while read lev_n lev_fn
   do
-    echo "$products" | while read prod_n prod_fn
+		ref="products$lev_n"
+    echo "${!ref}" | while read prod_n prod_fn
     do
       echo ${name}_${lev_n}${prod_n}.png
     done

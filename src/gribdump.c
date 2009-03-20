@@ -244,6 +244,7 @@ float *do_gribdump(
 {
 	FILE *fp = NULL;
 	float *raster;
+	int i;
 	
   /***** open the grib file *****/
   
@@ -254,12 +255,18 @@ float *do_gribdump(
 		fp = gribdump_open(gribfile, gribmsg, 'm', quasi);
   }
 
-  
   /***** read the grib raster into memory *****/
   
   raster = gribdump_read(fp, gds);
   
+	/***** correct the data if specified *****/
+	
+	if (o->datacorrection != 0.0)
+		for (i = 0; i < gds->Npoints ; i++)
+			raster[i] += o->datacorrection;
+	
 	/***** close the grib file *****/
+	
 	
 	pclose(fp);
 	

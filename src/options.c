@@ -114,7 +114,7 @@ void get_options(
 	o->finterval = 0;
 	o->english = 0;
 	
-	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:k:t:z:q:eh?"))) {
+	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:c:k:t:z:q:eh?"))) {
 		
 		switch (opt) {
 			case 'w':
@@ -208,6 +208,10 @@ void get_options(
 			
 			case 'S':
 				o->scalecorrection = atof(optarg);
+				break;
+			
+			case 'c':
+				o->datacorrection = atof(optarg);
 				break;
 			
 			case 'k':

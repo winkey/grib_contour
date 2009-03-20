@@ -155,7 +155,7 @@ $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$th
 $(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/ecmwf.config.sh ;     echo "$$screenshots" ; echo "$$thumbs")
+$(shell source ../share/ecmwf.config.sh ;      echo "$$screenshots" ; echo "$$thumbs")
 
 www_DATA := \
 $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
@@ -168,8 +168,9 @@ $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$th
 $(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/ecmwf.config.sh ;     echo "$$screenshots" ; echo "$$thumbs")
+$(shell source ../share/ecmwf.config.sh ;      echo "$$screenshots" ; echo "$$thumbs")
 
+MAINTAINERCLEANFILES = $(EXTRA_DIST)
 all: all-am
 
 .SUFFIXES:
@@ -283,6 +284,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 clean: clean-am
 
 clean-am: clean-generic mostlyclean-am

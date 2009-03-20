@@ -31,9 +31,15 @@ cat > "$outfile" <<EOF
   <h4><a href="kml/${name}-latest.kml">${name}-latest.kml</a></h4>
 EOF
 
+##### levels #####
+
 echo "$levels" | while read lev_n lev_fn
 do
-  echo "$products" | while read prod_n prod_fn
+
+  ##### products #####
+	
+	ref="products$lev_n"
+  echo "${!ref}" | while read prod_n prod_fn
   do
 
 cat >> "$outfile" <<EOF
