@@ -72,6 +72,7 @@ dist_pkgdata_DATA = \
 	windwave.config.sh \
 	nogaps.config.sh \
 	ecmwf.config.sh \
+	ukmet.config.sh \
 	sst.config.sh
 
 1000hgt.scale: 925hgt.scale Makefile
