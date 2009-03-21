@@ -46,7 +46,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am_grib_contour_OBJECTS = main.$(OBJEXT) grib.$(OBJEXT) \
 	gdalcode.$(OBJEXT) ogrcode.$(OBJEXT) color.$(OBJEXT) \
 	options.$(OBJEXT) contour.$(OBJEXT) merge.$(OBJEXT) \
-	gribdump.$(OBJEXT)
+	gribdump.$(OBJEXT) style.$(OBJEXT)
 grib_contour_OBJECTS = $(am_grib_contour_OBJECTS)
 grib_contour_DEPENDENCIES =
 grib_contour_LINK = $(CCLD) $(AM_CFLAGS) $(CFLAGS) \
@@ -183,13 +183,16 @@ grib_contour_SOURCES = \
 	merge.c        \
 	merge.h        \
 	gribdump.c        \
-	gribdump.h
+	gribdump.h        \
+	style.c        \
+	style.h
 
 grib_contour_LDFLAGS = \
 	-lgdal          \
 	-lzip          \
 	-lweathercalc          \
-	-lKML
+	-lKML          \
+	-logr2kml
 
 grib_contour_LDADD = 
 all: all-am
@@ -267,6 +270,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/merge.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ogrcode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/options.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/style.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<

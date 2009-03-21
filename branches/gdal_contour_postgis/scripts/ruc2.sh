@@ -15,7 +15,7 @@
 
 source /usr/local/bin/generic2.sh
 
-wwwdisk="/home/rush/public_html/weather/kml/ruc2"
+wwwdisk="/home/rush/publichtml/weather/kml/kml/ruc2"
 www="http://atmos.ucsd.edu/kml/ruc2"
 
 #CONDUIT	^data/nccf/com/(ruc/prod/ruc2a.[0-9]*)/ruc2.t([0-9][0-9])z.pgrb20[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!

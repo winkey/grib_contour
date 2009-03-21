@@ -15,7 +15,7 @@
 
 source /usr/local/bin/generic2.sh
 
-wwwdisk="/home/rush/public_html/weather/kml/rtma_ak"
+wwwdisk="/home/rush/publichtml/weather/kml/kml/rtma_ak"
 www="http://atmos.ucsd.edu/kml/rtma_ak"
 
 #NGRID	^L[A-Z][AM]A98 KWBR .* !grib2/ncep/RTMA/#201/([0-9]{8})([0-9]{2})00F000/(DRCT|SPED|UREL|VREL|TMPK|DWPK)/
@@ -38,19 +38,8 @@ fi
 
 if [[ "$prod" == "TMPK" ]]
 then
-	zip="${wwwdisk}/${run}/t.kmz"
-	kml="t.kml"
-
-	if [[ -f "$zip" ]]
-	then
-		rm "$zip"
-	fi
-	
 	mkrootkml "t"
-	
-	nice -n 10 grib_contour -g "${path}" -m 1 -i 1.5 -s t -k $kml -z "$zip"
-	
-	appendkml t 00 01
+	plot "$path" "t" 1 1.5 00 01
 	rm "$path"
 fi
 
@@ -58,20 +47,8 @@ fi
 
 if [[ "$prod" == "DWPK" ]]
 then
-	zip="${wwwdisk}/${run}/dp.kmz"
-	kml="dp.kml"
-
-	if [[ -f "$zip" ]]
-		then
-		rm "$zip"
-	fi
-	
 	mkrootkml "dp"
-
-	nice -n 10 grib_contour -g "${path}" -m 1 -i 1.5 -s t -k $kml -z "$zip"
-	
-	appendkml dp 00 01
-	
+	plot "$path" "dp" 1 1.5 00 01
 	rm "$path"
 fi
 
@@ -82,21 +59,8 @@ then
 	vpath=$(echo $path | sed s/UREL/VREL/)
 	if [[ -f $vpath ]]
 	then
-
-		zip="${wwwdisk}/${run}/wind.kmz"
-		kml="wind.kml"
-		
-		if [[ -f "$zip" ]]
-			then
-			rm "$zip"
-		fi
-		
 		mkrootkml "wind"
-		
-		nice -n 10 grib_contour -w -u "$path" -v "$vpath" -U 1.0 -V 1.0 -i 5 -s wind -k $kml -z "$zip"
-		
-		appendkml wind 00 01
-		
+		windplot "$path" "$vpath" "wind" 1.0 1.0 5 00 01
 		rm "$path"
 		rm "$vpath"
 	fi
@@ -107,13 +71,8 @@ then
 	upath=$(echo $path | sed s/VREL/UREL/)
 	if [[ -f upath ]]
 	then
-		
 		mkrootkml "wind"
-		
-		nice -n 10 grib_contour -w -u "$upath" -v "$path" -U 1.0 -V 1.0 -i 5 -s wind -k $kml -z "$zip"
-
-		appendkml wind 00 01
-		
+		windplot "$upath" "$path" "wind" 1.0 1.0 5 00 01
 		rm "$path"
 		rm "$upath"
 	fi

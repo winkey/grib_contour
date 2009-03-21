@@ -14,30 +14,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
  
-#ifndef _CONTOUR_H
-#define _CONTOUR_H
+#ifndef _STYLE_H
+#define _STYLE_H
 
 
-void contour (
-	GDALDatasetH hgdalDS,
-	OGRSpatialReferenceH hSRS,
-	OGRDataSourceH *hogrDS,
-	OGRLayerH *hLayer,
-	options *o,
-	int id,
-	int elev,
-	gds_t *gds,
+/*******************************************************************************
+	function to add a style table to a dataset
+*******************************************************************************/
+
+void add_ds_style(OGRDataSourceH hDS, color_scale *cscales);
+
+void add_features_style(
+	OGRLayerH hLayer,
 	color_scale *cscales);
 
-void contour2kml(
-	gds_t *gds,
-	options *o,
-	color_scale *cscales,
-	OGRSpatialReferenceH hSRS,
-	OGRDataSourceH hDS,
-	OGRLayerH hLayer);
-
-
-#endif /* _CONTOUR_H */
+#endif /* STYLE_H */
 
  
