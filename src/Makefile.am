@@ -36,13 +36,16 @@ grib_contour_SOURCES = \
 	merge.c        \
 	merge.h        \
 	gribdump.c        \
-	gribdump.h
+	gribdump.h        \
+	style.c        \
+	style.h
 
 grib_contour_LDFLAGS =          \
 	-lgdal          \
 	-lzip          \
 	-lweathercalc          \
-	-lKML
+	-lKML          \
+	-logr2kml
 
 
 
