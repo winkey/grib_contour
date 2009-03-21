@@ -276,40 +276,6 @@ void add_feature(
 	return;
 }
 
-		
-void getpoint (
-	OGRGeometryH	hGeom,
-	int pointnum,						 
-	KML *kml)
-{
-	double x,y,z;
-	
-	OGR_G_GetPoint(hGeom, pointnum, &x, &y, &z);
-	
-	if (x > 180)
-		x -= ((int) ((x+180)/360)*360);
-	else if (x < -180)
-		x += ((int) (180 - x)/360)*360;
-	
-	KML_coordinates(kml, 4, &x, &y, NULL);
-	
-	return;
-}
-
-void getpoints (
-	OGRFeatureH hFeat,
-	KML *kml)
-{
-	int i;
-	OGRGeometryH hGeom = OGR_F_GetGeometryRef(hFeat);
-	int numpoints = OGR_G_GetPointCount(hGeom);
-	
-	for (i = 0 ; i < numpoints ; i++)
-		getpoint(hGeom, i, kml);
-	
-	return;
-}
-
 void transform(
 	OGRSpatialReferenceH hsrcSRS,
 	OGRLayerH hsrcLayer,
@@ -362,44 +328,6 @@ void transform(
 	/***** cleanup *****/
 	
 	OCTDestroyCoordinateTransformation(hTransform);
-	
-	return;
-}
-
-void ogr2kml(
-	OGRLayerH hLayer,
-	KML *kml,
-	color_scale *cscales)
-{
-	OGRFeatureH hFeat;
-	double value;
-					
-	OGR_L_ResetReading(hLayer);
-
-	/***** loop while theres features *****/
-			
-	while((hFeat = OGR_L_GetNextFeature(hLayer))) {
-	
-		CPLErrorReset();
-		
-		/***** the second field contains the data value *****/
-		
-		value = OGR_F_GetFieldAsDouble(hFeat, 1);
-		
-		/***** kml placemark header *****/
-		
-		KML_placemark_header(kml, NULL, NULL, color_checkscale(cscales, value));
-		
-		/***** reset the points buffer *****/
-		
-		KML_linestring_header(kml, 0, 0);
-		
-		getpoints(hFeat, kml);
-		
-		KML_linestring_footer(kml);
-		KML_placemark_footer(kml);
-		OGR_F_Destroy(hFeat);
-	}
 	
 	return;
 }

@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <gdal_alg.h>
 #include <libkml/libKML.h>
+#include <libogr2kml/libogr2kml.h>
 
 #include "options.h"
 #include "color.h"
@@ -26,6 +27,8 @@
 #include "ogrcode.h"
 #include "gdalcode.h"
 #include "contour.h"
+#include "style.h"
+#include "style.h"
 #include "error.h"
 
 
@@ -108,26 +111,26 @@ void contour2kml(
 	options *o,
 	color_scale *cscales,
 	OGRSpatialReferenceH hSRS,
+	OGRDataSourceH hDS,
 	OGRLayerH hLayer)
 {
-
-	color_scale *cscale;
-	KML *kml = KML_new(o->kmlfile, o->kmzfile);
 	
-	/***** kml header *****/
+	/***** style all the features in the layer *****/
+	/***** if the dataset gets trasnformed this will be copyed *****/
 	
-	KML_header(kml);
-
-	/***** kml linestyle *****/
-	
-	for (cscale = cscales ; *(cscale->color) ; cscale++) {
-		KML_linestyle(kml, cscale->color, cscale->color, "FF", 1);
-	}
+	add_features_style(hLayer, cscales);
 		
 	/***** check to see if it needs transformed *****/
 	
 	if (gds->proj == GDS_LATLON || gds->proj == GDS_GAUSSIAN_LATLON) {
-		ogr2kml(hLayer, kml, cscales);
+		
+		/***** add a style table to the dataset *****/
+		
+		add_ds_style(hDS, cscales);
+		
+		
+		ds2kml(hDS, o->kmzfile);
+	
 	}
 	
 	/***** translate first *****/
@@ -140,6 +143,10 @@ void contour2kml(
 		/***** create the datasource *****/
 		
 		OGRDataSourceH hogrDS2 = create_datasource(hMemDriver, "hDS2");
+		
+		/***** add a style table to the dataset *****/
+		
+		add_ds_style(hDS, cscales);
 		
 		/***** set the spatial reference for kml *****/
 	
@@ -162,7 +169,7 @@ void contour2kml(
 		
 		transform(hSRS, hLayer, hSRS2, hLayer2);
 		
-		ogr2kml(hLayer2, kml, cscales);
+		ds2kml(hogrDS2, o->kmzfile);
 		
 		/***** cleanup *****/
 		
@@ -171,11 +178,6 @@ void contour2kml(
 		
 	}
 
-	KML_footer(kml);
-	
-	KML_write(kml);
-	
-	KML_free(kml);
 	
 	/***** cleanup *****/
 		
