@@ -15,7 +15,7 @@
 
 source /usr/local/bin/generic2.sh
 
-wwwdisk="/home/rush/public_html/weather/kml/forecaster"
+wwwdisk="/home/rush/publichtml/weather/kml/kml/forecaster"
 www="http://atmos.ucsd.edu/kml/forecaster"
 
 #NGRID ^[LM]DG[A-Z]98 KNHC .* !grib2/ncep/FORECASTER/#000/([0-9]{8})([0-9][0-9])00F[0-9]{3}/SPED([0-9]{2,3})00(17|25|32)P.*

@@ -37,7 +37,7 @@
 #include "gdalcode.h"
 #include "contour.h"
 #include "merge.h"
-
+#include "style.h"
 
 #define DEBUG 1
 
@@ -188,8 +188,10 @@ int main(int argc, char **argv)
 		fprintf(stderr, "contour\n");
 		contour (t_hDS, t_hSRS, &hogrDS, &hLayer, &o, 0, 1, gds, cscales);
 		
+		/***** output to kml *****/
+		
 		fprintf(stderr, "contour2kml\n");
-		contour2kml(gds, &o, cscales, t_hSRS, hLayer);
+		contour2kml(gds, &o, cscales, t_hSRS, hogrDS, hLayer);
 		
 		OGR_DS_Destroy(hogrDS);
 		
