@@ -39,6 +39,10 @@ typedef struct {
 	char *kmzfile;
 	char *tiffile;
 	char *quasi;
+	char *run;
+	char *begin;
+	char *end;
+	
 } options;
 
 /*******************************************************************************

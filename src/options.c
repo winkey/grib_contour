@@ -13,12 +13,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
-
+#define _XOPEN_SOURCE
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <errno.h>
 #include <unistd.h>
+
+#include <time.h>
 
 #include "options.h"
 #include "error.h"
@@ -30,7 +32,9 @@ void usage(char *appname, int type) {
 		case 'g':
 			fprintf(stderr,
 							"USAGE: %s ( <-g grib file> [-m grib msg] )... <-i interval> [-I]\n"
-							"<-s color scale> \[-S scale multiplyer] ( ( <-k kml file> AND \n"
+							"<-s color scale> \[-S scale multiplyer]\n"
+							"[-R run time yyyy-mm-ddThhmmZ] [-B begin time] [-E end time]\n"
+							"( ( <-k kml file> AND \n"
 							"<-z kmz file> ) OR <-t <tiff file> )\n\n", appname);
 			break;
 		
@@ -38,7 +42,9 @@ void usage(char *appname, int type) {
 			fprintf(stderr,
 							"USAGE: %s -w ( <-u u wind grib file> <-v v wind grib file>\n"
 							"[-U u grib msg] [-V v grib msg] )... <-i interval> [-I]\n"
-							"<-s color scale> [-S scale multiplyer] ( ( <-k kml file> AND \n"
+							"<-s color scale> [-S scale multiplyer]\n"
+							"[-R run time yyyy-mm-ddThhmmZ] [-B begin time] [-E end time]\n"
+							"( ( <-k kml file> AND \n"
 							"<-z kmz file> ) OR <-t <tiff file> )\n\n", appname);
 			break;
 		
@@ -46,7 +52,9 @@ void usage(char *appname, int type) {
 			fprintf(stderr,
 							"USAGE: %s -a ( <-u data grib file> <-v 0/1 grib file>\n"
 							"[-U data grib msg] [-V 0/1 grib msg] )... <-i interval> [-I]\n"
-							"<-s color scale> [-S scale multiplyer] ( ( <-k kml file> AND \n"
+							"<-s color scale> [-S scale multiplyer]\n"
+							"[-R run time yyyy-mm-ddThhmmZ] [-B begin time] [-E end time]\n"
+							"( ( <-k kml file> AND \n"
 							"<-z kmz file> ) OR <-t <tiff file> )\n\n", appname);
 			break;
 		
@@ -54,30 +62,18 @@ void usage(char *appname, int type) {
 			fprintf(stderr,
 							"USAGE: %s -d ( <-u upper grib file> <-v lower grib file>\n"
 							"[-U upper grib msg] [-V lower grib msg] )... <-i interval> [-I]\n"
-							"<-s color scale> [-S scale multiplyer] ( ( <-k kml file> AND \n"
+							"<-s color scale> [-S scale multiplyer]\n"
+							"[-R run time yyyy-mm-ddThhmmZ] [-B begin time] [-E end time]\n"
+							"( ( <-k kml file> AND \n"
 							"<-z kmz file> ) OR <-t <tiff file> )\n\n", appname);
 			break;
 		
 		default:
-			fprintf(stderr,
-							"USAGE: %s ( <-g grib file> [-m grib msg] )... <-i interval> [-I]\n"
-							"<-s color scale> \[-S scale multiplyer] ( ( <-k kml file> AND \n"
-							"<-z kmz file> ) OR <-t <tiff file> )\n\n", appname);
-			fprintf(stderr,
-							"USAGE: %s -w ( <-u u wind grib file> <-v v wind grib file>\n"
-							"[-U u grib msg] [-V v grib msg] )... <-i interval> [-I]\n"
-							"<-s color scale> [-S scale multiplyer] ( ( <-k kml file> AND \n"
-							"<-z kmz file> ) OR <-t <tiff file> )\n\n", appname);
-			fprintf(stderr,
-							"USAGE: %s -a ( <-u data grib file> <-v 0/1 grib file>\n"
-							"[-U data grib msg] [-V 0/1 grib msg] )... <-i interval> [-I]\n"
-							"<-s color scale> [-S scale multiplyer] ( ( <-k kml file> AND \n"
-							"<-z kmz file> ) OR <-t <tiff file> )\n\n", appname);
-			fprintf(stderr,
-							"USAGE: %s -d ( <-u upper grib file> <-v lower grib file>\n"
-							"[-U upper grib msg] [-V lower grib msg] )... <-i interval> [-I]\n"
-							"<-s color scale> [-S scale multiplyer] ( ( <-k kml file> AND \n"
-							"<-z kmz file> ) OR <-t <tiff file> )\n\n", appname);
+			usage(appname, 'g');
+			usage(appname, 'w');
+			usage(appname, 'a');
+			usage(appname, 'd');
+			
 			break;
 	}
 	
@@ -114,7 +110,7 @@ void get_options(
 	o->finterval = 0;
 	o->english = 0;
 	
-	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:c:k:t:z:q:eh?"))) {
+	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:c:k:t:z:q:R:B:E:eh?"))) {
 		
 		switch (opt) {
 			case 'w':
@@ -228,11 +224,49 @@ void get_options(
 			case 'q':
 				o->quasi = optarg;
 				break;
+			
+			case 'B':
+				o->begin = optarg;
+				break;
+				
+			case 'E':
+				o->end = optarg;
+				break;
+			
+			case 'R':
+				o->run = optarg;
+				break;
+				
 			case 'h':
 			case '?':
 			default:
 				usage(argv[0], 0);
 				exit(EXIT_FAILURE);
+		}
+	}
+	
+	if (o->begin) {
+		struct tm tm;
+		if (!(strptime (o->begin, "%Y-%m-%dT%H:%MZ", &tm))) {
+			fprintf(stderr, "ERROR: Invalid begin date\n");
+			usage(argv[0], 0);
+			exit(EXIT_FAILURE);
+		}
+	}
+	if (o->end) {
+		struct tm tm;
+		if (!(strptime (o->end, "%Y-%m-%dT%H:%MZ", &tm))) {
+			fprintf(stderr, "ERROR: Invalid end date\n");
+			usage(argv[0], 0);
+			exit(EXIT_FAILURE);
+		}
+	}
+	if (o->run) {
+		struct tm tm;
+		if (!(strptime (o->run, "%Y-%m-%dT%H:%MZ", &tm))) {
+			fprintf(stderr, "ERROR: Invalid run date\n");
+			usage(argv[0], 0);
+			exit(EXIT_FAILURE);
 		}
 	}
 	
