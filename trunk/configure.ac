@@ -49,20 +49,32 @@ if test $HAVE_DEGRIB = "false"; then
   AC_MSG_FAILURE([degrib not found])
 fi
 
-AC_CHECK_LIB(weathercalc, uv2velocity, HAVE_WEATHERCALC=true, HAVE_WEATHERCALC=false)
-if test $HAVE_WEATHERCALC = "false"; then
-  AC_MSG_FAILURE([weathercalc not found])
-fi
+PKG_CHECK_MODULES(DEPS, libogr2kml >= 0.4 weathercalc >= 0.5)
+AC_SUBST(DEPS_CFLAGS)
+AC_SUBST(DEPS_LIBS)
 
-AC_CHECK_LIB(KML, KML_new, HAVE_LIBKML=true, HAVE_LIBKML=false)
-if test $HAVE_LIBKML = "false"; then
-  AC_MSG_FAILURE([libKML not found])
-fi
 
-AC_CHECK_LIB(gdal, GDALAllRegister, HAVE_GDAL=true, HAVE_GDAL=false)
-if test $HAVE_GDAL = "false"; then
-  AC_MSG_FAILURE([gdal not found])
+
+AC_ARG_WITH(gdal-config,
+[  --with-gdal-config=GDAL_CONFIG    use gdal-config specified ],
+[
+  GDAL_CONFIG=$withval;
+  echo "using "$GDAL_CONFIG" for gdal-config";
+],[
+  PROG="gdal-config";
+  AC_PATH_PROG(GDAL_CONFIG, $PROG, "", $PATH)
+])
+
+if test "x$GDAL_CONFIG" != "x"; then
+  GDAL_CFLAGS=`$GDAL_CONFIG --cflags`
+  GDAL_LIBS=`$GDAL_CONFIG --libs`
+  AC_SUBST(GDAL_CFLAGS)
+  AC_SUBST(GDAL_LIBS)
+  found_gdal="yes"
+else
+  found_gdal="no"
 fi
+AM_CONDITIONAL(HAVE_GDAL, test "x$GDAL_CONFIG" != "x")
 
 
 AC_OUTPUT([

@@ -600,6 +600,14 @@ PACKAGE_BUGREPORT=''
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
+HAVE_GDAL_FALSE
+HAVE_GDAL_TRUE
+GDAL_LIBS
+GDAL_CFLAGS
+GDAL_CONFIG
+DEPS_LIBS
+DEPS_CFLAGS
+PKG_CONFIG
 HAVE_DEGRIB
 HAVE_BASH
 WWWDISK
@@ -693,6 +701,7 @@ enable_maintainer_mode
 enable_dependency_tracking
 with_www
 with_wwwdisk
+with_gdal_config
 '
       ac_precious_vars='build_alias
 host_alias
@@ -702,7 +711,10 @@ CFLAGS
 LDFLAGS
 LIBS
 CPPFLAGS
-CPP'
+CPP
+PKG_CONFIG
+DEPS_CFLAGS
+DEPS_LIBS'
 
 
 # Initialize some variables set by options.
@@ -1340,6 +1352,7 @@ Optional Packages:
   --with-www=someurl      base url to use in kml output
   --with-wwwdisk=/some/path
                           base dir to output kml and images
+  --with-gdal-config=GDAL_CONFIG    use gdal-config specified
 
 Some influential environment variables:
   CC          C compiler command
@@ -1350,6 +1363,9 @@ Some influential environment variables:
   CPPFLAGS    C/C++/Objective C preprocessor flags, e.g. -I<include dir> if
               you have headers in a nonstandard directory <include dir>
   CPP         C preprocessor
+  PKG_CONFIG  path to pkg-config utility
+  DEPS_CFLAGS C compiler flags for DEPS, overriding pkg-config
+  DEPS_LIBS   linker flags for DEPS, overriding pkg-config
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -5793,248 +5809,308 @@ See \`config.log' for more details." >&2;}
    { (exit 1); exit 1; }; }; }
 fi
 
-{ $as_echo "$as_me:$LINENO: checking for uv2velocity in -lweathercalc" >&5
-$as_echo_n "checking for uv2velocity in -lweathercalc... " >&6; }
-if test "${ac_cv_lib_weathercalc_uv2velocity+set}" = set; then
+
+
+if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
+	if test -n "$ac_tool_prefix"; then
+  # Extract the first word of "${ac_tool_prefix}pkg-config", so it can be a program name with args.
+set dummy ${ac_tool_prefix}pkg-config; ac_word=$2
+{ $as_echo "$as_me:$LINENO: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if test "${ac_cv_path_PKG_CONFIG+set}" = set; then
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lweathercalc  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
+  case $PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_PKG_CONFIG="$PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_path_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
 
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char uv2velocity ();
-int
-main ()
-{
-return uv2velocity ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
+  ;;
 esac
-eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
-$as_echo "$ac_try_echo") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext && {
-	 test "$cross_compiling" = yes ||
-	 $as_test_x conftest$ac_exeext
-       }; then
-  ac_cv_lib_weathercalc_uv2velocity=yes
+fi
+PKG_CONFIG=$ac_cv_path_PKG_CONFIG
+if test -n "$PKG_CONFIG"; then
+  { $as_echo "$as_me:$LINENO: result: $PKG_CONFIG" >&5
+$as_echo "$PKG_CONFIG" >&6; }
 else
-  $as_echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_weathercalc_uv2velocity=no
+  { $as_echo "$as_me:$LINENO: result: no" >&5
+$as_echo "no" >&6; }
 fi
 
-rm -rf conftest.dSYM
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:$LINENO: result: $ac_cv_lib_weathercalc_uv2velocity" >&5
-$as_echo "$ac_cv_lib_weathercalc_uv2velocity" >&6; }
-if test "x$ac_cv_lib_weathercalc_uv2velocity" = x""yes; then
-  HAVE_WEATHERCALC=true
-else
-  HAVE_WEATHERCALC=false
-fi
 
-if test $HAVE_WEATHERCALC = "false"; then
-  { { $as_echo "$as_me:$LINENO: error: in \`$ac_pwd':" >&5
-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-{ { $as_echo "$as_me:$LINENO: error: weathercalc not found
-See \`config.log' for more details." >&5
-$as_echo "$as_me: error: weathercalc not found
-See \`config.log' for more details." >&2;}
-   { (exit 1); exit 1; }; }; }
 fi
-
-{ $as_echo "$as_me:$LINENO: checking for KML_new in -lKML" >&5
-$as_echo_n "checking for KML_new in -lKML... " >&6; }
-if test "${ac_cv_lib_KML_KML_new+set}" = set; then
+if test -z "$ac_cv_path_PKG_CONFIG"; then
+  ac_pt_PKG_CONFIG=$PKG_CONFIG
+  # Extract the first word of "pkg-config", so it can be a program name with args.
+set dummy pkg-config; ac_word=$2
+{ $as_echo "$as_me:$LINENO: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if test "${ac_cv_path_ac_pt_PKG_CONFIG+set}" = set; then
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lKML  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
+  case $ac_pt_PKG_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_ac_pt_PKG_CONFIG="$ac_pt_PKG_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_path_ac_pt_PKG_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
 
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char KML_new ();
-int
-main ()
-{
-return KML_new ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
+  ;;
 esac
-eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
-$as_echo "$ac_try_echo") >&5
-  (eval "$ac_link") 2>conftest.er1
+fi
+ac_pt_PKG_CONFIG=$ac_cv_path_ac_pt_PKG_CONFIG
+if test -n "$ac_pt_PKG_CONFIG"; then
+  { $as_echo "$as_me:$LINENO: result: $ac_pt_PKG_CONFIG" >&5
+$as_echo "$ac_pt_PKG_CONFIG" >&6; }
+else
+  { $as_echo "$as_me:$LINENO: result: no" >&5
+$as_echo "no" >&6; }
+fi
+
+  if test "x$ac_pt_PKG_CONFIG" = x; then
+    PKG_CONFIG=""
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ $as_echo "$as_me:$LINENO: WARNING: using cross tools not prefixed with host triplet" >&5
+$as_echo "$as_me: WARNING: using cross tools not prefixed with host triplet" >&2;}
+ac_tool_warned=yes ;;
+esac
+    PKG_CONFIG=$ac_pt_PKG_CONFIG
+  fi
+else
+  PKG_CONFIG="$ac_cv_path_PKG_CONFIG"
+fi
+
+fi
+if test -n "$PKG_CONFIG"; then
+	_pkg_min_version=0.9.0
+	{ $as_echo "$as_me:$LINENO: checking pkg-config is at least version $_pkg_min_version" >&5
+$as_echo_n "checking pkg-config is at least version $_pkg_min_version... " >&6; }
+	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version; then
+		{ $as_echo "$as_me:$LINENO: result: yes" >&5
+$as_echo "yes" >&6; }
+	else
+		{ $as_echo "$as_me:$LINENO: result: no" >&5
+$as_echo "no" >&6; }
+		PKG_CONFIG=""
+	fi
+
+fi
+
+pkg_failed=no
+{ $as_echo "$as_me:$LINENO: checking for DEPS" >&5
+$as_echo_n "checking for DEPS... " >&6; }
+
+if test -n "$DEPS_CFLAGS"; then
+    pkg_cv_DEPS_CFLAGS="$DEPS_CFLAGS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { ($as_echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"libogr2kml >= 0.4 weathercalc >= 0.5\"") >&5
+  ($PKG_CONFIG --exists --print-errors "libogr2kml >= 0.4 weathercalc >= 0.5") 2>&5
   ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
   $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext && {
-	 test "$cross_compiling" = yes ||
-	 $as_test_x conftest$ac_exeext
-       }; then
-  ac_cv_lib_KML_KML_new=yes
+  (exit $ac_status); }; then
+  pkg_cv_DEPS_CFLAGS=`$PKG_CONFIG --cflags "libogr2kml >= 0.4 weathercalc >= 0.5" 2>/dev/null`
 else
-  $as_echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_KML_KML_new=no
+  pkg_failed=yes
 fi
-
-rm -rf conftest.dSYM
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+ else
+    pkg_failed=untried
 fi
-{ $as_echo "$as_me:$LINENO: result: $ac_cv_lib_KML_KML_new" >&5
-$as_echo "$ac_cv_lib_KML_KML_new" >&6; }
-if test "x$ac_cv_lib_KML_KML_new" = x""yes; then
-  HAVE_LIBKML=true
+if test -n "$DEPS_LIBS"; then
+    pkg_cv_DEPS_LIBS="$DEPS_LIBS"
+ elif test -n "$PKG_CONFIG"; then
+    if test -n "$PKG_CONFIG" && \
+    { ($as_echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"libogr2kml >= 0.4 weathercalc >= 0.5\"") >&5
+  ($PKG_CONFIG --exists --print-errors "libogr2kml >= 0.4 weathercalc >= 0.5") 2>&5
+  ac_status=$?
+  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; then
+  pkg_cv_DEPS_LIBS=`$PKG_CONFIG --libs "libogr2kml >= 0.4 weathercalc >= 0.5" 2>/dev/null`
 else
-  HAVE_LIBKML=false
+  pkg_failed=yes
+fi
+ else
+    pkg_failed=untried
 fi
 
-if test $HAVE_LIBKML = "false"; then
-  { { $as_echo "$as_me:$LINENO: error: in \`$ac_pwd':" >&5
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        DEPS_PKG_ERRORS=`$PKG_CONFIG --short-errors --print-errors "libogr2kml >= 0.4 weathercalc >= 0.5" 2>&1`
+        else
+	        DEPS_PKG_ERRORS=`$PKG_CONFIG --print-errors "libogr2kml >= 0.4 weathercalc >= 0.5" 2>&1`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$DEPS_PKG_ERRORS" >&5
+
+	{ { $as_echo "$as_me:$LINENO: error: Package requirements (libogr2kml >= 0.4 weathercalc >= 0.5) were not met:
+
+$DEPS_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables DEPS_CFLAGS
+and DEPS_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+" >&5
+$as_echo "$as_me: error: Package requirements (libogr2kml >= 0.4 weathercalc >= 0.5) were not met:
+
+$DEPS_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables DEPS_CFLAGS
+and DEPS_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+" >&2;}
+   { (exit 1); exit 1; }; }
+elif test $pkg_failed = untried; then
+	{ { $as_echo "$as_me:$LINENO: error: in \`$ac_pwd':" >&5
 $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-{ { $as_echo "$as_me:$LINENO: error: libKML not found
+{ { $as_echo "$as_me:$LINENO: error: The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables DEPS_CFLAGS
+and DEPS_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details." >&5
-$as_echo "$as_me: error: libKML not found
+$as_echo "$as_me: error: The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables DEPS_CFLAGS
+and DEPS_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
 See \`config.log' for more details." >&2;}
    { (exit 1); exit 1; }; }; }
+else
+	DEPS_CFLAGS=$pkg_cv_DEPS_CFLAGS
+	DEPS_LIBS=$pkg_cv_DEPS_LIBS
+        { $as_echo "$as_me:$LINENO: result: yes" >&5
+$as_echo "yes" >&6; }
+	:
 fi
 
-{ $as_echo "$as_me:$LINENO: checking for GDALAllRegister in -lgdal" >&5
-$as_echo_n "checking for GDALAllRegister in -lgdal... " >&6; }
-if test "${ac_cv_lib_gdal_GDALAllRegister+set}" = set; then
+
+
+
+
+
+# Check whether --with-gdal-config was given.
+if test "${with_gdal_config+set}" = set; then
+  withval=$with_gdal_config;
+  GDAL_CONFIG=$withval;
+  echo "using "$GDAL_CONFIG" for gdal-config";
+
+else
+
+  PROG="gdal-config";
+  # Extract the first word of "$PROG", so it can be a program name with args.
+set dummy $PROG; ac_word=$2
+{ $as_echo "$as_me:$LINENO: checking for $ac_word" >&5
+$as_echo_n "checking for $ac_word... " >&6; }
+if test "${ac_cv_path_GDAL_CONFIG+set}" = set; then
   $as_echo_n "(cached) " >&6
 else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lgdal  $LIBS"
-cat >conftest.$ac_ext <<_ACEOF
-/* confdefs.h.  */
-_ACEOF
-cat confdefs.h >>conftest.$ac_ext
-cat >>conftest.$ac_ext <<_ACEOF
-/* end confdefs.h.  */
+  case $GDAL_CONFIG in
+  [\\/]* | ?:[\\/]*)
+  ac_cv_path_GDAL_CONFIG="$GDAL_CONFIG" # Let the user override the test with a path.
+  ;;
+  *)
+  as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_path_GDAL_CONFIG="$as_dir/$ac_word$ac_exec_ext"
+    $as_echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
 
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char GDALAllRegister ();
-int
-main ()
-{
-return GDALAllRegister ();
-  ;
-  return 0;
-}
-_ACEOF
-rm -f conftest.$ac_objext conftest$ac_exeext
-if { (ac_try="$ac_link"
-case "(($ac_try" in
-  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
-  *) ac_try_echo=$ac_try;;
+  test -z "$ac_cv_path_GDAL_CONFIG" && ac_cv_path_GDAL_CONFIG=""""
+  ;;
 esac
-eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
-$as_echo "$ac_try_echo") >&5
-  (eval "$ac_link") 2>conftest.er1
-  ac_status=$?
-  grep -v '^ *+' conftest.er1 >conftest.err
-  rm -f conftest.er1
-  cat conftest.err >&5
-  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
-  (exit $ac_status); } && {
-	 test -z "$ac_c_werror_flag" ||
-	 test ! -s conftest.err
-       } && test -s conftest$ac_exeext && {
-	 test "$cross_compiling" = yes ||
-	 $as_test_x conftest$ac_exeext
-       }; then
-  ac_cv_lib_gdal_GDALAllRegister=yes
+fi
+GDAL_CONFIG=$ac_cv_path_GDAL_CONFIG
+if test -n "$GDAL_CONFIG"; then
+  { $as_echo "$as_me:$LINENO: result: $GDAL_CONFIG" >&5
+$as_echo "$GDAL_CONFIG" >&6; }
 else
-  $as_echo "$as_me: failed program was:" >&5
-sed 's/^/| /' conftest.$ac_ext >&5
-
-	ac_cv_lib_gdal_GDALAllRegister=no
+  { $as_echo "$as_me:$LINENO: result: no" >&5
+$as_echo "no" >&6; }
 fi
 
-rm -rf conftest.dSYM
-rm -f core conftest.err conftest.$ac_objext conftest_ipa8_conftest.oo \
-      conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
+
+
 fi
-{ $as_echo "$as_me:$LINENO: result: $ac_cv_lib_gdal_GDALAllRegister" >&5
-$as_echo "$ac_cv_lib_gdal_GDALAllRegister" >&6; }
-if test "x$ac_cv_lib_gdal_GDALAllRegister" = x""yes; then
-  HAVE_GDAL=true
+
+
+if test "x$GDAL_CONFIG" != "x"; then
+  GDAL_CFLAGS=`$GDAL_CONFIG --cflags`
+  GDAL_LIBS=`$GDAL_CONFIG --libs`
+
+
+  found_gdal="yes"
 else
-  HAVE_GDAL=false
+  found_gdal="no"
+fi
+ if test "x$GDAL_CONFIG" != "x"; then
+  HAVE_GDAL_TRUE=
+  HAVE_GDAL_FALSE='#'
+else
+  HAVE_GDAL_TRUE='#'
+  HAVE_GDAL_FALSE=
 fi
 
-if test $HAVE_GDAL = "false"; then
-  { { $as_echo "$as_me:$LINENO: error: in \`$ac_pwd':" >&5
-$as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-{ { $as_echo "$as_me:$LINENO: error: gdal not found
-See \`config.log' for more details." >&5
-$as_echo "$as_me: error: gdal not found
-See \`config.log' for more details." >&2;}
-   { (exit 1); exit 1; }; }; }
-fi
 
 
 ac_config_files="$ac_config_files Makefile etc/Makefile images/Makefile kml/Makefile page/Makefile screenshot/Makefile scripts/Makefile share/Makefile src/Makefile"
@@ -6168,6 +6244,13 @@ if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
   { { $as_echo "$as_me:$LINENO: error: conditional \"am__fastdepCC\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 $as_echo "$as_me: error: conditional \"am__fastdepCC\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${HAVE_GDAL_TRUE}" && test -z "${HAVE_GDAL_FALSE}"; then
+  { { $as_echo "$as_me:$LINENO: error: conditional \"HAVE_GDAL\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+$as_echo "$as_me: error: conditional \"HAVE_GDAL\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
