@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gdal_alg.h>
-#include <libkml/libKML.h>
+#include <libKML/libKML.h>
 #include <libogr2kml/libogr2kml.h>
 
 #include "options.h"

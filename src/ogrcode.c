@@ -24,7 +24,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <libkml/libKML.h>
+#include <libKML/libKML.h>
 
 #include "options.h"
 #include "grib.h"

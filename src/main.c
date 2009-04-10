@@ -31,7 +31,7 @@
 #include "options.h"
 #include "grib.h"
 #include "gribdump.h"
-#include <libkml/libKML.h>
+#include <libKML/libKML.h>
 #include "color.h"
 #include "ogrcode.h"
 #include "gdalcode.h"

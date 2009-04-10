@@ -1,11 +1,16 @@
-## Process this file with automake to produce Makefile.in
+INCLUDES = \
+	$(DEPS_CFLAGS) \
+	$(GDAL_CFLAGS)
 
-## Created by Anjuta
+LIBS = \
+	$(DEPS_LIBS) \
+	$(GDAL_LIBS)
+
 
 www = @WWW@
 wwwdisk = @WWWDISK@
 
-INCLUDES = \
+AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
@@ -39,14 +44,6 @@ grib_contour_SOURCES = \
 	gribdump.h        \
 	style.c        \
 	style.h
-
-grib_contour_LDFLAGS =          \
-	-lgdal          \
-	-lzip          \
-	-lweathercalc          \
-	-lKML          \
-	-logr2kml
-
 
 
 grib_contour_LDADD = 
