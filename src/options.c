@@ -14,6 +14,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
  */
 
+#define _XOPEN_SOURCE
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -114,7 +116,7 @@ void get_options(
 	o->finterval = 0;
 	o->english = 0;
 	
-	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:c:k:t:z:q:eh?"))) {
+	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:c:k:t:z:p:q:r:f:l:eh?"))) {
 		
 		switch (opt) {
 			case 'w':
@@ -172,6 +174,18 @@ void get_options(
 				}
 				break;
 			
+			case 'r':
+				strptime (optarg, "%Y%m%d%k", &(o->run));
+				break;
+			
+			case 'f':
+				o->hour = atoi(optarg);
+				break;
+			
+			case 'l':
+				o->period = atoi(optarg);
+				break;
+			
 			case 'U':
 				o->ugribmsg[umcount] = atof(optarg);
 				(umcount)++;
@@ -220,6 +234,10 @@ void get_options(
 			
 			case 't':
 				o->tiffile = optarg;
+				break;
+			
+			case 'p':
+				o->pgfile = optarg;
 				break;
 			
 			case 'z':
@@ -331,6 +349,20 @@ void get_options(
 		
 		o->count = ucount;
 	}
+	
+	o->begin.tm_hour = o->run.tm_hour + o->hour;
+	o->begin.tm_mday = o->run.tm_mday;
+	o->begin.tm_mon = o->run.tm_mon;
+	o->begin.tm_year = o->run.tm_year;
+
+	timegm(&(o->begin));
+
+	o->end.tm_hour = o->begin.tm_hour + o->period;
+	o->end.tm_mday = o->begin.tm_mday;
+	o->end.tm_mon = o->begin.tm_mon;
+	o->end.tm_year = o->begin.tm_year;
+
+	timegm(&(o->end));
 
 	return;
 }

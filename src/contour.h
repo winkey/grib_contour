@@ -37,6 +37,13 @@ void contour2kml(
 	OGRDataSourceH hDS,
 	OGRLayerH hLayer);
 
+void contour2pg(
+	gds_t *gds,
+	options *o,
+	color_scale *cscales,
+	OGRSpatialReferenceH hSRS,
+	OGRDataSourceH hDS,
+	OGRLayerH hLayer);
 
 #endif /* _CONTOUR_H */
 
