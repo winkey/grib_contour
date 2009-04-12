@@ -184,3 +184,238 @@ void contour2kml(
 //	OSRDestroySpatialReference(hSRS2);
 	
 }
+
+OGRLayerH contour2pg_GetLayer(
+	OGRDataSourceH hDS,
+	OGRSpatialReferenceH hSRS_dst,
+	options *o)
+{
+	OGRLayerH hPGLayer;
+	
+	if (!(hPGLayer = OGR_DS_GetLayerByName(hDS, o->scalename))) {
+		if (!(hPGLayer = OGR_DS_CreateLayer(hDS, o->scalename, hSRS_dst, wkbPolygon, NULL)))
+			ERROR("can not create new layer");
+		
+		/***** create the run field *****/
+		
+		OGRFieldDefnH hField = OGR_Fld_Create("run", OFTDateTime);
+		OGR_L_CreateField(hPGLayer, hField, FALSE);
+		OGR_Fld_Destroy(hField);
+		
+		/***** create the forecast hour field *****/
+		
+		hField = OGR_Fld_Create("hour", OFTInteger);
+		OGR_L_CreateField(hPGLayer, hField, FALSE);
+		OGR_Fld_Destroy(hField);
+		
+		/***** create the date field *****/
+		
+		hField = OGR_Fld_Create("begin", OFTDateTime);
+		OGR_L_CreateField(hPGLayer, hField, FALSE);
+		OGR_Fld_Destroy(hField);
+		
+		hField = OGR_Fld_Create("end", OFTDateTime);
+		OGR_L_CreateField(hPGLayer, hField, FALSE);
+		OGR_Fld_Destroy(hField);
+		
+		/***** create the value field *****/
+		
+		hField = OGR_Fld_Create("value", OFTReal);
+		OGR_L_CreateField(hPGLayer, hField, FALSE);
+		OGR_Fld_Destroy(hField);
+		
+	}
+	
+	return hPGLayer;
+}
+
+void contour2pg_SetSTyleTable(
+	OGRLayerH hPGLayer,
+	color_scale *cscales)
+{
+															
+	/***** if the layer already has a style table no need to do it again *****/
+	
+	OGRStyleTableH hSTBL = OGR_L_GetStyleTable(hPGLayer);
+	
+	if (!hSTBL) {
+		OGR_STBL_Destroy(hSTBL);
+		
+		/***** set the style table *****/
+		
+		OGRStyleTableH hSTBL = OGR_STBL_Create();
+		OGRStyleMgrH hSM = OGR_SM_Create(hSTBL);
+		
+		color_scale *cscale;
+		for (cscale = cscales ; *(cscale->color) ; cscale++) {
+			
+			/***** clear the current style in the manager *****/
+			
+			OGR_SM_InitStyleString(hSM, NULL);
+			
+			char color[10] = {};
+			OGRStyleToolH hST;
+			
+			/***** pen color *****/
+			
+			snprintf(color, sizeof(color), "#%sff", cscale->color);
+			
+			hST = OGR_ST_Create(OGRSTCPen);
+			OGR_ST_SetParamStr(hST, OGRSTPenColor, color);
+			OGR_ST_SetParamNum(hST,OGRSTPenWidth, 10); 
+			OGR_ST_SetUnit(hST, OGRSTUPixel, 2);
+			OGR_SM_AddPart (hSM, hST);
+			OGR_ST_Destroy(hST);
+			
+			/***** brush color *****/
+			
+			snprintf(color, sizeof(color), "#%saa", cscale->color);
+			hST = OGR_ST_Create(OGRSTCBrush);
+			OGR_ST_SetParamStr(hST, OGRSTBrushFColor, color);
+			OGR_SM_AddPart (hSM, hST);
+			OGR_ST_Destroy(hST);
+			
+			/***** add the style in the manager to the style table *****/
+			
+			snprintf(color, sizeof(color), "@%s", cscale->color);
+			OGR_SM_AddStyle(hSM, color, NULL);
+			
+		}
+		
+		OGR_SM_Destroy(hSM);
+		OGR_L_SetStyleTable(hPGLayer, hSTBL);
+	}
+	
+	/**** cleanup *****/
+	
+	OGR_STBL_Destroy(hSTBL);
+}
+
+void contour2pg(
+	gds_t *gds,
+	options *o,
+	color_scale *cscales,
+	OGRSpatialReferenceH hSRS,
+	OGRDataSourceH hDS,
+	OGRLayerH hLayer)
+{
+	
+	/***** get the ogr driver *****/
+	
+	OGRSFDriverH hPGDriver = get_driver("PostgreSQL");
+	
+	/***** open the pg ds *****/
+	
+	OGRDataSourceH hPGDS = OGR_Dr_Open(hPGDriver, o->pgfile, 1);
+	
+	/***** set the output SRS *****/
+	
+	OGRSpatialReferenceH hSRS_dst = OSRNewSpatialReference(NULL);
+	OSRSetWellKnownGeogCS(hSRS_dst, "WGS84");
+	
+	/***** get the layer *****/
+		
+	OGRLayerH hPGLayer = contour2pg_GetLayer(hPGDS, hSRS_dst, o);
+		
+	/***** set the style table *****/
+	
+	contour2pg_SetSTyleTable(hPGLayer, cscales);
+	
+	/***** if the projection is not latlon create a transformer *****/
+	
+	OGRCoordinateTransformationH *hTransform = NULL;
+	
+	if (gds->proj == GDS_LATLON || gds->proj == GDS_GAUSSIAN_LATLON) {
+		if (!(hTransform = OCTNewCoordinateTransformation(hSRS, hSRS_dst)))
+			ERROR("Can't create transformation");
+	}
+	
+	/***** loop while theres features *****/
+	
+	OGRFeatureDefnH hPGFeatDef = OGR_L_GetLayerDefn(hPGLayer);
+	
+	OGRFeatureH hFeat;
+	OGR_L_ResetReading(hLayer);
+
+	while((hFeat = OGR_L_GetNextFeature(hLayer))) {
+		
+		/***** create a new pg feature *****/
+		
+		OGRFeatureH hPGFeat;
+		if (!(hPGFeat = OGR_F_Create (hPGFeatDef)))
+			ERROR("Can't create new feature");
+		
+		/***** get the geometry *****/
+		
+		OGRGeometryH hGeom = OGR_F_GetGeometryRef(hFeat)   	;
+		
+		/***** check to see if it needs transformed *****/
+	
+		if (hTransform)
+			OGR_G_Transform(hGeom, hTransform);
+		
+		/***** write the geometry *****/
+		
+		OGR_F_SetGeometryDirectly(hPGFeat, hGeom);
+		
+		/***** run *****/
+		
+		int fldidx = OGR_FD_GetFieldIndex(hPGFeatDef, "run");
+		OGR_F_SetFieldDateTime(hPGFeat,	fldidx, o->run.tm_year + 1900,
+													 o->run.tm_mon + 1, o->run.tm_mday, 
+													 o->run.tm_hour, 0, 0, 100);
+			
+		/***** hour *****/
+		
+		fldidx = OGR_FD_GetFieldIndex(hPGFeatDef, "hour");
+		OGR_F_SetFieldInteger (hPGFeat, fldidx, o->hour);
+		
+		/***** begin *****/
+		
+		fldidx = OGR_FD_GetFieldIndex(hPGFeatDef, "begin");
+		
+		OGR_F_SetFieldDateTime(hPGFeat,	fldidx, o->begin.tm_year + 1900,
+													 o->begin.tm_mon + 1, o->begin.tm_mday, 
+													 o->begin.tm_hour, 0, 0, 100);
+			
+		/***** end *****/
+		
+		fldidx = OGR_FD_GetFieldIndex(hPGFeatDef, "end");
+		
+		OGR_F_SetFieldDateTime(hPGFeat,	fldidx, o->end.tm_year + 1900,
+													 o->end.tm_mon + 1, o->end.tm_mday, 
+													 o->end.tm_hour, 0, 0, 100);
+			
+		/***** value *****/
+		
+		fldidx = OGR_FD_GetFieldIndex(hPGFeatDef, "value");
+		OGR_F_SetFieldDouble (hPGFeat, fldidx, OGR_F_GetFieldAsDouble(hFeat, 1));
+		
+		/***** set the style string *****/
+			
+		char name[20] = {};
+		snprintf(name, sizeof(name), "@%s",
+						 color_checkscale(cscales, OGR_F_GetFieldAsDouble(hFeat, 1)));
+		OGR_F_SetStyleString(hPGFeat, name);
+			
+		/***** add the feature to a layer *****/
+			
+		OGR_L_CreateFeature(hPGLayer, hPGFeat);
+		
+		/***** cleanup *****/
+		
+		OGR_F_Destroy(hFeat);
+		OGR_F_Destroy(hPGFeat);
+		
+	}
+	
+	/***** cleanup *****/
+	
+	if (hTransform)
+		OCTDestroyCoordinateTransformation(hTransform);
+	
+	OGR_DS_Destroy(hPGDS);
+	OSRDestroySpatialReference(hSRS_dst);
+	
+	
+}

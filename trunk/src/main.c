@@ -181,7 +181,7 @@ int main(int argc, char **argv)
 		
 	}
 		
-	if (o.kmlfile) {
+	if (o.kmlfile || o.pgfile) {
 		
 		/***** make a linestring *****/
 		
@@ -190,8 +190,15 @@ int main(int argc, char **argv)
 		
 		/***** output to kml *****/
 		
-		fprintf(stderr, "contour2kml\n");
-		contour2kml(gds, &o, cscales, t_hSRS, hogrDS, hLayer);
+		if (o.kmlfile) {
+			fprintf(stderr, "contour2kml\n");
+			contour2kml(gds, &o, cscales, t_hSRS, hogrDS, hLayer);
+		}
+		
+		else  {
+			fprintf(stderr, "contour2pg\n");
+			contour2pg(gds, &o, cscales, t_hSRS, hogrDS, hLayer);
+		}
 		
 		OGR_DS_Destroy(hogrDS);
 		

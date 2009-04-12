@@ -17,6 +17,7 @@
 #ifndef _OPTIONS_H
 #define _OPTIONS_H
 
+#include <time.h>
 
 typedef struct {
 	int wind;
@@ -38,7 +39,13 @@ typedef struct {
 	char *kmlfile;
 	char *kmzfile;
 	char *tiffile;
+	char *pgfile;
 	char *quasi;
+	struct tm run;
+	int hour;
+	int period;
+	struct tm begin;
+	struct tm end;
 } options;
 
 /*******************************************************************************
