@@ -6113,7 +6113,7 @@ fi
 
 
 
-ac_config_files="$ac_config_files Makefile etc/Makefile images/Makefile kml/Makefile page/Makefile screenshot/Makefile scripts/Makefile share/Makefile src/Makefile"
+ac_config_files="$ac_config_files Makefile cgi/Makefile etc/Makefile images/Makefile kml/Makefile page/Makefile screenshot/Makefile scripts/Makefile share/Makefile src/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -6765,6 +6765,7 @@ do
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
+    "cgi/Makefile") CONFIG_FILES="$CONFIG_FILES cgi/Makefile" ;;
     "etc/Makefile") CONFIG_FILES="$CONFIG_FILES etc/Makefile" ;;
     "images/Makefile") CONFIG_FILES="$CONFIG_FILES images/Makefile" ;;
     "kml/Makefile") CONFIG_FILES="$CONFIG_FILES kml/Makefile" ;;
