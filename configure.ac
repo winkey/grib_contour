@@ -79,6 +79,7 @@ AM_CONDITIONAL(HAVE_GDAL, test "x$GDAL_CONFIG" != "x")
 
 AC_OUTPUT([
 Makefile
+cgi/Makefile
 etc/Makefile
 images/Makefile
 kml/Makefile

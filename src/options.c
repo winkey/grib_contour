@@ -262,7 +262,7 @@ void get_options(
 			exit(EXIT_FAILURE);
 		}
 		
-		if (!o->interval || !o->scalename || (!o->kmlfile && !o->tiffile)) {
+		if (!o->interval || !o->scalename || (!o->kmlfile && !o->tiffile && !o->pgfile)) {
 			usage(argv[0], 'g');
 			exit(EXIT_FAILURE);
 		}
@@ -285,7 +285,7 @@ void get_options(
 			exit(EXIT_FAILURE);
 		}
 		
-		if (!o->interval || !o->scalename || (!o->kmlfile && !o->tiffile)) {
+		if (!o->interval || !o->scalename || (!o->kmlfile && !o->tiffile && !o->pgfile)) {
 			usage(argv[0], 'w');
 			exit(EXIT_FAILURE);
 		}
@@ -310,7 +310,7 @@ void get_options(
 			exit(EXIT_FAILURE);
 		}
 		
-		if (!o->interval || !o->scalename || (!o->kmlfile && !o->tiffile)) {
+		if (!o->interval || !o->scalename || (!o->kmlfile && !o->tiffile && !o->pgfile)) {
 			usage(argv[0], 'a');
 			exit(EXIT_FAILURE);
 		}
@@ -335,7 +335,7 @@ void get_options(
 			exit(EXIT_FAILURE);
 		}
 		
-		if (!o->interval || !o->scalename || (!o->kmlfile && !o->tiffile)) {
+		if (!o->interval || !o->scalename || (!o->kmlfile && !o->tiffile && !o->pgfile)) {
 			usage(argv[0], 'a');
 			exit(EXIT_FAILURE);
 		}

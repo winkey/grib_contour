@@ -183,7 +183,8 @@ SUBDIRS = src \
 	etc \
 	kml \
 	screenshot \
-	page
+	page \
+	cgi
 
 grib_contourdocdir = ${prefix}/doc/grib_contour
 grib_contourdoc_DATA = \

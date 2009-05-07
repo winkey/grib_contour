@@ -193,7 +193,7 @@ OGRLayerH contour2pg_GetLayer(
 	OGRLayerH hPGLayer;
 	
 	if (!(hPGLayer = OGR_DS_GetLayerByName(hDS, o->scalename))) {
-		if (!(hPGLayer = OGR_DS_CreateLayer(hDS, o->scalename, hSRS_dst, wkbPolygon, NULL)))
+		if (!(hPGLayer = OGR_DS_CreateLayer(hDS, o->scalename, hSRS_dst, wkbLineString, NULL)))
 			ERROR("can not create new layer");
 		
 		/***** create the run field *****/
@@ -236,10 +236,10 @@ void contour2pg_SetSTyleTable(
 															
 	/***** if the layer already has a style table no need to do it again *****/
 	
-	OGRStyleTableH hSTBL = OGR_L_GetStyleTable(hPGLayer);
+	//OGRStyleTableH hSTBL = OGR_L_GetStyleTable(hPGLayer);
 	
-	if (!hSTBL) {
-		OGR_STBL_Destroy(hSTBL);
+	//if (!hSTBL) {
+		//OGR_STBL_Destroy(hSTBL);
 		
 		/***** set the style table *****/
 		
@@ -262,7 +262,7 @@ void contour2pg_SetSTyleTable(
 			
 			hST = OGR_ST_Create(OGRSTCPen);
 			OGR_ST_SetParamStr(hST, OGRSTPenColor, color);
-			OGR_ST_SetParamNum(hST,OGRSTPenWidth, 10); 
+			OGR_ST_SetParamNum(hST,OGRSTPenWidth, 1); 
 			OGR_ST_SetUnit(hST, OGRSTUPixel, 2);
 			OGR_SM_AddPart (hSM, hST);
 			OGR_ST_Destroy(hST);
@@ -284,7 +284,7 @@ void contour2pg_SetSTyleTable(
 		
 		OGR_SM_Destroy(hSM);
 		OGR_L_SetStyleTable(hPGLayer, hSTBL);
-	}
+	//}
 	
 	/**** cleanup *****/
 	
@@ -354,6 +354,24 @@ void contour2pg(
 		if (hTransform)
 			OGR_G_Transform(hGeom, hTransform);
 		
+		/***** make sure its -180 to 180 *****/
+		
+		int i;
+		int numpoints = OGR_G_GetPointCount(hGeom);
+	
+		for (i = 0 ; i < numpoints ; i++) {
+			double x, y, z;
+			OGR_G_GetPoint(hGeom, i, &x, &y, &z);
+	
+			if (x > 180)
+				x -= 360;
+			else if (x < -180)
+				x += 360;
+	
+			OGR_G_SetPoint(hGeom, i, x, y, z);
+		
+		}
+		
 		/***** write the geometry *****/
 		
 		OGR_F_SetGeometryDirectly(hPGFeat, hGeom);
@@ -405,7 +423,7 @@ void contour2pg(
 		/***** cleanup *****/
 		
 		OGR_F_Destroy(hFeat);
-		OGR_F_Destroy(hPGFeat);
+
 		
 	}
 	
