@@ -17,9 +17,7 @@ db="sst"
 source /etc/profile
 source @bindir@/generic2.sh
 
-
-
-run="00"
+run="${datee}00"
 
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/gfs/prod/"

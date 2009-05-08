@@ -20,19 +20,14 @@ source @bindir@/generic2.sh
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/nam/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf_backup/pub/data/model/grid/grib/nogaps/"
 
-
-
-run=$1
+run="${datee}$1"
 
 times="$(seq -f "%03g" 0 3 24) $(seq -f "%03g" 30 6 84) $(seq -f "%03g" 96 12 144)"
 
 
 function doplot {
-	datee=$1
-	run=$2
-	timee=$3
 	
-	gribfile="nogaps_${datee}${run}f${timee}"
+	gribfile="nogaps_${1}${2}f${3}"
 	if ! getgrib "${servb}" "$gribfile" "/tmp"
 	then
 		return
@@ -120,7 +115,7 @@ mktempfiledir "$tmp"
 
 for i in $times
 do
-	time doplot $datee $run $i
+	time doplot $datee $1 $i
 done
 
 #cleanup
