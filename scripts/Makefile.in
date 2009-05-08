@@ -163,8 +163,7 @@ bin_SCRIPTS = \
 	nogaps.sh \
 	ww.sh \
 	ecmwf.sh \
-	ukmet.sh \
-	mkkml.sh
+	ukmet.sh
 
 CLEANFILES = $(bin_SCRIPTS)
 EXTRA_DIST = \
