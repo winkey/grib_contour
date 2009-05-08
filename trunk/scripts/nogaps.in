@@ -26,6 +26,7 @@ times="$(seq -f "%03g" 0 3 24) $(seq -f "%03g" 30 6 84) $(seq -f "%03g" 96 12 14
 
 
 function doplot {
+	timee=$3
 	
 	gribfile="nogaps_${1}${2}f${3}"
 	if ! getgrib "${servb}" "$gribfile" "/tmp"

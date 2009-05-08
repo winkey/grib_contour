@@ -25,6 +25,7 @@ run="${datee}$1"
 times=`seq -f "%02g" 0 1 48`
 
 function doplot {
+	timee=$3
 	
 	gribfile="westnmm.t${2}z.awpreg${3}.tm00.grib2"
 	
