@@ -448,8 +448,8 @@ generic.sh: generic.in Makefile
 	$(do_subst) < $(srcdir)/generic.in > generic.sh
 	chmod +x generic.sh
 
-generic2.sh: generic2.in Makefile
-	$(do_subst) < $(srcdir)/generic2.in > generic2.sh
+generic2.sh: generic4.in Makefile
+	$(do_subst) < $(srcdir)/generic4.in > generic2.sh
 	chmod +x generic2.sh
 
 gfs.sh: gfs.in Makefile
