@@ -22,9 +22,7 @@ bin_SCRIPTS = \
 	nogaps.sh \
 	ww.sh \
 	ecmwf.sh \
-	ukmet.sh \
-	mkkml.sh
-
+	ukmet.sh
 
     
 
