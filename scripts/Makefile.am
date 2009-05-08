@@ -50,8 +50,7 @@ EXTRA_DIST = \
 	nogaps.in \
 	ww.in \
 	ecmwf.in \
-	ukmet.in \
-	mkkml.in
+	ukmet.in
 
 
 
@@ -77,9 +76,7 @@ dist_bin_SCRIPTS = \
 	ww.sh \
 	nogaps.sh \
 	ecmwf.sh \
-	ukmet.sh \
-	mkkml.sh
-
+	ukmet.sh 
 
 
    

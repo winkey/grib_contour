@@ -187,8 +187,7 @@ EXTRA_DIST = \
 	nogaps.in \
 	ww.in \
 	ecmwf.in \
-	ukmet.in \
-	mkkml.in
+	ukmet.in
 
 dist_bin_SCRIPTS = \
 	generic.sh \
@@ -210,8 +209,7 @@ dist_bin_SCRIPTS = \
 	ww.sh \
 	nogaps.sh \
 	ecmwf.sh \
-	ukmet.sh \
-	mkkml.sh
+	ukmet.sh 
 
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
 							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
