@@ -13,6 +13,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
+db="forecaster"
+
 source @bindir@/generic2.sh
 
 wwwdisk="@wwwdisk@/kml/forecaster"
@@ -35,10 +37,7 @@ then
 	hour="00"
 fi
 
-if [[ ! -d "${wwwdisk}/${run}" ]]
-then
-	mkdir -p "${wwwdisk}/${run}"
-fi
+
 
 frames=${wwwdisk}/${run}/prob${prod}.kml
 

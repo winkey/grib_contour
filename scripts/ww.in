@@ -12,6 +12,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
+db="ww"
 source @bindir@/generic2.sh
 
 wwwdisk="@wwwdisk@/kml/ww"
@@ -36,11 +37,6 @@ else
 	period="03"
 fi
 
-
-if [[ ! -d "${wwwdisk}/${run}" ]]
-then
-	mkdir -p "${wwwdisk}/${run}"
-fi
 
 ##### plot Significant hght of wind waves #####
 
