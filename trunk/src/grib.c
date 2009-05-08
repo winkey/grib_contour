@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
-#include <wind.h>
+#include <weathercalc/wind.h>
 
 #include "options.h"
 #include "grib.h"
