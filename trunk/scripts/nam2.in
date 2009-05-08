@@ -13,6 +13,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
+db="nam_conus"
+
 source @bindir@/generic2.sh
 
 wwwdisk="@wwwdisk@/kml/nam_conus"
@@ -27,11 +29,6 @@ level="$5"
 tmp="/tmp"
 
 hour="${hour:1}"
-
-if [[ ! -d "${wwwdisk}/${run}" ]]
-then
-	mkdir -p "${wwwdisk}/${run}"
-fi
 
 function thick {
 	spath="${path/HGHT.1000/HGHT.${1}}"

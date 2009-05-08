@@ -13,6 +13,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
+db="rtma_ak"
+
 source @bindir@/generic2.sh
 
 wwwdisk="@wwwdisk@/kml/rtma_ak"
@@ -28,11 +30,6 @@ prod="$3"
 tmp="/tmp"
 
 hour="00"
-
-if [[ ! -d "${wwwdisk}/${run}" ]]
-then
-	mkdir -p "${wwwdisk}/${run}"
-fi
 
 ##### plot temp #####
 

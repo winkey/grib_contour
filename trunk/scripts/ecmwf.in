@@ -13,6 +13,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
+db="ecmwf"
+
 source @bindir@/generic2.sh
 
 wwwdisk="@wwwdisk@/kml/ecmwf"
@@ -32,11 +34,6 @@ tmp="/tmp"
 if [[ "$hour" == "" ]]
 then
 	hour="00"
-fi
-
-if [[ ! -d "${wwwdisk}/${run}" ]]
-then
-	mkdir -p "${wwwdisk}/${run}"
 fi
 
 
