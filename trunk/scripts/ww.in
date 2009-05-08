@@ -15,8 +15,6 @@
 db="ww"
 source @bindir@/generic2.sh
 
-wwwdisk="@wwwdisk@/kml/ww"
-www="@www@/kml/ww"
 
 path="$1"
 run="$3"
@@ -42,10 +40,7 @@ fi
 
 if [[ "$prod" == "HGHTWW" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "hghtww"
-	fi
+
 	
 	plot "$path" "hghtww" 1 .5 $hour $period
 #	rm "$path"
@@ -55,10 +50,7 @@ fi
 
 if [[ "$prod" == "PERDWW" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "perdww"
-	fi
+
 	
 	plot "$path" "perdww" 1 1 $hour $period
 #	rm "$path"
@@ -68,10 +60,7 @@ fi
 
 if [[ "$prod" == "HTSGW" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "htsgw"
-	fi
+
 	
 	plot "$path" "htsgw" 1 1 $hour $period
 #	rm "$path"
@@ -85,10 +74,7 @@ then
 	
 	if [[ -f "$vpath" ]]
 	then
-		if [[ "$hour" == "00" ]]
-		then
-			mkrootkml "wind"
-		fi
+
 		
 		windplot "$path" "$vpath" "wind" 1.0 1.0 5 $hour $period
 
@@ -103,10 +89,7 @@ then
 	
 	if [[ -f "$upath" ]]
 	then
-		if [[ "$hour" == "00" ]]
-		then
-			mkrootkml "wind"
-		fi
+
 		
 		windplot "$upath" "$path" "wind" 1.0 1.0 5 $hour $period
 		

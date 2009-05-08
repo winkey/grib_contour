@@ -17,8 +17,7 @@ db="ruc2"
 
 source @bindir@/generic2.sh
 
-wwwdisk="@wwwdisk@/kml/ruc2"
-www="@www@/kml/ruc2"
+
 
 #CONDUIT	^data/nccf/com/(ruc/prod/ruc2a.[0-9]*)/ruc2.t([0-9][0-9])z.pgrb20[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
 #	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
@@ -46,10 +45,7 @@ function thick {
 	spath="${path/HGHT.1000/HGHT.${1}}"
 	if [[ -f $spath ]]
 	then
-		if [[ $hour == "00" ]]
-		then
-			mkrootkml ${1}thk
-		fi
+
 		diffplot "$spath" "$path" ${1}thk 1 1 20 $hour 01
 		
 		
@@ -60,10 +56,7 @@ function thick2 {
 	spath="${path/HGHT.${1}/HGHT.1000}"
 	if [[ -f $spath ]]
 	then
-		if [[ $hour == "00" ]]
-		then
-			mkrootkml ${1}thk
-		fi
+
 		diffplot "$path" "$spath" ${1}thk 1 1 20 $hour 01
 		
 		
@@ -74,10 +67,7 @@ function thick2 {
 
 if [[ "$prod" == "HGHT" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}hgt"
-	fi
+
 	
 	plot "$path" "${level}hgt" 1 20 $hour 01
 
@@ -102,10 +92,7 @@ fi
 
 if [[ "$prod" == "TMPK" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}t"
-	fi
+
 	
 	plot "$path" "${level}t" 1 1 $hour 01
 	rm "$path"
@@ -115,10 +102,7 @@ fi
 
 if [[ "$prod" == "RELH" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}rh"
-	fi
+
 	
 	plot "$path" "${level}rh" 1 10 $hour 01
 	rm "$path"
@@ -128,10 +112,7 @@ fi
 
 if [[ "$prod" == "UREL;VREL" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}wind"
-	fi
+
 	
 	windplot "$path" "$path" "${level}wind" 1.0 1.1 10 $hour 01
 	rm "$path"
@@ -141,10 +122,7 @@ fi
 
 if [[ "$prod" == "CAPE" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "cape"
-	fi
+
 	
 	plot "$path" "cape" 1 200 $hour 01
 	rm "$path"
@@ -154,10 +132,7 @@ fi
 
 if [[ "$prod" == "PWTR" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "pwat"
-	fi
+
 	
 	plot "$path" "pwat" 1 4 $hour 01 "-I"
 	rm "$path"
@@ -167,10 +142,7 @@ fi
 
 if [[ "$prod" == "PR03" ]]
 then
-	if [[ "$hour" == "03" ]]
-	then
-		mkrootkml "pcp"
-	fi
+
 	
 	plot "$path" "pcp" 1 4 $hour 01
 	rm "$path"
@@ -180,10 +152,7 @@ fi
 
 if [[ "$prod" == "MMSL" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "pmsl"
-	fi
+
 	
 	plot "$path" "pmsl" 1 200 $hour 01
 	rm "$path"

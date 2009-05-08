@@ -99,8 +99,6 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
-WWW = @WWW@
-WWWDISK = @WWWDISK@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -166,14 +164,7 @@ bin_SCRIPTS = \
 	ww.sh \
 	ecmwf.sh \
 	ukmet.sh \
-	mkkml.sh \
-	mkpage.sh \
-	mkkml-latest.sh \
-	mkscreenshot.sh \
-	mkkml_nolevel.sh \
-	mkpage_nolevel.sh \
-	mkkml_nolevel-latest.sh \
-	mkscreenshot_nolevel.sh
+	mkkml.sh
 
 CLEANFILES = $(bin_SCRIPTS)
 EXTRA_DIST = \
@@ -197,14 +188,7 @@ EXTRA_DIST = \
 	ww.in \
 	ecmwf.in \
 	ukmet.in \
-	mkkml.in \
-	mkpage.in \
-	mkkml-latest.in \
-	mkscreenshot.in \
-	mkkml_nolevel.in \
-	mkpage_nolevel.in \
-	mkkml_nolevel-latest.in \
-	mkscreenshot_nolevel.in
+	mkkml.in
 
 dist_bin_SCRIPTS = \
 	generic.sh \
@@ -227,14 +211,7 @@ dist_bin_SCRIPTS = \
 	nogaps.sh \
 	ecmwf.sh \
 	ukmet.sh \
-	mkkml.sh \
-	mkpage.sh \
-	mkkml-latest.sh \
-	mkscreenshot.sh \
-	mkkml_nolevel.sh \
-	mkpage_nolevel.sh \
-	mkkml_nolevel-latest.sh \
-	mkscreenshot_nolevel.sh
+	mkkml.sh
 
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
 							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
@@ -523,38 +500,6 @@ ecmwf.sh: ecmwf.in Makefile
 ukmet.sh: ukmet.in Makefile
 	$(do_subst) < $(srcdir)/ukmet.in > ukmet.sh
 	chmod +x ukmet.sh
-
-mkkml.sh: mkkml.in Makefile
-	$(do_subst) < $(srcdir)/mkkml.in > mkkml.sh
-	chmod +x mkkml.sh
-
-mkpage.sh: mkpage.in Makefile
-	$(do_subst) < $(srcdir)/mkpage.in > mkpage.sh
-	chmod +x mkpage.sh
-
-mkkml-latest.sh: mkkml-latest.in Makefile
-	$(do_subst) < $(srcdir)/mkkml-latest.in > mkkml-latest.sh
-	chmod +x mkkml-latest.sh
-
-mkscreenshot.sh: mkscreenshot.in
-	$(do_subst) < $(srcdir)/mkscreenshot.in > mkscreenshot.sh
-	chmod +x mkscreenshot.sh
-
-mkkml_nolevel.sh: mkkml_nolevel.in Makefile
-	$(do_subst) < $(srcdir)/mkkml_nolevel.in > mkkml_nolevel.sh
-	chmod +x mkkml_nolevel.sh
-
-mkpage_nolevel.sh: mkpage_nolevel.in Makefile
-	$(do_subst) < $(srcdir)/mkpage_nolevel.in > mkpage_nolevel.sh
-	chmod +x mkpage_nolevel.sh
-
-mkkml_nolevel-latest.sh: mkkml_nolevel-latest.in Makefile
-	$(do_subst) < $(srcdir)/mkkml_nolevel-latest.in > mkkml_nolevel-latest.sh
-	chmod +x mkkml_nolevel-latest.sh
-
-mkscreenshot_nolevel.sh: mkscreenshot_nolevel.in
-	$(do_subst) < $(srcdir)/mkscreenshot_nolevel.in > mkscreenshot_nolevel.sh
-	chmod +x mkscreenshot_nolevel.sh
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
