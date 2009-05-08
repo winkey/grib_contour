@@ -19,8 +19,7 @@ source @bindir@/generic2.sh
 
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/nam/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf_backup/pub/data/model/grid/grib/nogaps/"
-wwwdisk="@wwwdisk@/kml/nogaps"
-www="@www@/kml/nogaps/"
+
 
 
 run=$1

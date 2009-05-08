@@ -23,8 +23,7 @@ run="00"
 
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/gfs/prod/"
-wwwdisk="@wwwdisk@/kml/sst"
-www="@www@/kml/sst"
+
 
 gribfile="rtgssthr_grb_0.083_awips.grib2"
 

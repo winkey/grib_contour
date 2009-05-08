@@ -17,9 +17,6 @@ db="ukmet"
 
 source @bindir@/generic2.sh
 
-wwwdisk="@wwwdisk@/kml/ukmet"
-www="@www@/kml/ukmet"
-
 
 
 path="$1"
@@ -56,21 +53,11 @@ then
 	
 	if [[ "$i" == "16" ]]
 	then
-		zip="${wwwdisk}/${run}/${level}hgt${hour}.kmz"
-		kml="${level}hgt${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
-		
-		nice -n 10 grib_contour "${paths[@]}" -i 20 -s ${level}hgt -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip"
 
-		if [[ "$hour" == "06" ]]
-		then
-			mkrootkml "${level}hgt"
-		fi
-		appendkml ${level}hgt $hour 06
+		
+		nice -n 10 grib_contour "${paths[@]}" -i 20 -s ${level}hgt -q "lin,dlat=2.5,dlon=2.5" -p "$pg" -r $run -f timee -l $incr
+
+
 	fi
 fi
 
@@ -78,10 +65,7 @@ fi
 
 if [[ "$prod" == "TMP" ]]
 then
-	if [[ "$hour" == "06" ]]
-	then
-		mkrootkml "${level}t"
-	fi
+
 	
 	unset paths i
 	for grid in 037 038 039 040 041 042 043 044
@@ -96,17 +80,11 @@ then
 	
 	if [[ "$i" == "16" ]]
 	then
-		zip="${wwwdisk}/${run}/${level}t${hour}.kmz"
-		kml="${level}t${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
-		
-		nice -n 10 grib_contour "${paths[@]}" -i 1 -s ${level}t -c -273.15 -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip"
 
-		appendkml ${level}t $hour 06
+		
+		nice -n 10 grib_contour "${paths[@]}" -i 1 -s ${level}t -c -273.15 -q "lin,dlat=2.5,dlon=2.5" -p "$pg" -r $run -f timee -l $incr
+
+
 	fi
 fi
 
@@ -128,21 +106,11 @@ then
 	
 	if [[ "$i" == "16" ]]
 	then
-		zip="${wwwdisk}/${run}/${level}rh${hour}.kmz"
-		kml="${level}rh${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
-		
-		nice -n 10 grib_contour "${paths[@]}" -i 5 -s ${level}rh -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip"
 
-		if [[ "$hour" == "06" ]]
-		then
-			mkrootkml "${level}rh"
-		fi
-		appendkml ${level}rh $hour 06
+		
+		nice -n 10 grib_contour "${paths[@]}" -i 5 -s ${level}rh -q "lin,dlat=2.5,dlon=2.5" -p "$pg" -r $run -f timee -l $incr
+
+
 	fi
 fi
 
@@ -174,13 +142,7 @@ then
 		
 	if [[ "$i" == "32" ]]
 	then
-		zip="${wwwdisk}/${run}/${level}wind${hour}.kmz"
-		kml="${level}wind${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
+
 		
 		if [[ "$level" -gt "500" ]]
 		then
@@ -189,14 +151,9 @@ then
 			interval=7
 		fi
 		
-		nice -n 10 grib_contour -w "${paths[@]}" -i $interval -s ${level}wind -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip"
+		nice -n 10 grib_contour -w "${paths[@]}" -i $interval -s ${level}wind -q "lin,dlat=2.5,dlon=2.5" -p "$pg" -r $run -f timee -l $incr
 
-		if [[ "$hour" == "06" ]]
-		then
-			mkrootkml "${level}wind"
-		fi
-	
-		appendkml ${level}wind $hour 06
+
 	fi
 fi
 
@@ -226,13 +183,7 @@ then
 		
 	if [[ "$i" == "32" ]]
 	then
-		zip="${wwwdisk}/${run}/${level}wind${hour}.kmz"
-		kml="${level}wind${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
+
 		
 		if [[ "$level" -gt "500" ]]
 		then
@@ -241,14 +192,8 @@ then
 			interval=7
 		fi
 		
-		nice -n 10 grib_contour -w "${paths[@]}" -i $interval -s ${level}wind -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip"
+		nice -n 10 grib_contour -w "${paths[@]}" -i $interval -s ${level}wind -q "lin,dlat=2.5,dlon=2.5" -p "$pg" -r $run -f timee -l $incr
 
-		if [[ "$hour" == "06" ]]
-		then
-			mkrootkml "${level}wind"
-		fi
-
-		appendkml ${level}wind $hour 06
 	fi
 fi
 
@@ -269,23 +214,11 @@ then
 	
 	if [[ "$i" == "16" ]]
 	then
-		zip="${wwwdisk}/${run}/pmsl${hour}.kmz"
-		kml="pmsl${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
-		
-		echo nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip"
-		nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip"
 
-		if [[ "$hour" == "06" ]]
-		then
-			mkrootkml "pmsl"
-		fi
-	
-		appendkml pmsl $hour 06
+		
+		nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -q "lin,dlat=2.5,dlon=2.5" -p "$pg" -r $run -f timee -l $incr
+
+
 	fi
 fi
 

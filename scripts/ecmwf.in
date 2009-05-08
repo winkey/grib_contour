@@ -17,10 +17,6 @@ db="ecmwf"
 
 source @bindir@/generic2.sh
 
-wwwdisk="@wwwdisk@/kml/ecmwf"
-www="@www@/kml/ecmwf"
-
-
 
 path="$1"
 grid="$2"
@@ -57,21 +53,10 @@ then
 	
 	if [[ "$i" == "16" ]]
 	then
-		zip="${wwwdisk}/${run}/${level}hgt${hour}.kmz"
-		kml="${level}hgt${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
-		
-		nice -n 10 grib_contour "${paths[@]}" -i 20 -s ${level}hgt -k "$kml" -z "$zip"
 
-		if [[ "$hour" == "00" ]]
-		then
-			mkrootkml "${level}hgt"
-		fi
-		appendkml ${level}hgt $hour 24
+		
+		nice -n 10 grib_contour "${paths[@]}" -i 20 -s ${level}hgt -p "$pg" -r $run -f timee -l $incr
+
 	fi
 fi
 
@@ -97,17 +82,11 @@ then
 	
 	if [[ "$i" == "16" ]]
 	then
-		zip="${wwwdisk}/${run}/${level}t${hour}.kmz"
-		kml="${level}t${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
-		
-		nice -n 10 grib_contour "${paths[@]}" -i 1 -s ${level}t -k "$kml" -z "$zip"
 
-		appendkml ${level}t $hour 24
+		
+		nice -n 10 grib_contour "${paths[@]}" -i 1 -s ${level}t -p "$pg" -r $run -f timee -l $incr
+
+
 	fi
 fi
 
@@ -129,21 +108,11 @@ then
 	
 	if [[ "$i" == "16" ]]
 	then
-		zip="${wwwdisk}/${run}/${level}rh${hour}.kmz"
-		kml="${level}rh${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
-		
-		nice -n 10 grib_contour "${paths[@]}" -i 5 -s ${level}rh -k "$kml" -z "$zip"
 
-		if [[ "$hour" == "00" ]]
-		then
-			mkrootkml "${level}rh"
-		fi
-		appendkml ${level}rh $hour 24
+		
+		nice -n 10 grib_contour "${paths[@]}" -i 5 -s ${level}rh -p "$pg" -r $run -f timee -l $incr
+
+
 	fi
 fi
 
@@ -175,13 +144,7 @@ then
 		
 	if [[ "$i" == "32" ]]
 	then
-		zip="${wwwdisk}/${run}/${level}wind${hour}.kmz"
-		kml="${level}wind${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
+
 		
 		if [[ "$level" -gt "500" ]]
 		then
@@ -190,14 +153,8 @@ then
 			interval=7
 		fi
 		
-		nice -n 10 grib_contour -w "${paths[@]}" -i $interval -s ${level}wind -k "$kml" -z "$zip"
+		nice -n 10 grib_contour -w "${paths[@]}" -i $interval -s ${level}wind -k -p "$pg" -r $run -f timee -l $incr
 
-		if [[ "$hour" == "00" ]]
-		then
-			mkrootkml "${level}wind"
-		fi
-	
-		appendkml ${level}wind $hour 24
 	fi
 fi
 
@@ -227,13 +184,7 @@ then
 		
 	if [[ "$i" == "32" ]]
 	then
-		zip="${wwwdisk}/${run}/${level}wind${hour}.kmz"
-		kml="${level}wind${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
+
 		
 		if [[ "$level" -gt "500" ]]
 		then
@@ -242,14 +193,9 @@ then
 			interval=7
 		fi
 		
-		nice -n 10 grib_contour -w "${paths[@]}" -i $interval -s ${level}wind -k "$kml" -z "$zip"
+		nice -n 10 grib_contour -w "${paths[@]}" -i $interval -s ${level}wind -p "$pg" -r $run -f timee -l $incr
 
-		if [[ "$hour" == "00" ]]
-		then
-			mkrootkml "${level}wind"
-		fi
 
-		appendkml ${level}wind $hour 24
 	fi
 fi
 
@@ -270,23 +216,12 @@ then
 	
 	if [[ "$i" == "16" ]]
 	then
-		zip="${wwwdisk}/${run}/pmsl${hour}.kmz"
-		kml="pmsl${hour}.kml"
-	
-		if [[ -f "$zip" ]]
-		then
-			rm "$zip"
-		fi
-		
-		echo nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -k "$kml" -z "$zip"
-		nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -k "$kml" -z "$zip"
 
+		
+		echo nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -p "$pg" -r $run -f timee -l $incr
+		nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -p "$pg" -r $run -f timee -l $incr
 		if [[ "$hour" == "00" ]]
-		then
-			mkrootkml "pmsl"
-		fi
-	
-		appendkml pmsl $hour 24
+
 	fi
 fi
 
