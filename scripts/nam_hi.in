@@ -20,20 +20,15 @@ source @bindir@/generic2.sh
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/nam/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/nam/prod/"
 
-
-
-run=$1
+run="${datee}$1"
 
 times=`seq -f "%02g" 0 1 48`
 
 function doplot {
-	datee=$1
-	run=$2
-	timee=$3
 	
-	gribfile="hinmm.t${run}z.awpreg${timee}.tm00.grib2"
+	gribfile="hinmm.t${2}z.awpreg${3}.tm00.grib2"
 	
-	if ! getgrib "${servb}hiresw.${datee}/" "$gribfile" "/tmp"
+	if ! getgrib "${servb}hiresw.${1}/" "$gribfile" "/tmp"
 	then
 		return
 	fi
@@ -115,7 +110,7 @@ mktempfiledir "$tmp"
 
 for i in $times
 do
-	time doplot $datee $run $i
+	time doplot $datee $1 $i
 done
 
 #cleanup
