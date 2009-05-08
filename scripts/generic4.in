@@ -34,7 +34,7 @@ then
 	psql -d $db -f /usr/share/postgresql/contrib/spatial_ref_sys.sql
 fi
 
-pg="PG:dbname=$db
+pg="PG:dbname=$db"
 
 ##### get the number of cpu's #####
 
