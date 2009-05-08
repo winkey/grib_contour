@@ -27,7 +27,7 @@ else
 	datee=$2
 fi
 
-if createdb $db
+if createdb $db -D data 
 then
 	createlang plpgsql $db
 	psql -d $db -f /usr/share/postgresql/contrib/lwpostgis.sql

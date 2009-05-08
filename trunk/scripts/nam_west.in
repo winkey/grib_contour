@@ -40,7 +40,6 @@ function doplot {
 	plot $gribfile 1000t 111 1 $timee 01 &
 	plot $gribfile 1000rh 109 10 $timee 01 &
 	windplot $gribfile $gribfile 1000wind 113 114 5 $timee 01 &
-	wait
 	
 	plot $gribfile 925hgt 104 20 $timee 01 &
 	plot $gribfile 925t 105 1 $timee 01 &
@@ -54,7 +53,6 @@ function doplot {
 	plot $gribfile 850rh 97 10 $timee 01 &
 	diffplot $gribfile $gribfile 850thk 98 110 20 $hour 01 &
 	windplot $gribfile $gribfile 850wind 101 102 5 $timee 01 &
-	wait
 
 	plot $gribfile 700hgt 92 20 $timee 01 &
 	plot $gribfile 700t 93 1 $timee 01 &
@@ -68,7 +66,6 @@ function doplot {
 	plot $gribfile 500rh 85 10 $timee 01 &
 	diffplot $gribfile $gribfile 500thk 86 110 20 $hour 01 &
 	windplot $gribfile $gribfile 500wind 89.0 90.0 10 $timee 01 &
-	wait
 
 	plot $gribfile 300hgt 74 20 $timee 01 &
 	plot $gribfile 300t 75 1 $timee 01 &
@@ -80,7 +77,6 @@ function doplot {
 	plot $gribfile 200t 63 1 $timee 01 &
 	plot $gribfile 200rh 61 10 $timee 01 &
 	windplot $gribfile $gribfile 200wind 65.0 66.0 10 $timee 01 &
-	wait
 	
 	plot $gribfile pwat 18 4 $timee 01 "-I" &
 	plot $gribfile cape 20 200 $timee 01 &
