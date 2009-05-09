@@ -44,25 +44,25 @@ function doplot {
 	plot $gribfile 925hgt 104 20 $timee 01 &
 	plot $gribfile 925t 105 1 $timee 01 &
 	plot $gribfile 925rh 103 10 $timee 01 &
-	diffplot $gribfile $gribfile 925thk 104 110 20 $hour 01 &
+	diffplot $gribfile $gribfile 925thk 104 110 20 $timee 01 &
 	windplot $gribfile $gribfile 925wind 107 108 5 $timee 01 &
 		
 	plot $gribfile 850hgt 98 20 $timee 01 &
 	plot $gribfile 850t 99 1 $timee 01 &
 	plot $gribfile 850rh 97 10 $timee 01 &
-	diffplot $gribfile $gribfile 850thk 98 110 20 $hour 01 &
+	diffplot $gribfile $gribfile 850thk 98 110 20 $timee 01 &
 	windplot $gribfile $gribfile 850wind 101 102 5 $timee 01 &
 
 	plot $gribfile 700hgt 92 20 $timee 01 &
 	plot $gribfile 700t 93 1 $timee 01 &
 	plot $gribfile 700rh 91 10 $timee 01 &
-	diffplot $gribfile $gribfile 700thk 92 110 20 $hour 01 &
+	diffplot $gribfile $gribfile 700thk 92 110 20 $timee 01 &
 	windplot $gribfile $gribfile 700wind 95 96 5 $timee 01 &
 	
 	plot $gribfile 500hgt 86 20 $timee 01 &
 	plot $gribfile 500t 87 1 $timee 01 &
 	plot $gribfile 500rh 85 10 $timee 01 &
-	diffplot $gribfile $gribfile 500thk 86 110 20 $hour 01 &
+	diffplot $gribfile $gribfile 500thk 86 110 20 $timee 01 &
 	windplot $gribfile $gribfile 500wind 89.0 90.0 10 $timee 01 &
 
 	plot $gribfile 300hgt 74 20 $timee 01 &

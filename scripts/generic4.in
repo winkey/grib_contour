@@ -125,7 +125,7 @@ function windplot {
 	interval=$6
 	timee=$7
 	incr=$8
-	extra="$7"
+	extra="$9"
 
 	nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
@@ -146,7 +146,7 @@ function andplot {
 	interval=$6
 	timee=$7
 	incr=$8
-	extra="$7"
+	extra="$9"
 	
 	nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
