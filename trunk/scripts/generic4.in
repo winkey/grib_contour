@@ -98,7 +98,7 @@ function plot {
 
 	nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg \
 													-i $interval -s $name \
-													-p "$pg" -r $run -f timee -l $incr \
+													-p "$pg" -r $run -f $timee -l $incr \
 													$extra
 	
 
@@ -130,7 +130,7 @@ function windplot {
 	nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
 													-i $interval -s $name \
-													-p "$pg" -r $run -f timee -l $incr \
+													-p "$pg" -r $run -f $timee -l $incr \
 													$extra
 	
 
@@ -151,7 +151,7 @@ function andplot {
 	nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
 													-i $interval -s $name \
-													-p "$pg" -r $run -f timee -l $incr \
+													-p "$pg" -r $run -f $timee -l $incr \
 													$extra
 	
 }
@@ -170,7 +170,7 @@ function diffplot {
 	nice -n 10 grib_contour -d -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
 													-i $interval -s $name \
-													-p "$pg" -r $run -f timee -l $incr \
+													-p "$pg" -r $run -f $timee -l $incr \
 													$extra
 	
 	
