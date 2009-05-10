@@ -325,7 +325,7 @@ void contour2pg(
 	
 	OGRCoordinateTransformationH *hTransform = NULL;
 	
-	if (gds->proj == GDS_LATLON || gds->proj == GDS_GAUSSIAN_LATLON) {
+	if (gds->proj != GDS_LATLON && gds->proj != GDS_GAUSSIAN_LATLON) {
 		if (!(hTransform = OCTNewCoordinateTransformation(hSRS, hSRS_dst)))
 			ERROR("Can't create transformation");
 	}
