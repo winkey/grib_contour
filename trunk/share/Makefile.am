@@ -32,7 +32,11 @@ pkgdata_DATA = \
 	1000wind.scale \
 	200t.scale \
 	925t.scale \
-	1000t.scale
+	1000t.scale \
+	prob17.scale \
+	prob25.scale \
+	prob32.scale
+	
 	
 dist_pkgdata_DATA = \
 	cape.scale \
@@ -138,9 +142,12 @@ tstm.scale: prob.scale Makefile
 200t.scale: 300t.scale Makefile
 	cp $(srcdir)/300t.scale $(srcdir)/200t.scale
 
-925t.scale: t.scale Makefile
-	cp $(srcdir)/t.scale $(srcdir)/925t.scale
+prob17.scale: prob.scale Makefile
+	cp $(srcdir)/prob.scale $(srcdir)/prob17.scale
 
-1000t.scale: t.scale Makefile
-	cp $(srcdir)/t.scale $(srcdir)/1000t.scale
+prob25.scale: prob.scale Makefile
+	cp $(srcdir)/prob.scale $(srcdir)/prob25.scale
+
+prob32.scale: prob.scale Makefile
+	cp $(srcdir)/prob.scale $(srcdir)/prob32.scale
 

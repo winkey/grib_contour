@@ -30,9 +30,9 @@ NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#(218)/([0-9]{10})00F(00[1-9]|[0-9][1-
 
 
 NGRID	^[LM]DG[A-Z]98 KNHC .* !grib2/ncep/(FORECASTER)/#000/([0-9]{10})00F([0-9]{3})/SPED[0-9]*00(17|25|32)P.*
-	FILE	data/ngrid/forecaster/\1\2.\2.\3.\4.grib2
+	FILE	data/ngrid/forecaster/\2.\2.\3.\4.grib2
 NGRID	^[LM]DG[A-Z]98 KNHC .* !grib2/ncep/(FORECASTER)/#000/([0-9]{10})00F([0-9]{3})/SPED[0-9]*00(17|25|32)P.*
-	EXEC	-wait /usr/local/bin/forecaster.sh data/ngrid/forecaster/\1\2.\2.\3.\4.grib2 \2 \3 \4
+	EXEC	-wait /usr/local/bin/forecaster.sh data/ngrid/forecaster/\2.\2.\3.\4.grib2 \2 \3 \4
 
 CONDUIT	^data/nccf/com/ruc/prod/ruc2a.([0-9]*)/ruc2.t([0-9][0-9])z.pgrb20[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300|200) Pa PRES!
 	FILE	data/conduit/ruc/prod/\1/\2.\3.\4.\5.grib2
