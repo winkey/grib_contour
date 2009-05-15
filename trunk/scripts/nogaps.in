@@ -96,7 +96,7 @@ function doplot {
 	then
 		plot $gribfile pcp 2 1 $timee $incr "-I" &
 	fi
-	
+	wait
 
 	#cleanup
 	
