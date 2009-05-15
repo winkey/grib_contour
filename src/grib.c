@@ -26,6 +26,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #include <weathercalc/wind.h>
 
 #include "options.h"
@@ -53,6 +57,10 @@ FILE *grib_open(
 {
 	FILE *result = NULL;
 	char cmd[1000] = {};
+	struct stat statbuf = {};
+	
+	if (-1 == stat(gribfile, &statbuf))
+		ERROR("grib_open");
 	
 	snprintf (cmd, sizeof(cmd),
 						"degrib -in \"%s\" -out stdout -C -Unit %c -msg %.1f -Csv",
