@@ -57,6 +57,8 @@ GDALDatasetH raster_open_mem(
 	GDALDatasetH result = NULL;
 	char myfilename[300];
 	
+	if (!raster || !width || !height)
+		ERROR("raster_open\n 0 length raster");
 	snprintf(myfilename, sizeof(myfilename),
 					 "MEM:::DATAPOINTER=%p,PIXELS=%i,LINES=%i,BANDS=1,DATATYPE=Float32",
 					 raster, width, height);
