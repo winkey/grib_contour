@@ -1,4 +1,3 @@
-#!bin/bash
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -13,13 +12,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-name=gfs
-fullname=".5 Degree Resolution GFS Forecast Model"
+name=coamps_cent_am
+fullname=".2 Deg Resolution Central America COAMPS Forecast Model"
 
-description='Data from <a href=\"http://www.ncep.noaa.gov/\">
-National Centers for Environmental Prediction</a> 
-generated four times daily is contoured and converted to kml
-for forecast hours 0-180 in 3 hour increments.'
+description='Data from <a href=\"https://www.fnmoc.navy.mil/public/\">
+Fleet Numerical Meteorology and Oceanography Center</a> 
+generated twice daily is contoured and converted to kml
+for forecast hours 0-48 in 3 hour increments.'
 
 levels="200 200 mb
 300 300 mb
@@ -70,19 +69,11 @@ hgt Heights"
 
 levels2="0 0 - none"
 
-products2="pwat Perceptible Water
-pmsl Mean Sea Level Pressure
-pcp 6 Hour Total Precipitation
-rain 6 Hour Total Rain Precipitation
-snow 6 Hour Total Snow Precipitation
-frez 6 Hour Total Freezing Precipitation
-pellet 6 Hour Total Pellet Precipitation
-cape Convective Available Potential Energy"
+products2="pmsl Mean Sea Level Pressure
+pcp 3 Hour Total Precipitation"
 
 times="00 00Z
-06 06Z
-12 12Z
-18 18Z"
+12 12Z"
 
 screenshots=$(
   echo "$levels" | while read lev_n lev_fn

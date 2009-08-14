@@ -14,13 +14,27 @@ bin_SCRIPTS = \
 	nam_ak.sh \
 	nam_pr.sh \
 	nam2.sh \
-	makekey.sh \
+	mkkml.sh \
+	mkmaster.sh \
+	mklatest.sh \
+	mkpage.sh \
+	mkkml-latest.sh \
+	mkscreenshot.sh \
+	mkkml_nolevel.sh \
+	mkpage_nolevel.sh \
+	mkkml_nolevel-latest.sh \
+	mkscreenshot_nolevel.sh \
 	forecaster.sh \
 	ruc2.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
 	nogaps.sh \
+	coamps_cent_am.sh \
+	coamps_e_pac.sh \
+	coamps_europe.sh \
+	ocean.sh \
 	ww.sh \
+	ww3.sh \
 	ecmwf.sh \
 	ukmet.sh
 
@@ -41,12 +55,27 @@ EXTRA_DIST = \
 	nam_pr.in \
 	nam2.in \
 	makekey.in \
+	mkkml.in \
+	mkmaster.in \
+	mklatest.in \
+	mkpage.in \
+	mkkml-latest.in \
+	mkscreenshot.in \
+	mkkml_nolevel.in \
+	mkpage_nolevel.in \
+	mkkml_nolevel-latest.in \
+	mkscreenshot_nolevel.in \
 	forecaster.in \
 	ruc2.in \
 	rtma_ak.in \
 	rtma_conus.in \
 	nogaps.in \
+	coamps_cent_am.in \
+	coamps_e_pac.in \
+	coamps_europe.in \
+	ocean.in \
 	ww.in \
+	ww3.in \
 	ecmwf.in \
 	ukmet.in
 
@@ -66,13 +95,27 @@ dist_bin_SCRIPTS = \
 	nam_ak.sh \
 	nam_pr.sh \
 	nam2.sh \
-	makekey.sh \
+	mkkml.sh \
+	mkmaster.sh \
+	mklatest.sh \
+	mkpage.sh \
+	mkkml-latest.sh \
+	mkscreenshot.sh \
+	mkkml_nolevel.sh \
+	mkpage_nolevel.sh \
+	mkkml_nolevel-latest.sh \
+	mkscreenshot_nolevel.sh \
 	forecaster.sh \
 	ruc2.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
 	ww.sh \
+	ww3.sh \
 	nogaps.sh \
+	coamps_cent_am.sh \
+	coamps_e_pac.sh \
+	coamps_europe.sh \
+	ocean.sh \
 	ecmwf.sh \
 	ukmet.sh 
 
@@ -86,8 +129,8 @@ generic.sh: generic.in Makefile
 	$(do_subst) < $(srcdir)/generic.in > generic.sh
 	chmod +x generic.sh
 
-generic2.sh: generic4.in Makefile
-	$(do_subst) < $(srcdir)/generic4.in > generic2.sh
+generic2.sh: generic2.in Makefile
+	$(do_subst) < $(srcdir)/generic2.in > generic2.sh
 	chmod +x generic2.sh
 
 gfs.sh: gfs.in Makefile
@@ -150,9 +193,29 @@ ww.sh: ww.in Makefile
 	$(do_subst) < $(srcdir)/ww.in > ww.sh
 	chmod +x ww.sh
 
+ww3.sh: ww3.in Makefile
+	$(do_subst) < $(srcdir)/ww3.in > ww3.sh
+	chmod +x ww3.sh
+
 nogaps.sh: nogaps.in Makefile
 	$(do_subst) < $(srcdir)/nogaps.in > nogaps.sh
 	chmod +x nogaps.sh
+
+coamps_cent_am.sh: coamps_cent_am.in Makefile
+	$(do_subst) < $(srcdir)/coamps_cent_am.in > coamps_cent_am.sh
+	chmod +x coamps_cent_am.sh
+
+coamps_e_pac.sh: coamps_e_pac.in Makefile
+	$(do_subst) < $(srcdir)/coamps_e_pac.in > coamps_e_pac.sh
+	chmod +x coamps_e_pac.sh
+
+coamps_europe.sh: coamps_europe.in Makefile
+	$(do_subst) < $(srcdir)/coamps_europe.in > coamps_europe.sh
+	chmod +x coamps_europe.sh
+
+ocean.sh: ocean.in Makefile
+	$(do_subst) < $(srcdir)/ocean.in > ocean.sh
+	chmod +x ocean.sh
 
 ecmwf.sh: ecmwf.in Makefile
 	$(do_subst) < $(srcdir)/ecmwf.in > ecmwf.sh
@@ -162,4 +225,42 @@ ukmet.sh: ukmet.in Makefile
 	$(do_subst) < $(srcdir)/ukmet.in > ukmet.sh
 	chmod +x ukmet.sh
 
+mkkml.sh: mkkml.in Makefile
+	$(do_subst) < $(srcdir)/mkkml.in > mkkml.sh
+	chmod +x mkkml.sh
 
+mkmaster.sh: mkmaster.in Makefile
+	$(do_subst) < $(srcdir)/mkmaster.in > mkmaster.sh
+	chmod +x mkmaster.sh
+
+mklatest.sh: mklatest.in Makefile
+	$(do_subst) < $(srcdir)/mklatest.in > mklatest.sh
+	chmod +x mklatest.sh
+
+mkpage.sh: mkpage.in Makefile
+	$(do_subst) < $(srcdir)/mkpage.in > mkpage.sh
+	chmod +x mkpage.sh
+
+mkkml-latest.sh: mkkml-latest.in Makefile
+	$(do_subst) < $(srcdir)/mkkml-latest.in > mkkml-latest.sh
+	chmod +x mkkml-latest.sh
+
+mkscreenshot.sh: mkscreenshot.in
+	$(do_subst) < $(srcdir)/mkscreenshot.in > mkscreenshot.sh
+	chmod +x mkscreenshot.sh
+
+mkkml_nolevel.sh: mkkml_nolevel.in Makefile
+	$(do_subst) < $(srcdir)/mkkml_nolevel.in > mkkml_nolevel.sh
+	chmod +x mkkml_nolevel.sh
+
+mkpage_nolevel.sh: mkpage_nolevel.in Makefile
+	$(do_subst) < $(srcdir)/mkpage_nolevel.in > mkpage_nolevel.sh
+	chmod +x mkpage_nolevel.sh
+
+mkkml_nolevel-latest.sh: mkkml_nolevel-latest.in Makefile
+	$(do_subst) < $(srcdir)/mkkml_nolevel-latest.in > mkkml_nolevel-latest.sh
+	chmod +x mkkml_nolevel-latest.sh
+
+mkscreenshot_nolevel.sh: mkscreenshot_nolevel.in
+	$(do_subst) < $(srcdir)/mkscreenshot_nolevel.in > mkscreenshot_nolevel.sh
+	chmod +x mkscreenshot_nolevel.sh

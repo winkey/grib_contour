@@ -130,6 +130,8 @@ SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
 VERSION = @VERSION@
+WWW = @WWW@
+WWWDISK = @WWWDISK@
 abs_builddir = @abs_builddir@
 abs_srcdir = @abs_srcdir@
 abs_top_builddir = @abs_top_builddir@
@@ -178,7 +180,10 @@ SUBDIRS = src \
 	scripts\
 	share \
 	images \
-	etc
+	etc \
+	screenshot \
+	page \
+	kml
 
 grib_contourdocdir = ${prefix}/doc/grib_contour
 grib_contourdoc_DATA = \

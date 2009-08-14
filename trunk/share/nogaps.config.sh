@@ -17,8 +17,8 @@ fullname="1 Deg Resolution Global NOGAPS Forecast Model"
 
 description='Data from <a href=\"https://www.fnmoc.navy.mil/public/\">
 Fleet Numerical Meteorology and Oceanography Center</a> 
-generated twice daily is contoured and converted to kml
-for forecast hours 0-144 in 3 to 6 hour increments.'
+generated four times daily is contoured and converted to kml
+for forecast hours 0-180 in 3 hour increments.'
 
 levels="200 200 mb
 300 300 mb
@@ -69,10 +69,13 @@ hgt Heights"
 
 levels2="0 0 - none"
 
-products2="pcp 3 Hour Total Precipitation"
+products2="pmsl Mean Sea Level Pressure
+pcp 3 Hour Total Precipitation"
 
 times="00 00Z
-12 12Z"
+06 06Z
+12 12Z
+18 18Z"
 
 screenshots=$(
   echo "$levels" | while read lev_n lev_fn

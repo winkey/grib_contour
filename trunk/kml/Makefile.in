@@ -30,7 +30,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-subdir = images
+subdir = kml
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -149,64 +149,46 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 www = @WWW@
 wwwdisk = @WWWDISK@
-wwwdir = ${wwwdisk}/kml/images
+wwwdir = ${wwwdisk}/kml
 www_DATA = \
-	1000t.png \
-	1000hgt.png \
-	1000rh.png \
-	1000wind.png \
-	925t.png \
-	925thk.png \
-	925hgt.png \
-	925rh.png \
-	925wind.png \
-	850t.png \
-	850thk.png \
-	850hgt.png \
-	850rh.png \
-	850wind.png \
-	700t.png \
-	700thk.png \
-	700hgt.png \
-	700rh.png \
-	700wind.png \
-	500t.png \
-	500thk.png \
-	500hgt.png \
-	500rh.png \
-	500wind.png \
-	300t.png \
-	300hgt.png \
-	300rh.png \
-	300wind.png \
-	200t.png \
-	200hgt.png \
-	200rh.png \
-	200wind.png \
-	pwat.png \
-	pmsl.png \
-	cape.png \
-	pcp.png \
-	rain.png \
-	snow.png \
-	frez.png \
-	pellet.png \
-	prob17.png \
-	prob25.png \
-	prob32.png \
-	pop.png \
-	popf.png \
-	popz.png \
-	tstm.png \
-	t.png \
-	dp.png \
-	sst.png \
-	wind.png \
-	hghtww.png \
-	perdww.png \
-	hghtswl.png \
-	perdswl.png \
-	htsgw.png
+	forecaster.kml \
+	forecaster-latest.kml \
+	gfs.kml \
+	gfs-latest.kml \
+	nam_conus.kml \
+	nam_conus-latest.kml \
+	ruc2.kml \
+	ruc2-latest.kml \
+	nam_ak.kml \
+	nam_ak-latest.kml \
+	nam_east.kml \
+	nam_east-latest.kml \
+	nam_hi.kml \
+	nam_hi-latest.kml \
+	nam_pr.kml \
+	nam_pr-latest.kml \
+	nam_west.kml \
+	nam_west-latest.kml \
+	master.kml \
+	latest.kml \
+	rtma_conus.kml \
+	rtma_conus-latest.kml \
+	rtma_ak.kml \
+	rtma_ak-latest.kml \
+	sst.kml \
+	sst-latest.kml \
+	windwave.kml \
+	windwave-latest.kml \
+	nogaps.kml \
+	nogaps-latest.kml \
+	ecmwf.kml \
+	ecmwf-latest.kml \
+	ukmet.kml \
+	ukmet-latest.kml
+
+do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
+							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
+							 -e 's,[@]www[@],$(www),g'
 
 all: all-am
 
@@ -220,9 +202,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  images/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  kml/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  images/Makefile
+	  $(AUTOMAKE) --gnu  kml/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -389,176 +371,107 @@ uninstall-am: uninstall-wwwDATA
 	uninstall-am uninstall-wwwDATA
 
 
-1000t.png: ../share/1000t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/1000t.scale "c" 1000t.png
+gfs.kml: ../scripts/mkkml.sh ../share/gfs.config.sh Makefile
+	../scripts/mkkml.sh ../share/gfs.config.sh
 
-1000hgt.png: ../share/1000hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/1000hgt.scale "m" 1000hgt.png
+gfs-latest.kml: ../scripts/mkkml-latest.sh ../share/gfs.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/gfs.config.sh
 
-1000rh.png: ../share/1000rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/1000rh.scale "%" 1000rh.png
+nam_conus.kml: ../scripts/mkkml.sh ../share/nam_conus.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_conus.config.sh
 
-1000wind.png: ../share/1000wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/1000wind.scale "kts" 1000wind.png
+nam_conus-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_conus.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_conus.config.sh
 
-925t.png: ../share/t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925t.scale "c" 925t.png
+nam_ak.kml: ../scripts/mkkml.sh ../share/nam_ak.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_ak.config.sh
 
-925thk.png: ../share/925thk.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925thk.scale "m" 925thk.png
+nam_ak-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_ak.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_ak.config.sh
 
-925hgt.png: ../share/925hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925hgt.scale "m" 925hgt.png
+nam_east.kml: ../scripts/mkkml.sh ../share/nam_east.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_east.config.sh
 
-925rh.png: ../share/925rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925rh.scale "%" 925rh.png
+nam_east-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_east.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_east.config.sh
 
-925wind.png: ../share/925wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925wind.scale "kts" 925wind.png
+nam_hi.kml: ../scripts/mkkml.sh ../share/nam_hi.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_hi.config.sh
 
-850t.png: ../share/850t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850t.scale "c" 850t.png
+nam_hi-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_hi.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_hi.config.sh
 
-850thk.png: ../share/850thk.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850thk.scale "m" 850thk.png
+nam_pr.kml: ../scripts/mkkml.sh ../share/nam_pr.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_pr.config.sh
 
-850hgt.png: ../share/850hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850hgt.scale "m" 850hgt.png
+nam_pr-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_pr.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_pr.config.sh
 
-850rh.png: ../share/850rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850rh.scale "%" 850rh.png
+nam_west.kml: ../scripts/mkkml.sh ../share/nam_west.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_west.config.sh
 
-850wind.png: ../share/850wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850wind.scale "kts" 850wind.png
+nam_west-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_west.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_west.config.sh
 
-700t.png: ../share/700t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700t.scale "c" 700t.png
+ruc2.kml: ../scripts/mkkml.sh ../share/ruc2.config.sh Makefile
+	../scripts/mkkml.sh ../share/ruc2.config.sh
 
-700thk.png: ../share/700thk.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700thk.scale "m" 700thk.png
+ruc2-latest.kml: ../scripts/mkkml-latest.sh ../share/ruc2.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/ruc2.config.sh
 
-700hgt.png: ../share/700hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700hgt.scale "m" 700hgt.png
+forecaster.kml: ../scripts/mkkml_nolevel.sh ../share/forecaster.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/forecaster.config.sh
 
-700rh.png: ../share/700rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700rh.scale "%" 700rh.png
+forecaster-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/forecaster.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/forecaster.config.sh
 
-700wind.png: ../share/700wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700wind.scale "kts" 700wind.png
+sst.kml: ../scripts/mkkml_nolevel.sh ../share/sst.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/sst.config.sh
 
-500t.png: ../share/500t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500t.scale "c" 500t.png
+sst-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/sst.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/sst.config.sh
 
-500thk.png: ../share/500thk.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500thk.scale "c" 500thk.png
+rtma_conus.kml: ../scripts/mkkml_nolevel.sh ../share/rtma_conus.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/rtma_conus.config.sh
 
-500hgt.png: ../share/500hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500hgt.scale "m" 500hgt.png
+rtma_conus-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/rtma_conus.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/rtma_conus.config.sh
 
-500rh.png: ../share/500rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500rh.scale "%" 500rh.png
+rtma_ak.kml: ../scripts/mkkml_nolevel.sh ../share/rtma_ak.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/rtma_ak.config.sh
 
-500wind.png: ../share/500wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500wind.scale "kts" 500wind.png
+rtma_ak-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/rtma_ak.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/rtma_ak.config.sh
 
-300t.png: ../share/300t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300t.scale "c" 300t.png
+windwave.kml: ../scripts/mkkml_nolevel.sh ../share/windwave.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/windwave.config.sh
 
-300hgt.png: ../share/300hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300hgt.scale "m" 300hgt.png
+windwave-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/windwave.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/windwave.config.sh
 
-300rh.png: ../share/300rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300rh.scale "%" 300rh.png
+nogaps.kml: ../scripts/mkkml.sh ../share/nogaps.config.sh Makefile
+	../scripts/mkkml.sh ../share/nogaps.config.sh
 
-300wind.png: ../share/300wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300wind.scale "kts" 300wind.png
+nogaps-latest.kml: ../scripts/mkkml-latest.sh ../share/nogaps.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nogaps.config.sh
 
-200t.png: ../share/200t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/200t.scale "c" 200t.png
+ecmwf.kml: ../scripts/mkkml.sh ../share/ecmwf.config.sh Makefile
+	../scripts/mkkml.sh ../share/ecmwf.config.sh
 
-200hgt.png: ../share/200hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/200hgt.scale "m" 200hgt.png
+ecmwf-latest.kml: ../scripts/mkkml-latest.sh ../share/ecmwf.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/ecmwf.config.sh
 
-200rh.png: ../share/200rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/200rh.scale "%" 200rh.png
+ukmet.kml: ../scripts/mkkml.sh ../share/ukmet.config.sh Makefile
+	../scripts/mkkml.sh ../share/ukmet.config.sh
 
-200wind.png: ../share/200wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/200wind.scale "kts" 200wind.png
+ukmet-latest.kml: ../scripts/mkkml-latest.sh ../share/ukmet.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/ukmet.config.sh
 
-cape.png: ../share/cape.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/cape.scale "J/kg" cape.png
+master.kml: ../scripts/mkmaster.sh Makefile
+	../scripts/mkmaster.sh > master.kml
 
-pwat.png: ../share/pwat.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pwat.scale "mm" pwat.png
-
-pmsl.png: ../share/pmsl.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pmsl.scale "pa" pmsl.png
-
-pcp.png: ../share/pcp.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pcp.scale "mm" pcp.png
-
-rain.png: ../share/rain.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/rain.scale "mm" rain.png
-
-snow.png: ../share/snow.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/snow.scale "mm" snow.png
-
-frez.png: ../share/frez.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/frez.scale "mm" frez.png
-
-pellet.png: ../share/pellet.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pellet.scale "mm" pellet.png
-
-prob17.png: ../share/prob.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/prob.scale "%" prob17.png
-
-prob25.png: ../share/prob.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/prob.scale "%" prob25.png
-
-prob32.png: ../share/prob.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/prob.scale "%" prob32.png
-
-pop.png: ../share/pop.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pop.scale "%" pop.png
-
-popf.png: ../share/popf.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/popf.scale "%" popf.png
-
-popz.png: ../share/popz.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/popz.scale "%" popz.png
-
-tstm.png: ../share/tstm.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/tstm.scale "%" tstm.png
-
-t.png: ../share/t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/t.scale "%" t.png
-
-dp.png: ../share/dp.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/dp.scale "%" dp.png
-
-sst.png: ../share/sst.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/sst.scale "c" sst.png
-
-ice.png: ../share/ice.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/ice.scale "" ice.png
-
-wind.png: ../share/wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/wind.scale "%" wind.png
-
-hghtww.png: ../share/hghtww.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/hghtww.scale "m" hghtww.png
-
-perdww.png: ../share/perdww.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/perdww.scale "s" perdww.png
-
-hghtswl.png: ../share/hghtww.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/hghtww.scale "m" hghtswl.png
-
-perdswl.png: ../share/perdww.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/perdww.scale "s" perdswl.png
-
-htsgw.png: ../share/htsgw.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/htsgw.scale "m" htsgw.png
+latest.kml: ../scripts/mklatest.sh Makefile
+	../scripts/mklatest.sh > latest.kml
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

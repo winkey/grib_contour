@@ -63,6 +63,8 @@ www_DATA = \
 	wind.png \
 	hghtww.png \
 	perdww.png \
+	hghtswl.png \
+	perdswl.png \
 	htsgw.png
 
 1000t.png: ../share/1000t.scale Makefile ../scripts/makekey.sh
@@ -215,6 +217,9 @@ dp.png: ../share/dp.scale Makefile ../scripts/makekey.sh
 sst.png: ../share/sst.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/sst.scale "c" sst.png
 
+ice.png: ../share/ice.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/ice.scale "" ice.png
+
 wind.png: ../share/wind.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/wind.scale "%" wind.png
 
@@ -223,6 +228,12 @@ hghtww.png: ../share/hghtww.scale Makefile ../scripts/makekey.sh
 
 perdww.png: ../share/perdww.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/perdww.scale "s" perdww.png
+
+hghtswl.png: ../share/hghtww.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/hghtww.scale "m" hghtswl.png
+
+perdswl.png: ../share/perdww.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/perdww.scale "s" perdswl.png
 
 htsgw.png: ../share/htsgw.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/htsgw.scale "m" htsgw.png

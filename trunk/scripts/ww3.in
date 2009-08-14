@@ -1,0 +1,73 @@
+#!/bin/sh 
+
+#           ww3.in
+#  Sat Aug  8 07:46:35 2009
+#  Copyright  2009  Brian Case
+#  <rush@winkey.org>
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Library General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
+
+db="ww3"
+
+source @bindir@/generic2.sh
+
+
+path="$1"
+run="$2"
+hour="$3"
+prod="$4"
+level="$5"
+tmp="/tmp"
+
+period="03"
+
+
+##### plot hght of wind waves #####
+
+if [[ "$prod" == "wnd_wav_ht" ]]
+then
+	plot "$path" "hghtww" 1 .5 $hour $period
+fi
+
+##### Mean period of wind waves #####
+
+if [[ "$prod" == "wnd_wav_per" ]]
+then
+	plot "$path" "perdww" 1 1 $hour $period
+fi
+
+##### Sig hght of comb wind waves/swell #####
+
+if [[ "$prod" == "sig_wav_ht" ]]
+then
+	plot "$path" "htsgw" 1 .5 $hour $period
+fi
+
+##### swell wave height #####
+
+if [[ "$prod" == "swl_wav_ht" ]]
+then
+	plot "$path" "hghtswl" 1 .5 $hour $period
+fi
+
+##### swell wave period #####
+
+if [[ "$prod" == "swl_wav_per" ]]
+then
+	plot "$path" "perdswl" 1 1 $hour $period
+fi
+
+
+rm "$path"
