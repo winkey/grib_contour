@@ -33,6 +33,8 @@ pkgdata_DATA = \
 	200t.scale \
 	925t.scale \
 	1000t.scale \
+	hghtswl.scale \
+	perdswl.scale \
 	prob17.scale \
 	prob25.scale \
 	prob32.scale
@@ -59,11 +61,14 @@ dist_pkgdata_DATA = \
 	t.scale \
 	dp.scale \
 	sst.scale \
+	ice.scale \
 	wind.scale \
 	rh.scale \
 	hghtww.scale \
 	perdww.scale \
 	htsgw.scale \
+	hghtswl.scale \
+	perdswl.scale \
 	forecaster.config.sh \
 	gfs.config.sh \
 	nam_conus.config.sh \
@@ -75,6 +80,11 @@ dist_pkgdata_DATA = \
 	nam_west.config.sh \
 	windwave.config.sh \
 	nogaps.config.sh \
+	ocean.config.sh \
+	ww3.config.sh \
+	coamps_cent_am.config.sh \
+	coamps_e_pac.config.sh \
+	coamps_europe.config.sh \
 	ecmwf.config.sh \
 	ukmet.config.sh \
 	rtma_conus.config.sh \
@@ -150,4 +160,10 @@ prob25.scale: prob.scale Makefile
 
 prob32.scale: prob.scale Makefile
 	cp $(srcdir)/prob.scale $(srcdir)/prob32.scale
+
+hghtswl.scale: hghtww.scale Makefile
+	cp $(srcdir)/hghtww.scale $(srcdir)/hghtswl.scale
+
+perdswl.scale: perdww.scale Makefile
+	cp $(srcdir)/perdww.scale $(srcdir)/perdswl.scale
 

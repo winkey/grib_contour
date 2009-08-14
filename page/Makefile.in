@@ -30,7 +30,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-subdir = images
+subdir = page
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -149,64 +149,53 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 www = @WWW@
 wwwdisk = @WWWDISK@
-wwwdir = ${wwwdisk}/kml/images
+wwwdir = ${wwwdisk}/kml/page
+EXTRA_DIST = \
+	generic.css.in
+
 www_DATA = \
-	1000t.png \
-	1000hgt.png \
-	1000rh.png \
-	1000wind.png \
-	925t.png \
-	925thk.png \
-	925hgt.png \
-	925rh.png \
-	925wind.png \
-	850t.png \
-	850thk.png \
-	850hgt.png \
-	850rh.png \
-	850wind.png \
-	700t.png \
-	700thk.png \
-	700hgt.png \
-	700rh.png \
-	700wind.png \
-	500t.png \
-	500thk.png \
-	500hgt.png \
-	500rh.png \
-	500wind.png \
-	300t.png \
-	300hgt.png \
-	300rh.png \
-	300wind.png \
-	200t.png \
-	200hgt.png \
-	200rh.png \
-	200wind.png \
-	pwat.png \
-	pmsl.png \
-	cape.png \
-	pcp.png \
-	rain.png \
-	snow.png \
-	frez.png \
-	pellet.png \
-	prob17.png \
-	prob25.png \
-	prob32.png \
-	pop.png \
-	popf.png \
-	popz.png \
-	tstm.png \
-	t.png \
-	dp.png \
-	sst.png \
-	wind.png \
-	hghtww.png \
-	perdww.png \
-	hghtswl.png \
-	perdswl.png \
-	htsgw.png
+	gfs.php \
+	nam_conus.php \
+	nam_ak.php \
+	nam_east.php \
+	nam_hi.php \
+	nam_pr.php \
+	nam_west.php \
+	ruc2.php \
+	forecaster.php \
+	sst.php \
+	rtma_conus.php \
+	rtma_ak.php \
+	windwave.php \
+	nogaps.php \
+	ocean.php \
+	ww3.php \
+	coamps_cent_am.php \
+	coamps_e_pac.php \
+	coamps_europe.php \
+	ecmwf.php \
+	ukmet.php \
+	gfs.css \
+	nam_conus.css \
+	nam_ak.css \
+	nam_east.css \
+	nam_hi.css \
+	nam_pr.css \
+	nam_west.css \
+	ruc2.css \
+	forecaster.css \
+	sst.css \
+	rtma_conus.css \
+	rtma_ak.css \
+	windwave.css \
+	nogaps.css \
+	ocean.css \
+	ww3.css \
+	coamps_cent_am.css \
+	coamps_e_pac.css \
+	coamps_europe.css \
+	ecmwf.css \
+	ukmet.css
 
 all: all-am
 
@@ -220,9 +209,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  images/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu  page/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  images/Makefile
+	  $(AUTOMAKE) --gnu  page/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -389,176 +378,71 @@ uninstall-am: uninstall-wwwDATA
 	uninstall-am uninstall-wwwDATA
 
 
-1000t.png: ../share/1000t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/1000t.scale "c" 1000t.png
+gfs.php: ../scripts/mkpage.sh ../share/gfs.config.sh Makefile
+	../scripts/mkpage.sh ../share/gfs.config.sh
 
-1000hgt.png: ../share/1000hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/1000hgt.scale "m" 1000hgt.png
+nam_conus.php: ../scripts/mkpage.sh ../share/nam_conus.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_conus.config.sh
 
-1000rh.png: ../share/1000rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/1000rh.scale "%" 1000rh.png
+nam_ak.php: ../scripts/mkpage.sh ../share/nam_ak.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_ak.config.sh
 
-1000wind.png: ../share/1000wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/1000wind.scale "kts" 1000wind.png
+nam_east.php: ../scripts/mkpage.sh ../share/nam_east.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_east.config.sh
 
-925t.png: ../share/t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925t.scale "c" 925t.png
+nam_hi.php: ../scripts/mkpage.sh ../share/nam_hi.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_hi.config.sh
 
-925thk.png: ../share/925thk.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925thk.scale "m" 925thk.png
+nam_pr.php: ../scripts/mkpage.sh ../share/nam_pr.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_pr.config.sh
 
-925hgt.png: ../share/925hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925hgt.scale "m" 925hgt.png
+nam_west.php: ../scripts/mkpage.sh ../share/nam_west.config.sh Makefile
+	../scripts/mkpage.sh ../share/nam_west.config.sh
 
-925rh.png: ../share/925rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925rh.scale "%" 925rh.png
+ruc2.php: ../scripts/mkpage.sh ../share/ruc2.config.sh Makefile
+	../scripts/mkpage.sh ../share/ruc2.config.sh
 
-925wind.png: ../share/925wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/925wind.scale "kts" 925wind.png
+forecaster.php: ../scripts/mkpage_nolevel.sh ../share/forecaster.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/forecaster.config.sh
 
-850t.png: ../share/850t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850t.scale "c" 850t.png
+sst.php: ../scripts/mkpage_nolevel.sh ../share/sst.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/sst.config.sh
 
-850thk.png: ../share/850thk.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850thk.scale "m" 850thk.png
+rtma_conus.php: ../scripts/mkpage_nolevel.sh ../share/rtma_conus.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/rtma_conus.config.sh
 
-850hgt.png: ../share/850hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850hgt.scale "m" 850hgt.png
+rtma_ak.php: ../scripts/mkpage_nolevel.sh ../share/rtma_ak.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/rtma_ak.config.sh
 
-850rh.png: ../share/850rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850rh.scale "%" 850rh.png
+windwave.php: ../scripts/mkpage_nolevel.sh ../share/windwave.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/windwave.config.sh
 
-850wind.png: ../share/850wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/850wind.scale "kts" 850wind.png
+nogaps.php: ../scripts/mkpage.sh ../share/nogaps.config.sh Makefile
+	../scripts/mkpage.sh ../share/nogaps.config.sh
 
-700t.png: ../share/700t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700t.scale "c" 700t.png
+ocean.php: ../scripts/mkpage_nolevel.sh ../share/ocean.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/ocean.config.sh
 
-700thk.png: ../share/700thk.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700thk.scale "m" 700thk.png
+ww3.php: ../scripts/mkpage_nolevel.sh ../share/ww3.config.sh Makefile
+	../scripts/mkpage_nolevel.sh ../share/ww3.config.sh
 
-700hgt.png: ../share/700hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700hgt.scale "m" 700hgt.png
+coamps_cent_am.php: ../scripts/mkpage.sh ../share/coamps_cent_am.config.sh Makefile
+	../scripts/mkpage.sh ../share/coamps_cent_am.config.sh
 
-700rh.png: ../share/700rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700rh.scale "%" 700rh.png
+coamps_e_pac.php: ../scripts/mkpage.sh ../share/coamps_e_pac.config.sh Makefile
+	../scripts/mkpage.sh ../share/coamps_e_pac.config.sh
 
-700wind.png: ../share/700wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/700wind.scale "kts" 700wind.png
+coamps_europe.php: ../scripts/mkpage.sh ../share/coamps_europe.config.sh Makefile
+	../scripts/mkpage.sh ../share/coamps_europe.config.sh
 
-500t.png: ../share/500t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500t.scale "c" 500t.png
+ecmwf.php: ../scripts/mkpage.sh ../share/ecmwf.config.sh Makefile
+	../scripts/mkpage.sh ../share/ecmwf.config.sh
 
-500thk.png: ../share/500thk.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500thk.scale "c" 500thk.png
+ukmet.php: ../scripts/mkpage.sh ../share/ukmet.config.sh Makefile
+	../scripts/mkpage.sh ../share/ukmet.config.sh
 
-500hgt.png: ../share/500hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500hgt.scale "m" 500hgt.png
-
-500rh.png: ../share/500rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500rh.scale "%" 500rh.png
-
-500wind.png: ../share/500wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/500wind.scale "kts" 500wind.png
-
-300t.png: ../share/300t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300t.scale "c" 300t.png
-
-300hgt.png: ../share/300hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300hgt.scale "m" 300hgt.png
-
-300rh.png: ../share/300rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300rh.scale "%" 300rh.png
-
-300wind.png: ../share/300wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/300wind.scale "kts" 300wind.png
-
-200t.png: ../share/200t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/200t.scale "c" 200t.png
-
-200hgt.png: ../share/200hgt.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/200hgt.scale "m" 200hgt.png
-
-200rh.png: ../share/200rh.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/200rh.scale "%" 200rh.png
-
-200wind.png: ../share/200wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/200wind.scale "kts" 200wind.png
-
-cape.png: ../share/cape.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/cape.scale "J/kg" cape.png
-
-pwat.png: ../share/pwat.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pwat.scale "mm" pwat.png
-
-pmsl.png: ../share/pmsl.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pmsl.scale "pa" pmsl.png
-
-pcp.png: ../share/pcp.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pcp.scale "mm" pcp.png
-
-rain.png: ../share/rain.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/rain.scale "mm" rain.png
-
-snow.png: ../share/snow.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/snow.scale "mm" snow.png
-
-frez.png: ../share/frez.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/frez.scale "mm" frez.png
-
-pellet.png: ../share/pellet.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pellet.scale "mm" pellet.png
-
-prob17.png: ../share/prob.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/prob.scale "%" prob17.png
-
-prob25.png: ../share/prob.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/prob.scale "%" prob25.png
-
-prob32.png: ../share/prob.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/prob.scale "%" prob32.png
-
-pop.png: ../share/pop.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/pop.scale "%" pop.png
-
-popf.png: ../share/popf.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/popf.scale "%" popf.png
-
-popz.png: ../share/popz.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/popz.scale "%" popz.png
-
-tstm.png: ../share/tstm.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/tstm.scale "%" tstm.png
-
-t.png: ../share/t.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/t.scale "%" t.png
-
-dp.png: ../share/dp.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/dp.scale "%" dp.png
-
-sst.png: ../share/sst.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/sst.scale "c" sst.png
-
-ice.png: ../share/ice.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/ice.scale "" ice.png
-
-wind.png: ../share/wind.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/wind.scale "%" wind.png
-
-hghtww.png: ../share/hghtww.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/hghtww.scale "m" hghtww.png
-
-perdww.png: ../share/perdww.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/perdww.scale "s" perdww.png
-
-hghtswl.png: ../share/hghtww.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/hghtww.scale "m" hghtswl.png
-
-perdswl.png: ../share/perdww.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/perdww.scale "s" perdswl.png
-
-htsgw.png: ../share/htsgw.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/htsgw.scale "m" htsgw.png
+%.css: generic.css.in
+	cat generic.css.in > $@
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

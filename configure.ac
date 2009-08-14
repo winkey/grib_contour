@@ -13,6 +13,31 @@ AC_PROG_CC
 AM_PROG_CC_STDC
 AC_HEADER_STDC
 
+AC_ARG_WITH(www,
+  [AS_HELP_STRING([--with-www=someurl],
+    [base url to use in kml output])],
+  if test -n "$withval"
+  then
+    WWW="$withval"
+    AC_SUBST(WWW)
+  else
+		[AC_MSG_FAILURE([--with-www=someurl MUST be specified])]
+	fi,
+  [AC_MSG_FAILURE([--with-www=someurl MUST be specified])]
+)
+
+AC_ARG_WITH(wwwdisk,
+  [AS_HELP_STRING([--with-wwwdisk=/some/path],
+    [base dir to output kml and images])],
+  if test -n "$withval"
+  then
+    WWWDISK="$withval"
+    AC_SUBST(WWWDISK)
+  else
+		[AC_MSG_FAILURE([--with-wwwdisk=/some/path MUST be specified])]
+	fi,
+  [AC_MSG_FAILURE([--with-wwwdisk=/some/path MUST be specified])]
+)
 
 AC_CHECK_PROG(HAVE_BASH, bash, true, false)
 if test $HAVE_BASH = "false"; then
@@ -56,6 +81,9 @@ AC_OUTPUT([
 Makefile
 etc/Makefile
 images/Makefile
+kml/Makefile
+page/Makefile
+screenshot/Makefile
 scripts/Makefile
 share/Makefile
 src/Makefile

@@ -13,7 +13,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-db="nogaps"
+db="coamps_cent_am"
 
 source @bindir@/generic2.sh
 
@@ -41,7 +41,7 @@ function thick {
 	if [[ -f $spath ]]
 	then
 
-		diffplot "$spath" "$path" ${1}thk 1 1 20 $hour 03
+		diffplot "$spath" "$path" ${1}thk 1 1 20 $hour 06
 		
 		
 	fi
@@ -52,7 +52,7 @@ function thick2 {
 	if [[ -f $spath ]]
 	then
 
-		diffplot "$path" "$spath" ${1}thk 1 1 20 $hour 03
+		diffplot "$path" "$spath" ${1}thk 1 1 20 $hour 06
 		
 		
 	fi
@@ -64,7 +64,7 @@ if [[ "$prod" == "geop_ht" ]]
 then
 
 	
-	plot "$path" "${level}hgt" 1 20 $hour 03
+	plot "$path" "${level}hgt" 1 20 $hour 06
 	
 	##### plot thickness #####
 	
@@ -88,7 +88,7 @@ fi
 if [[ "$prod" == "air_temp" ]]
 then
 
-	plot "$path" "${level}t" 1 1 $hour 03
+	plot "$path" "${level}t" 1 1 $hour 06
 	rm "$path"
 fi
 
@@ -98,7 +98,7 @@ if [[ "$prod" == "rltv_hum" ]]
 then
 
 	
-	plot "$path" "${level}rh" 1 10 $hour 03
+	plot "$path" "${level}rh" 1 10 $hour 06
 	rm "$path"
 fi
 
@@ -118,7 +118,7 @@ then
 			interval=7
 		fi
 		
-		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 $interval $hour 03
+		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 $interval $hour 06
 
 		rm "$path"
 		rm "$vpath"
@@ -139,7 +139,7 @@ then
 			interval=7
 		fi
 		
-		windplot "$upath" "$path" "${level}wind" 1.0 1.0 $interval $hour 03
+		windplot "$upath" "$path" "${level}wind" 1.0 1.0 $interval $hour 06
 		
 		rm "$path"
 		rm "$upath"
@@ -153,7 +153,7 @@ fi
 then
 
 	
-	plot "$path" "pcp" 1 4 $hour 03 "-I"
+	plot "$path" "pcp" 1 4 $hour 06 "-I"
 	
 
 fi
@@ -165,7 +165,7 @@ if [[ "$prod" == "pres" ]] && [[ "$level" == "0" ]]
 then
 
 	
-	plot "$path" "pmsl" 1 200 $hour 03
+	plot "$path" "pmsl" 1 200 $hour 06
 	rm "$path"
 fi
 

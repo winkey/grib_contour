@@ -54,40 +54,140 @@ NGRID	^L[A-Z][AM]A98 KWBR .* !grib2/ncep/RTMA/#(227)/([0-9]{10})00F000/(DRCT|SPE
 NGRID	^L[A-Z][AM]A98 KWBR .* !grib2/ncep/RTMA/#(227)/([0-9]{10})00F000/(DRCT|SPED|UREL|VREL|TMPK|DWPK)/
 	EXEC	@bindir@/rtma_conus.sh data/ngrid/rtma/\1.\2.\2.\3.grib2 \2 \3
 
-#NGRID	^E[A-Z]{3}88 KWBJ .* !grib2/ncep/11/#231/([0-9]{8})([0-9]{2})00F([0-9]*)/(HGHTWW|PERDWW|HTSGW|UREL|VREL)/0 - NONE
-#	FILE	data/ngrid/ww/231/\1.\2.\3.\4.grib2
-#NGRID	^E[A-Z]{3}88 KWBJ .* !grib2/ncep/11/#231/([0-9]{8})([0-9]{2})00F([0-9]*)/(HGHTWW|PERDWW|HTSGW|UREL|VREL)/0 - NONE
-#	EXEC	@bindir@/ww.sh data/ngrid/ww/231/\1.\2.\3.\4.grib2 \1 \2 \3 \4
+NGRID	^E[A-Z]{3}88 KWBJ .* !grib2/ncep/11/#231/([0-9]{8})([0-9]{2})00F([0-9]*)/(HGHTWW|PERDWW|HTSGW|UREL|VREL)/0 - NONE
+	FILE	data/ngrid/ww/231/\1.\2.\3.\4.grib2
+NGRID	^E[A-Z]{3}88 KWBJ .* !grib2/ncep/11/#231/([0-9]{8})([0-9]{2})00F([0-9]*)/(HGHTWW|PERDWW|HTSGW|UREL|VREL)/0 - NONE
+	EXEC	@bindir@/ww.sh data/ngrid/ww/231/\1.\2.\3.\4.grib2 \1 \2 \3 \4
 
 
-#HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{10}).*/F([0-9]*)/(.*)/([0-9]*).mb
-#	FILE	data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib
-#HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{10}).*/F([0-9]*)/(.*)/([0-9]*).mb
-#	EXEC	@bindir@/ecmwf.sh data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib \1 \2 \3 \4 \5 \6
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{10}).*/F([0-9]*)/(.*)/([0-9]*).mb
+	FILE	data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{10}).*/F([0-9]*)/(.*)/([0-9]*).mb
+	EXEC	@bindir@/ecmwf.sh data/HDS/ecmwf/\2\3/\1.\4.\5.\6mb.grib \1 \2 \3 \4 \5 \6
 	
-#HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{10}).*/F([0-9]*)/(.*)/sfc/
-#	FILE	data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib
-#HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{10}).*/F([0-9]*)/(.*)/sfc/
-#	EXEC	@bindir@/ecmwf.sh data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{10}).*/F([0-9]*)/(.*)/sfc/
+	FILE	data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib
+HDS	ECMF .*/mECMWF.* !grib/ecmwf/ECMWF.*/#([0-9]*)/([0-9]{10}).*/F([0-9]*)/(.*)/sfc/
+	EXEC	@bindir@/ecmwf.sh data/HDS/ecmwf/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
 
-#HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/(1000|925|850|700|500|300|200).mb
-#	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.\6mb.grib
-#HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/(1000|925|850|700|500|300|200).mb
-#	EXEC	@bindir@/ukmet.sh data/HDS/ukmet/\2\3/\1.\4.\5.\6mb.grib \1 \2 \3 \4 \5 \6
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/(1000|925|850|700|500|300|200).mb
+	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.\6mb.grib
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/(1000|925|850|700|500|300|200).mb
+	EXEC	@bindir@/ukmet.sh data/HDS/ukmet/\2\3/\1.\4.\5.\6mb.grib \1 \2 \3 \4 \5 \6
 
-#HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
-#	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.sfc.grib
-#HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
-#	EXEC	@bindir@/ukmet.sh data/HDS/ukmet/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
+	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.sfc.grib
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/sfc/
+	EXEC	@bindir@/ukmet.sh data/HDS/ukmet/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
 
-#HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/MSL/
-#	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.sfc.grib
-#HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/MSL/
-#	EXEC	@bindir@/ukmet.sh data/HDS/ukmet/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/MSL/
+	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.sfc.grib
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/MSL/
+	EXEC	@bindir@/ukmet.sh data/HDS/ukmet/\2\3/\1.\4.\5.sfc.grib \1 \2 \3 \4 \5 0
 
 
-#HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/tropopause/
-#	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.tropopause.grib
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/tropopause/
+	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.tropopause.grib
 
-#HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/max wind lev/
-#	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.max_wind_lev.grib
+HDS	EGRR .*/mUKM_45.* !grib/ukmet/UKM_45/#([0-9]*)/([0-9]{8})([0-9][0-9]).*/F([0-9]*)/(.*)/max wind lev/
+	FILE	data/HDS/ukmet/\2\3/\1.\4.\5.max_wind_lev.grib
+
+#http://www.usgodae.org/docs/layout/mdllayout.pns.html
+#http://www.unidata.ucar.edu/software/ldm/ldm-current/basics/feedtypes/nogaps_coamps.html
+#  The below entry is for the one degree nogaps.
+# US058GMET-GR1mdl.0058_0240_01200F0RL2009080600_0100_009500-000000geop_ht
+FNMOC	^US058GMET-GR1mdl\.0058_0240_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0100_[0]*(1000|925|850|700|500|300|200)0-000000(geop_ht|air_temp|rltv_hum|wnd_ucmp|wnd_vcmp)
+	FILE	data/fnmoc/nogaps/\2\3/\4.\5.\1
+
+FNMOC	^US058GMET-GR1mdl\.0058_0240_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0100_[0]*(1000|925|850|700|500|300|200)0-000000(geop_ht|air_temp|rltv_hum|wnd_ucmp|wnd_vcmp)
+	EXEC	@bindir@/nogaps.sh data/fnmoc/nogaps/\2\3/\4.\5.\1 \3 \1 \5 \4
+
+FNMOC	^US058GMET-GR1mdl\.0058_0240_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0102_000000-000000pres
+	FILE	data/fnmoc/nogaps/\2\3/0.pres.\1
+
+FNMOC	^US058GMET-GR1mdl\.0058_0240_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0102_000000-000000pres
+	EXEC	@bindir@/nogaps.sh data/fnmoc/nogaps/\2\3/0.pres.\1 \3 \1 pres 0
+
+FNMOC	^US058GMET-GR1mdl\.0058_0240_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0001_000000-000000(ttl_prcp)
+	FILE	data/fnmoc/nogaps/\2\3/0.\4.\1
+
+FNMOC	^US058GMET-GR1mdl\.0058_0240_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0001_000000-000000(ttl_prcp)
+	EXEC	@bindir@/nogaps.sh data/fnmoc/nogaps/\2\3/0.\4.\1 \3 \1 \4 0
+
+#ww3
+FNMOC	^US058GOCN-GR1mdl.0110_0240_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0001_000000-000000([a-z_]*)
+	FILE	data/fnmoc/ww3/\2\3/0.\4.\1
+
+FNMOC	^US058GOCN-GR1mdl.0110_0240_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0001_000000-000000([a-z_]*)
+	EXEC	@bindir@/ww3.sh data/fnmoc/ww3/\2\3/0.\4.\1 \3 \1 \4 0
+
+#ocean
+#  The below entry is for the 1/4 degree global ocean model.
+
+FNMOC	US058GOCN-GR1mdl.0078_0200__([0-9]{3})00A0R([0-9]{8})([0-9]{2})_0001_000000-000000([a-z_]*)
+	FILE	data/fnmoc/ocean/\2\3/0.\4.\1
+
+FNMOC	US058GOCN-GR1mdl.0078_0200__([0-9]{3})00A0R([0-9]{8})([0-9]{2})_0001_000000-000000([a-z_]*)
+	EXEC	@bindir@/ocean.sh data/fnmoc/ocean/\2\3/0.\4.\1 \3 \1 \4 0
+
+#  The below entry is for the COAMPS Central America (cent_am)
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0100_[0]*(1000|925|850|700|500|300|200)0-000000(geop_ht|air_temp|rltv_hum|wnd_ucmp|wnd_vcmp)
+	FILE	data/fnmoc/coamps_cent_am/\2\3/\4.\5.\1
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0100_[0]*(1000|925|850|700|500|300|200)0-000000(geop_ht|air_temp|rltv_hum|wnd_ucmp|wnd_vcmp)
+	EXEC	@bindir@/coamps_cent_am.sh data/fnmoc/coamps_cent_am/\2\3/\4.\5.\1 \3 \1 \5 \4
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0102_000000-000000pres
+	FILE	data/fnmoc/coamps_cent_am/\2\3/0.pres.\1
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0102_000000-000000pres
+	EXEC	@bindir@/coamps_cent_am.sh data/fnmoc/coamps_cent_am/\2\3/0.pres.\1 \3 \1 pres 0
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0001_000000-000000(ttl_prcp)
+	FILE	data/fnmoc/coamps_cent_am/\2\3/0.\4.\1
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0001_000000-000000(ttl_prcp)
+	EXEC	@bindir@/coamps_cent_am.sh data/fnmoc/coamps_cent_am/\2\3/0.\4.\1 \3 \1 \4 0
+
+#  The below entry is for the COAMPS Eastern Pacific (e_pac)
+
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0100_[0]*(1000|925|850|700|500|300|200)0-000000(geop_ht|air_temp|rltv_hum|wnd_ucmp|wnd_vcmp)
+	FILE	data/fnmoc/coamps_e_pac/\2\3/\4.\5.\1
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0100_[0]*(1000|925|850|700|500|300|200)0-000000(geop_ht|air_temp|rltv_hum|wnd_ucmp|wnd_vcmp)
+	EXEC	@bindir@/coamps_e_pac.sh data/fnmoc/coamps_e_pac/\2\3/\4.\5.\1 \3 \1 \5 \4
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0102_000000-000000pres
+	FILE	data/fnmoc/coamps_e_pac/\2\3/0.pres.\1
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0102_000000-000000pres
+	EXEC	@bindir@/coamps_e_pac.sh data/fnmoc/coamps_e_pac/\2\3/0.pres.\1 \3 \1 pres 0
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0001_000000-000000(ttl_prcp)
+	FILE	data/fnmoc/coamps_e_pac/\2\3/0.\4.\1
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0001_000000-000000(ttl_prcp)
+	EXEC	@bindir@/coamps_e_pac.sh data/fnmoc/coamps_e_pac/\2\3/0.\4.\1 \3 \1 \4 0
+
+#  The below entry is for the COAMPS Europe (europe)
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0100_[0]*(1000|925|850|700|500|300|200)0-000000(geop_ht|air_temp|rltv_hum|wnd_ucmp|wnd_vcmp)
+	FILE	data/fnmoc/coamps_europe/\2\3/\4.\5.\1
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0100_[0]*(1000|925|850|700|500|300|200)0-000000(geop_ht|air_temp|rltv_hum|wnd_ucmp|wnd_vcmp)
+	EXEC	@bindir@/coamps_europe.sh data/fnmoc/coamps_europe/\2\3/\4.\5.\1 \3 \1 \5 \4
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0102_000000-000000pres
+	FILE	data/fnmoc/coamps_europe/\2\3/0.pres.\1
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0102_000000-000000pres
+	EXEC	@bindir@/coamps_europe.sh data/fnmoc/coamps_europe/\2\3/0.pres.\1 \3 \1 pres 0
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0001_000000-000000(ttl_prcp)
+	FILE	data/fnmoc/coamps_europe/\2\3/0.\4.\1
+
+FNMOC	^US058GMET-GR1mdl\.0027_0186_([0-9]{3})00F0RL([0-9]{8})([0-9]{2})_0001_000000-000000(ttl_prcp)
+	EXEC	@bindir@/coamps_europe.sh data/fnmoc/coamps_europe/\2\3/0.\4.\1 \3 \1 \4 0
+
