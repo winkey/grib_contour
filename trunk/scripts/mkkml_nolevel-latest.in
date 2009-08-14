@@ -25,7 +25,7 @@ cat > "$outfile" <<EOF
 <kml xmlns="http://earth.google.com/kml/2.2">
 <Document>
   <name>${fullname}</name>
-  <description>${description}</description>
+  <description>$(echo $description | sed 's/[\\]//g')</description>
 EOF
 
 ##### products #####
