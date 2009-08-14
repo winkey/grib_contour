@@ -181,6 +181,16 @@ www_DATA = \
 	windwave-latest.kml \
 	nogaps.kml \
 	nogaps-latest.kml \
+	ocean.kml \
+	ocean-latest.kml \
+	ww3.kml \
+	ww3-latest.kml \
+	coamps_cent_am.kml \
+	coamps_cent_am-latest.kml \
+	coamps_e_pac.kml \
+	coamps_e_pac-latest.kml \
+	coamps_europe.kml \
+	coamps_europe-latest.kml \
 	ecmwf.kml \
 	ecmwf-latest.kml \
 	ukmet.kml \
@@ -454,6 +464,36 @@ nogaps.kml: ../scripts/mkkml.sh ../share/nogaps.config.sh Makefile
 
 nogaps-latest.kml: ../scripts/mkkml-latest.sh ../share/nogaps.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/nogaps.config.sh
+
+ocean.kml: ../scripts/mkkml.sh ../share/ocean.config.sh Makefile
+	../scripts/mkkml.sh ../share/ocean.config.sh
+
+ocean-latest.kml: ../scripts/mkkml-latest.sh ../share/ocean.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/ocean.config.sh
+
+ww3.kml: ../scripts/mkkml.sh ../share/ww3.config.sh Makefile
+	../scripts/mkkml.sh ../share/ww3.config.sh
+
+ww3-latest.kml: ../scripts/mkkml-latest.sh ../share/ww3.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/ww3.config.sh
+
+coamps_cent_am.kml: ../scripts/mkkml.sh ../share/coamps_cent_am.config.sh Makefile
+	../scripts/mkkml.sh ../share/coamps_cent_am.config.sh
+
+coamps_cent_am-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_cent_am.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/coamps_cent_am.config.sh
+
+coamps_e_pac.kml: ../scripts/mkkml.sh ../share/coamps_e_pac.config.sh Makefile
+	../scripts/mkkml.sh ../share/coamps_e_pac.config.sh
+
+coamps_e_pac-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_e_pac.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/coamps_e_pac.config.sh
+
+coamps_europe.kml: ../scripts/mkkml.sh ../share/coamps_europe.config.sh Makefile
+	../scripts/mkkml.sh ../share/coamps_europe.config.sh
+
+coamps_europe-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_europe.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/coamps_europe.config.sh
 
 ecmwf.kml: ../scripts/mkkml.sh ../share/ecmwf.config.sh Makefile
 	../scripts/mkkml.sh ../share/ecmwf.config.sh
