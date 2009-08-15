@@ -12,20 +12,25 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-db="sst"
-
 source /etc/profile
 source @bindir@/generic2.sh
 
-run="${datee}00"
+
+
+run="00"
 
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/gfs/prod/"
-
+wwwdisk="@wwwdisk@/kml/sst"
+www="@www@/kml/sst"
 
 gribfile="rtgssthr_grb_0.083_awips.grib2"
 
 
+if [[ ! -d "${wwwdisk}/${run}" ]]
+then
+	mkdir -p "${wwwdisk}/${run}"
+fi
 
 if ! getgrib "${servb}/sst.${datee}/" "$gribfile" "/tmp"
 then
@@ -34,6 +39,7 @@ fi
 
 gribfile="/tmp/${gribfile}"
 
+mkrootkml "${level}sst"
 
 plot "${gribfile}" "sst" 1 .75 0 24
 

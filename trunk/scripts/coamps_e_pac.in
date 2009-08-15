@@ -18,6 +18,10 @@ db="coamps_e_pac"
 source @bindir@/generic2.sh
 
 
+wwwdisk="@wwwdisk@/kml/coamps_e_pac"
+www="@www@/kml/coamps_e_pac"
+
+
 path="$1"
 run="$2"
 hour="$3"
@@ -25,23 +29,23 @@ prod="$4"
 level="$5"
 tmp="/tmp"
 
+hour=${hour#0}
 
-
-
-
-if [[ "$hour" == "" ]]
+if [[ ! -d "${wwwdisk}/${run}" ]]
 then
-	hour="00"
+	mkdir -p "${wwwdisk}/${run}"
 fi
-
 
 
 function thick {
 	spath="${path/1000.geop_ht/${1}.geop_ht}"
 	if [[ -f $spath ]]
 	then
-
-		diffplot "$spath" "$path" ${1}thk 1 1 20 $hour 06
+		if [[ $hour == "00" ]]
+		then
+			mkrootkml ${1}thk
+		fi
+		diffplot "$spath" "$path" ${1}thk 1 1 20 $hour 03
 		
 		
 	fi
@@ -51,8 +55,11 @@ function thick2 {
 	spath="${path/${1}.geop_ht/1000.geop_ht}"
 	if [[ -f $spath ]]
 	then
-
-		diffplot "$path" "$spath" ${1}thk 1 1 20 $hour 06
+		if [[ $hour == "00" ]]
+		then
+			mkrootkml ${1}thk
+		fi
+		diffplot "$path" "$spath" ${1}thk 1 1 20 $hour 03
 		
 		
 	fi
@@ -63,8 +70,11 @@ function thick2 {
 if [[ "$prod" == "geop_ht" ]]
 then
 
-	
-	plot "$path" "${level}hgt" 1 20 $hour 06
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}hgt"
+	fi	
+	plot "$path" "${level}hgt" 1 20 $hour 03
 	
 	##### plot thickness #####
 	
@@ -87,8 +97,11 @@ fi
 
 if [[ "$prod" == "air_temp" ]]
 then
-
-	plot "$path" "${level}t" 1 1 $hour 06
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}t"
+	fi
+	plot "$path" "${level}t" 1 1 $hour 03
 	rm "$path"
 fi
 
@@ -97,8 +110,11 @@ fi
 if [[ "$prod" == "rltv_hum" ]]
 then
 
-	
-	plot "$path" "${level}rh" 1 10 $hour 06
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}rh"
+	fi	
+	plot "$path" "${level}rh" 1 10 $hour 03
 	rm "$path"
 fi
 
@@ -117,8 +133,11 @@ then
 		else
 			interval=7
 		fi
-		
-		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 $interval $hour 06
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "${level}wind"
+		fi		
+		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 $interval $hour 03
 
 		rm "$path"
 		rm "$vpath"
@@ -138,8 +157,11 @@ then
 		else
 			interval=7
 		fi
-		
-		windplot "$upath" "$path" "${level}wind" 1.0 1.0 $interval $hour 06
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "${level}wind"
+		fi				
+		windplot "$upath" "$path" "${level}wind" 1.0 1.0 $interval $hour 03
 		
 		rm "$path"
 		rm "$upath"
@@ -152,8 +174,11 @@ fi
  if [[ "$prod" == "ttl_prcp" ]]
 then
 
-	
-	plot "$path" "pcp" 1 4 $hour 06 "-I"
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "pcp"
+	fi
+	plot "$path" "pcp" 1 4 $hour 03 "-I"
 	
 
 fi
@@ -164,8 +189,11 @@ fi
 if [[ "$prod" == "pres" ]] && [[ "$level" == "0" ]]
 then
 
-	
-	plot "$path" "pmsl" 1 200 $hour 06
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "pmsl"
+	fi	
+	plot "$path" "pmsl" 1 200 $hour 03
 	rm "$path"
 fi
 

@@ -23,6 +23,8 @@ db="ocean"
 
 source @bindir@/generic2.sh
 
+wwwdisk="@wwwdisk@/kml/ocean"
+www="@www@/kml/ocean"
 
 path="$1"
 run="$2"
@@ -33,11 +35,18 @@ tmp="/tmp"
 
 period="24"
 
+hour=${hour#0}
+
+if [[ ! -d "${wwwdisk}/${run}" ]]
+then
+	mkdir -p "${wwwdisk}/${run}"
+fi
 
 ##### sst #####
 
 if [[ "$prod" == "sea_temp" ]]
 then
+	mkrootkml ${1}sst
 	plot "$path" "sst" 1 .5 $hour $period
 fi
 
@@ -45,6 +54,7 @@ fi
 
 if [[ "$prod" == "ice_cvrg" ]]
 then
+	mkrootkml ${1}ice
 	plot "$path" "ice" 1 1 $hour $period
 fi
 

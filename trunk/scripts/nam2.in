@@ -13,9 +13,11 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-db="nam_conus"
-
 source @bindir@/generic2.sh
+
+wwwdisk="@wwwdisk@/kml/nam_conus"
+www="@www@/kml/nam_conus"
+
 
 path="$1"
 run="$2"
@@ -26,11 +28,19 @@ tmp="/tmp"
 
 hour="${hour:1}"
 
+if [[ ! -d "${wwwdisk}/${run}" ]]
+then
+	mkdir -p "${wwwdisk}/${run}"
+fi
+
 function thick {
 	spath="${path/HGHT.1000/HGHT.${1}}"
 	if [[ -f $spath ]]
 	then
-
+		if [[ $hour == "00" ]]
+		then
+			mkrootkml ${1}thk
+		fi
 		diffplot "$spath" "$path" ${1}thk 1 1 20 $hour 03
 		
 		
@@ -41,7 +51,10 @@ function thick2 {
 	spath="${path/HGHT.${1}/HGHT.1000}"
 	if [[ -f $spath ]]
 	then
-
+		if [[ $hour == "00" ]]
+		then
+			mkrootkml ${1}thk
+		fi
 		diffplot "$path" "$spath" ${1}thk 1 1 20 $hour 03
 		
 		
@@ -52,6 +65,10 @@ function thick2 {
 
 if [[ "$prod" == "HGHT" ]]
 then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}hgt"
+	fi
 	
 	plot "$path" "${level}hgt" 1 20 $hour 03
 	
@@ -76,7 +93,10 @@ fi
 
 if [[ "$prod" == "TMPK" ]]
 then
-
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}t"
+	fi
 	
 	plot "$path" "${level}t" 1 1 $hour 03
 
@@ -87,7 +107,10 @@ fi
 
 if [[ "$prod" == "RELH" ]]
 then
-
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}rh"
+	fi
 	
 	plot "$path" "${level}rh" 1 10 $hour 03
 
@@ -102,7 +125,11 @@ then
 	
 	if [[ -f "$vpath" ]]
 	then
-
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "${level}wind"
+		fi
+		
 		if [[ "$level" -gt "500" ]]
 		then
 			interval=5
@@ -123,7 +150,11 @@ then
 	
 	if [[ -f "$upath" ]]
 	then
-
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "${level}wind"
+		fi
+		
 		if [[ "$level" -gt "500" ]]
 		then
 			interval=5
@@ -142,6 +173,10 @@ fi
 
 if [[ "$prod" == "CAPE" ]]
 then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "cape"
+	fi
 	
 	plot "$path" "cape" 1 200 $hour 03
 	
@@ -152,6 +187,10 @@ fi
 
 if [[ "$prod" == "PWTR" ]]
 then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "pwat"
+	fi
 	
 	plot "$path" "pwat" 1 4 $hour 03 "-I"
 	
@@ -162,6 +201,10 @@ fi
 
 if [[ "$prod" == "P03M" ]]
 then
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "pcp"
+	fi
 	
 	plot "$path" "pcp" 1 4 $hour 03 "-I"
 	
@@ -171,6 +214,10 @@ then
 	
 	if [[ -f "$spath" ]]
 	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "snow"
+		fi
 		
 		andplot "$path" "$spath" "snow" 1.0 1.0 4 $hour 03 "-I"
 		
@@ -183,7 +230,10 @@ then
 	
 	if [[ -f "$zpath" ]]
 	then
-
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "frez"
+		fi
 		
 		andplot "$path" "$zpath" "frez" 1.0 1.0 4 $hour 03 "-I"
 		
@@ -196,6 +246,10 @@ then
 	
 	if [[ -f "$rpath" ]]
 	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "rain"
+		fi
 		
 		andplot "$path" "$rpath" "rain" 1.0 1.0 4 $hour 03 "-I"
 		
@@ -208,6 +262,10 @@ then
 	
 	if [[ -f "$ppath" ]]
 	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "pellet"
+		fi
 		
 		andplot "$path" "$ppath" "pellet" 1.0 1.0 4 $hour 03 "-I"
 		
@@ -223,6 +281,10 @@ then
 	
 	if [[ -f "$ppath" ]]
 	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "snow"
+		fi
 		
 		andplot "$ppath" "$path" "snow" 1.0 1.0 4 $hour 03 "-I"
 		
@@ -239,6 +301,10 @@ then
 	
 	if [[ -f "$ppath" ]]
 	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "frez"
+		fi
 		
 		andplot "$ppath" "$path" "frez" 1.0 1.0 4 $hour 03 "-I"
 		
@@ -255,6 +321,10 @@ then
 	
 	if [[ -f "$ppath" ]]
 	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "rain"
+		fi
 		
 		andplot "$ppath" "$path" "rain" 1.0 1.0 4 $hour 03 "-I"
 		
@@ -270,6 +340,10 @@ then
 	
 	if [[ -f "$ppath" ]]
 	then
+		if [[ "$hour" == "03" ]]
+		then
+			mkrootkml "pellet"
+		fi
 		
 		andplot "$ppath" "$path" "pellet" 1.0 1.0 4 $hour 03 "-I"
 		
@@ -281,6 +355,10 @@ fi
 
 if [[ "$prod" == "PMSL" ]]
 then
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "pmsl"
+	fi
 	
 	plot "$path" "pmsl" 1 200 $hour 03
 	rm "$path"
@@ -290,6 +368,10 @@ fi
 
 if [[ "$prod" == "POPF03" ]]
 then
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "popf"
+	fi
 	
 	plot "$path" "popf" 1 10 $hour 03
 
@@ -300,6 +382,10 @@ fi
 
 if [[ "$prod" == "TSTM03" ]]
 then
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "tstm"
+	fi
 	
 	plot "$path" "tstm" 1 10 $hour 03
 
@@ -310,6 +396,10 @@ fi
 
 if [[ "$prod" == "POP03" ]]
 then
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "pop"
+	fi
 	
 	plot "$path" "pop" 1 10 $hour 03
 
@@ -320,6 +410,10 @@ fi
 
 if [[ "$prod" == "POPZ03" ]]
 then
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "popz"
+	fi
 	
 	plot "$path" "popz" 1 10 $hour 03
 
