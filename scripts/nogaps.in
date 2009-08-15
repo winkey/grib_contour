@@ -17,6 +17,9 @@ db="nogaps"
 
 source @bindir@/generic2.sh
 
+wwwdisk="@wwwdisk@/kml/nogaps"
+www="@www@/kml/nogaps"
+
 
 path="$1"
 run="$2"
@@ -25,22 +28,22 @@ prod="$4"
 level="$5"
 tmp="/tmp"
 
+hour=${hour#0}
 
-
-
-
-if [[ "$hour" == "" ]]
+if [[ ! -d "${wwwdisk}/${run}" ]]
 then
-	hour="00"
+	mkdir -p "${wwwdisk}/${run}"
 fi
-
 
 
 function thick {
 	spath="${path/1000.geop_ht/${1}.geop_ht}"
 	if [[ -f $spath ]]
 	then
-
+		if [[ $hour == "00" ]]
+		then
+			mkrootkml ${1}thk
+		fi
 		diffplot "$spath" "$path" ${1}thk 1 1 20 $hour 03
 		
 		
@@ -51,7 +54,10 @@ function thick2 {
 	spath="${path/${1}.geop_ht/1000.geop_ht}"
 	if [[ -f $spath ]]
 	then
-
+		if [[ $hour == "00" ]]
+		then
+			mkrootkml ${1}thk
+		fi
 		diffplot "$path" "$spath" ${1}thk 1 1 20 $hour 03
 		
 		
@@ -63,7 +69,10 @@ function thick2 {
 if [[ "$prod" == "geop_ht" ]]
 then
 
-	
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}hgt"
+	fi	
 	plot "$path" "${level}hgt" 1 20 $hour 03
 	
 	##### plot thickness #####
@@ -87,7 +96,10 @@ fi
 
 if [[ "$prod" == "air_temp" ]]
 then
-
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}t"
+	fi
 	plot "$path" "${level}t" 1 1 $hour 03
 	rm "$path"
 fi
@@ -97,7 +109,10 @@ fi
 if [[ "$prod" == "rltv_hum" ]]
 then
 
-	
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}rh"
+	fi	
 	plot "$path" "${level}rh" 1 10 $hour 03
 	rm "$path"
 fi
@@ -117,7 +132,10 @@ then
 		else
 			interval=7
 		fi
-		
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "${level}wind"
+		fi		
 		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 $interval $hour 03
 
 		rm "$path"
@@ -138,7 +156,10 @@ then
 		else
 			interval=7
 		fi
-		
+		if [[ "$hour" == "00" ]]
+		then
+			mkrootkml "${level}wind"
+		fi				
 		windplot "$upath" "$path" "${level}wind" 1.0 1.0 $interval $hour 03
 		
 		rm "$path"
@@ -152,7 +173,10 @@ fi
  if [[ "$prod" == "ttl_prcp" ]]
 then
 
-	
+	if [[ "$hour" == "03" ]]
+	then
+		mkrootkml "pcp"
+	fi
 	plot "$path" "pcp" 1 4 $hour 03 "-I"
 	
 
@@ -164,7 +188,10 @@ fi
 if [[ "$prod" == "pres" ]] && [[ "$level" == "0" ]]
 then
 
-	
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "pmsl"
+	fi	
 	plot "$path" "pmsl" 1 200 $hour 03
 	rm "$path"
 fi

@@ -23,6 +23,8 @@ db="ww3"
 
 source @bindir@/generic2.sh
 
+wwwdisk="@wwwdisk@/kml/ww3"
+www="@www@/kml/ww3"
 
 path="$1"
 run="$2"
@@ -33,11 +35,21 @@ tmp="/tmp"
 
 period="03"
 
+hour=${hour#0}
+
+if [[ ! -d "${wwwdisk}/${run}" ]]
+then
+	mkdir -p "${wwwdisk}/${run}"
+fi
 
 ##### plot hght of wind waves #####
 
 if [[ "$prod" == "wnd_wav_ht" ]]
 then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}hghtww"
+	fi	
 	plot "$path" "hghtww" 1 .5 $hour $period
 fi
 
@@ -45,6 +57,10 @@ fi
 
 if [[ "$prod" == "wnd_wav_per" ]]
 then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}perdww"
+	fi	
 	plot "$path" "perdww" 1 1 $hour $period
 fi
 
@@ -52,6 +68,10 @@ fi
 
 if [[ "$prod" == "sig_wav_ht" ]]
 then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}htsgw"
+	fi	
 	plot "$path" "htsgw" 1 .5 $hour $period
 fi
 
@@ -59,6 +79,10 @@ fi
 
 if [[ "$prod" == "swl_wav_ht" ]]
 then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}hghtswl"
+	fi	
 	plot "$path" "hghtswl" 1 .5 $hour $period
 fi
 
@@ -66,6 +90,10 @@ fi
 
 if [[ "$prod" == "swl_wav_per" ]]
 then
+	if [[ "$hour" == "00" ]]
+	then
+		mkrootkml "${level}perdswl"
+	fi	
 	plot "$path" "perdswl" 1 1 $hour $period
 fi
 
