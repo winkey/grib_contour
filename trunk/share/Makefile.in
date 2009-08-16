@@ -232,6 +232,7 @@ dist_pkgdata_DATA = \
 	ww3.config.sh \
 	coamps_cent_am.config.sh \
 	coamps_e_pac.config.sh \
+	coamps_w_atl.config.sh \
 	coamps_europe.config.sh \
 	ecmwf.config.sh \
 	ukmet.config.sh \
