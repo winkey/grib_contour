@@ -1,4 +1,4 @@
-#!/bin/sh 
+#!/bin/bash
 
 #           checkpqact.conf.sh
 #  Sun Aug 16 07:23:54 2009
