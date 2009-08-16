@@ -28,6 +28,7 @@ www_DATA = \
 	ww3.php \
 	coamps_cent_am.php \
 	coamps_e_pac.php \
+	coamps_w_atl.php \
 	coamps_europe.php \
 	ecmwf.php \
 	ukmet.php \
@@ -49,6 +50,7 @@ www_DATA = \
 	ww3.css \
 	coamps_cent_am.css \
 	coamps_e_pac.css \
+	coamps_w_atl.css \
 	coamps_europe.css \
 	ecmwf.css \
 	ukmet.css
@@ -106,6 +108,9 @@ coamps_cent_am.php: ../scripts/mkpage.sh ../share/coamps_cent_am.config.sh Makef
 
 coamps_e_pac.php: ../scripts/mkpage.sh ../share/coamps_e_pac.config.sh Makefile
 	../scripts/mkpage.sh ../share/coamps_e_pac.config.sh
+
+coamps_w_atl.php: ../scripts/mkpage.sh ../share/coamps_w_atl.config.sh Makefile
+	../scripts/mkpage.sh ../share/coamps_w_atl.config.sh
 
 coamps_europe.php: ../scripts/mkpage.sh ../share/coamps_europe.config.sh Makefile
 	../scripts/mkpage.sh ../share/coamps_europe.config.sh
