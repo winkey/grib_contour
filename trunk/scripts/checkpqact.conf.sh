@@ -25,9 +25,13 @@ log=$2
 grep $conf -e "^[A-Z]" |\
  sed s/.*$'\t'// |\
  sed 's/\^//' |\
- sed 's/\([(){}|]\)/\\\1/g' |\
+ sed 's/\([(){}|]\)/\\\\\1/g' |\
+ i=1
  while read line
  do
+  (
   echo "doing $line"
 	grep $log -e "$line"
+	) > /tmp/checkpqact.conf.$i
+	i=$(($i + 1))
  done
