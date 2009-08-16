@@ -24,6 +24,7 @@ bin_SCRIPTS = \
 	mkpage_nolevel.sh \
 	mkkml_nolevel-latest.sh \
 	mkscreenshot_nolevel.sh \
+	checkpqact.conf.sh \
 	forecaster.sh \
 	ruc2.sh \
 	rtma_ak.sh \
@@ -107,6 +108,7 @@ dist_bin_SCRIPTS = \
 	mkpage_nolevel.sh \
 	mkkml_nolevel-latest.sh \
 	mkscreenshot_nolevel.sh \
+	checkpqact.conf.sh \
 	forecaster.sh \
 	ruc2.sh \
 	rtma_ak.sh \
