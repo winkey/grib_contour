@@ -42,6 +42,8 @@ www_DATA = \
 	coamps_cent_am-latest.kml \
 	coamps_e_pac.kml \
 	coamps_e_pac-latest.kml \
+	coamps_w_atl.kml \
+	coamps_w_atl-latest.kml \
 	coamps_europe.kml \
 	coamps_europe-latest.kml \
 	ecmwf.kml \
@@ -160,6 +162,12 @@ coamps_e_pac.kml: ../scripts/mkkml.sh ../share/coamps_e_pac.config.sh Makefile
 	
 coamps_e_pac-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_e_pac.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/coamps_e_pac.config.sh
+
+coamps_w_atl.kml: ../scripts/mkkml.sh ../share/coamps_w_atl.config.sh Makefile
+	../scripts/mkkml.sh ../share/coamps_w_atl.config.sh
+	
+coamps_w_atl-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_w_atl.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/coamps_w_atl.config.sh
 
 coamps_europe.kml: ../scripts/mkkml.sh ../share/coamps_europe.config.sh Makefile
 	../scripts/mkkml.sh ../share/coamps_europe.config.sh

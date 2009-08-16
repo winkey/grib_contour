@@ -31,6 +31,7 @@ bin_SCRIPTS = \
 	nogaps.sh \
 	coamps_cent_am.sh \
 	coamps_e_pac.sh \
+	coamps_w_atl.sh \
 	coamps_europe.sh \
 	ocean.sh \
 	ww.sh \
@@ -72,6 +73,7 @@ EXTRA_DIST = \
 	nogaps.in \
 	coamps_cent_am.in \
 	coamps_e_pac.in \
+	coamps_w_atl.in \
 	coamps_europe.in \
 	ocean.in \
 	ww.in \
@@ -114,6 +116,7 @@ dist_bin_SCRIPTS = \
 	nogaps.sh \
 	coamps_cent_am.sh \
 	coamps_e_pac.sh \
+	coamps_w_atl.sh \
 	coamps_europe.sh \
 	ocean.sh \
 	ecmwf.sh \
@@ -208,6 +211,10 @@ coamps_cent_am.sh: coamps_cent_am.in Makefile
 coamps_e_pac.sh: coamps_e_pac.in Makefile
 	$(do_subst) < $(srcdir)/coamps_e_pac.in > coamps_e_pac.sh
 	chmod +x coamps_e_pac.sh
+
+coamps_w_atl.sh: coamps_w_atl.in Makefile
+	$(do_subst) < $(srcdir)/coamps_w_atl.in > coamps_w_atl.sh
+	chmod +x coamps_w_atl.sh
 
 coamps_europe.sh: coamps_europe.in Makefile
 	$(do_subst) < $(srcdir)/coamps_europe.in > coamps_europe.sh
