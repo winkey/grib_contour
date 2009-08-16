@@ -34,6 +34,7 @@ configs="../share/gfs.config.sh
 ../share/ww3.config.sh
 ../share/coamps_cent_am.config.sh
 ../share/coamps_e_pac.config.sh
+../share/coamps_w_atl.config.sh
 ../share/coamps_europe.config.sh
 ../share/ecmwf.config.sh
 ../share/ukmet.config.sh"
