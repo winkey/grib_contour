@@ -73,9 +73,7 @@ products2="pmsl Mean Sea Level Pressure
 pcp 3 Hour Total Precipitation"
 
 times="00 00Z
-06 06Z
-12 12Z
-18 18Z"
+12 12Z"
 
 screenshots=$(
   echo "$levels" | while read lev_n lev_fn

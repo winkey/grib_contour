@@ -8,12 +8,9 @@ wwwdir = ${wwwdisk}/kml/screenshot
 
 EXTRA_DIST = \
 $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") 
-#$(shell source ../share/nam_east.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/nam_west.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/nam_ak.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") 
 #$(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
@@ -23,16 +20,17 @@ $(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$th
 #$(shell source ../share/coamps_e_pac.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/coamps_europe.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/ecmwf.config.sh ;      echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/ukmet.config.sh ;      echo "$$screenshots" ; echo "$$thumbs")
+#$(shell source ../share/ukmet.config.sh ;      echo "$$screenshots" ; echo "$$thumbs") \
+#$(shell source ../share/nam_east.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
+#$(shell source ../share/nam_west.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
+#$(shell source ../share/nam_ak.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") 
 
+if MAINTAINER_MODE
 www_DATA := \
 $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
-$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") 
-#$(shell source ../share/nam_east.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/nam_west.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/nam_ak.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") 
 #$(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
@@ -42,8 +40,11 @@ $(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$th
 #$(shell source ../share/coamps_e_pac.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/coamps_europe.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/ecmwf.config.sh ;      echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/ukmet.config.sh ;      echo "$$screenshots" ; echo "$$thumbs")
-
+#$(shell source ../share/ukmet.config.sh ;      echo "$$screenshots" ; echo "$$thumbs") \
+#$(shell source ../share/nam_east.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
+#$(shell source ../share/nam_west.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
+#$(shell source ../share/nam_ak.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") 
+endif
 
 
 MAINTAINERCLEANFILES = $(EXTRA_DIST)
