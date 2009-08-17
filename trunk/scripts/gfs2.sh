@@ -15,7 +15,7 @@
 
 source /usr/local/bin/generic2.sh
 
-wwwdisk="/home/rush/publichtml/weather/kml/kml/gfs"
+wwwdisk="/home/rush/public_html/weather/kml/gfs"
 www="http://atmos.ucsd.edu/kml/gfs"
 
 #CONDUIT ^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
