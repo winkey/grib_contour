@@ -15,7 +15,7 @@
 
 source /usr/local/bin/generic2.sh
 
-wwwdisk="/home/rush/publichtml/weather/kml/kml/rtma_conus"
+wwwdisk="/home/rush/public_html/weather/kml/rtma_conus"
 www="http://atmos.ucsd.edu/kml/rtma_conus"
 
 #NGRID	^L[A-Z][AM]A98 KWBR .* !grib2/ncep/RTMA/#227/([0-9]{8})([0-9]{2})00F000/(DRCT|SPED|UREL|VREL|TMPK|DWPK)/

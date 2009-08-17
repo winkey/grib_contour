@@ -6,9 +6,9 @@ wwwdisk = @WWWDISK@
 
 wwwdir = ${wwwdisk}/kml/screenshot
 
-#EXTRA_DIST = \
-#$(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+EXTRA_DIST = \
+$(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") 
 #$(shell source ../share/nam_east.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nam_west.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nam_ak.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
@@ -25,9 +25,9 @@ wwwdir = ${wwwdisk}/kml/screenshot
 #$(shell source ../share/ecmwf.config.sh ;      echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/ukmet.config.sh ;      echo "$$screenshots" ; echo "$$thumbs")
 
-#www_DATA := \
-#$(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
+www_DATA := \
+$(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") 
 #$(shell source ../share/nam_east.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nam_west.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nam_ak.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \

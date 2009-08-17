@@ -13,6 +13,7 @@
 # PARTICULAR PURPOSE.
 
 @SET_MAKE@
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -40,6 +41,15 @@ CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 SOURCES =
 DIST_SOURCES =
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
+am__installdirs = "$(DESTDIR)$(wwwdir)"
+wwwDATA_INSTALL = $(INSTALL_DATA)
+DATA = $(www_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 AMTAR = @AMTAR@
@@ -140,10 +150,10 @@ top_srcdir = @top_srcdir@
 www = @WWW@
 wwwdisk = @WWWDISK@
 wwwdir = ${wwwdisk}/kml/screenshot
+EXTRA_DIST = \
+$(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") 
 
-#EXTRA_DIST = \
-#$(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nam_east.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nam_west.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nam_ak.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
@@ -159,10 +169,10 @@ wwwdir = ${wwwdisk}/kml/screenshot
 #$(shell source ../share/coamps_europe.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/ecmwf.config.sh ;      echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/ukmet.config.sh ;      echo "$$screenshots" ; echo "$$thumbs")
+www_DATA := \
+$(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
+$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") 
 
-#www_DATA := \
-#$(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nam_east.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nam_west.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/nam_ak.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
@@ -211,6 +221,23 @@ $(top_srcdir)/configure: @MAINTAINER_MODE_TRUE@ $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
+install-wwwDATA: $(www_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(wwwdir)" || $(MKDIR_P) "$(DESTDIR)$(wwwdir)"
+	@list='$(www_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(wwwDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(wwwdir)/$$f'"; \
+	  $(wwwDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(wwwdir)/$$f"; \
+	done
+
+uninstall-wwwDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(www_DATA)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(wwwdir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(wwwdir)/$$f"; \
+	done
 tags: TAGS
 TAGS:
 
@@ -246,8 +273,11 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile
+all-am: Makefile $(DATA)
 installdirs:
+	for dir in "$(DESTDIR)$(wwwdir)"; do \
+	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+	done
 install: install-am
 install-exec: install-exec-am
 install-data: install-data-am
@@ -291,7 +321,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-wwwDATA
 
 install-dvi: install-dvi-am
 
@@ -325,7 +355,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am:
+uninstall-am: uninstall-wwwDATA
 
 .MAKE: install-am install-strip
 
@@ -335,9 +365,10 @@ uninstall-am:
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
 	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-generic pdf pdf-am ps ps-am uninstall uninstall-am
+	install-strip install-wwwDATA installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am uninstall \
+	uninstall-am uninstall-wwwDATA
 
 
 gfs_%.jpg: ../scripts/mkscreenshot.sh

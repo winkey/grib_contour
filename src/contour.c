@@ -146,7 +146,7 @@ void contour2kml(
 		
 		/***** add a style table to the dataset *****/
 		
-		add_ds_style(hDS, cscales);
+		add_ds_style(hogrDS2, cscales);
 		
 		/***** set the spatial reference for kml *****/
 	
