@@ -82,7 +82,7 @@ then
 		mkrootkml "${level}hgt"
 	fi
 	
-	plot "$path" "${level}hgt" 1 20 $hour 01
+	plot "$path" "${level}hgt" 1 20 $hour 01 "-H"
 
 	##### plot thickness #####
 	
@@ -188,7 +188,7 @@ then
 		mkrootkml "pmsl"
 	fi
 	
-	plot "$path" "pmsl" 1 200 $hour 01
+	plot "$path" "pmsl" 1 200 $hour 01 "-H"
 	rm "$path"
 fi
 

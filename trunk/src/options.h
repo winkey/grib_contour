@@ -33,6 +33,7 @@ typedef struct {
 	float interval;
 	int finterval;
 	int english;
+	int hilo;
 	char *scalename;
 	float scalecorrection;
 	float datacorrection;

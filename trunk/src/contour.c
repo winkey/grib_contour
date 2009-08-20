@@ -27,6 +27,7 @@
 #include "ogrcode.h"
 #include "gdalcode.h"
 #include "contour.h"
+#include "hilo.h"
 #include "style.h"
 #include "style.h"
 #include "error.h"
@@ -128,6 +129,8 @@ void contour2kml(
 		
 		add_ds_style(hDS, cscales);
 		
+		if (o->hilo)
+			hilo(hDS, hLayer, hSRS);
 		
 		ds2kml(hDS, o->kmzfile);
 	
@@ -168,6 +171,9 @@ void contour2kml(
 		/***** transform *****/
 		
 		transform(hSRS, hLayer, hSRS2, hLayer2);
+		
+		if (o->hilo)
+			hilo(hogrDS2, hLayer2, hSRS2);
 		
 		ds2kml(hogrDS2, o->kmzfile);
 		

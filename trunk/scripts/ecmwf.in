@@ -68,7 +68,7 @@ then
 			rm "$zip"
 		fi
 		
-		nice -n 10 grib_contour "${paths[@]}" -i 20 -s ${level}hgt -k "$kml" -z "$zip"
+		nice -n 10 grib_contour "${paths[@]}" -i 20 -s ${level}hgt -k "$kml" -z "$zip" "-H"
 
 		if [[ "$hour" == "00" ]]
 		then
@@ -282,7 +282,7 @@ then
 		fi
 		
 		echo nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -k "$kml" -z "$zip"
-		nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -k "$kml" -z "$zip"
+		nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -k "$kml" -z "$zip" "-H"
 
 		if [[ "$hour" == "00" ]]
 		then

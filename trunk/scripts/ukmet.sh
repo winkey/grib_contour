@@ -16,7 +16,7 @@
 source /usr/local/bin/generic2.sh
 
 wwwdisk="/home/rush/public_html/weather/kml/ukmet"
-www="http://atmos.ucsd.edu/kml/ukmet"
+www="file:///home/rush/public_html/weather/kml/ukmet"
 
 
 
@@ -68,7 +68,7 @@ then
 			rm "$zip"
 		fi
 		
-		nice -n 10 grib_contour "${paths[@]}" -i 20 -s ${level}hgt -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip"
+		nice -n 10 grib_contour "${paths[@]}" -i 20 -s ${level}hgt -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip" "-H"
 
 		if [[ "$hour" == "06" ]]
 		then
@@ -282,7 +282,7 @@ then
 		fi
 		
 		echo nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip"
-		nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip"
+		nice -n 10 grib_contour "${paths[@]}" -i 200 -s pmsl -q "lin,dlat=2.5,dlon=2.5" -k "$kml" -z "$zip" "-H"
 
 		if [[ "$hour" == "06" ]]
 		then

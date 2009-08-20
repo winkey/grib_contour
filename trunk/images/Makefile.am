@@ -65,7 +65,9 @@ www_DATA = \
 	perdww.png \
 	hghtswl.png \
 	perdswl.png \
-	htsgw.png
+	htsgw.png \
+	hi.png \
+	lo.png
 
 1000t.png: ../share/1000t.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/1000t.scale "c" 1000t.png

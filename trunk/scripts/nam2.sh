@@ -16,7 +16,7 @@
 source /usr/local/bin/generic2.sh
 
 wwwdisk="/home/rush/public_html/weather/kml/nam_conus"
-www="http://atmos.ucsd.edu/kml/nam_conus"
+www="file:///home/rush/public_html/weather/kml/nam_conus"
 
 
 path="$1"
@@ -70,7 +70,7 @@ then
 		mkrootkml "${level}hgt"
 	fi
 	
-	plot "$path" "${level}hgt" 1 20 $hour 03
+	plot "$path" "${level}hgt" 1 20 $hour 03 "-H"
 	
 	##### plot thickness #####
 	
@@ -360,7 +360,7 @@ then
 		mkrootkml "pmsl"
 	fi
 	
-	plot "$path" "pmsl" 1 200 $hour 03
+	plot "$path" "pmsl" 1 200 $hour 03 "-H"
 	rm "$path"
 fi
 

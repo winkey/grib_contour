@@ -18,7 +18,7 @@ db="nogaps"
 source /usr/local/bin/generic2.sh
 
 wwwdisk="/home/rush/public_html/weather/kml/nogaps"
-www="http://atmos.ucsd.edu/kml/nogaps"
+www="file:///home/rush/public_html/weather/kml/nogaps"
 
 
 path="$1"
@@ -73,7 +73,7 @@ then
 	then
 		mkrootkml "${level}hgt"
 	fi	
-	plot "$path" "${level}hgt" 1 20 $hour 03
+	plot "$path" "${level}hgt" 1 20 $hour 03 "-H"
 	
 	##### plot thickness #####
 	
@@ -192,7 +192,7 @@ then
 	then
 		mkrootkml "pmsl"
 	fi	
-	plot "$path" "pmsl" 1 200 $hour 03
+	plot "$path" "pmsl" 1 200 $hour 03 "-H"
 	rm "$path"
 fi
 
