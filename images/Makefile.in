@@ -206,7 +206,9 @@ www_DATA = \
 	perdww.png \
 	hghtswl.png \
 	perdswl.png \
-	htsgw.png
+	htsgw.png \
+	hi.png \
+	lo.png
 
 all: all-am
 

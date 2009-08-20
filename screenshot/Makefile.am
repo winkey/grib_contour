@@ -11,9 +11,9 @@ $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$th
 $(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") 
+#$(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/ocean.config.sh ;      echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/ww3.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/coamps_cent_am.config.sh ; echo "$$screenshots" ; echo "$$thumbs") \
@@ -31,9 +31,9 @@ $(shell source ../share/gfs.config.sh ;        echo "$$screenshots" ; echo "$$th
 $(shell source ../share/nam_conus.config.sh ;  echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/ruc2.config.sh ;       echo "$$screenshots" ; echo "$$thumbs") \
 $(shell source ../share/forecaster.config.sh ; echo "$$screenshots" ; echo "$$thumbs") 
+#$(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/sst.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/windwave.config.sh ;   echo "$$screenshots" ; echo "$$thumbs") \
-#$(shell source ../share/nogaps.config.sh ;     echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/ocean.config.sh ;      echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/ww3.config.sh ;        echo "$$screenshots" ; echo "$$thumbs") \
 #$(shell source ../share/coamps_cent_am.config.sh ; echo "$$screenshots" ; echo "$$thumbs") \

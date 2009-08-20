@@ -14,7 +14,8 @@ AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
-	-DPACKAGE_PKG_DATA_DIR=\""$(pkgdatadir)"\" 
+	-DPACKAGE_PKG_DATA_DIR=\""$(pkgdatadir)"\" \
+	-DPACKAGE_WWW=\""$(www)/kml"\"
 	
 AM_CFLAGS =\
 	 -Wall\
@@ -43,7 +44,9 @@ grib_contour_SOURCES = \
 	gribdump.c        \
 	gribdump.h        \
 	style.c        \
-	style.h
+	style.h        \
+	hilo.c        \
+	hilo.h
 
 
 grib_contour_LDADD = 

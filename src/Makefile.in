@@ -46,7 +46,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am_grib_contour_OBJECTS = main.$(OBJEXT) grib.$(OBJEXT) \
 	gdalcode.$(OBJEXT) ogrcode.$(OBJEXT) color.$(OBJEXT) \
 	options.$(OBJEXT) contour.$(OBJEXT) merge.$(OBJEXT) \
-	gribdump.$(OBJEXT) style.$(OBJEXT)
+	gribdump.$(OBJEXT) style.$(OBJEXT) hilo.$(OBJEXT)
 grib_contour_OBJECTS = $(am_grib_contour_OBJECTS)
 grib_contour_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -170,7 +170,8 @@ AM_CPPFLAGS = \
 	-DPACKAGE_LOCALE_DIR=\""$(prefix)/$(DATADIRNAME)/locale"\" \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
-	-DPACKAGE_PKG_DATA_DIR=\""$(pkgdatadir)"\" 
+	-DPACKAGE_PKG_DATA_DIR=\""$(pkgdatadir)"\" \
+	-DPACKAGE_WWW=\""$(www)/kml"\"
 
 AM_CFLAGS = \
 	 -Wall\
@@ -196,7 +197,9 @@ grib_contour_SOURCES = \
 	gribdump.c        \
 	gribdump.h        \
 	style.c        \
-	style.h
+	style.h        \
+	hilo.c        \
+	hilo.h
 
 grib_contour_LDADD = 
 all: all-am
@@ -270,6 +273,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdalcode.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/grib.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gribdump.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/hilo.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/merge.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ogrcode.Po@am__quote@

@@ -115,8 +115,9 @@ void get_options(
 	o->scalecorrection = 1;
 	o->finterval = 0;
 	o->english = 0;
+	o->hilo = 0;
 	
-	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:c:k:t:z:p:q:r:f:l:eh?"))) {
+	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:c:k:t:z:p:q:r:f:l:eHh?"))) {
 		
 		switch (opt) {
 			case 'w':
@@ -235,7 +236,12 @@ void get_options(
 			case 't':
 				o->tiffile = optarg;
 				break;
-			
+
+
+			case 'H':
+				o->hilo = 1;
+				break;
+					
 			case 'p':
 				o->pgfile = optarg;
 				break;
