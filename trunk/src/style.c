@@ -65,6 +65,8 @@ void add_ds_style(OGRDataSourceH hDS, color_scale *cscales) {
 	OGR_DS_SetStyleTableDirectly(hDS, hSTBL);
 }
 
+
+
 void add_features_style(
 	OGRLayerH hLayer,
 	color_scale *cscales)
@@ -79,7 +81,13 @@ void add_features_style(
 	while((hFeat = OGR_L_GetNextFeature(hLayer))) {
 	
 		CPLErrorReset();
+
+		/***** flatten to 2d,                    *****/
+		/***** i have this here cause its a loop *****/
+		/***** and i don't want to add another   *****/
+		
 		OGR_G_FlattenTo2D(OGR_F_GetGeometryRef(hFeat));
+
 		/***** the second field contains the data value *****/
 		
 		value = OGR_F_GetFieldAsDouble(hFeat, 1);
@@ -92,6 +100,11 @@ void add_features_style(
 		OGR_F_SetStyleString(hFeat, name);
 		
 		OGR_L_SetFeature (hLayer, hFeat);
+
+		/***** cleanup *****/
+		
+		OGR_F_Destroy(hFeat);
+		
 	}
 	
 	return;
