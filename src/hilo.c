@@ -77,7 +77,7 @@ int hilocmp (
 		OGR_G_SetPoint (hGeomlr2, i, x, y, z);
 	}
 
-	OGR_G_AddGeometry(poly2, hGeomlr2);
+	OGR_G_AddGeometryDirectly(poly2, hGeomlr2);
 
 	/***** contains not contains *****/
 	
@@ -93,7 +93,7 @@ int hilocmp (
 }
 
 void hilofree(void *data) {
-	/***** do nothing *****/
+	OGR_F_Destroy(data);
 }
 
 void *hilo_traverse(MWTree *t, MWTree_node *node, void *data, void *extra)
