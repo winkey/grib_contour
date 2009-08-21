@@ -79,7 +79,7 @@ void add_features_style(
 	while((hFeat = OGR_L_GetNextFeature(hLayer))) {
 	
 		CPLErrorReset();
-		
+		OGR_G_FlattenTo2D(OGR_F_GetGeometryRef(hFeat));
 		/***** the second field contains the data value *****/
 		
 		value = OGR_F_GetFieldAsDouble(hFeat, 1);
