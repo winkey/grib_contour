@@ -66,7 +66,7 @@ int hilocmp (
 		OGR_G_SetPoint (hGeomlr1, i, x, y, z);
 	}
 
-	OGR_G_AddGeometry(poly1, hGeomlr1);
+	OGR_G_AddGeometryDirectly(poly1, hGeomlr1);
 			
 	OGRGeometryH poly2 = OGR_G_CreateGeometry(wkbPolygon);
 	OGRGeometryH hGeomlr2 = OGR_G_CreateGeometry(wkbLinearRing);
