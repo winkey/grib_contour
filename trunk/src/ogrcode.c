@@ -331,3 +331,55 @@ void transform(
 	
 	return;
 }
+
+void flatten_feature(
+  OGRFeatureH hFeat)
+{
+
+  if (!hFeat)
+    return;
+
+  OGRGeometryH hGeom;
+
+  if (!(hGeom = OGR_F_GetGeometryRef(hFeat)))
+    return;
+
+  OGR_G_FlattenTo2D(hGeom);
+
+  return;
+}
+
+void flatten_layer(
+  OGRLayerH hLayer)
+{
+
+  if (!hLayer)
+    return;
+  
+  OGR_L_ResetReading(hLayer);
+	OGRFeatureH hFeat;
+	while((hFeat = OGR_L_GetNextFeature(hLayer))) {
+		CPLErrorReset();
+    flatten_feature(hFeat);
+  }
+
+  return;
+}
+
+void flatten_DS(
+  OGRDataSourceH hDS)
+{
+
+  if (!hDS)
+    return;
+
+  int nlayers = OGR_DS_GetLayerCount(hDS);
+  int i;
+  for (i = 0 ; i < nlayers ; i++) {
+		OGRLayerH hLayer = OGR_DS_GetLayer(hDS, i);
+		flatten_layer(hLayer);
+	}
+
+  return;
+}
+  

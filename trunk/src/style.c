@@ -53,7 +53,15 @@ void add_ds_style(OGRDataSourceH hDS, color_scale *cscales) {
 		OGR_ST_SetUnit(hST, OGRSTUPixel, 2);
 		OGR_SM_AddPart (hSM, hST);
 		OGR_ST_Destroy(hST);
-		
+
+    /***** brush color *****/
+			
+	  snprintf(color, sizeof(color), "#%saa", cscale->color);
+		hST = OGR_ST_Create(OGRSTCBrush);
+		OGR_ST_SetParamStr(hST, OGRSTBrushFColor, color);
+		OGR_SM_AddPart (hSM, hST);
+		OGR_ST_Destroy(hST);
+    
 		/***** add the style in the manager to the style table *****/
 		
 		snprintf(color, sizeof(color), "@%s", cscale->color);
@@ -86,7 +94,7 @@ void add_features_style(
 		/***** i have this here cause its a loop *****/
 		/***** and i don't want to add another   *****/
 		
-		OGR_G_FlattenTo2D(OGR_F_GetGeometryRef(hFeat));
+		// OGR_G_FlattenTo2D(OGR_F_GetGeometryRef(hFeat));
 
 		/***** the second field contains the data value *****/
 		

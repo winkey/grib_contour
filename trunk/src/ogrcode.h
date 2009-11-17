@@ -178,8 +178,18 @@ void transform(
 	OGRSpatialReferenceH hdstSRS,
 	OGRLayerH hdstLayer);
 
-void ogr2kml(
-	OGRLayerH hLayer,
-	KML *kml,
-	color_scale *cscales);
+
+void flatten_feature(
+  OGRFeatureH hFeat);
+
+void flatten_layer(
+  OGRLayerH hLayer);
+
+void flatten_DS(
+  OGRDataSourceH hDS);
+
+//void ogr2kml(
+//	OGRLayerH hLayer,
+//	KML *kml,
+//	color_scale *cscales);
 #endif /* _OGRCODE_H */

@@ -28,6 +28,7 @@
 #include "gdalcode.h"
 #include "contour.h"
 #include "hilo.h"
+#include "c2p.h"
 #include "style.h"
 #include "style.h"
 #include "error.h"
@@ -117,7 +118,8 @@ void contour2kml(
 	OGRDataSourceH hDS,
 	OGRLayerH hLayer)
 {
-	
+	OGRLayerH hLayerPoly;
+  
 	/***** style all the features in the layer *****/
 	/***** if the dataset gets trasnformed this will be copyed *****/
 	
@@ -134,6 +136,14 @@ void contour2kml(
 		if (o->hilo)
 			hilo(hDS, hLayer, hSRS);
 		
+		if (o->polygon) {
+			hLayerPoly = c2p(hDS, hLayer, hSRS);
+      add_features_style(hLayerPoly, cscales);
+    }
+
+    if (!o->three_d)
+      flatten_DS(hDS);
+    
 		ds2kml(hDS, o->kmzfile);
 	
 	}
@@ -177,6 +187,14 @@ void contour2kml(
 		if (o->hilo)
 			hilo(hogrDS2, hLayer2, hSRS2);
 		
+		if (o->polygon) {
+			hLayerPoly = c2p(hogrDS2, hLayer2, hSRS2);
+      add_features_style(hLayerPoly, cscales);
+    }
+
+    if (!o->three_d)
+      flatten_DS(hDS);
+    
 		ds2kml(hogrDS2, o->kmzfile);
 		
 		/***** cleanup *****/
