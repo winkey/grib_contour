@@ -46,7 +46,8 @@ PROGRAMS = $(bin_PROGRAMS)
 am_grib_contour_OBJECTS = main.$(OBJEXT) grib.$(OBJEXT) \
 	gdalcode.$(OBJEXT) ogrcode.$(OBJEXT) color.$(OBJEXT) \
 	options.$(OBJEXT) contour.$(OBJEXT) merge.$(OBJEXT) \
-	gribdump.$(OBJEXT) style.$(OBJEXT) hilo.$(OBJEXT)
+	gribdump.$(OBJEXT) style.$(OBJEXT) hilo.$(OBJEXT) \
+	c2p.$(OBJEXT)
 grib_contour_OBJECTS = $(am_grib_contour_OBJECTS)
 grib_contour_DEPENDENCIES =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
@@ -199,7 +200,9 @@ grib_contour_SOURCES = \
 	style.c        \
 	style.h        \
 	hilo.c        \
-	hilo.h
+	hilo.h        \
+	c2p.c        \
+	c2p.h
 
 grib_contour_LDADD = 
 all: all-am
@@ -268,6 +271,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/c2p.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/color.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/contour.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gdalcode.Po@am__quote@

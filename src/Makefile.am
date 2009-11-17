@@ -46,7 +46,9 @@ grib_contour_SOURCES = \
 	style.c        \
 	style.h        \
 	hilo.c        \
-	hilo.h
+	hilo.h        \
+	c2p.c        \
+	c2p.h
 
 
 grib_contour_LDADD = 

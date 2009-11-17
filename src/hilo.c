@@ -40,6 +40,14 @@
 #include "style.h"
 #include "error.h"
 
+#define DEBUG 1
+
+typedef struct {
+	OGRFeatureH hFeat;
+	OGRGeometryH hGeom;
+} hilo_data;
+
+
 int hilocmp (
 	void *data1,
 	void *data2)
@@ -49,11 +57,11 @@ int hilocmp (
 	OGRGeometryH hGeom1 = OGR_F_GetGeometryRef(data1);
 	OGRGeometryH hGeom2 = OGR_F_GetGeometryRef(data2);
 
-	if (!OGR_G_IsRing (hGeom2))
-		return 1;
-	if (!OGR_G_IsRing (hGeom1))
-		return -1;
 
+	if (!OGR_G_IsRing (hGeom1))
+		return 0;
+	if (!OGR_G_IsRing (hGeom2))
+    return 0;
   /***** turn them into polys *****/
 
 	OGRGeometryH poly1 = OGR_G_CreateGeometry(wkbPolygon);
@@ -93,7 +101,7 @@ int hilocmp (
 }
 
 void hilofree(void *data) {
-	OGR_F_Destroy(data);
+  OGR_F_Destroy(data);
 }
 
 void *hilo_traverse(MWTree *t, MWTree_node *node, void *data, void *extra)
@@ -180,11 +188,16 @@ void hilo(
   OGRSpatialReferenceH hSRS)
 {
 
+
+  
 	MWTree t = {};
 
 	t.cmp = hilocmp;
 	t.free = hilofree;
-	
+
+  if (DEBUG)
+    fprintf(stderr, "hilo\n");
+  
 	/***** get the extent of the layer *****/
 	
 	OGREnvelope hEnv;
@@ -264,11 +277,10 @@ void hilo(
 	OGR_SM_AddStyle(hSM, "@lo", NULL);
 			
 	OGR_SM_Destroy(hSM);
-	OGR_L_SetStyleTable(hLayernew, hSTBL);
+	OGR_L_SetStyleTableDirectly(hLayernew, hSTBL);
 	
 	/***** cleanup *****/
 
-	OGR_F_Destroy(hFeatEnv);
 	MWTree_delete_all (&t);
 
 	return;

@@ -120,6 +120,14 @@ float *do_wind_grib(
 	float vgribmsg,
 	gds_t *gds);
 
+float *do_winddir_grib(
+	options *o,
+	char *ugribfile,
+	char *vgribfile,
+	float ugribmsg,
+	float vgribmsg,
+	gds_t *gds);
+
 float *do_and_grib(
 	options *o,
 	char *ugribfile,

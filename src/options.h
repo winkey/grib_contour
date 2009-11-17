@@ -21,6 +21,7 @@
 
 typedef struct {
 	int wind;
+	int winddir;
 	int and;
 	int diff;
 	int count;
@@ -34,6 +35,7 @@ typedef struct {
 	int finterval;
 	int english;
 	int hilo;
+	int polygon;
 	char *scalename;
 	float scalecorrection;
 	float datacorrection;
@@ -47,6 +49,7 @@ typedef struct {
 	int period;
 	struct tm begin;
 	struct tm end;
+  int three_d;
 } options;
 
 /*******************************************************************************

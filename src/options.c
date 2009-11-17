@@ -116,12 +116,18 @@ void get_options(
 	o->finterval = 0;
 	o->english = 0;
 	o->hilo = 0;
+	o->polygon = 0;
+	o->three_d = 0;
 	
-	while (0 < (opt = getopt(argc, argv, "adwg:u:v:U:V:m:i:Is:S:c:k:t:z:p:q:r:f:l:eHh?"))) {
+	while (0 < (opt = getopt(argc, argv, "adwWg:u:v:U:V:m:i:Is:S:c:k:t:z:p:q:r:f:l:e3HPh?"))) {
 		
 		switch (opt) {
 			case 'w':
 				o->wind = 1;
+				break;
+			
+			case 'W':
+				o->winddir = 1;
 				break;
 			
 			case 'a':
@@ -242,6 +248,14 @@ void get_options(
 				o->hilo = 1;
 				break;
 					
+			case 'P':
+				o->polygon = 1;
+				break;
+					
+			case '3':
+				o->three_d = 1;
+				break;
+					
 			case 'p':
 				o->pgfile = optarg;
 				break;
@@ -262,7 +276,7 @@ void get_options(
 	
 	/***** regular *****/
 	
-	if (!o->wind && !o->and && !o->diff) {
+	if (!o->wind && !o->winddir && !o->and && !o->diff) {
 		if (!gcount) {
 			usage(argv[0], 'g');
 			exit(EXIT_FAILURE);
@@ -284,6 +298,31 @@ void get_options(
 	/***** wind *****/
 	
 	else if (o->wind) {
+		if (ucount != vcount) {
+			fprintf(stderr,
+							"ERROR: you must have the same number of u and v datasets\n");
+			usage(argv[0], 'w');
+			exit(EXIT_FAILURE);
+		}
+		
+		if (!o->interval || !o->scalename || (!o->kmlfile && !o->tiffile && !o->pgfile)) {
+			usage(argv[0], 'w');
+			exit(EXIT_FAILURE);
+		}
+		
+		for (i = 0; i < ucount ; i++) {
+			if (!o->ugribmsg[i])
+				o->ugribmsg[i] = 1;
+			if (!o->vgribmsg[i])
+				o->vgribmsg[i] = 1;
+		}
+		
+		o->count = ucount;
+	}
+	
+	/***** winddir *****/
+	
+	else if (o->winddir) {
 		if (ucount != vcount) {
 			fprintf(stderr,
 							"ERROR: you must have the same number of u and v datasets\n");
