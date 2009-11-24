@@ -361,7 +361,8 @@ void flatten_layer(
 	while((hFeat = OGR_L_GetNextFeature(hLayer))) {
 		CPLErrorReset();
     flatten_feature(hFeat);
-  }
+    OGR_L_SetFeature(hLayer, hFeat);
+	}
 
   return;
 }
