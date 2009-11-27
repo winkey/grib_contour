@@ -193,7 +193,7 @@ void contour2kml(
     }
 
     if (!o->three_d)
-      flatten_DS(hDS);
+      flatten_DS(hogrDS2);
     
 		ds2kml(hogrDS2, o->kmzfile);
 		
