@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 																 o.ugribmsg[i], o.vgribmsg[i], gds + i);
 			}
 		}
-		if (o.winddir) {
+		else if (o.winddir) {
 			for (i = 0; i < o.count ; i++) {
 				fprintf(stderr, "do_winddir_grib\n");
 				raster[i] = do_winddir_grib(&o, o.ugribfile[i], o.vgribfile[i],
