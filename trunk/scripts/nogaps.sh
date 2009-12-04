@@ -17,8 +17,8 @@ db="nogaps"
 
 source /usr/local/bin/generic2.sh
 
-wwwdisk="/home/rush/public_html/weather/kml/nogaps"
-www="file:///home/rush/public_html/weather/kml/nogaps"
+wwwdisk="/home/rush/winkey/public_html//kml/nogaps"
+www="atmos.ucsd.edu//kml/nogaps"
 
 
 path="$1"

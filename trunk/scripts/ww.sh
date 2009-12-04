@@ -14,8 +14,8 @@
 
 source /usr/local/bin/generic2.sh
 
-wwwdisk="/home/rush/public_html/weather/kml/ww"
-www="file:///home/rush/public_html/weather/kml/ww"
+wwwdisk="/home/rush/winkey/public_html//kml/ww"
+www="atmos.ucsd.edu//kml/ww"
 
 path="$1"
 run="$3"

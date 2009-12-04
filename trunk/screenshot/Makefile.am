@@ -86,10 +86,10 @@ windwave_%.jpg: ../scripts/mkscreenshot_nolevel.sh
 nogaps_%.jpg: ../scripts/mkscreenshot.sh
 	../scripts/mkscreenshot.sh ../share/nogaps.config.sh
 
-ocean_%.jpg: ../scripts/mkscreenshot.sh
+ocean_%.jpg: ../scripts/mkscreenshot_nolevel.sh
 	../scripts/mkscreenshot_nolevel.sh ../share/ocean.config.sh
 
-ww3_%.jpg: ../scripts/mkscreenshot.sh
+ww3_%.jpg: ../scripts/mkscreenshot_nolevel.sh
 	../scripts/mkscreenshot_nolevel.sh ../share/ww3.config.sh
 
 coamps_cent_am_%.jpg: ../scripts/mkscreenshot.sh
