@@ -139,17 +139,17 @@ nogaps.kml: ../scripts/mkkml.sh ../share/nogaps.config.sh Makefile
 nogaps-latest.kml: ../scripts/mkkml-latest.sh ../share/nogaps.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/nogaps.config.sh
 
-ocean.kml: ../scripts/mkkml.sh ../share/ocean.config.sh Makefile
-	../scripts/mkkml.sh ../share/ocean.config.sh
+ocean.kml: ../scripts/mkkml_nolevel.sh ../share/ocean.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/ocean.config.sh
 	
-ocean-latest.kml: ../scripts/mkkml-latest.sh ../share/ocean.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/ocean.config.sh
+ocean-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/ocean.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/ocean.config.sh
 
-ww3.kml: ../scripts/mkkml.sh ../share/ww3.config.sh Makefile
-	../scripts/mkkml.sh ../share/ww3.config.sh
+ww3.kml: ../scripts/mkkml_nolevel.sh ../share/ww3.config.sh Makefile
+	../scripts/mkkml_nolevel.sh ../share/ww3.config.sh
 	
-ww3-latest.kml: ../scripts/mkkml-latest.sh ../share/ww3.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/ww3.config.sh
+ww3-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/ww3.config.sh Makefile
+	../scripts/mkkml_nolevel-latest.sh ../share/ww3.config.sh
 
 coamps_cent_am.kml: ../scripts/mkkml.sh ../share/coamps_cent_am.config.sh Makefile
 	../scripts/mkkml.sh ../share/coamps_cent_am.config.sh

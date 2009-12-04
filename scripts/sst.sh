@@ -21,8 +21,8 @@ run="00"
 
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/gfs/prod/"
-wwwdisk="/home/rush/public_html/weather/kml/sst"
-www="file:///home/rush/public_html/weather/kml/sst"
+wwwdisk="/home/rush/winkey/public_html//kml/sst"
+www="atmos.ucsd.edu//kml/sst"
 
 gribfile="rtgssthr_grb_0.083_awips.grib2"
 

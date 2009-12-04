@@ -17,8 +17,8 @@ source /usr/local/bin/generic2.sh
 
 serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/nam/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/nam/prod/"
-wwwdisk="/home/rush/public_html/weather/kml/nam_west"
-www="file:///home/rush/public_html/weather/kml/nam_west/"
+wwwdisk="/home/rush/winkey/public_html//kml/nam_west"
+www="atmos.ucsd.edu//kml/nam_west/"
 
 
 run=$1

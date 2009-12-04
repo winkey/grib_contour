@@ -15,8 +15,8 @@
 
 source /usr/local/bin/generic2.sh
 
-wwwdisk="/home/rush/public_html/weather/kml/gfs"
-www="file:///home/rush/public_html/weather/kml/gfs"
+wwwdisk="/home/rush/winkey/public_html//kml/gfs"
+www="atmos.ucsd.edu//kml/gfs"
 
 #CONDUIT ^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(925|850|700|500|300) Pa PRES!
 #	EXEC	/usr/local/bin/gfs2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
