@@ -84,7 +84,7 @@ function doplot {
 	
 	plot $gribfile pwat 18 4 $timee 01 "-I" &
 	plot $gribfile cape 20 200 $timee 01 &
-	plot $gribfile pmsl 2 200 $timee 01 "-H" &
+	plot $gribfile pmsl 2 300 $timee 01 "-H" &
 	if [[ "$timee" != "00" ]] && [[ "$timee" != "01" ]]
 	then
 		plot $gribfile pcp 12 1 $timee 01 "-I" &
