@@ -218,6 +218,8 @@ function plot {
 		rm "$zip"
 	fi
 	
+	while read l junk </proc/loadavg ; (( ${l%%.*} > 100 )) ; do sleep 10 ; done
+  
 	nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg \
 													-i $interval -s $name \
 													-k $kml -z "$zip" \
@@ -257,6 +259,8 @@ function windplot {
 		rm "$zip"
 	fi
 	
+	while read l junk </proc/loadavg ; (( ${l%%.*} > 100 )) ; do sleep 10 ; done
+  
 	nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
 													-i $interval -s $name \
@@ -286,6 +290,8 @@ function andplot {
 		rm "$zip"
 	fi
 	
+	while read l junk </proc/loadavg ; (( ${l%%.*} > 100 )) ; do sleep 10 ; done
+  
 	nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
 													-i $interval -s $name \
@@ -315,6 +321,8 @@ function diffplot {
 		rm "$zip"
 	fi
 	
+  while read l junk </proc/loadavg ; (( ${l%%.*} > 100 )) ; do sleep 10 ; done
+  
 	nice -n 10 grib_contour -d -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
 													-i $interval -s $name \
