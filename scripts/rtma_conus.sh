@@ -43,7 +43,7 @@ if [[ "$prod" == "TMPK" ]]
 then
 	mkrootkml "t"
 	plot "$path" "t" 1 1.5 00 01
-	rm "$path"
+
 fi
 
 ##### plot dewpoint #####
@@ -52,7 +52,7 @@ if [[ "$prod" == "DWPK" ]]
 then
 	mkrootkml "dp"
 	plot "$path" "dp" 1 1.5 00 01
-	rm "$path"
+
 fi
 
 ##### plot wind #####
@@ -64,8 +64,7 @@ then
 	then
 		mkrootkml "wind"
 		windplot "$path" "$vpath" "wind" 1.0 1.0 5 00 01
-		rm "$path"
-		rm "$vpath"
+
 	fi
 fi
 
@@ -76,7 +75,6 @@ then
 	then
 		mkrootkml "wind"
 		windplot "$upath" "$path" "wind" 1.0 1.0 5 00 01
-		rm "$path"
-		rm "$upath"
+
 	fi
 fi

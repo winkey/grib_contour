@@ -52,7 +52,7 @@ then
 	fi
 	
 	plot "$path" "hghtww" 1 .5 $hour $period
-#	rm "$path"
+
 fi
 
 ##### Mean period of wind waves #####
@@ -65,7 +65,7 @@ then
 	fi
 	
 	plot "$path" "perdww" 1 1 $hour $period
-#	rm "$path"
+
 fi
 
 ##### Sig hght of comb wind waves/swell #####
@@ -78,7 +78,7 @@ then
 	fi
 	
 	plot "$path" "htsgw" 1 1 $hour $period
-#	rm "$path"
+
 fi
 
 ##### plot wind #####
@@ -96,8 +96,7 @@ then
 		
 		windplot "$path" "$vpath" "wind" 1.0 1.0 5 $hour $period
 
-#		rm "$path"
-#		rm "$vpath"
+
 	fi
 fi
 
@@ -114,8 +113,7 @@ then
 		
 		windplot "$upath" "$path" "wind" 1.0 1.0 5 $hour $period
 		
-#		rm "$path"
-#		rm "$upath"
+
 	fi
 fi
 

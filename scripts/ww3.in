@@ -98,4 +98,3 @@ then
 fi
 
 
-rm "$path"

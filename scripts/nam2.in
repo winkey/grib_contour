@@ -100,7 +100,7 @@ then
 	
 	plot "$path" "${level}t" 1 1 $hour 03
 
-	rm "$path"
+
 fi
 
 ##### plot rh #####
@@ -114,7 +114,7 @@ then
 	
 	plot "$path" "${level}rh" 1 10 $hour 03
 
-	rm "$path"
+
 fi
 
 ##### plot wind #####
@@ -139,8 +139,7 @@ then
 		
 		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 $interval $hour 03
 
-		rm "$path"
-		rm "$vpath"
+
 	fi
 fi
 
@@ -164,8 +163,7 @@ then
 		
 		windplot "$upath" "$path" "${level}wind" 1.0 1.0 $interval $hour 03
 		
-		rm "$path"
-		rm "$upath"
+
 	fi
 fi
 
@@ -180,7 +178,7 @@ then
 	
 	plot "$path" "cape" 1 200 $hour 03
 	
-	rm "$path"
+
 fi
 
 ##### plot pwat #####
@@ -194,7 +192,7 @@ then
 	
 	plot "$path" "pwat" 1 4 $hour 03 "-I"
 	
-	rm "$path"
+
 fi
 
 ##### plot percip #####
@@ -221,7 +219,7 @@ then
 		
 		andplot "$path" "$spath" "snow" 1.0 1.0 4 $hour 03 "-I"
 		
-		rm "$spath"
+
 	fi
 	
 	## WXTZ ##
@@ -237,7 +235,7 @@ then
 		
 		andplot "$path" "$zpath" "frez" 1.0 1.0 4 $hour 03 "-I"
 		
-		rm "$zpath"
+
 	fi
 	
 	## WXTR ##
@@ -253,7 +251,7 @@ then
 		
 		andplot "$path" "$rpath" "rain" 1.0 1.0 4 $hour 03 "-I"
 		
-		rm "$rpath"
+
 	fi
 	
 	## WXTP ##
@@ -269,7 +267,7 @@ then
 		
 		andplot "$path" "$ppath" "pellet" 1.0 1.0 4 $hour 03 "-I"
 		
-		rm "$ppath"
+
 	fi
 fi
 
@@ -288,7 +286,7 @@ then
 		
 		andplot "$ppath" "$path" "snow" 1.0 1.0 4 $hour 03 "-I"
 		
-		rm "$path"
+
 	fi
 fi
 
@@ -308,7 +306,7 @@ then
 		
 		andplot "$ppath" "$path" "frez" 1.0 1.0 4 $hour 03 "-I"
 		
-		rm "$path"
+
 	fi
 fi
 
@@ -328,7 +326,7 @@ then
 		
 		andplot "$ppath" "$path" "rain" 1.0 1.0 4 $hour 03 "-I"
 		
-		rm "$path"
+
 	fi
 fi
 
@@ -347,7 +345,7 @@ then
 		
 		andplot "$ppath" "$path" "pellet" 1.0 1.0 4 $hour 03 "-I"
 		
-		rm "$path"
+
 	fi
 fi
 
@@ -361,7 +359,7 @@ then
 	fi
 	
 	plot "$path" "pmsl" 1 200 $hour 03 "-H"
-	rm "$path"
+
 fi
 
 ##### plot POPF03 #####
@@ -375,7 +373,7 @@ then
 	
 	plot "$path" "popf" 1 10 $hour 03
 
-	rm "$path"
+
 fi
 
 ##### plot TSTM03 #####
@@ -389,7 +387,7 @@ then
 	
 	plot "$path" "tstm" 1 10 $hour 03
 
-	rm "$path"
+
 fi
 
 ##### plot POP03 #####
@@ -403,7 +401,7 @@ then
 	
 	plot "$path" "pop" 1 10 $hour 03
 
-	rm "$path"
+
 fi
 
 ##### plot POPZ03 #####
@@ -417,6 +415,6 @@ then
 	
 	plot "$path" "popz" 1 10 $hour 03
 
-	rm "$path"
+
 fi
 
