@@ -43,6 +43,6 @@ mkrootkml "${level}sst"
 
 plot "${gribfile}" "sst" 1 .75 0 24
 
-rm "${gribfile}"
+
 
 

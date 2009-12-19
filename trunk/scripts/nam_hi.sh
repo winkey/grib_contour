@@ -99,12 +99,6 @@ function doplot {
 		andplot $gribfile $gribfile "pellet" 12 1 $timee 01 "-I" &
 	fi
 	
-	# we don't want to cleanup untill we are done
-	wait
-	
-	#cleanup
-	
-	rm "${tmp}/${gribfile}"
 	
 }
 

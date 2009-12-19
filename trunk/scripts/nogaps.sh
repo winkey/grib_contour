@@ -101,7 +101,7 @@ then
 		mkrootkml "${level}t"
 	fi
 	plot "$path" "${level}t" 1 1 $hour 03
-	rm "$path"
+
 fi
 
 ##### plot rh #####
@@ -114,7 +114,7 @@ then
 		mkrootkml "${level}rh"
 	fi	
 	plot "$path" "${level}rh" 1 10 $hour 03
-	rm "$path"
+
 fi
 
 ##### plot wind #####
@@ -138,8 +138,7 @@ then
 		fi		
 		windplot "$path" "$vpath" "${level}wind" 1.0 1.0 $interval $hour 03
 
-		rm "$path"
-		rm "$vpath"
+
 	fi
 fi
 
@@ -162,8 +161,7 @@ then
 		fi				
 		windplot "$upath" "$path" "${level}wind" 1.0 1.0 $interval $hour 03
 		
-		rm "$path"
-		rm "$upath"
+
 	fi
 fi
 
@@ -193,7 +191,7 @@ then
 		mkrootkml "pmsl"
 	fi	
 	plot "$path" "pmsl" 1 200 $hour 03 "-H"
-	rm "$path"
+
 fi
 
 
