@@ -126,6 +126,10 @@ function appendkml {
 	hr=$2
 	incr=$3
 	grid=$4
+	script=$5
+	run=$6
+	wwwdisk=$7
+	www=$8
 	
 	tmpfile=/tmp/$script.$run.$name.kml
 	frames=${wwwdisk}/${run}/${name}.kml
@@ -190,6 +194,107 @@ function my_mkfifo {
 	mknod "$1" p
 }
 
+export npipe="$HOME/jobqueue.pipe"
+export lock="$HOME/jobqueue.lock"
+export maxload=50
+export maxjobs=30
+
+################################################################################
+# function to fetch a cmd from the pipe
+################################################################################
+
+function readfifo {
+  
+  ret=1
+  i=0
+  
+  while IFS=$'\0' read -t 1 -r -d '' param <"$npipe" && \
+        ret=$? && \
+        [[ $param != $'\n' ]]
+  do
+    cmd[i++]="$param"
+  done
+  
+  return $ret
+}
+
+################################################################################
+# main loop jobqueue function
+################################################################################
+
+function mainloop {
+  
+  ##### loop while there is a cmd in the pipe or we have bg jobs #####
+  
+  while readfifo && r=$? || (( $(jobs -r | wc -l) ))
+  do
+    
+    ##### loop and sleep if we are too busy #####
+    
+    while read l junk </proc/loadavg ; (( ${l%%.*} > $maxload )) ||\
+          (( $(jobs -r | wc -l) > $maxjobs ))
+    do 
+      sleep 5
+    done
+    
+    ##### run the queued command #####
+    
+    if ! (( $r ))
+    then
+      (eval "${cmd[@]}") &
+    fi
+    
+    unset cmd
+    
+    r=1
+    
+  done
+  
+  ##### remove the lock file were exiting #####
+  
+  rmdir "$lock"
+}
+
+################################################################################
+# function to add a job to the job queue
+################################################################################
+
+function enqueue {
+
+  ##### if the pipe don't exist create it #####
+
+  if ! [[ -p "$npipe" ]]
+  then
+    mkfifo "$npipe"
+    chmod 600 "$npipe"
+  fi
+  
+  ##### open the pipe to a fd RW #####
+  
+  exec 3<>"$npipe"
+  
+  ##### send the command followed by a \n to the pipe #####
+  
+  printf "%s\0" "$@" $'\n' >&3
+  
+  ##### close the pipe #####
+  
+  #exec 3>&-
+  
+  ##### if there is no lock file make it and start the main loop #####
+
+  if mkdir "$lock" >/dev/null 2>&1
+  then
+    (
+      mainloop >/dev/null 2>&1 &
+      disown
+    )
+    
+  fi
+}
+
+
+
 ################################################################################
 #	function to plot the data
 #
@@ -218,14 +323,12 @@ function plot {
 		rm "$zip"
 	fi
 	
-	while read l junk </proc/loadavg ; (( ${l%%.*} > 100 )) ; do sleep 10 ; done
-  
-	nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg \
+	enqueue nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg \
 													-i $interval -s $name \
 													-k $kml -z "$zip" \
-													$extra
-	
-	appendkml $name $timee $incr $grid
+													$extra \
+	\;\
+	appendkml $name $timee $incr $grid $script $run $wwwdisk $www
 	
 }
 
@@ -259,15 +362,13 @@ function windplot {
 		rm "$zip"
 	fi
 	
-	while read l junk </proc/loadavg ; (( ${l%%.*} > 100 )) ; do sleep 10 ; done
-  
-	nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" \
+	enqueue nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
 													-i $interval -s $name \
 													-k $kml -z "$zip" \
-													$extra
-	
-	appendkml $name $timee $incr $grid
+													$extra \
+	\;\
+	appendkml $name $timee $incr $grid $script $run $wwwdisk $www
 	
 }
 
@@ -290,15 +391,13 @@ function andplot {
 		rm "$zip"
 	fi
 	
-	while read l junk </proc/loadavg ; (( ${l%%.*} > 100 )) ; do sleep 10 ; done
-  
-	nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" \
+	enqueue nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
 													-i $interval -s $name \
 													-k $kml -z "$zip" \
-													$extra
-	
-	appendkml $name $timee $incr $grid
+													$extra \
+	\;\
+	appendkml $name $timee $incr $grid $script $run $wwwdisk $www
 	
 }
 
@@ -321,15 +420,13 @@ function diffplot {
 		rm "$zip"
 	fi
 	
-  while read l junk </proc/loadavg ; (( ${l%%.*} > 100 )) ; do sleep 10 ; done
-  
-	nice -n 10 grib_contour -d -u "${ufile}" -v "${vfile}" \
+  enqueue nice -n 10 grib_contour -d -u "${ufile}" -v "${vfile}" \
 													-U $umsg -V $vmsg \
 													-i $interval -s $name \
 													-k $kml -z "$zip" \
-													$extra
-	
-	appendkml $name $timee $incr $grid
+													$extra \
+	\;\
+	appendkml $name $timee $incr $grid $script $run $wwwdisk $www
 	
 }
  
