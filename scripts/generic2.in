@@ -127,7 +127,7 @@ function appendkml {
 	wwwzip="$5"
 	frames="$6"
 	
-	lock="/tmp/${frames//'/'/.}.lock"
+	lock="/tmp/${frames//\//.}.lock"
 	
 	begin=$(date -d "$run GMT $hr hours" "+%FT%TZ" -u)
 	end=$(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u)

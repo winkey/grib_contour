@@ -44,59 +44,59 @@ function doplot {
 	
 	gribfile="/tmp/${gribfile}"
 
-  plot $gribfile 1000hgt 110 20 $timee 01 "-H" &
-	plot $gribfile 1000t 111 1 $timee 01 &
-	plot $gribfile 1000rh 109 10 $timee 01 &
-	windplot $gribfile $gribfile 1000wind 113 114 5 $timee 01 &
+  plot $gribfile 1000hgt 110 20 $timee 01 "-H"
+	plot $gribfile 1000t 111 1 $timee 01
+	plot $gribfile 1000rh 109 10 $timee 01
+	windplot $gribfile $gribfile 1000wind 113 114 5 $timee 01
 	
-	plot $gribfile 925hgt 104 20 $timee 01 "-H" &
-	plot $gribfile 925t 105 1 $timee 01 &
-	plot $gribfile 925rh 103 10 $timee 01 &
-	diffplot $gribfile $gribfile 925thk 104 110 20 $hour 01 &
-	windplot $gribfile $gribfile 925wind 107 108 5 $timee 01 &
+	plot $gribfile 925hgt 104 20 $timee 01 "-H"
+	plot $gribfile 925t 105 1 $timee 01
+	plot $gribfile 925rh 103 10 $timee 01
+	diffplot $gribfile $gribfile 925thk 104 110 20 $hour 01
+	windplot $gribfile $gribfile 925wind 107 108 5 $timee 01
 		
-	plot $gribfile 850hgt 98 20 $timee 01 "-H" &
-	plot $gribfile 850t 99 1 $timee 01 &
-	plot $gribfile 850rh 97 10 $timee 01 &
-	diffplot $gribfile $gribfile 850thk 98 110 20 $hour 01 &
-	windplot $gribfile $gribfile 850wind 101 102 5 $timee 01 &
+	plot $gribfile 850hgt 98 20 $timee 01 "-H"
+	plot $gribfile 850t 99 1 $timee 01
+	plot $gribfile 850rh 97 10 $timee 01
+	diffplot $gribfile $gribfile 850thk 98 110 20 $hour 01
+	windplot $gribfile $gribfile 850wind 101 102 5 $timee 01
 
-	plot $gribfile 700hgt 92 20 $timee 01 "-H" &
-	plot $gribfile 700t 93 1 $timee 01 &
-	plot $gribfile 700rh 91 10 $timee 01 &
-	diffplot $gribfile $gribfile 700thk 92 110 20 $hour 01 &
-	windplot $gribfile $gribfile 700wind 95 96 5 $timee 01 &
+	plot $gribfile 700hgt 92 20 $timee 01 "-H"
+	plot $gribfile 700t 93 1 $timee 01
+	plot $gribfile 700rh 91 10 $timee 01
+	diffplot $gribfile $gribfile 700thk 92 110 20 $hour 01
+	windplot $gribfile $gribfile 700wind 95 96 5 $timee 01
 	
-	plot $gribfile 500hgt 86 20 $timee 01 "-H" &
-	plot $gribfile 500t 87 1 $timee 01 &
-	plot $gribfile 500rh 85 10 $timee 01 &
-	diffplot $gribfile $gribfile 500thk 86 110 20 $hour 01 &
-	windplot $gribfile $gribfile 500wind 89.0 90.0 10 $timee 01 &
+	plot $gribfile 500hgt 86 20 $timee 01 "-H"
+	plot $gribfile 500t 87 1 $timee 01
+	plot $gribfile 500rh 85 10 $timee 01
+	diffplot $gribfile $gribfile 500thk 86 110 20 $hour 01
+	windplot $gribfile $gribfile 500wind 89.0 90.0 10 $timee 01
 
-	plot $gribfile 300hgt 74 20 $timee 01 "-H" &
-	plot $gribfile 300t 75 1 $timee 01 &
-	plot $gribfile 300rh 73 10 $timee 01 &
-	windplot $gribfile $gribfile 300wind 77.0 78.0 10 $timee 01 &
+	plot $gribfile 300hgt 74 20 $timee 01 "-H"
+	plot $gribfile 300t 75 1 $timee 01
+	plot $gribfile 300rh 73 10 $timee 01
+	windplot $gribfile $gribfile 300wind 77.0 78.0 10 $timee 01
 	
-	plot $gribfile 200hgt 62 20 $timee 01 "-H" &
-	plot $gribfile 200t 63 1 $timee 01 &
-	plot $gribfile 200rh 61 10 $timee 01 &
-	windplot $gribfile $gribfile 200wind 65.0 66.0 10 $timee 01 &
+	plot $gribfile 200hgt 62 20 $timee 01 "-H"
+	plot $gribfile 200t 63 1 $timee 01
+	plot $gribfile 200rh 61 10 $timee 01
+	windplot $gribfile $gribfile 200wind 65.0 66.0 10 $timee 01
 	
-	plot $gribfile pwat 18 4 $timee 01 "-I" &
-	plot $gribfile cape 20 200 $timee 01 &
-	plot $gribfile pmsl 2 200 $timee 01 "-H" &
+	plot $gribfile pwat 18 4 $timee 01 "-I"
+	plot $gribfile cape 20 200 $timee 01
+	plot $gribfile pmsl 2 200 $timee 01 "-H"
 	if [[ "$timee" != "00" ]] && [[ "$timee" != "01" ]]
 	then
-		plot $gribfile pcp 12 1 $timee 01 "-I" &
+		plot $gribfile pcp 12 1 $timee 01 "-I"
 	fi
 	
 	if [[ "$timee" != "00" ]] && [[ "$timee" != "01" ]]
 	then
-		andplot $gribfile $gribfile "snow" 12 14 1 $timee 01 "-I" &
-		andplot $gribfile $gribfile "frez" 12 16 1 $timee 01 "-I" &
-		andplot $gribfile $gribfile "rain" 12 17 1 $timee 01 "-I" &
-		andplot $gribfile $gribfile "pellet" 12 1 $timee 01 "-I" &
+		andplot $gribfile $gribfile "snow" 12 14 1 $timee 01 "-I"
+		andplot $gribfile $gribfile "frez" 12 16 1 $timee 01 "-I"
+		andplot $gribfile $gribfile "rain" 12 17 1 $timee 01 "-I"
+		andplot $gribfile $gribfile "pellet" 12 1 $timee 01 "-I"
 	fi
 	
 
