@@ -17,6 +17,8 @@ source /etc/profile
 source ~/.profile
 
 export PATH="$PATH:/usr/local/bin"
+wwwbase="atmos.ucsd.edu//kml"
+wwwdiskbase="/home/rush/winkey/public_html//kml"
 
 script=$(basename ${0})
 
@@ -77,7 +79,7 @@ function mktempfiledir {
 function mkrootkml {
 	name=$1
 	
-	frames=${wwwdisk}/${run}/${name}.kml
+	frames="$wwwdiskbase/$model/$run/$name.kml"
 	
 	cat > $frames << EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -102,12 +104,12 @@ EOF
 
 	##### check the latest link #####
 	
-	if [ -h "${wwwdisk}/latest" ]
+	if [ -h "$wwwdiskbase/$model/latest" ]
 	then
-		rm ${wwwdisk}/latest
+		rm $wwwdiskbase/$model/latest
 	fi
 
-	ln -s "${wwwdisk}/${run}" -T "${wwwdisk}/latest"	
+	ln -s "$wwwdiskbase/$model/${run}" -T "$wwwdiskbase/$model/latest"	
 
 
 }
@@ -115,32 +117,20 @@ EOF
 ################################################################################
 #	function to append the new frame to the root kml
 #
-#	args:
-#					$1	name ie: 925hgt etc...
-#					$2	the forcast hour in the run
-#					
 ################################################################################
 
 function appendkml {
 	name=$1
 	hr=$2
 	incr=$3
-	grid=$4
-	script=$5
-	run=$6
-	wwwdisk=$7
-	www=$8
+	run=$4
+	wwwzip="$5"
+	frames="$6"
 	
-	tmpfile=/tmp/$script.$run.$name.kml
-	frames=${wwwdisk}/${run}/${name}.kml
-	lock="/tmp/$script.$run.$name.lock"
+	lock="/tmp/${frames//\//.}.lock"
 	
-	if [[ "$grid" != "" ]]
-	then
-		zip="${www}/${run}/${grid}.${name}${hr}.kmz"
-	else
-		zip="${www}/${run}/${name}${hr}.kmz"
-	fi
+	begin=$(date -d "$run GMT $hr hours" "+%FT%TZ" -u)
+	end=$(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u)
 
 	##### lock the file #####
 	
@@ -149,12 +139,9 @@ function appendkml {
 		sleep 1
 	done
 	
-	head -n -2 $frames > $tmpfile
-
-	begin=`date -d "$run GMT $hr hours" "+%FT%TZ" -u`
-	end=`date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u`
-
-cat >> $tmpfile << EOF
+	
+ed -s $frames << EOF
+$ -2a
   <NetworkLink>
     <name>${run}Z + ${hr} ${grid}.${name}</name>
     <TimeSpan>
@@ -164,14 +151,13 @@ cat >> $tmpfile << EOF
     <visibility>1</visibility>
     <open>0</open>
     <Url>
-      <href>${zip}</href>
+      <href>${wwwzip}</href>
     </Url>
   </NetworkLink>
+.
+w
 EOF
 
-	tail -n 2 $frames >> $tmpfile
-	mv $tmpfile $frames
-	
 	##### remove the lock #####
 	
 	rmdir "$lock"
@@ -317,6 +303,8 @@ function plot {
 
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
+	frames=${wwwdisk}/${run}/${name}.kml
+	wwwzip="${www}/${run}/${name}${timee}.kmz"
 	
 	if [[ -f "$zip" ]]
 	then
@@ -328,7 +316,7 @@ function plot {
 													-k $kml -z "$zip" \
 													$extra \
 	\;\
-	appendkml $name $timee $incr $grid $script $run $wwwdisk $www
+	appendkml $name $timee $incr $run $wwwzip $frames
 	
 }
 
@@ -356,6 +344,8 @@ function windplot {
 
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
+	frames=${wwwdisk}/${run}/${name}.kml
+	wwwzip="${www}/${run}/${name}${timee}.kmz"
 	
 	if [[ -f "$zip" ]]
 	then
@@ -368,7 +358,7 @@ function windplot {
 													-k $kml -z "$zip" \
 													$extra \
 	\;\
-	appendkml $name $timee $incr $grid $script $run $wwwdisk $www
+	appendkml $name $timee $incr $run $wwwzip
 	
 }
 
@@ -385,6 +375,8 @@ function andplot {
 	
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
+	frames=${wwwdisk}/${run}/${name}.kml
+	wwwzip="${www}/${run}/${name}${timee}.kmz"
 	
 	if [[ -f "$zip" ]]
 	then
@@ -397,7 +389,7 @@ function andplot {
 													-k $kml -z "$zip" \
 													$extra \
 	\;\
-	appendkml $name $timee $incr $grid $script $run $wwwdisk $www
+	appendkml $name $timee $incr $run $wwwzip $frames
 	
 }
 
@@ -414,6 +406,8 @@ function diffplot {
 	
 	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
+	frames=${wwwdisk}/${run}/${name}.kml
+	wwwzip="${www}/${run}/${name}${timee}.kmz"
 	
 	if [[ -f "$zip" ]]
 	then
@@ -426,7 +420,7 @@ function diffplot {
 													-k $kml -z "$zip" \
 													$extra \
 	\;\
-	appendkml $name $timee $incr $grid $script $run $wwwdisk $www
+	appendkml $name $timee $incr $run $wwwzip $frames
 	
 }
  
