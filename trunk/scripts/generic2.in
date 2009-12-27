@@ -127,8 +127,7 @@ function appendkml {
 	incr=$3
 	grid=$4
 	
-	tmpfile=/tmp/$script.$run.$name.kml
-	frames=${wwwdisk}/${run}/${name}.kml
+	frames="${wwwdisk}/${run}/${name}.kml"
 	lock="/tmp/$script.$run.$name.lock"
 	
 	if [[ "$grid" != "" ]]
@@ -145,12 +144,12 @@ function appendkml {
 		sleep 1
 	done
 	
-	head -n -2 $frames > $tmpfile
+	begin=$(date -d "$run GMT $hr hours" "+%FT%TZ" -u)
+	end=$(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u)
 
-	begin=`date -d "$run GMT $hr hours" "+%FT%TZ" -u`
-	end=`date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u`
-
-cat >> $tmpfile << EOF
+ed -s $frames << EOF
+$ -2
+a
   <NetworkLink>
     <name>${run}Z + ${hr} ${grid}.${name}</name>
     <TimeSpan>
@@ -163,11 +162,10 @@ cat >> $tmpfile << EOF
       <href>${zip}</href>
     </Url>
   </NetworkLink>
+.
+w
 EOF
 
-	tail -n 2 $frames >> $tmpfile
-	mv $tmpfile $frames
-	
 	##### remove the lock #####
 	
 	rmdir "$lock"
