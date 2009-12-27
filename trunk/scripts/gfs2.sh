@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
@@ -103,10 +103,10 @@ then
 	then
 		mkrootkml "${level}t"
 	fi
-
+	echo gotcha
 
 	plot "$path" "${level}t" 1 1 $hour 03
-
+	rm "$path"
 fi
 
 ##### plot rh #####
@@ -119,7 +119,7 @@ then
 	fi
 	
 	plot "$path" "${level}rh" 1 10 $hour 03
-
+	rm "$path"
 fi
 
 ##### plot wind #####
@@ -139,7 +139,7 @@ then
 	fi
 		
 	windplot "$path" "$path" "${level}wind" 1.0 1.1 $interval $hour 03
-
+	rm "$path"
 fi
 
 ##### plot cape #####
@@ -152,7 +152,7 @@ then
 	fi
 	
 	plot "$path" "cape" 1 200 $hour 03
-
+	rm "$path"
 fi
 
 ##### plot pwat #####
@@ -165,7 +165,7 @@ then
 	fi
 	
 	plot "$path" "pwat" 1 4 $hour 03 "-I"
-
+	rm "$path"
 fi
 
 function wx {
@@ -256,7 +256,7 @@ then
 	fi
 	
 	plot "$path" "pmsl" 1 200 $hour 03 "-H"
-
+	rm "$path"
 fi
 
 
