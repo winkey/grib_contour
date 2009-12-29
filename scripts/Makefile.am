@@ -14,6 +14,7 @@ bin_SCRIPTS = \
 	nam_ak.sh \
 	nam_pr.sh \
 	nam2.sh \
+	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
 	mklatest.sh \
@@ -98,6 +99,7 @@ dist_bin_SCRIPTS = \
 	nam_ak.sh \
 	nam_pr.sh \
 	nam2.sh \
+	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
 	mklatest.sh \
