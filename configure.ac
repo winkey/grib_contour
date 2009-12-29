@@ -80,12 +80,12 @@ AM_CONDITIONAL(HAVE_GDAL, test "x$GDAL_CONFIG" != "x")
 AC_OUTPUT([
 Makefile
 etc/Makefile
+scripts/Makefile
+share/Makefile
 images/Makefile
 kml/Makefile
 page/Makefile
 screenshot/Makefile
-scripts/Makefile
-share/Makefile
 src/Makefile
 
 ])
