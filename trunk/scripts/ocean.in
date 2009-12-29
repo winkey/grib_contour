@@ -33,7 +33,7 @@ prod="$4"
 level="$5"
 tmp="/tmp"
 
-period="24"
+period="12"
 
 hour=${hour#0}
 
@@ -46,7 +46,7 @@ fi
 
 if [[ "$prod" == "sea_temp" ]]
 then
-	mkrootkml ${1}sst
+	mkrootkml sst
 	plot "$path" "sst" 1 .5 $hour $period
 fi
 
@@ -54,7 +54,7 @@ fi
 
 if [[ "$prod" == "ice_cvrg" ]]
 then
-	mkrootkml ${1}ice
+	mkrootkml ice
 	plot "$path" "ice" 1 1 $hour $period
 fi
 
