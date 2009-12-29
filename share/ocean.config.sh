@@ -13,7 +13,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
 name=ocean
-fullname=".25 Degree Resolution Global Ocean Model"
+fullname="1 Degree Resolution Global Ocean Model"
 
 description='Data from <a href=\"https://www.fnmoc.navy.mil/public/\">
 Fleet Numerical Meteorology and Oceanography Center</a> 
@@ -22,7 +22,8 @@ generated once daily is contoured and converted to kml'
 products="sst Sea Surface Temperature
 ice Sea Ice Coverage"
 
-times="12 12Z"
+times="00 00Z
+12 12Z"
 
 screenshots=$(
   echo "$products" | while read prod_n prod_fn
