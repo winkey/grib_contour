@@ -6113,7 +6113,7 @@ fi
 
 
 
-ac_config_files="$ac_config_files Makefile etc/Makefile images/Makefile kml/Makefile page/Makefile screenshot/Makefile scripts/Makefile share/Makefile src/Makefile"
+ac_config_files="$ac_config_files Makefile etc/Makefile scripts/Makefile share/Makefile images/Makefile kml/Makefile page/Makefile screenshot/Makefile src/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -6766,12 +6766,12 @@ do
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "etc/Makefile") CONFIG_FILES="$CONFIG_FILES etc/Makefile" ;;
+    "scripts/Makefile") CONFIG_FILES="$CONFIG_FILES scripts/Makefile" ;;
+    "share/Makefile") CONFIG_FILES="$CONFIG_FILES share/Makefile" ;;
     "images/Makefile") CONFIG_FILES="$CONFIG_FILES images/Makefile" ;;
     "kml/Makefile") CONFIG_FILES="$CONFIG_FILES kml/Makefile" ;;
     "page/Makefile") CONFIG_FILES="$CONFIG_FILES page/Makefile" ;;
     "screenshot/Makefile") CONFIG_FILES="$CONFIG_FILES screenshot/Makefile" ;;
-    "scripts/Makefile") CONFIG_FILES="$CONFIG_FILES scripts/Makefile" ;;
-    "share/Makefile") CONFIG_FILES="$CONFIG_FILES share/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
 
   *) { { $as_echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
