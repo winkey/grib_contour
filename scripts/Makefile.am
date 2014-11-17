@@ -21,11 +21,9 @@ bin_SCRIPTS = \
 	mkpage.sh \
 	mknewworld.sh \
 	mkkml-latest.sh \
-	mkscreenshot.sh \
 	mkkml_nolevel.sh \
 	mkpage_nolevel.sh \
 	mkkml_nolevel-latest.sh \
-	mkscreenshot_nolevel.sh \
 	checkpqact.conf.sh \
 	forecaster.sh \
 	ruc2.sh \
@@ -65,11 +63,9 @@ EXTRA_DIST = \
 	mkpage.in \
 	mknewworld.in \
 	mkkml-latest.in \
-	mkscreenshot.in \
 	mkkml_nolevel.in \
 	mkpage_nolevel.in \
 	mkkml_nolevel-latest.in \
-	mkscreenshot_nolevel.in \
 	forecaster.in \
 	ruc2.in \
 	rtma_ak.in \
@@ -108,11 +104,9 @@ dist_bin_SCRIPTS = \
 	mkpage.sh \
 	mknewworld.sh \
 	mkkml-latest.sh \
-	mkscreenshot.sh \
 	mkkml_nolevel.sh \
 	mkpage_nolevel.sh \
 	mkkml_nolevel-latest.sh \
-	mkscreenshot_nolevel.sh \
 	checkpqact.conf.sh \
 	forecaster.sh \
 	ruc2.sh \
@@ -263,10 +257,6 @@ mkkml-latest.sh: mkkml-latest.in Makefile
 	$(do_subst) < $(srcdir)/mkkml-latest.in > mkkml-latest.sh
 	chmod +x mkkml-latest.sh
 
-mkscreenshot.sh: mkscreenshot.in
-	$(do_subst) < $(srcdir)/mkscreenshot.in > mkscreenshot.sh
-	chmod +x mkscreenshot.sh
-
 mkkml_nolevel.sh: mkkml_nolevel.in Makefile
 	$(do_subst) < $(srcdir)/mkkml_nolevel.in > mkkml_nolevel.sh
 	chmod +x mkkml_nolevel.sh
@@ -279,6 +269,4 @@ mkkml_nolevel-latest.sh: mkkml_nolevel-latest.in Makefile
 	$(do_subst) < $(srcdir)/mkkml_nolevel-latest.in > mkkml_nolevel-latest.sh
 	chmod +x mkkml_nolevel-latest.sh
 
-mkscreenshot_nolevel.sh: mkscreenshot_nolevel.in
-	$(do_subst) < $(srcdir)/mkscreenshot_nolevel.in > mkscreenshot_nolevel.sh
-	chmod +x mkscreenshot_nolevel.sh
+
