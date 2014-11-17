@@ -23,16 +23,4 @@ products="sst Sea Surface Temperature"
 
 times="00 00Z"
 
-screenshots=$(
-  echo "$products" | while read prod_n prod_fn
-  do
-    echo ${name}_${prod_n}.jpg
-  done
-)
 
-thumbs=$(
-  echo "$products" | while read prod_n prod_fn
-  do
-    echo ${name}_${prod_n}.png
-  done
-)

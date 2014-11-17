@@ -67,38 +67,4 @@ runs="latest Latest
 00 00Z
 12 12Z"
 
-screenshots=$(
-  echo "$levels" | while read lev_n lev_fn
-  do
-		ref="products$lev_n"
-    echo "${!ref}" | while read prod_n prod_fn
-    do
-      echo ${name}_${lev_n}${prod_n}.jpg
-    done
-  done
-  echo "$levels2" | while read lev_n lev_fn
-  do
-    echo "$products2" | while read prod_n prod_fn
-    do
-      echo ${name}_${prod_n}.jpg
-    done
-  done
-)
 
-thumbs=$(
-  echo "$levels" | while read lev_n lev_fn
-  do
-		ref="products$lev_n"
-    echo "${!ref}" | while read prod_n prod_fn
-    do
-      echo ${name}_${lev_n}${prod_n}.png
-    done
-  done
-  echo "$levels2" | while read lev_n lev_fn
-  do
-    echo "$products2" | while read prod_n prod_fn
-    do
-      echo ${name}_${prod_n}.png
-    done
-  done
-)

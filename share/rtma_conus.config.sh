@@ -73,16 +73,4 @@ runs="latest Latest
 22 22Z
 23 23Z"
 
-screenshots=$(
-  echo "$products" | while read prod_n prod_fn
-  do
-    echo ${name}_${prod_n}.jpg
-  done
-)
 
-thumbs=$(
-  echo "$products" | while read prod_n prod_fn
-  do
-    echo ${name}_${prod_n}.png
-  done
-)
