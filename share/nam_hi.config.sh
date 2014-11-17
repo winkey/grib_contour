@@ -82,6 +82,10 @@ pellet 1 Hour Total Pellet Precipitation"
 times="00 00Z
 12 12Z"
 
+runs="latest Latest
+00 00Z
+12 12Z"
+
 screenshots=$(
   echo "$levels" | while read lev_n lev_fn
   do

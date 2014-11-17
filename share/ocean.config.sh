@@ -25,6 +25,10 @@ ice Sea Ice Coverage"
 times="00 00Z
 12 12Z"
 
+runs="latest Latest
+00 00Z
+12 12Z"
+
 screenshots=$(
   echo "$products" | while read prod_n prod_fn
   do

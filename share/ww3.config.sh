@@ -31,6 +31,12 @@ times="00 00Z
 12 12Z
 18 18Z"
 
+runs="latest Latest
+00 00Z
+06 06Z
+12 12Z
+18 18Z"
+
 screenshots=$(
   echo "$products" | while read prod_n prod_fn
   do

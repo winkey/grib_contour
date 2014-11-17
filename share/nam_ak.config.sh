@@ -82,6 +82,8 @@ pellet 1 Hour Total Pellet Precipitation"
 
 times="18 18Z"
 
+runs="18 18Z"
+
 screenshots=$(
   echo "$levels" | while read lev_n lev_fn
   do
