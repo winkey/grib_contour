@@ -19,6 +19,7 @@ bin_SCRIPTS = \
 	mkmaster.sh \
 	mklatest.sh \
 	mkpage.sh \
+	mknewworld.sh \
 	mkkml-latest.sh \
 	mkscreenshot.sh \
 	mkkml_nolevel.sh \
@@ -62,6 +63,7 @@ EXTRA_DIST = \
 	mkmaster.in \
 	mklatest.in \
 	mkpage.in \
+	mknewworld.in \
 	mkkml-latest.in \
 	mkscreenshot.in \
 	mkkml_nolevel.in \
@@ -104,6 +106,7 @@ dist_bin_SCRIPTS = \
 	mkmaster.sh \
 	mklatest.sh \
 	mkpage.sh \
+	mknewworld.sh \
 	mkkml-latest.sh \
 	mkscreenshot.sh \
 	mkkml_nolevel.sh \
@@ -251,6 +254,10 @@ mklatest.sh: mklatest.in Makefile
 mkpage.sh: mkpage.in Makefile
 	$(do_subst) < $(srcdir)/mkpage.in > mkpage.sh
 	chmod +x mkpage.sh
+
+mknewworld.sh: mknewworld.in Makefile
+	$(do_subst) < $(srcdir)/mknewworld.in > mknewworld.sh
+	chmod +x mknewworld.sh
 
 mkkml-latest.sh: mkkml-latest.in Makefile
 	$(do_subst) < $(srcdir)/mkkml-latest.in > mkkml-latest.sh
