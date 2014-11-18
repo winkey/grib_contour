@@ -18,11 +18,9 @@ bin_SCRIPTS = \
 	mkkml.sh \
 	mkmaster.sh \
 	mklatest.sh \
-	mkpage.sh \
 	mknewworld.sh \
 	mkkml-latest.sh \
 	mkkml_nolevel.sh \
-	mkpage_nolevel.sh \
 	mkkml_nolevel-latest.sh \
 	checkpqact.conf.sh \
 	forecaster.sh \
@@ -60,11 +58,9 @@ EXTRA_DIST = \
 	mkkml.in \
 	mkmaster.in \
 	mklatest.in \
-	mkpage.in \
 	mknewworld.in \
 	mkkml-latest.in \
 	mkkml_nolevel.in \
-	mkpage_nolevel.in \
 	mkkml_nolevel-latest.in \
 	forecaster.in \
 	ruc2.in \
@@ -101,11 +97,9 @@ dist_bin_SCRIPTS = \
 	mkkml.sh \
 	mkmaster.sh \
 	mklatest.sh \
-	mkpage.sh \
 	mknewworld.sh \
 	mkkml-latest.sh \
 	mkkml_nolevel.sh \
-	mkpage_nolevel.sh \
 	mkkml_nolevel-latest.sh \
 	checkpqact.conf.sh \
 	forecaster.sh \
@@ -245,10 +239,6 @@ mklatest.sh: mklatest.in Makefile
 	$(do_subst) < $(srcdir)/mklatest.in > mklatest.sh
 	chmod +x mklatest.sh
 
-mkpage.sh: mkpage.in Makefile
-	$(do_subst) < $(srcdir)/mkpage.in > mkpage.sh
-	chmod +x mkpage.sh
-
 mknewworld.sh: mknewworld.in Makefile
 	$(do_subst) < $(srcdir)/mknewworld.in > mknewworld.sh
 	chmod +x mknewworld.sh
@@ -260,10 +250,6 @@ mkkml-latest.sh: mkkml-latest.in Makefile
 mkkml_nolevel.sh: mkkml_nolevel.in Makefile
 	$(do_subst) < $(srcdir)/mkkml_nolevel.in > mkkml_nolevel.sh
 	chmod +x mkkml_nolevel.sh
-
-mkpage_nolevel.sh: mkpage_nolevel.in Makefile
-	$(do_subst) < $(srcdir)/mkpage_nolevel.in > mkpage_nolevel.sh
-	chmod +x mkpage_nolevel.sh
 
 mkkml_nolevel-latest.sh: mkkml_nolevel-latest.in Makefile
 	$(do_subst) < $(srcdir)/mkkml_nolevel-latest.in > mkkml_nolevel-latest.sh

@@ -9,7 +9,6 @@ SUBDIRS = src \
 	share \
 	images \
 	etc \
-	page \
 	kml
 
 
