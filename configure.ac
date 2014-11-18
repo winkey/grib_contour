@@ -85,7 +85,6 @@ share/Makefile
 images/Makefile
 kml/Makefile
 page/Makefile
-screenshot/Makefile
 src/Makefile
 
 ])
