@@ -225,7 +225,7 @@ dist_pkgdata_DATA = \
 	gfs.config.sh \
 	nam_conus.config.sh \
 	hrrr.config.sh \
-	ruc2.config.sh \
+	rap.config.sh \
 	nam_ak.config.sh \
 	nam_east.config.sh \
 	nam_hi.config.sh \
