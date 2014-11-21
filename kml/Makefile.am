@@ -34,8 +34,8 @@ www_DATA = \
 	sst-latest.kml \
 	windwave.kml \
 	windwave-latest.kml \
-	nogaps.kml \
-	nogaps-latest.kml \
+	navgem.kml \
+	navgem-latest.kml \
 	ocean.kml \
 	ocean-latest.kml \
 	ww3.kml \
@@ -143,11 +143,11 @@ windwave.kml: ../scripts/mkkml_nolevel.sh ../share/windwave.config.sh Makefile
 windwave-latest.kml: ../scripts/mkkml_nolevel-latest.sh ../share/windwave.config.sh Makefile
 	../scripts/mkkml_nolevel-latest.sh ../share/windwave.config.sh
 
-nogaps.kml: ../scripts/mkkml.sh ../share/nogaps.config.sh Makefile
+navgem.kml: ../scripts/mkkml.sh ../share/nogaps.config.sh Makefile
 	../scripts/mkkml.sh ../share/nogaps.config.sh
 	
-nogaps-latest.kml: ../scripts/mkkml-latest.sh ../share/nogaps.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/nogaps.config.sh
+navgem-latest.kml: ../scripts/mkkml-latest.sh ../share/navgem.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/navgem.config.sh
 
 ocean.kml: ../scripts/mkkml_nolevel.sh ../share/ocean.config.sh Makefile
 	../scripts/mkkml_nolevel.sh ../share/ocean.config.sh
