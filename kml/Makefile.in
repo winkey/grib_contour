@@ -161,8 +161,10 @@ www_DATA = \
 	gfs-latest.kml \
 	nam_conus.kml \
 	nam_conus-latest.kml \
-	ruc2.kml \
-	ruc2-latest.kml \
+	hrrr.kml \
+	hrrr-latest.kml \
+	rap.kml \
+	rap-latest.kml \
 	nam_ak.kml \
 	nam_ak-latest.kml \
 	nam_east.kml \
@@ -191,12 +193,14 @@ www_DATA = \
 	ww3-latest.kml \
 	coamps_cent_am.kml \
 	coamps_cent_am-latest.kml \
-	coamps_e_pac.kml \
-	coamps_e_pac-latest.kml \
+	coamps_ne_pac.kml \
+	coamps_ne_pac-latest.kml \
 	coamps_w_atl.kml \
 	coamps_w_atl-latest.kml \
-	coamps_europe.kml \
-	coamps_europe-latest.kml \
+	coamps_cencoos.kml \
+	coamps_cencoos-latest.kml \
+	coamps_socal.kml \
+	coamps_socal-latest.kml \
 	ecmwf.kml \
 	ecmwf-latest.kml \
 	ukmet.kml \
@@ -411,6 +415,12 @@ nam_conus.kml: ../scripts/mkkml.sh ../share/nam_conus.config.sh Makefile
 nam_conus-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_conus.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/nam_conus.config.sh
 
+hrrr.kml: ../scripts/mkkml.sh ../share/hrrr.config.sh Makefile
+	../scripts/mkkml.sh ../share/hrrr.config.sh
+
+hrrr-latest.kml: ../scripts/mkkml-latest.sh ../share/hrrr.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/hrrr.config.sh
+
 nam_ak.kml: ../scripts/mkkml.sh ../share/nam_ak.config.sh Makefile
 	../scripts/mkkml.sh ../share/nam_ak.config.sh
 
@@ -441,11 +451,11 @@ nam_west.kml: ../scripts/mkkml.sh ../share/nam_west.config.sh Makefile
 nam_west-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_west.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/nam_west.config.sh
 
-ruc2.kml: ../scripts/mkkml.sh ../share/ruc2.config.sh Makefile
-	../scripts/mkkml.sh ../share/ruc2.config.sh
+rap.kml: ../scripts/mkkml.sh ../share/rap.config.sh Makefile
+	../scripts/mkkml.sh ../share/rap.config.sh
 
-ruc2-latest.kml: ../scripts/mkkml-latest.sh ../share/ruc2.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/ruc2.config.sh
+rap-latest.kml: ../scripts/mkkml-latest.sh ../share/rap.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/rap.config.sh
 
 forecaster.kml: ../scripts/mkkml_nolevel.sh ../share/forecaster.config.sh Makefile
 	../scripts/mkkml_nolevel.sh ../share/forecaster.config.sh
@@ -501,11 +511,11 @@ coamps_cent_am.kml: ../scripts/mkkml.sh ../share/coamps_cent_am.config.sh Makefi
 coamps_cent_am-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_cent_am.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/coamps_cent_am.config.sh
 
-coamps_e_pac.kml: ../scripts/mkkml.sh ../share/coamps_e_pac.config.sh Makefile
-	../scripts/mkkml.sh ../share/coamps_e_pac.config.sh
+coamps_ne_pac.kml: ../scripts/mkkml.sh ../share/coamps_ne_pac.config.sh Makefile
+	../scripts/mkkml.sh ../share/coamps_ne_pac.config.sh
 
-coamps_e_pac-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_e_pac.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/coamps_e_pac.config.sh
+coamps_ne_pac-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_ne_pac.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/coamps_ne_pac.config.sh
 
 coamps_w_atl.kml: ../scripts/mkkml.sh ../share/coamps_w_atl.config.sh Makefile
 	../scripts/mkkml.sh ../share/coamps_w_atl.config.sh
@@ -513,11 +523,17 @@ coamps_w_atl.kml: ../scripts/mkkml.sh ../share/coamps_w_atl.config.sh Makefile
 coamps_w_atl-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_w_atl.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/coamps_w_atl.config.sh
 
-coamps_europe.kml: ../scripts/mkkml.sh ../share/coamps_europe.config.sh Makefile
-	../scripts/mkkml.sh ../share/coamps_europe.config.sh
+coamps_cencoos.kml: ../scripts/mkkml.sh ../share/coamps_cencoos.config.sh Makefile
+	../scripts/mkkml.sh ../share/coamps_cencoos.config.sh
 
-coamps_europe-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_europe.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/coamps_europe.config.sh
+coamps_cencoos-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_cencoos.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/coamps_cencoos.config.sh
+
+coamps_socal.kml: ../scripts/mkkml.sh ../share/coamps_socal.config.sh Makefile
+	../scripts/mkkml.sh ../share/coamps_socal.config.sh
+
+coamps_socal-latest.kml: ../scripts/mkkml-latest.sh ../share/coamps_socal.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/coamps_socal.config.sh
 
 ecmwf.kml: ../scripts/mkkml.sh ../share/ecmwf.config.sh Makefile
 	../scripts/mkkml.sh ../share/ecmwf.config.sh
