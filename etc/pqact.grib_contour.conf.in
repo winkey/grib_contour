@@ -258,7 +258,7 @@ FNMOC	^US058GMET-GR[0-9][a-z]{3}\.COAMPS-EQAM_EQAM-[a-z][0-9]-[a-z][0-9]_([0-9]{
 #  The below entry is for the COAMPS Eastern Pacific (e_pac)
 ################################################################################
 
-COAMPS-NEPAC_NEPAC
+#COAMPS-NEPAC_NEPAC
 
 FNMOC	^US058GMET-GR[0-9][a-z]{3}\.COAMPS-NEPAC_NEPAC-[a-z][0-9]-[a-z][0-9]_([0-9]{3})00F0NL([0-9]{8})([0-9]{2})_0100_[0]*(1000|925|850|700|500|300|200)0-000000(geop_ht|air_temp|rltv_hum|wnd_ucmp|wnd_vcmp)
 	FILE	data/fnmoc/coamps_ne_pac/\2\3/\4.\5.\1
