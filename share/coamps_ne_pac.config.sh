@@ -12,31 +12,19 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-name=nogaps
-fullname="1 Deg Resolution Global NOGAPS Forecast Model"
+name=coamps_ne_pac
+fullname=".2 Deg Resolution North Eastern Pacific COAMPS Forecast Model"
 
 description='Data from <a href=\"https://www.fnmoc.navy.mil/public/\">
 Fleet Numerical Meteorology and Oceanography Center</a> 
-generated four times daily is contoured and converted to kml
-for forecast hours 0-180 in 3 hour increments.'
+generated twice daily is contoured and converted to kml
+for forecast hours 0-48 in 3 hour increments.'
 
-levels="200 200 mb
-300 300 mb
-500 500 mb
+levels="500 500 mb
 700 700 mb
 850 850 mb
 925 925 mb
 1000 1000 mb"
-
-products200="wind Wind
-t Temperature
-rh Relative Humidity
-hgt Heights"
-
-products300="wind Wind
-t Temperature
-rh Relative Humidity
-hgt Heights"
 
 products500="wind Wind
 t Temperature

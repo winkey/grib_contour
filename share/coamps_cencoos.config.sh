@@ -12,8 +12,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-name=coamps_europe
-fullname=".2 Deg Resolution Europe COAMPS Forecast Model"
+name=coamps_cencoos
+fullname=".2 Deg Resolution Central and Northern California COAMPS Forecast Model"
 
 description='Data from <a href=\"https://www.fnmoc.navy.mil/public/\">
 Fleet Numerical Meteorology and Oceanography Center</a> 

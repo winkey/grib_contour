@@ -72,6 +72,7 @@ dist_pkgdata_DATA = \
 	forecaster.config.sh \
 	gfs.config.sh \
 	nam_conus.config.sh \
+	hrrr.config.sh \
 	ruc2.config.sh \
 	nam_ak.config.sh \
 	nam_east.config.sh \
@@ -79,13 +80,14 @@ dist_pkgdata_DATA = \
 	nam_pr.config.sh \
 	nam_west.config.sh \
 	windwave.config.sh \
-	nogaps.config.sh \
+	navgem.config.sh \
 	ocean.config.sh \
 	ww3.config.sh \
 	coamps_cent_am.config.sh \
-	coamps_e_pac.config.sh \
+	coamps_ne_pac.config.sh \
 	coamps_w_atl.config.sh \
-	coamps_europe.config.sh \
+	coamps_socal.config.sh \
+	coamps_cencoos.config.sh \
 	ecmwf.config.sh \
 	ukmet.config.sh \
 	rtma_conus.config.sh \

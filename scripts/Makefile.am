@@ -14,6 +14,7 @@ bin_SCRIPTS = \
 	nam_ak.sh \
 	nam_pr.sh \
 	nam2.sh \
+	hrrr.sh \
 	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
@@ -24,14 +25,15 @@ bin_SCRIPTS = \
 	mkkml_nolevel-latest.sh \
 	checkpqact.conf.sh \
 	forecaster.sh \
-	ruc2.sh \
+	rap.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
-	nogaps.sh \
+	navgem.sh \
 	coamps_cent_am.sh \
-	coamps_e_pac.sh \
+	coamps_ne_pac.sh \
 	coamps_w_atl.sh \
-	coamps_europe.sh \
+	coamps_socal.sh \
+	coamps_cencoos.sh \
 	ocean.sh \
 	ww.sh \
 	ww3.sh \
@@ -54,6 +56,7 @@ EXTRA_DIST = \
 	nam_ak.in \
 	nam_pr.in \
 	nam2.in \
+	hrrr.in \
 	makekey.in \
 	mkkml.in \
 	mkmaster.in \
@@ -63,14 +66,15 @@ EXTRA_DIST = \
 	mkkml_nolevel.in \
 	mkkml_nolevel-latest.in \
 	forecaster.in \
-	ruc2.in \
+	rap.in \
 	rtma_ak.in \
 	rtma_conus.in \
-	nogaps.in \
+	navgem.in \
 	coamps_cent_am.in \
-	coamps_e_pac.in \
+	coamps_ne_pac.in \
 	coamps_w_atl.in \
-	coamps_europe.in \
+	coamps_socal.in \
+	coamps_cencoos.in \
 	ocean.in \
 	ww.in \
 	ww3.in \
@@ -93,6 +97,7 @@ dist_bin_SCRIPTS = \
 	nam_ak.sh \
 	nam_pr.sh \
 	nam2.sh \
+	hrrr.sh \
 	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
@@ -103,16 +108,17 @@ dist_bin_SCRIPTS = \
 	mkkml_nolevel-latest.sh \
 	checkpqact.conf.sh \
 	forecaster.sh \
-	ruc2.sh \
+	rap.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
 	ww.sh \
 	ww3.sh \
-	nogaps.sh \
+	navgem.sh \
 	coamps_cent_am.sh \
-	coamps_e_pac.sh \
+	coamps_ne_pac.sh \
 	coamps_w_atl.sh \
-	coamps_europe.sh \
+	coamps_socal.sh \
+	coamps_cencoos.sh \
 	ocean.sh \
 	ecmwf.sh \
 	ukmet.sh 
@@ -167,9 +173,13 @@ nam2.sh: nam2.in Makefile
 	$(do_subst) < $(srcdir)/nam2.in > nam2.sh
 	chmod +x nam2.sh
 
-ruc2.sh: ruc2.in Makefile
-	$(do_subst) < $(srcdir)/ruc2.in > ruc2.sh
-	chmod +x ruc2.sh
+hrrr.sh: hrrr.in Makefile
+	$(do_subst) < $(srcdir)/hrrr.in > hrrr.sh
+	chmod +x hrrr.sh
+
+rap.sh: rap.in Makefile
+	$(do_subst) < $(srcdir)/rap.in > rap.sh
+	chmod +x rap.sh
 
 forecaster.sh: forecaster.in Makefile
 	$(do_subst) < $(srcdir)/forecaster.in > forecaster.sh
@@ -195,25 +205,29 @@ ww3.sh: ww3.in Makefile
 	$(do_subst) < $(srcdir)/ww3.in > ww3.sh
 	chmod +x ww3.sh
 
-nogaps.sh: nogaps.in Makefile
-	$(do_subst) < $(srcdir)/nogaps.in > nogaps.sh
-	chmod +x nogaps.sh
+navgem.sh: navgem.in Makefile
+	$(do_subst) < $(srcdir)/navgem.in > navgem.sh
+	chmod +x navgem.sh
 
 coamps_cent_am.sh: coamps_cent_am.in Makefile
 	$(do_subst) < $(srcdir)/coamps_cent_am.in > coamps_cent_am.sh
 	chmod +x coamps_cent_am.sh
 
-coamps_e_pac.sh: coamps_e_pac.in Makefile
-	$(do_subst) < $(srcdir)/coamps_e_pac.in > coamps_e_pac.sh
-	chmod +x coamps_e_pac.sh
+coamps_ne_pac.sh: coamps_ne_pac.in Makefile
+	$(do_subst) < $(srcdir)/coamps_ne_pac.in > coamps_ne_pac.sh
+	chmod +x coamps_ne_pac.sh
 
 coamps_w_atl.sh: coamps_w_atl.in Makefile
 	$(do_subst) < $(srcdir)/coamps_w_atl.in > coamps_w_atl.sh
 	chmod +x coamps_w_atl.sh
 
-coamps_europe.sh: coamps_europe.in Makefile
-	$(do_subst) < $(srcdir)/coamps_europe.in > coamps_europe.sh
-	chmod +x coamps_europe.sh
+coamps_socal.sh: coamps_socal.in Makefile
+	$(do_subst) < $(srcdir)/coamps_socal.in > coamps_socal.sh
+	chmod +x coamps_socal.sh
+
+coamps_cencoos.sh: coamps_cencoos.in Makefile
+	$(do_subst) < $(srcdir)/coamps_cencoos.in > coamps_cencoos.sh
+	chmod +x coamps_cencoos.sh
 
 ocean.sh: ocean.in Makefile
 	$(do_subst) < $(srcdir)/ocean.in > ocean.sh

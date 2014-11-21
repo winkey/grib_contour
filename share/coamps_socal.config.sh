@@ -12,101 +12,59 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-name=ruc2
-fullname="20 km Resolution CONUS RUC2 Forecast Model"
+name=coamps_cencoos
+fullname=".2 Deg Resolution Southern California COAMPS Forecast Model"
 
-description='Data from <a href=\"http://www.ncep.noaa.gov/\">
-National Centers for Environmental Prediction</a> 
-generated twenty four times daily is contoured and converted to kml
-for forecast hours 0-9 in 1 hour increments.'
+description='Data from <a href=\"https://www.fnmoc.navy.mil/public/\">
+Fleet Numerical Meteorology and Oceanography Center</a> 
+generated twice daily is contoured and converted to kml
+for forecast hours 0-48 in 3 hour increments.'
 
-levels="300 300 mb
-500 500 mb
+levels="500 500 mb
 700 700 mb
 850 850 mb
-925 925 mb"
-
-products300="wind Wind
-t Temperature
-rh Relative Humidity
-hgt Heights"
+925 925 mb
+1000 1000 mb"
 
 products500="wind Wind
 t Temperature
 rh Relative Humidity
-hgt Heights"
+hgt Heights
+thk Thickness"
 
 products700="wind Wind
 t Temperature
 rh Relative Humidity
-hgt Heights"
+hgt Heights
+thk Thickness"
 
 products850="wind Wind
 t Temperature
 rh Relative Humidity
-hgt Heights"
+hgt Heights
+thk Thickness"
 
 products925="wind Wind
 t Temperature
 rh Relative Humidity
-hgt Heights"
+hgt Heights
+thk Thickness"
 
+products1000="wind Wind
+t Temperature
+rh Relative Humidity
+hgt Heights"
 
 levels2="0 0 - none"
 
-products2="pwat Perceptible Water
-pmsl Mean Sea Level Pressure
-cape Convective Available Potential Energy"
+products2="pmsl Mean Sea Level Pressure
+pcp 3 Hour Total Precipitation"
 
 times="00 00Z
-01 01Z
-02 02Z
-03 03Z
-04 04Z
-05 05Z
-06 06Z
-07 07Z
-08 08Z
-09 09Z
-10 10Z
-11 11Z
-12 12Z
-13 13Z
-14 14Z
-15 15Z
-16 16Z
-17 17Z
-18 18Z
-19 19Z
-20 20Z
-21 21Z
-22 22Z
-23 23Z"
+12 12Z"
 
 runs="latest Latest
 00 00Z
-01 01Z
-02 02Z
-03 03Z
-04 04Z
-05 05Z
-06 06Z
-07 07Z
-08 08Z
-09 09Z
-10 10Z
-11 11Z
-12 12Z
-13 13Z
-14 14Z
-15 15Z
-16 16Z
-17 17Z
-18 18Z
-19 19Z
-20 20Z
-21 21Z
-22 22Z
-23 23Z"
+12 12Z"
 
 
