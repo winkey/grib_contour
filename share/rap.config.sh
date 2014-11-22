@@ -12,7 +12,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-name=RAP
+name=rap
 fullname="20 km Resolution CONUS NCEP Rapid Refresh (RAP)  Forecast Model"
 
 description='Data from <a href=\"http://www.ncep.noaa.gov/\">

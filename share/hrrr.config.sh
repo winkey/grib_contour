@@ -18,7 +18,7 @@ fullname="12km Resolution CONUS High-Resolution Rapid Refresh Forecast Model"
 description='Data from <a href=\"http://www.ncep.noaa.gov/\">
 National Centers for Environmental Prediction</a> 
 generated four times daily is contoured and converted to kml
-for forecast hours 0-96 in 3 hour increments.'
+for forecast hours 0-15 in 1 hour increments.'
 
 levels="200 200 mb
 300 300 mb
