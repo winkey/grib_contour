@@ -13,7 +13,7 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
 name=hrrr
-fullname="12km Resolution CONUS High-Resolution Rapid Refresh Forecast Model"
+fullname="2.5km Resolution CONUS High-Resolution Rapid Refresh Forecast Model"
 
 description='Data from <a href=\"http://www.ncep.noaa.gov/\">
 National Centers for Environmental Prediction</a> 
