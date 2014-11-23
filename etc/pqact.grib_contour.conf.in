@@ -6,12 +6,12 @@
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300|200) [h]*Pa PRES!
 	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300|200) [h]*Pa PRES!
-	EXEC	@bindir@/gfs2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
+	EXEC	@bindir@/gfs.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS06|WXTZ06|WXTR06|WXTP06|P06M|PMSL)/(0) - NONE!
 	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS06|WXTZ06|WXTR06|WXTP06|P06M|PMSL)/(0) - NONE!
-	EXEC	@bindir@/gfs2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
+	EXEC	@bindir@/gfs.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 ################################################################################
 # nam conus model
@@ -20,22 +20,22 @@ CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(HGHT|TMPK|RELH|UREL|VREL)/(1000|925|850|700|500|300|200) hPa PRES
 	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(HGHT|TMPK|RELH|UREL|VREL)/(1000|925|850|700|500|300|200) hPa PRES
-	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
+	EXEC	@bindir@/nam_conus.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(CAPE|PWTR|PMSL)/(0) - NONE
 	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F([0-9]*)/(CAPE|PWTR|PMSL)/(0) - NONE
-	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
+	EXEC	@bindir@/nam_conus.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(WXTS|WXTZ|WXTR|WXTP|P03M)/(0) - NONE
 	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(WXTS|WXTZ|WXTR|WXTP|P03M)/(0) - NONE
-	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
+	EXEC	@bindir@/nam_conus.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(POPF03|TSTM03|POP03|POPZ03)/(0) - NONE
 	FILE	data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2
 NGRID	^[LM].B... KWBE.*!grib2/ncep/NAM_84/#218/([0-9]{8})([0-9][0-9])00F(00[1-9]|[0-9][1-9][0-9])/(POPF03|TSTM03|POP03|POPZ03)/(0) - NONE
-	EXEC	@bindir@/nam2.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
+	EXEC	@bindir@/nam_conus.sh data/ngrid/nam/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 ################################################################################
 # nhc forecaster

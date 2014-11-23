@@ -13,10 +13,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
+source @PKGDATADIR@/rtma_conus.config.sh
 source @bindir@/generic2.sh
 
-wwwdisk="@wwwdisk@/kml/rtma_conus"
-www="@www@/kml/rtma_conus"
 
 #NGRID	^L[A-Z][AM]A98 KWBR .* !grib2/ncep/RTMA/#227/([0-9]{8})([0-9]{2})00F000/(DRCT|SPED|UREL|VREL|TMPK|DWPK)/
 #	FILE	data/ngrid/rtma/227/\1\2.\2.\3.grib2

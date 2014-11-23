@@ -19,12 +19,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-db="ocean"
-
+source @PKGDATADIR@/ocean.config.sh
 source @bindir@/generic2.sh
 
-wwwdisk="@wwwdisk@/kml/ocean"
-www="@www@/kml/ocean"
+
 
 path="$1"
 run="$2"

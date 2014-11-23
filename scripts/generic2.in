@@ -34,6 +34,10 @@ else
 	datee=$2
 fi
 
+wwwdisk="@wwwdisk@/kml/${name}"
+www="@www@/kml/${name}"
+
+
 ##### get the number of cpu's #####
 
 cpus=$(cat /proc/cpuinfo | grep "^processor" | wc -l)

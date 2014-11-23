@@ -7,13 +7,12 @@ bin_SCRIPTS = \
 	generic2.sh \
 	gfs.sh \
 	sst.sh \
-	gfs2.sh \
 	nam_west.sh \
 	nam_east.sh \
 	nam_hi.sh \
 	nam_ak.sh \
 	nam_pr.sh \
-	nam2.sh \
+	nam_conus.sh \
 	hrrr.sh \
 	makekey.sh \
 	mkkml.sh \
@@ -49,13 +48,12 @@ EXTRA_DIST = \
 	generic2.in \
 	gfs.in \
 	sst.in \
-	gfs2.in \
 	nam_west.in \
 	nam_east.in \
 	nam_hi.in \
 	nam_ak.in \
 	nam_pr.in \
-	nam2.in \
+	nam_conus.in \
 	hrrr.in \
 	makekey.in \
 	mkkml.in \
@@ -90,13 +88,12 @@ dist_bin_SCRIPTS = \
 	generic2.sh \
 	gfs.sh \
 	sst.sh \
-	gfs2.sh \
 	nam_west.sh \
 	nam_east.sh \
 	nam_hi.sh \
 	nam_ak.sh \
 	nam_pr.sh \
-	nam2.sh \
+	nam_conus.sh \
 	hrrr.sh \
 	makekey.sh \
 	mkkml.sh \
@@ -126,8 +123,9 @@ dist_bin_SCRIPTS = \
 
    
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
-							 -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
-							 -e 's,[@]www[@],$(www),g'
+               -e 's,[@]PKGDATADIR[@],$(pkgdatadir),g' \
+               -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
+               -e 's,[@]www[@],$(www),g'
      
 generic.sh: generic.in Makefile
 	$(do_subst) < $(srcdir)/generic.in > generic.sh
@@ -144,10 +142,6 @@ gfs.sh: gfs.in Makefile
 sst.sh: sst.in Makefile
 	$(do_subst) < $(srcdir)/sst.in > sst.sh
 	chmod +x sst.sh
-
-gfs2.sh: gfs2.in Makefile
-	$(do_subst) < $(srcdir)/gfs2.in > gfs2.sh
-	chmod +x gfs2.sh
 
 nam_west.sh: nam_west.in Makefile
 	$(do_subst) < $(srcdir)/nam_west.in > nam_west.sh
@@ -169,9 +163,9 @@ nam_ak.sh: nam_ak.in Makefile
 	$(do_subst) < $(srcdir)/nam_ak.in > nam_ak.sh
 	chmod +x nam_ak.sh
 
-nam2.sh: nam2.in Makefile
-	$(do_subst) < $(srcdir)/nam2.in > nam2.sh
-	chmod +x nam2.sh
+nam_conus.sh: nam_conus.in Makefile
+	$(do_subst) < $(srcdir)/nam_conus.in > nam_conus.sh
+	chmod +x nam_conus.sh
 
 hrrr.sh: hrrr.in Makefile
 	$(do_subst) < $(srcdir)/hrrr.in > hrrr.sh

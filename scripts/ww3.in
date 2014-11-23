@@ -19,12 +19,12 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-db="ww3"
 
+
+source @PKGDATADIR@/ww3.config.sh
 source @bindir@/generic2.sh
 
-wwwdisk="@wwwdisk@/kml/ww3"
-www="@www@/kml/ww3"
+
 
 path="$1"
 run="$2"
