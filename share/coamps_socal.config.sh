@@ -12,7 +12,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-name=coamps_cencoos
+name=coamps_socal
 fullname=".2 Deg Resolution Southern California COAMPS Forecast Model"
 
 description='Data from <a href=\"https://www.fnmoc.navy.mil/public/\">
