@@ -83,15 +83,56 @@ tstm Probability of Thunderstorm
 cape Convective Available Potential Energy"
 
 times="00 00Z
+01 01Z
+02 02Z
+03 03Z
+04 04Z
+05 05Z
 06 06Z
+07 07Z
+08 08Z
+09 09Z
+10 10Z
+11 11Z
 12 12Z
-18 18Z"
+13 13Z
+14 14Z
+15 15Z
+16 16Z
+17 17Z
+18 18Z
+19 19Z
+20 20Z
+21 21Z
+22 22Z
+23 23Z"
 
 runs="latest Latest
 00 00Z
+01 01Z
+02 02Z
+03 03Z
+04 04Z
+05 05Z
 06 06Z
+07 07Z
+08 08Z
+09 09Z
+10 10Z
+11 11Z
 12 12Z
-18 18Z"
+13 13Z
+14 14Z
+15 15Z
+16 16Z
+17 17Z
+18 18Z
+19 19Z
+20 20Z
+21 21Z
+22 22Z
+23 23Z"
+
 
 
   
