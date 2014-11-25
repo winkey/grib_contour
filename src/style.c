@@ -49,7 +49,7 @@ void add_ds_style(OGRDataSourceH hDS, color_scale *cscales) {
 		
 		hST = OGR_ST_Create(OGRSTCPen);
 		OGR_ST_SetParamStr(hST, OGRSTPenColor, color);
-		OGR_ST_SetParamNum(hST,OGRSTPenWidth, 1); 
+		OGR_ST_SetParamNum(hST,OGRSTPenWidth, 2); 
 		OGR_ST_SetUnit(hST, OGRSTUPixel, 2);
 		OGR_SM_AddPart (hSM, hST);
 		OGR_ST_Destroy(hST);
