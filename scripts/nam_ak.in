@@ -13,6 +13,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
+
+run=$1
+
 source @PKGDATADIR@/nam_ak.config.sh
 source @bindir@/generic2.sh
 
@@ -20,14 +23,10 @@ serv="ftp://ftpprd.ncep.noaa.gov/pub/data/nccf/com/nam/prod/"
 servb="http://www.ftp.ncep.noaa.gov/data/nccf/com/nam/prod/"
 
 
-run=$1
 
 times=`seq -f "%02g" 0 1 48`
 
-if [[ ! -d "${wwwdisk}/${run}" ]]
-then
-	mkdir -p "${wwwdisk}/${run}"
-fi
+
 
 function doplot {
 	datee=$1
@@ -109,58 +108,11 @@ function doplot {
 
 mktempfiledir "$tmp"
 
-mkrootkml 1000hgt
-mkrootkml 1000t
-mkrootkml 1000rh
-mkrootkml 1000wind
 
-mkrootkml 925hgt
-mkrootkml 925t
-mkrootkml 925thk
-mkrootkml 925rh
-mkrootkml 925wind
-
-mkrootkml 850hgt
-mkrootkml 850t
-mkrootkml 850thk
-mkrootkml 850rh
-mkrootkml 850wind
-
-mkrootkml 700hgt
-mkrootkml 700t
-mkrootkml 700thk
-mkrootkml 700rh
-mkrootkml 700wind
-
-mkrootkml 500hgt
-mkrootkml 500t
-mkrootkml 500thk
-mkrootkml 500rh
-mkrootkml 500wind
-
-mkrootkml 300hgt
-mkrootkml 300t
-mkrootkml 300rh
-mkrootkml 300wind
-
-mkrootkml 200hgt
-mkrootkml 200t
-mkrootkml 200rh
-mkrootkml 200wind
-
-mkrootkml pwat
-mkrootkml cape
-mkrootkml pmsl
-mkrootkml pcp
-
-mkrootkml snow
-mkrootkml frez
-mkrootkml rain
-mkrootkml pellet
   
 for i in $times
 do
-	time doplot $datee $run $i
+	doplot $datee $run $i
 done
 
 #cleanup

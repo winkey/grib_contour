@@ -19,11 +19,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-source @PKGDATADIR@/ocean.config.sh
-source @bindir@/generic2.sh
-
-
-
 path="$1"
 run="$2"
 hour="$3"
@@ -35,16 +30,16 @@ period="12"
 
 hour=${hour#0}
 
-if [[ ! -d "${wwwdisk}/${run}" ]]
-then
-	mkdir -p "${wwwdisk}/${run}"
-fi
+source @PKGDATADIR@/ocean.config.sh
+source @bindir@/generic2.sh
+
+
 
 ##### sst #####
 
 if [[ "$prod" == "sea_temp" ]]
 then
-	mkrootkml sst
+
 	plot "$path" "sst" 1 .5 $hour $period
 fi
 
@@ -52,7 +47,7 @@ fi
 
 if [[ "$prod" == "ice_cvrg" ]]
 then
-	mkrootkml ice
+
 	plot "$path" "ice" 1 1 $hour $period
 fi
 

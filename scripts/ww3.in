@@ -19,13 +19,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-
-
-source @PKGDATADIR@/ww3.config.sh
-source @bindir@/generic2.sh
-
-
-
 path="$1"
 run="$2"
 hour="$3"
@@ -33,23 +26,24 @@ prod="$4"
 level="$5"
 tmp="/tmp"
 
+source @PKGDATADIR@/ww3.config.sh
+source @bindir@/generic2.sh
+
+
+
+
+
 period="03"
 
 hour=${hour#0}
 
-if [[ ! -d "${wwwdisk}/${run}" ]]
-then
-	mkdir -p "${wwwdisk}/${run}"
-fi
+
 
 ##### plot hght of wind waves #####
 
 if [[ "$prod" == "wnd_wav_ht" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}hghtww"
-	fi	
+
 	plot "$path" "hghtww" 1 .5 $hour $period
 fi
 
@@ -57,10 +51,7 @@ fi
 
 if [[ "$prod" == "wnd_wav_per" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}perdww"
-	fi	
+
 	plot "$path" "perdww" 1 1 $hour $period
 fi
 
@@ -68,10 +59,7 @@ fi
 
 if [[ "$prod" == "sig_wav_ht" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}htsgw"
-	fi	
+
 	plot "$path" "htsgw" 1 .5 $hour $period
 fi
 
@@ -79,10 +67,7 @@ fi
 
 if [[ "$prod" == "swl_wav_ht" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}hghtswl"
-	fi	
+
 	plot "$path" "hghtswl" 1 .5 $hour $period
 fi
 
@@ -90,10 +75,7 @@ fi
 
 if [[ "$prod" == "swl_wav_per" ]]
 then
-	if [[ "$hour" == "00" ]]
-	then
-		mkrootkml "${level}perdswl"
-	fi	
+
 	plot "$path" "perdswl" 1 1 $hour $period
 fi
 

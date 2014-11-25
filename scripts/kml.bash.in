@@ -1,0 +1,160 @@
+#!/bin/bash
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Library General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
+
+wwwdisk="@wwwdisk@"
+www="@www@"
+
+###############################################################################
+## @brief function to create the root kml file
+##
+## @param name  the name of the product ie: 925hgt
+##
+## @details
+## global vars
+## @param wwwdisk   the base web dir to write to "/var/www/html/"
+## @param run       the run of the model "00"
+## @param www       the base url for the website
+## @param dsname    name of the dataset
+##
+###############################################################################
+
+mkrootkml () {
+	local name="$1"
+	
+	frames=${wwwdisk}/kml/${dsname}/${run}/${name}.kml
+	
+	cat > $frames << EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.2">
+<Folder>
+  <ScreenOverlay>
+    <name>Key</name>
+    <visibility>1</visibility>
+		<Icon>
+      <href>${www}/kml/images/${name}.png</href>
+    </Icon>
+    <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+    <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
+    <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
+    <size x="0" y="0" xunits="fraction" yunits="fraction"/>
+  </ScreenOverlay>
+  <name>frames</name>
+    <description></description>
+</Folder>
+</kml>
+EOF
+
+    #FIXME this should probably go someplace else
+    
+	##### check the latest link #####
+	
+	if [ -h "${wwwdisk}/kml/${dsname}/latest" ]
+	then
+		rm "${wwwdisk}/kml/${dsname}/latest"
+	fi
+
+	ln -s "${wwwdisk}/kml/${dsname}/${run}" -T "${wwwdisk}/kml/${dsname}/latest"
+}
+
+
+
+###############################################################################
+## @brief function to append the new frame to the root kml
+##
+## @param name  the name of the product ie: 925hgt
+## @param hr    the forcast hour in the run
+## @param incr  how many hours apart the frames are
+## @param grid  optional name to prefix onto the kml name
+##
+## @details
+## global vars
+## @param wwwdisk   the base web dir to write to "/var/www/html/"			
+## @param run       the run of the model "00"
+## @param www       the base url for the website
+## @param dsname    name of the dataset
+##
+###############################################################################
+
+appendkml () {
+	local name="$1"
+	local hr="$2"
+	local incr="$3"
+	local grid="$4"
+	
+	local frames="${wwwdisk}/kml/${dsname}/${run}/${name}.kml"
+	
+	if ! [ -f "$frames" ]
+	then
+        mkrootkml "${name}"
+    fi
+    
+    ##### lock the file #####
+	
+	local lock="$locdir/$script.$run.$name.kml.lock"
+	echo lock $lock
+	while ! mkdir "$lock" > /dev/null
+	do
+		sleep 1
+	done
+	
+    ##### test if the kml is older than 6 hours #####
+    
+	local frametime;
+    local nowtime;
+    
+	frametime=$(stat --printf "%Y\n" "$frames")
+    nowtime=$(date "+%s")
+    
+    if (( frametime + 21600 < nowtime))
+    then
+        mkrootkml "${name}"
+    fi
+    
+	if [[ "$grid" != "" ]]
+	then
+		zip="${www}/kml/${dsname}/${run}/${grid}.${name}${hr}.kmz"
+	else
+		zip="${www}/kml/${dsname}/${run}/${name}${hr}.kmz"
+	fi
+
+
+	
+	begin=$(date -d "$run GMT $hr hours" "+%FT%TZ" -u)
+	end=$(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u)
+
+ed -s $frames << EOF
+$ -2
+a
+  <NetworkLink>
+    <name>${run}Z + ${hr} ${grid}.${name}</name>
+    <TimeSpan>
+      <begin>${begin}</begin>
+      <end>${end}</end>
+    </TimeSpan>
+    <visibility>1</visibility>
+    <open>0</open>
+    <Url>
+      <href>${zip}</href>
+    </Url>
+  </NetworkLink>
+.
+w
+EOF
+
+	##### remove the lock #####
+	
+	rmdir "$lock"
+
+}

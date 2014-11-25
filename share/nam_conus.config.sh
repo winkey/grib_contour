@@ -94,4 +94,23 @@ runs="latest Latest
 18 18Z"
 
 
-  
+#### this is a mapping idea to simplify the code but its likely wrong, the combo products perhaps need a seperate map or more columns #####
+
+productmap="HGHT hgt
+TMPK t
+RELH rh
+UREL UREL
+VREL VREL
+CAPE cape
+PWTR pwat
+P03M pcp
+WXTS snow
+WXTZ frez
+WXTR rain
+WXTP pellet
+PMSL pmsl
+POPF03 popf
+TSTM03 tstm
+POP03 pop
+POPZ03 popz"
+

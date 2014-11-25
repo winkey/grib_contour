@@ -13,6 +13,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
+path="$1"
+run="$2"
+hour="$3"
+prod="$4"
+level="$5"
+tmp="/tmp"
+
 source @PKGDATADIR@/hrrr.config.sh
 source @bindir@/generic2.sh
 
@@ -28,20 +35,7 @@ source @bindir@/generic2.sh
 #CONDUIT	^data/nccf/com/(ruc/prod/ruc2a.[0-9]*)/ruc2.t([0-9][0-9])z.pgrb20[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(CAPE|PWTR)/(0) - NONE!
 #	EXEC	@bindir@/ruc2.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
-path="$1"
-run="$2"
-hour="$3"
-prod="$4"
-level="$5"
-tmp="/tmp"
 
-
-mkkmldir
-
-if [[ ! -d "${wwwdisk}/${run}" ]]
-then
-	mkdir -p "${wwwdisk}/${run}"
-fi
 
 function thick {
 	spath="${path/HGHT.1000/HGHT.${1}}"

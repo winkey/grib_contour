@@ -23,6 +23,12 @@ then
     source "~/.profile"
 fi
 
+
+
+dsname="${name}"
+
+source @bindir@/kml.bash
+
 export PATH="$PATH:@bindir@"
 
 script=$(basename ${0})
@@ -34,9 +40,12 @@ else
 	datee=$2
 fi
 
-wwwdisk="@wwwdisk@/kml/${name}"
-www="@www@/kml/${name}"
+##### make the run dir #####
 
+if [[ ! -d "${wwwdisk}/kml/${name}/${run}" ]]
+then
+	mkdir -p "${wwwdisk}/kml/${name}/${run}"
+fi
 
 ##### get the number of cpu's #####
 
@@ -78,110 +87,8 @@ function mktempfiledir {
 	fi
 }
 
-################################################################################
-#	function to create the root kml file
-#
-#	args:
-#					$1	the name of the product ie: 925hgt
-################################################################################
-
-function mkrootkml {
-	name=$1
-	
-	frames=${wwwdisk}/${run}/${name}.kml
-	
-	cat > $frames << EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<kml xmlns="http://earth.google.com/kml/2.2">
-<Folder>
-  <ScreenOverlay>
-    <name>Key</name>
-    <visibility>1</visibility>
-		<Icon>
-      <href>${www}/../images/${name}.png</href>
-    </Icon>
-    <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
-    <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
-    <rotationXY x="0" y="0" xunits="fraction" yunits="fraction"/>
-    <size x="0" y="0" xunits="fraction" yunits="fraction"/>
-  </ScreenOverlay>
-  <name>frames</name>
-    <description></description>
-</Folder>
-</kml>
-EOF
-
-	##### check the latest link #####
-	
-	if [ -h "${wwwdisk}/latest" ]
-	then
-		rm ${wwwdisk}/latest
-	fi
-
-	ln -s "${wwwdisk}/${run}" -T "${wwwdisk}/latest"	
 
 
-}
-
-################################################################################
-#	function to append the new frame to the root kml
-#
-#	args:
-#					$1	name ie: 925hgt etc...
-#					$2	the forcast hour in the run
-#					
-################################################################################
-
-function appendkml {
-	name=$1
-	hr=$2
-	incr=$3
-	grid=$4
-	
-	frames="${wwwdisk}/${run}/${name}.kml"
-	lock="/tmp/$script.$run.$name.lock"
-	
-	if [[ "$grid" != "" ]]
-	then
-		zip="${www}/${run}/${grid}.${name}${hr}.kmz"
-	else
-		zip="${www}/${run}/${name}${hr}.kmz"
-	fi
-
-	##### lock the file #####
-	
-	while ! mkdir "$lock"
-	do
-		sleep 1
-	done
-	
-	begin=$(date -d "$run GMT $hr hours" "+%FT%TZ" -u)
-	end=$(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u)
-
-ed -s $frames << EOF
-$ -2
-a
-  <NetworkLink>
-    <name>${run}Z + ${hr} ${grid}.${name}</name>
-    <TimeSpan>
-      <begin>${begin}</begin>
-      <end>${end}</end>
-    </TimeSpan>
-    <visibility>1</visibility>
-    <open>0</open>
-    <Url>
-      <href>${zip}</href>
-    </Url>
-  </NetworkLink>
-.
-w
-EOF
-
-	##### remove the lock #####
-	
-	rmdir "$lock"
-
-}
 
 ################################################################################
 #	function to make a fifo
@@ -199,27 +106,37 @@ function my_mkfifo {
 	mknod "$1" p
 }
 
-################################################################################
-#	function to plot the data
-#
-#	args:
-#					$1	the grib file to plot
-#					$2	the name of the product ie: 925hgt
-#					$3	the grib msg #
-#					$4	interval apart the contours are
-#					$5	the forcast hour in the run
-################################################################################
+###############################################################################
+## @brief function to plot the data
+##
+## @param gribfile  full path to the grib file to plot
+## @param name      name of the product ie: 925hgt
+## @param gribmsg   the grib msg #
+## @param interval  interval apart the contours are
+## @param timee     the forcast hour in the run
+## @param incr      how many hours apart the frames are
+## @param extra     extra args to pass to grib_contour
+##
+## @details
+## global vars
+## @param wwwdisk   the base web dir to write to "/var/www/html/"
+## @param run       the run of the model "00"
+## @param dsname    name of the dataset
+##
+###############################################################################
 
-function plot {
-	gribfile=$1
-	name="$2"
-	grbmsg=$3
-	interval=$4
-	timee=$5
-	incr=$6
-	extra="$7"
+plot () {
+	local gribfile=$1
+	local name="$2"
+	local grbmsg=$3
+	local interval=$4
+	local timee=$5
+	local incr=$6
+	local extra="$7"
 
-	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+    local zip
+    local kml
+	zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
 	
 	if [[ -f "$zip" ]]
@@ -233,32 +150,46 @@ function plot {
 													$extra
 	
 	appendkml $name $timee $incr $grid
+	#appendgeoext $name $timee $incr $grid
+	#appendmapfile "$name" "$zip"
 	
 }
 
-################################################################################
-#  function to plot the wind data
-#
-#	 args:
-#					$1	the grib file to plot
-#					$2	the name of the product ie: 925hgt
-#					$3	the grib msg #
-#					$4	interval apart the contours are
-#					$5	the forcast hour in the run
-################################################################################
+###############################################################################
+## @brief function to plot the wind data
+##
+## @param ufile     full path to the u grib file to plot
+## @param vfile     full path to the u grib file to plot
+## @param name      name of the product ie: 925hgt
+## @param umsg      the u grib msg #
+## @param vmsg      the v grib msg #
+## @param interval  interval apart the contours are
+## @param timee     the forcast hour in the run
+## @param incr      how many hours apart the frames are
+## @param extra     extra args to pass to grib_contour
+##
+## @details
+## global vars
+## @param wwwdisk   the base web dir to write to "/var/www/html/"
+## @param run       the run of the model "00"
+## @param dsname    name of the dataset
+##
+###############################################################################
 
-function windplot {
-	ufile="$1"
-	vfile="$2"
-	name="$3"
-	umsg=$4
-	vmsg=$5
-	interval=$6
-	timee=$7
-	incr=$8
-	extra="$7"
+windplot () {
+	local ufile="$1"
+	local vfile="$2"
+	local name="$3"
+	local umsg=$4
+	local vmsg=$5
+	local interval=$6
+	local timee=$7
+	local incr=$8
+	local extra="$7"
 
-	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+    local zip
+    local kml
+	zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
 	
 	if [[ -f "$zip" ]]
@@ -273,21 +204,46 @@ function windplot {
 													$extra
 	
 	appendkml $name $timee $incr $grid
-	
+	#appendgeoext $name $timee $incr $grid
+	#appendmapfile "$name" "$zip"
+
 }
 
-function andplot {
-	ufile="$1"
-	vfile="$2"
-	name="$3"
-	umsg=$4
-	vmsg=$5
-	interval=$6
-	timee=$7
-	incr=$8
-	extra="$7"
+###############################################################################
+## @brief function to plot 2 gribs and'ed together
+##
+## @param ufile     full path to the u grib file to plot
+## @param vfile     full path to the u grib file to plot
+## @param name      name of the product ie: 925hgt
+## @param umsg      the u grib msg #
+## @param vmsg      the v grib msg #
+## @param interval  interval apart the contours are
+## @param timee     the forcast hour in the run
+## @param incr      how many hours apart the frames are
+## @param extra     extra args to pass to grib_contour
+##
+## @details
+## global vars
+## @param wwwdisk   the base web dir to write to "/var/www/html/"
+## @param run       the run of the model "00"
+## @param dsname    name of the dataset
+##
+###############################################################################
+
+andplot () {
+	local ufile="$1"
+	local vfile="$2"
+	local name="$3"
+	local umsg=$4
+	local vmsg=$5
+	local interval=$6
+	local timee=$7
+	local incr=$8
+	local extra="$7"
 	
-	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+    local zip
+    local kml
+	zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
 	
 	if [[ -f "$zip" ]]
@@ -302,21 +258,46 @@ function andplot {
 													$extra
 	
 	appendkml $name $timee $incr $grid
+	#appendgeoext $name $timee $incr $grid
+	#appendmapfile "$name" "$zip"
 	
 }
 
-function diffplot {
-	ufile="$1"
-	vfile="$2"
-	name="$3"
-	umsg=$4
-	vmsg=$5
-	interval=$6
-	timee=$7
-	incr=$8
-	extra="$9"
+###############################################################################
+## @brief function to plot 2 gribs 1 subtracted from the other
+##
+## @param ufile     full path to the u grib file to plot
+## @param vfile     full path to the v grib file to plot
+## @param name      name of the product ie: 925hgt
+## @param umsg      the u grib msg #
+## @param vmsg      the v grib msg #
+## @param interval  interval apart the contours are
+## @param timee     the forcast hour in the run
+## @param incr      how many hours apart the frames are
+## @param extra     extra args to pass to grib_contour
+##
+## @details
+## global vars
+## @param wwwdisk   the base web dir to write to "/var/www/html/"
+## @param run       the run of the model "00"
+## @param dsname    name of the dataset
+##
+###############################################################################
+
+diffplot () {
+	local ufile="$1"
+	local vfile="$2"
+	local name="$3"
+	local umsg=$4
+	local vmsg=$5
+	local interval=$6
+	local timee=$7
+	local incr=$8
+	local extra="$9"
 	
-	zip="${wwwdisk}/${run}/${name}${timee}.kmz"
+    local zip
+    local kml
+	zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
 	kml="${name}${timee}.kml"
 	
 	if [[ -f "$zip" ]]
@@ -331,23 +312,27 @@ function diffplot {
 													$extra
 	
 	appendkml $name $timee $incr $grid
-	
+    #appendgeoext $name $timee $incr $grid
+	#appendmapfile "$name" "$zip"
+
 }
  
 
-################################################################################
-#	function to fetch the grib file
-#
-#	args:
-#					$1	the site and path
-#					$2	the filename
-################################################################################
+###############################################################################
+## @brief function to fetch the grib file
+##
+## @arg dir     the site and path
+## @arg file    the filename
+## @arg ddir    destination dir
+##
+###############################################################################
 
-function getgrib {
-	dir=$1
-	file=$2
-	ddir=$3
+getgrib () {
+	local dir=$1
+	local file=$2
+	local ddir=$3
 	
 	wget "${dir}${file}" -O "${ddir}/${file}"
 }
+
 

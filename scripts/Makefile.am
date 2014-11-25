@@ -3,7 +3,7 @@ www = @WWW@
 wwwdisk = @WWWDISK@
 
 bin_SCRIPTS = \
-	generic.sh \
+	kml.bash \
 	generic2.sh \
 	gfs.sh \
 	sst.sh \
@@ -44,7 +44,7 @@ bin_SCRIPTS = \
 CLEANFILES = $(bin_SCRIPTS)
 
 EXTRA_DIST = \
-	generic.in \
+	kml.bash.in \
 	generic2.in \
 	gfs.in \
 	sst.in \
@@ -84,7 +84,7 @@ EXTRA_DIST = \
 
 
 dist_bin_SCRIPTS = \
-	generic.sh \
+	kml.bash \
 	generic2.sh \
 	gfs.sh \
 	sst.sh \
@@ -127,9 +127,9 @@ do_subst = sed -e 's,[@]bindir[@],$(bindir),g' \
                -e 's,[@]wwwdisk[@],$(wwwdisk),g' \
                -e 's,[@]www[@],$(www),g'
      
-generic.sh: generic.in Makefile
-	$(do_subst) < $(srcdir)/generic.in > generic.sh
-	chmod +x generic.sh
+kml.bash: kml.bash.in Makefile
+	$(do_subst) < $(srcdir)/kml.bash.in > kml.bash
+	chmod +x kml.bash
 
 generic2.sh: generic2.in Makefile
 	$(do_subst) < $(srcdir)/generic2.in > generic2.sh
