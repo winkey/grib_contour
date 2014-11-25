@@ -23,7 +23,7 @@ then
     source "~/.profile"
 fi
 
-
+locdir=/tmp
 
 dsname="${name}"
 
