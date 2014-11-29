@@ -347,14 +347,11 @@ NGRID	^[A-Z]{4}[0-9]{2} KWBY [0-9]* !grib2/ncep/HRRR/#255/([0-9]{8})([0-9]{2})00
 NGRID	^[A-Z]{4}[0-9]{2} KWBY [0-9]* !grib2/ncep/HRRR/#255/([0-9]{8})([0-9]{2})00F0([0-9]{2})/(CAPE|PWTR|PMSL)/(0) - NONE
 	EXEC	@bindir@/hrrr.sh data/ngrid/hrrr/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
-NGRID	^[A-Z]{4}[0-9]{2} KWBY [0-9]* !grib2/ncep/HRRR/#255/([0-9]{8})([0-9]{2})00F0([0-9]{2})/(WXTS|WXTZ|WXTR|WXTP|P03M)/(0) - NONE
+NGRID	^[A-Z]{4}[0-9]{2} KWBY [0-9]* !grib2/ncep/HRRR/#255/([0-9]{8})([0-9]{2})00F0([0-9]{2})/(P01M)/(0) - NONE
 	FILE	data/ngrid/hrrr/\1\2.\2.\3.\4.\5.grib2
-NGRID	^[A-Z]{4}[0-9]{2} KWBY [0-9]* !grib2/ncep/HRRR/#255/([0-9]{8})([0-9]{2})00F0([0-9]{2})/(WXTS|WXTZ|WXTR|WXTP|P03M)/(0) - NONE
+NGRID	^[A-Z]{4}[0-9]{2} KWBY [0-9]* !grib2/ncep/HRRR/#255/([0-9]{8})([0-9]{2})00F0([0-9]{2})/(P01M)/(0) - NONE
 	EXEC	@bindir@/hrrr.sh data/ngrid/hrrr/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
-NGRID	^[A-Z]{4}[0-9]{2} KWBY [0-9]* !grib2/ncep/HRRR/#255/([0-9]{8})([0-9]{2})00F0([0-9]{2})/(POPF03|TSTM03|POP03|POPZ03)/(0) - NONE
-	FILE	data/ngrid/hrrr/\1\2.\2.\3.\4.\5.grib2
-NGRID	^[A-Z]{4}[0-9]{2} KWBY [0-9]* !grib2/ncep/HRRR/#255/([0-9]{8})([0-9]{2})00F0([0-9]{2})/(POPF03|TSTM03|POP03|POPZ03)/(0) - NONE
-	EXEC	@bindir@/hrrr.sh data/ngrid/hrrr/\1\2.\2.\3.\4.\5.grib2 \2 \3 \4 \5
+
 
 

@@ -163,7 +163,7 @@ fi
 
 #### plot percip #####
 
-if [[ "$prod" == "PR03" ]]
+if [[ "$prod" == "P01M" ]]
 then
 	
 	plot "$path" "pcp" 1 4 $hour 01
@@ -172,7 +172,7 @@ fi
 
 #### plot mmsl #####
 
-if [[ "$prod" == "MMSL" ]]
+if [[ "$prod" == "PMSL" ]]
 then
 	
 	plot "$path" "pmsl" 1 200 $hour 01 "-H"

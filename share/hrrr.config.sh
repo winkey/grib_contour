@@ -30,56 +30,41 @@ levels="200 200 mb
 
 products200="wind Wind
 t Temperature
-rh Relative Humidity
 hgt Heights"
 
 products300="wind Wind
 t Temperature
-rh Relative Humidity
 hgt Heights"
 
 products500="wind Wind
 t Temperature
-rh Relative Humidity
 hgt Heights
 thk Thickness"
 
 products700="wind Wind
 t Temperature
-rh Relative Humidity
 hgt Heights
 thk Thickness"
 
 products850="wind Wind
 t Temperature
-rh Relative Humidity
 hgt Heights
 thk Thickness"
 
 products925="wind Wind
 t Temperature
-rh Relative Humidity
 hgt Heights
 thk Thickness"
 
 products1000="wind Wind
 t Temperature
-rh Relative Humidity
 hgt Heights"
 
 levels2="0 0 - none"
 
 products2="pwat Perceptible Water
 pmsl Mean Sea Level Pressure
-pcp 3 Hour Total Precipitation
-rain 3 Hour Total Rain Precipitation
-snow 3 Hour Total Snow Precipitation
-frez 3 Hour Total Freezing Precipitation
-pellet 3 Hour Total Pellet Precipitation
-pop Probability of Precipitation
-popz Probability of Frozen Precipitation
-popf Probability of Freezing Precipitation
-tstm Probability of Thunderstorm
+pcp 1 Hour Total Precipitation
 cape Convective Available Potential Energy"
 
 times="00 00Z
