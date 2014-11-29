@@ -60,7 +60,8 @@ levels2="0 0 - none"
 products2="pmsl Mean Sea Level Pressure
 pcp 3 Hour Total Precipitation"
 
-times="00 00Z
+times="latest Latest
+00 00Z
 12 12Z"
 
 runs="latest Latest

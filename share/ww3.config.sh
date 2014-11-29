@@ -26,7 +26,8 @@ htsgw Significant height of combination wind waves and swells
 hghtswl Height of swells
 perdswl Mean period of swells"
 
-times="00 00Z
+times="latest Latest
+00 00Z
 06 06Z
 12 12Z
 18 18Z"

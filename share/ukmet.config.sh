@@ -55,7 +55,8 @@ products1000="hgt Heights"
 
 products2="pmsl Mean Sea Level Pressure"
 
-times="00 00Z
+times="latest Latest
+00 00Z
 06 06Z
 12 12Z
 18 18Z"

@@ -24,7 +24,8 @@ products="hghtww Significant height of wind waves
 perdww Mean period of wind waves
 htsgw Significant height of combination wind waves and swell"
 
-times="00 00Z
+times="latest Latest
+00 00Z
 06 06Z
 12 12Z
 18 18Z"

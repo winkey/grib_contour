@@ -22,7 +22,8 @@ generated once daily is contoured and converted to kml'
 products="sst Sea Surface Temperature
 ice Sea Ice Coverage"
 
-times="00 00Z
+times="latest Latest
+00 00Z
 12 12Z"
 
 runs="latest Latest

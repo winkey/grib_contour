@@ -58,7 +58,8 @@ products2="pwat Perceptible Water
 pmsl Mean Sea Level Pressure
 cape Convective Available Potential Energy"
 
-times="00 00Z
+times="latest Latest
+00 00Z
 01 01Z
 02 02Z
 03 03Z

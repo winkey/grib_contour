@@ -82,7 +82,8 @@ popf Probability of Freezing Precipitation
 tstm Probability of Thunderstorm
 cape Convective Available Potential Energy"
 
-times="00 00Z
+times="latest Latest
+00 00Z
 06 06Z
 12 12Z
 18 18Z"

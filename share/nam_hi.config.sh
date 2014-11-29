@@ -79,7 +79,8 @@ snow 1 Hour Total Snow Precipitation
 frez 1 Hour Total Freezing Precipitation
 pellet 1 Hour Total Pellet Precipitation"
 
-times="00 00Z
+times="latest Latest
+00 00Z
 12 12Z"
 
 runs="latest Latest

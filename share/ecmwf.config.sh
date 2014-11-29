@@ -41,7 +41,8 @@ rh Relative Humidity"
 
 products2="pmsl Mean Sea Level Pressure"
 
-times="00 00Z
+times="latest Latest
+00 00Z
 12 12Z"
 
 runs="latest Latest

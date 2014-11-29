@@ -80,7 +80,8 @@ snow 1 Hour Total Snow Precipitation
 frez 1 Hour Total Freezing Precipitation
 pellet 1 Hour Total Pellet Precipitation"
 
-times="18 18Z"
+times="latest Latest
+18 18Z"
 
 runs="18 18Z"
 
