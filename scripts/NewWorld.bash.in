@@ -1,0 +1,433 @@
+#!/bin/bash
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Library General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
+
+username='grib_contour'
+group='software'
+host='67.58.51.110'
+pguser='atmos'
+pgdb='NewWorld'
+
+mypsql() {
+    psql -h "$host" -U "$pguser" "$pgdb" $@
+}
+
+mkuid() {
+    
+    read sha junk <<< $(dd if=/dev/urandom count=20 bs=1 2> /dev/null | shasum )
+    mypsql << EOF
+
+insert into auth_user( 
+    username,
+    first_name,
+    last_name,
+    email,
+    password,
+    is_staff,
+    is_active,
+    is_superuser,
+    last_login,
+    date_joined
+) VALUES (
+    '$username',
+    '',
+    '',
+    '',
+    'sha1\$$sha',
+    FALSE,
+    FALSE,
+    FALSE,
+    now(),
+    now()
+);
+
+EOF
+}
+
+mkgid() {
+
+    mypsql << EOF
+
+insert into auth_group( name) values ('$group');
+EOF
+
+}
+
+addtogroup () {
+    
+mypsql << EOF
+insert into from auth_user_groups (
+    user_id,
+    group_id 
+) values ( $1, $2)
+EOF
+}
+
+is_number() {
+    number="$1"
+
+    if [ $number  == $( bc <<< $number) ]
+    then
+        true
+    else
+        false
+    fi
+
+}
+
+getuid() {
+    mypsql -t -q << EOL
+select id from auth_user where username='$username';
+EOL
+
+}
+
+getgid() {
+    mypsql -t -q << EOL
+select id from auth_group where name='$group';
+EOL
+}
+
+
+################################################################################
+## function to add a folder
+# @param layeraray
+# @param owner_id    the owner id of this new node (CAN BE NULL)
+# @param groups_id   the group id of this new node (CAN BE NULL)
+# @param name        the name of the node to add
+# @param tooltip
+# @param metadata
+
+################################################################################
+
+add_layers_folder() {
+
+    mypsql << EOL
+
+select  layers_add_folder_by_name(array[$1], $2, $3, '$4', '$5', '$6');
+
+EOL
+}
+################################################################################
+## function to add a radio folder
+# @param layeraray
+# @param owner_id    the owner id of this new node (CAN BE NULL)
+# @param groups_id   the group id of this new node (CAN BE NULL)
+# @param name        the name of the node to add
+# @param tooltip
+# @param metadata
+
+################################################################################
+
+add_layers_radio() {
+
+    mypsql << EOL
+
+    select  layers_add_radio_by_name(array[$1], $2, $3, '$4', '$5', '$6');
+    
+
+EOL
+}
+
+################################################################################
+## function to add a wms layer
+## @param parent          an aray that describes the parent by name
+##  @param owner_id        the owner id of this new node (CAN BE NULL)
+##  @param groups_id       the group id of this new node (CAN BE NULL)
+##  @param timestamp
+##  @param begin_timespan
+##  @param end_timespan
+##  @param tilecache
+##  @param name            the name of the node to add
+##  @param tooltip
+##  @param metadata
+##  @param url                  ,
+##  @param layers               ,
+##  @param format               ,
+##  @param transparency         ,
+##  @param opacity              ,
+##  @param singleTile           ,
+##  @param attribution          ,
+##  @param isBaseLayer          ,
+##  @param gutter 
+
+##  @return nothing
+################################################################################
+
+add_layers_wms() {
+
+    mypsql << EOL
+
+    select  layers_add_wms_by_name( array[$1], $2, $3, '$4', '$5' , '$6' , $7,
+                                    '$8', '$9', '${10}', '${11}', '${12}',
+                                    '${13}', ${14}, ${15}, ${16}, '${17}',
+                                    ${18}, ${19} );
+    
+EOL
+}
+
+################################################################################
+## function to delete a folders contents recursively by name
+
+
+# layers_delete_all_contents_by_name
+
+
+
+###############################################################################
+## @brief function to add the new framre to the NewWorld Animation
+##
+## @param name  the name of the product ie: 925hgt
+## @param hr    the forcast hour in the run
+## @param incr  how many hours apart the frames are
+## @param grid  optional name to prefix onto the kml name
+##
+## @details
+## global vars
+## @param wwwdisk   the base web dir to write to "/var/www/html/"			
+## @param run       the run of the model "00"
+## @param www       the base url for the website
+## @param dsname    name of the dataset
+##
+###############################################################################
+
+appendNewWorld () {
+	local name="$1"
+	local hr="$2"
+	local incr="$3"
+	local grid="$4"
+
+    local frames="${wwwdisk}/kml/${dsname}/${run}/${name}.kml"
+
+##### does the folder structure exsist? #####
+
+psql <<EOF
+\x
+SELECT * FROM foo;
+EOF
+
+##### lock the file #####
+	
+	local lock="$locdir/$script.$run.$name.pg.lock"
+	echo lock $lock
+	while ! mkdir "$lock" > /dev/null
+	do
+		sleep 1
+	done
+	
+    ##### test if the kml is older than 6 hours #####
+    ##### fixme we should be testing the map in postgres #####
+
+	local frametime;
+    local nowtime;
+    
+	frametime=$(stat --printf "%Y\n" "$frames")
+    nowtime=$(date "+%s")
+    
+    if (( frametime + 21600 < nowtime))
+    then
+        mkrootNewWorld "${name}"
+    fi
+    
+    ##### get the uid and add the user if nessasary #####
+
+    NewWorld_uid=$(getuid)
+    if [ is_number $NewWorld_uid ]
+    then
+        ;;
+    else
+        mkuid
+        NewWorld_uid=$(getuid)
+    fi
+
+    ##### get the gid and add the group if nessasary #####
+
+    NewWorld_gid=$(getgid)
+    if [ is_number $NewWorld_gid ]
+    then
+        ;;
+    else
+        mkgid
+        addtogroup  $NewWorld_uid $NewWorld_gid
+    fi
+
+    ##### get the level #####
+
+    local level=${name%%[^0-9]*}
+    
+    local prod_fn=$(getprod_fn "$name")
+    local lev_fn=$(getlev_fn "$name")
+    local run_fn=$(getrun_fn "$run")
+
+    local tree
+
+
+    if [ -n "$lev_fn" ] && [ -n "$run_fn" ]
+    then
+        tree="'weather', '$name', '$lev_fn', '$prod_fn', '$run_fn'"
+
+    elif [ -n "$lev_fn" ]
+    then
+        tree="'weather', '$name', '$lev_fn', '$prod_fn'"
+
+    elif [ -n "$run_fn" ]
+    then
+        tree="'weather', '$name', '$prod_fn', '$run_fn'"
+    
+    else
+        tree="'weather', '$name', '$prod_fn'"
+    fi
+
+    add_layers_wms  "$tree" \
+                    $NewWorld_uid \
+                    $NewWorld_gid \
+                    null \
+                    $(date -d "$run GMT $hr hours" "+%FT%TZ" -u) \
+                    $(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u) \
+                    1 \
+                    "${name}${hr}" \
+                    "" \
+                    "" \
+                    "${www}/cgi-bin/${dsname}_wms?HOUR=${hr}&RUN=${run}" \
+                    "$name" \
+                    "image/png" \
+                    1 \
+                    null \
+                    1 \
+                    "<img src='${www}/kml/images/${name}.png' />" \
+                    0 \
+                    0
+}
+
+
+################################################################################
+# function to get the product fullname from input like 450t
+################################################################################
+
+getrun_fn() {
+
+    local run="$1"
+    
+    while read run_n run_fn
+    do
+        if [[ "$run_n" == "$run" ]]
+        then
+            echo "$run_fn"
+            return
+        fi
+    done <<< "$times"
+
+
+    ##### if we get here theres an error #####
+
+    return 1
+}
+
+################################################################################
+# function to get the product fullname from input like 450t
+################################################################################
+
+getlev_fn() {
+    local name="$1"
+    local level="${name%%[^0-9]*}"
+    
+    if [ -n "$level" ]
+    then
+        while read lev_n lev_fn
+        do
+            if [[ "$lev_n" == "$level" ]]
+            then
+                echo "$lev_fn"
+                return
+            fi
+        done <<< "$levels"
+    elif [ -n "$levels2" ]
+    then
+        while read lev_n lev_fn
+        do
+            # for now there can be no match we just return the first one
+            #if [[ "$lev_n" == "$level" ]]
+            #then
+                echo "$lev_fn"
+                return
+            #fi
+        done <<< "$levels2"
+
+    else
+
+        return
+    fi
+
+
+    ##### if we get here theres an error #####
+
+    return 1
+}
+
+
+################################################################################
+# function to get the product fullname from input like 450t
+################################################################################
+
+getprod_fn() {
+
+    local name="$1"
+    local level="${name%%[^0-9]*}"
+    local prod_n
+    local prod_fn
+
+    if [ -n "$level" ]
+    then
+        prod="${name##*[0-9]}"
+
+        ref="products$lev_n"
+        while read prod_n prod_fn
+        do
+            if [[ "$prod_n" == "$prod" ]]
+            then
+                echo "$prod_fn"
+                return
+            fi
+        done <<< "${!ref}"
+        
+    elif [ -n "$levels2" ]
+    then
+        while read prod_n prod_fn
+        do
+            if [[ "$prod_n" == "$name" ]]
+            then
+                echo "$prod_fn"
+                return
+            fi
+        done <<< "$products2"
+
+    elif [ -n "$products" ]
+    then
+        while read prod_n prod_fn
+        do
+           if [[ "$prod_n" == "$name" ]]
+            then
+                echo "$prod_fn"
+                return
+            fi
+        done <<< "$products"
+    fi
+
+    ##### if we get here theres an error #####
+
+    return 1
+}
+
+
+
