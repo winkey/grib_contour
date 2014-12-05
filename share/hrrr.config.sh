@@ -65,7 +65,9 @@ levels2="0 0 - none"
 products2="pwat Perceptible Water
 pmsl Mean Sea Level Pressure
 pcp 1 Hour Total Precipitation
-cape Convective Available Potential Energy"
+cape Convective Available Potential Energy
+refd Reflectivity
+maxrefd Max Reflectivity"
 
 times="latest Latest
 00 00Z
