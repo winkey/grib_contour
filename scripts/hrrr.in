@@ -179,4 +179,21 @@ then
 	rm "$path"
 fi
 
+#### plot REFD #####
+
+if [[ "$prod" == "REFD" ]]
+then
+	plot "$path" "refd" 1 3 $hour 01
+	rm "$path"
+fi
+
+#### plot MAXREf #####
+
+if [[ "$prod" == "MAXREF" ]]
+then
+	
+	plot "$path" "maxrefd" 1 3 $hour 01
+	rm "$path"
+fi
+
 

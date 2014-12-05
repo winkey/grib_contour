@@ -210,14 +210,9 @@ appendNewWorld () {
 
     local frames="${wwwdisk}/kml/${dsname}/${run}/${name}.kml"
 
-##### does the folder structure exsist? #####
 
-psql <<EOF
-\x
-SELECT * FROM foo;
-EOF
 
-##### lock the file #####
+    ##### lock the file #####
 	
 	local lock="$locdir/$script.$run.$name.pg.lock"
 	echo lock $lock

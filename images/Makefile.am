@@ -65,6 +65,8 @@ www_DATA = \
 	perdww.png \
 	hghtswl.png \
 	perdswl.png \
+	refd.png \
+	maxrefd.png \
 	htsgw.png \
 	hi.png \
 	lo.png
@@ -239,4 +241,11 @@ perdswl.png: ../share/perdww.scale Makefile ../scripts/makekey.sh
 
 htsgw.png: ../share/htsgw.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/htsgw.scale "m" htsgw.png
+
+refd.png: ../share/refd.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/refd.scale "dBZ" refd.png
+
+maxrefd.png: ../share/maxrefd.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/maxrefd.scale "dBZ" maxrefd.png
+
 
