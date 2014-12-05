@@ -181,18 +181,18 @@ fi
 
 #### plot REFD #####
 
-if [[ "$prod" == "REFD" ]]
+if [[ "$prod" == "REFD1000" ]]
 then
-	plot "$path" "refd" 1 5 $hour 01
+	plot "$path" "refd1000" 1 5 $hour 01
 	rm "$path"
 fi
 
 #### plot MAXREf #####
 
-if [[ "$prod" == "MAXREF" ]]
+if [[ "$prod" == "MAXREF1000" ]]
 then
 	
-	plot "$path" "maxrefd" 1 5 $hour 01
+	plot "$path" "maxrefd1000" 1 5 $hour 01
 	rm "$path"
 fi
 

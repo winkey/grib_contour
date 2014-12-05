@@ -56,7 +56,11 @@ levels2="0 0 - none"
 
 products2="pwat Perceptible Water
 pmsl Mean Sea Level Pressure
-cape Convective Available Potential Energy"
+cape Convective Available Potential Energy
+refc Composite Reflectivity
+refd1000 Reflectivity at 1 km above ground level
+refd4000 Reflectivity at 4 km above ground level"
+
 
 times="latest Latest
 00 00Z

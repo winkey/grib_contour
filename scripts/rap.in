@@ -148,4 +148,28 @@ then
 	rm "$path"
 fi
 
+#### plot REFC #####
+
+if [[ "$prod" == "REFC" ]]
+then
+	plot "$path" "refc" 1 5 $hour 01
+	rm "$path"
+fi
+
+#### plot REFD #####
+
+if [[ "$prod" == "REFD1000" ]]
+then
+	plot "$path" "refd1000" 1 5 $hour 01
+	rm "$path"
+fi
+
+#### plot REFD #####
+
+if [[ "$prod" == "REFD4000" ]]
+then
+	plot "$path" "refd4000" 1 5 $hour 01
+	rm "$path"
+fi
+
 

@@ -66,8 +66,8 @@ products2="pwat Perceptible Water
 pmsl Mean Sea Level Pressure
 pcp 1 Hour Total Precipitation
 cape Convective Available Potential Energy
-refd Reflectivity
-maxrefd Max Reflectivity"
+refd1000 Reflectivity at 1 km above ground level
+maxrefd1000 Maximum reflectivity at 1 km above ground level"
 
 times="latest Latest
 00 00Z

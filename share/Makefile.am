@@ -39,7 +39,10 @@ pkgdata_DATA = \
 	prob25.scale \
 	prob32.scale \
 	refd.scale \
-	maxrefd.scale
+	refc.scale \
+	refd1000.scale \
+	refd4000.scale \
+	maxrefd1000.scale
 	
 	
 dist_pkgdata_DATA = \
@@ -173,7 +176,16 @@ hghtswl.scale: hghtww.scale Makefile
 perdswl.scale: perdww.scale Makefile
 	cp $(srcdir)/perdww.scale $(srcdir)/perdswl.scale
 
-maxrefd.scale: refd.scale Makefile
-	cp $(srcdir)/refd.scale $(srcdir)/maxrefd.scale
+refd1000.scale: refd.scale Makefile
+	cp $(srcdir)/refd.scale $(srcdir)/refd1000.scale
+
+refd4000.scale: refd.scale Makefile
+	cp $(srcdir)/refd.scale $(srcdir)/refd4000.scale
+
+refc.scale: refd.scale Makefile
+	cp $(srcdir)/refd.scale $(srcdir)/refc.scale
+
+maxrefd1000.scale: refd.scale Makefile
+	cp $(srcdir)/refd.scale $(srcdir)/maxrefd1000.scale
 
 

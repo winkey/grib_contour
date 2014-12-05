@@ -66,7 +66,10 @@ www_DATA = \
 	hghtswl.png \
 	perdswl.png \
 	refd.png \
-	maxrefd.png \
+	refc.png \
+	refd1000.png \
+	refd4000.png \
+	maxrefd1000.png \
 	htsgw.png \
 	hi.png \
 	lo.png
@@ -245,7 +248,16 @@ htsgw.png: ../share/htsgw.scale Makefile ../scripts/makekey.sh
 refd.png: ../share/refd.scale Makefile ../scripts/makekey.sh
 	../scripts/makekey.sh ../share/refd.scale "dBZ" refd.png
 
-maxrefd.png: ../share/maxrefd.scale Makefile ../scripts/makekey.sh
-	../scripts/makekey.sh ../share/maxrefd.scale "dBZ" maxrefd.png
+refd1000.png: ../share/refd1000.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/refd1000.scale "dBZ" refd1000.png
+
+refd4000.png: ../share/refd4000.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/refd4000.scale "dBZ" refd4000.png
+
+refc.png: ../share/refc.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/refc.scale "dBZ" refc.png
+
+maxrefd1000.png: ../share/maxrefd1000.scale Makefile ../scripts/makekey.sh
+	../scripts/makekey.sh ../share/maxrefd1000.scale "dBZ" maxrefd1000.png
 
 
