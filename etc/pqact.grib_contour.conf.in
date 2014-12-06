@@ -64,16 +64,16 @@ CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0
 	EXEC	/usr/local/bin/rap.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 
-CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFC)/0 - NONE!.*
+CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFC)/0 - NONE!
 	FILE	data/conduit/\1/\2.\3.\4.0.grib2
 
-CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFC)/0 - NONE!.*
+CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFC)/0 - NONE!
 	EXEC	/usr/local/bin/rap.sh data/conduit/\1/\2.\3.\4.0.grib2 \2 \3 \4 0
 
-CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFD)/([14]000) m HGHT!.*
+CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFD)/([14]000) m HGHT!
 	FILE	data/conduit/\1/\2.\3.\4\5.0.grib2
 
-CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFD)/([14]000) m HGHT!.*
+CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFD)/([14]000) m HGHT!
 	EXEC	/usr/local/bin/rap.sh data/conduit/\1/\2.\3.\4\5.0.grib2 \2 \3 \4\5 0
 
 
