@@ -181,9 +181,43 @@ EOL
 ## function to delete a folders contents recursively by name
 
 
-# layers_delete_all_contents_by_name
+layers_delete_all_contents_by_name() {
 
+    mypsql << EOL
 
+    select  layers_delete_all_contents_by_name( array[$1]);
+EOL
+}
+
+###############################################################################
+## @brief 
+##
+## @param name  the name of the product ie: 925hgt
+##
+## @details
+## global vars
+## @param run       the run of the model "00"
+###############################################################################
+
+mkrootNewWorld() {
+    local $name="$1"
+
+    # perhaps check if the tree exssists
+    # create the tree?
+
+    local tree=$(get_tree "$name" "$run")
+
+    ##### delete the old layers #####
+
+    layers_delete_all_contents_by_name "$tree"
+
+    local tree=$(get_tree "$name" "latest")
+
+    ##### delete the old layers #####
+
+    layers_delete_all_contents_by_name "$tree"
+
+}
 
 ###############################################################################
 ## @brief function to add the new framre to the NewWorld Animation
@@ -257,7 +291,69 @@ appendNewWorld () {
         addtogroup  $NewWorld_uid $NewWorld_gid
     fi
 
-    ##### get the level #####
+    ##### add the layer to the current run folder #####
+
+    local tree=$(get_tree "$name" "$run")
+
+    add_layers_wms  "$tree" \
+                    $NewWorld_uid \
+                    $NewWorld_gid \
+                    null \
+                    $(date -d "$run GMT $hr hours" "+%FT%TZ" -u) \
+                    $(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u) \
+                    1 \
+                    "${name}${hr}" \
+                    "" \
+                    "" \
+                    "${www}/cgi-bin/${dsname}_wms?HOUR=${hr}&RUN=${run}" \
+                    "$name" \
+                    "image/png" \
+                    1 \
+                    null \
+                    1 \
+                    "<img src='${www}/kml/images/${name}.png' />" \
+                    0 \
+                    0
+
+    ##### add the layer to the latest run folder #####
+
+    local tree=$(get_tree "$name" "latest")
+
+    add_layers_wms  "$tree" \
+                    $NewWorld_uid \
+                    $NewWorld_gid \
+                    null \
+                    $(date -d "$run GMT $hr hours" "+%FT%TZ" -u) \
+                    $(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u) \
+                    1 \
+                    "${name}${hr}" \
+                    "" \
+                    "" \
+                    "${www}/cgi-bin/${dsname}_wms?HOUR=${hr}&RUN=${run}" \
+                    "$name" \
+                    "image/png" \
+                    1 \
+                    null \
+                    1 \
+                    "<img src='${www}/kml/images/${name}.png' />" \
+                    0 \
+                    0
+
+
+}
+
+###############################################################################
+## @brief function to figure out the array to pass to postgres that descripes a
+##  location ibn the layer tree
+##
+## @param name  the name of the product ie: 925hgt
+## @param run       the run of the model "00"
+
+###############################################################################
+
+get_tree() {
+    local name="$1"
+    local run="$2"
 
     local level=${name%%[^0-9]*}
     
@@ -284,27 +380,8 @@ appendNewWorld () {
         tree="'weather', '$name', '$prod_fn'"
     fi
 
-    add_layers_wms  "$tree" \
-                    $NewWorld_uid \
-                    $NewWorld_gid \
-                    null \
-                    $(date -d "$run GMT $hr hours" "+%FT%TZ" -u) \
-                    $(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u) \
-                    1 \
-                    "${name}${hr}" \
-                    "" \
-                    "" \
-                    "${www}/cgi-bin/${dsname}_wms?HOUR=${hr}&RUN=${run}" \
-                    "$name" \
-                    "image/png" \
-                    1 \
-                    null \
-                    1 \
-                    "<img src='${www}/kml/images/${name}.png' />" \
-                    0 \
-                    0
+    echo "$tree"
 }
-
 
 ################################################################################
 # function to get the product fullname from input like 450t
