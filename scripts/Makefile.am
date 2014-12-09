@@ -18,6 +18,7 @@ bin_SCRIPTS = \
 	mkkml.sh \
 	mkmaster.sh \
 	mklatest.sh \
+	NewWorld.bash \
 	mknewworld.sh \
 	mkkml-latest.sh \
 	mkkml_nolevel.sh \
@@ -59,6 +60,7 @@ EXTRA_DIST = \
 	mkkml.in \
 	mkmaster.in \
 	mklatest.in \
+	NewWorld.bash.in \
 	mknewworld.in \
 	mkkml-latest.in \
 	mkkml_nolevel.in \
@@ -99,6 +101,7 @@ dist_bin_SCRIPTS = \
 	mkkml.sh \
 	mkmaster.sh \
 	mklatest.sh \
+	NewWorld.bash \
 	mknewworld.sh \
 	mkkml-latest.sh \
 	mkkml_nolevel.sh \
@@ -246,6 +249,10 @@ mkmaster.sh: mkmaster.in Makefile
 mklatest.sh: mklatest.in Makefile
 	$(do_subst) < $(srcdir)/mklatest.in > mklatest.sh
 	chmod +x mklatest.sh
+
+NewWorld.bash: NewWorld.bash.in Makefile
+	$(do_subst) < $(srcdir)/NewWorld.bash.in > NewWorld.bash
+	chmod +x NewWorld.bash
 
 mknewworld.sh: mknewworld.in Makefile
 	$(do_subst) < $(srcdir)/mknewworld.in > mknewworld.sh

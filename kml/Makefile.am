@@ -205,6 +205,7 @@ ukmet-latest.kml: ../scripts/mkkml-latest.sh ../share/ukmet.config.sh Makefile
 
 master.kml: ../scripts/mkmaster.sh Makefile
 	../scripts/mkmaster.sh > master.kml
+	../scripts/mknewworld.sh
 
 latest.kml: ../scripts/mklatest.sh Makefile
 	../scripts/mklatest.sh > latest.kml
