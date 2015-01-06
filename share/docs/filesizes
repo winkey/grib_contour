@@ -1,0 +1,9 @@
+(total=0) ;for size in $(grep watchlog_20141102 -e "Nov 03" | grep -e "FNMOC\|CONDUIT\|NGRID\|HDS" | sed 's/.*INFO:[ ]*\([0-9]*\) .*/\1/' ) ; do (total+=size); done ; echo $(($(($total / 1024)) / 1024))
+
+
+210087443335
+
+
+
+[11:38:29] <winkey> grep watchlog_20141102 -e "Nov 03" | grep -e "FNMOC\|CONDUIT\|NGRID\|HDS" | sed 's/.*INFO:[ ]*\([0-9]*\) .*/\1/' | paste -sd+ | bc
+

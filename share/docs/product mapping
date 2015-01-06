@@ -1,0 +1,226 @@
+#!/bin/bash
+
+#plottype feed_name  our_name interval time_valid extra_args dependancys
+
+
+
+
+
+
+
+
+
+
+
+#rtma_ak
+prodmap="   plot,       TMPK,       t,      1,      01, ,
+            plot,       DWPK,       dp,     10,     01, ,
+            windplot,   UREL,       wind,   5,      01, ,   VREL"
+
+
+
+
+
+
+path="$1"
+run="$2"
+hour="$3"
+prod="$4"
+level="$5"
+tmp="/tmp"
+
+##### fixme the config mus tbe loaded  #####
+
+source @PKGDATADIR@/${config}
+source @bindir@/generic2.sh
+
+if [[ "$level" == "0" ]]
+then
+    level=""
+fi
+
+if [[ "$hour" == "" ]]
+then
+	hour="00"
+fi
+
+################################################################################
+# fixme list
+#
+# other scripts need to know what level "" is
+#
+# sometime the time a frame is valid for changes, for instance there is more gfs
+# Frames we just dont build them, but it goes from 3 to 6 hour intervals after a
+# week
+#
+# this assumes only 1 dep WE NREED TO REWRITE FOR THE FUTURE
+#
+# the diff scripts realy wont work without a hardcoded hack like with thickness
+#
+# fixme what if its a huge grib with multiple messages
+################################################################################
+
+
+thick() {
+    local plottype="$1"
+    local feed_n="$2"
+    local our_n="$3"
+    local interval="$4"
+    local valid="$5"
+    local extra="$6"
+    local deps="$7"
+    local tlevel="$8"
+
+	ppath="${path/HGHT.1000/HGHT.${1}}"
+	if [[ -f $ppath ]]
+	then
+
+		diffplot "$ppath" "$path" "${tlevel}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+		
+	fi
+}
+
+thick2() {
+    local plottype="$1"
+    local feed_n="$2"
+    local our_n="$3"
+    local interval="$4"
+    local valid="$5"
+    local extra="$6"
+    local deps="$7"
+    local tlevel="$8"
+
+	ppath="${path/HGHT.${1}/HGHT.1000}"
+	if [[ -f $ppath ]]
+	then
+
+		diffplot "$path" "$ppath" "${tlevel}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+		
+		
+	fi
+}
+
+################################################################################
+# main
+################################################################################
+
+do_generic() {
+
+
+    local num_matches=0
+    local num_depmatches=0
+
+    ##### loop over the product map #####
+
+
+    IFS=$IFS, while read plottype feed_n our_n interval valid extra deps
+    do
+
+        ##### product match? #####
+
+        if [[ "$feed_n" == "$prod" ]]
+        then
+            
+            ##### hard code in a thickness fix #####
+            
+            if [[ "$our_n" == "thk" ]]
+            then
+                ##### plot thickness #####
+	
+            	if [[ $level == 1000 ]]
+            	then
+		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 925
+		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 850
+		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 700
+		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 500
+	            else
+		            if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
+		            then
+			
+			            thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" $level
+		            fi
+            	fi
+            
+            ##### does it have any deps? #####
+
+            elif [ -n "$deps" ]
+            then
+
+                ##### do we have the dep yet? #####
+
+                ppath=$(echo "$path" | sed "s/${prod}/${deps}/")
+	            if [[ -f "$ppath" ]]
+            	then
+
+
+                case "$plottype" in
+                    andplot)
+                        andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$valid" "$extra"
+                        ;;
+                    windplot)
+                        windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                        ;;
+                    diffplot)
+                        diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+                        ;;
+                    *)
+                        ;;
+                esac
+
+                ##### fixme is it safe to delete both files? #####
+            
+            ##### no deps #####
+
+            else
+
+                ##### fixme what if its a huge grib with multiple messages #####
+    ..
+
+                case "$plottype" in
+                    plot)
+                        plot "$path" "${level}$our_n" 1 $interval $hour "$valid"  "$extra"
+                        ;;
+                    windplot)
+                        windplot "$path" "$path" "${level}wind" 1.0 1.1 $interval $hour "$valid" "$extra"
+                        ;;
+                    *)
+                        ;;
+                esac
+          
+                ##### fixme does anything else need this file? #####
+
+            fi
+
+        ##### does the dep match? #####
+
+        elif [[ "$deps" == "$prod" ]]
+        then
+            ppath=$(echo "$path" | sed "s/${prod}/${feed_n}/")
+	        if [[ -f "$ppath" ]]
+            	then
+                
+                case "$plottype" in
+                    andplot)
+                        andplot  "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                        ;;
+                    windplot)
+                        windplot "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                        ;;
+                    diffplot)
+                        diffplot "$ppath" "$path" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+                        ;;
+                    *)
+                        ;;
+                esac
+      	fi
+
+
+
+    done
+
+
+    
+
+}
+do_generic
+

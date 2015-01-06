@@ -122,5 +122,19 @@ runs="latest Latest
 23 23Z"
 
 
+##### HRRR MAPPING #####
+
+prodmap="   plot,       HGHT,       hgt,    20,     01, -h,
+            diffplot,   HGHT,       thk,    20,     01, ,   HGHT
+            plot,       TMPK,       t,      1,      01, ,
+            plot,       RELH,       rh,     10,     01, ,
+            windplot,   UREL,       wind,   5,      01, ,   VREL
+            plot,       CAPE,       cape,   200,    01, ,
+            plot,       PWTR,       pwat,   4,      01, -I,
+            plot,       P01M,       pcp,    4,      01, -I,
+            plot,       PMSL,       pmsl,   200,    01, -h,
+            plot,       REFD1000    refd1000,   5,  01, ,
+            plot,       MAXREF1000  maxrefd1000,   5,  01, ,"
+
 
   

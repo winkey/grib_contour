@@ -95,23 +95,22 @@ runs="latest Latest
 18 18Z"
 
 
-#### this is a mapping idea to simplify the code but its likely wrong, the combo products perhaps need a seperate map or more columns #####
 
-productmap="HGHT hgt
-TMPK t
-RELH rh
-UREL UREL
-VREL VREL
-CAPE cape
-PWTR pwat
-P03M pcp
-WXTS snow
-WXTZ frez
-WXTR rain
-WXTP pellet
-PMSL pmsl
-POPF03 popf
-TSTM03 tstm
-POP03 pop
-POPZ03 popz"
+prodmap="   plot,       HGHT,       hgt,    20,     03, -h,
+            diffplot,   HGHT,       thk,    20,     03, ,   HGHT
+            plot,       TMPK,       t,      1,      03, ,
+            plot,       RELH,       rh,     10,     03, ,
+            windplot,   UREL,       wind,   5,      03, ,   VREL
+            plot,       CAPE,       cape,   200,    03, ,
+            plot,       PWTR,       pwat,   4,      03, -I,
+            plot,       P03M,       pcp,    4,      03, -I,
+            andplot,    WXTS,       snow,   4,      03, -I, P03M
+            andplot,    WXTZ,       frez,   4,      03, -I, P03M
+            andplot,    WXTR,       rain,   4,      03, -I, P03M
+            andplot,    WXTP,       pellet, 4,      03, -I, P03M
+            plot,       PMSL,       pmsl,   200,    03, -h,
+            plot,       POPF03,     popf,   10,     03, ,
+            plot,       TSTM03,     tstm,   10,     03, ,
+            plot,       POP03,      pop,    10,     03, ,
+            plot,       POPZ03,     popz,   10,     03, ,"
 

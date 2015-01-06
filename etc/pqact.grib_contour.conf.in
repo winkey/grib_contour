@@ -4,14 +4,14 @@
 ################################################################################
 
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300|200) [h]*Pa PRES!
-	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
+	FILE	data/conduit/gfs/\2.\3.\4.\5.grib2
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300|200) [h]*Pa PRES!
-	EXEC	@bindir@/gfs.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
+	EXEC	@bindir@/gfs.sh data/conduit/gfs/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS06|WXTZ06|WXTR06|WXTP06|P06M|PMSL)/(0) - NONE!
-	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
+	FILE	data/conduit/gfs/\2.\3.\4.\5.grib2
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS06|WXTZ06|WXTR06|WXTP06|P06M|PMSL)/(0) - NONE!
-	EXEC	@bindir@/gfs.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
+	EXEC	@bindir@/gfs.sh data/conduit/gfs/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 ################################################################################
 # nam conus model
@@ -54,27 +54,27 @@ NGRID	^[LM]DG[A-Z]98 KNHC .* !grib2/ncep/FORECASTER/#255/([0-9]{8})([0-9][0-9])0
 #grid 252 is 20km res
 #grid 236 is 40km res
 CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300|200) [h]*Pa PRES!
-	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
+	FILE	data/conduit/rap/\2.\3.\4.\5.grib2
 CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300|200) [h]*Pa PRES!
-	EXEC	/usr/local/bin/rap.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
+	EXEC	/usr/local/bin/rap.sh data/conduit/rap/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(CAPE|PWTR|MMSL)/(0) - NONE!
-	FILE	data/conduit/\1/\2.\3.\4.\5.grib2
+	FILE	data/conduit/rap/\2.\3.\4.\5.grib2
 CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(CAPE|PWTR|MMSL)/(0) - NONE!
-	EXEC	/usr/local/bin/rap.sh data/conduit/\1/\2.\3.\4.\5.grib2 \2 \3 \4 \5
+	EXEC	/usr/local/bin/rap.sh data/conduit/rap/\2.\3.\4.\5.grib2 \2 \3 \4 \5
 
 
 CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFC)/0 - NONE!
-	FILE	data/conduit/\1/\2.\3.\4.0.grib2
+	FILE	data/conduit/rap/\2.\3.\4.0.grib2
 
 CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFC)/0 - NONE!
-	EXEC	/usr/local/bin/rap.sh data/conduit/\1/\2.\3.\4.0.grib2 \2 \3 \4 0
+	EXEC	/usr/local/bin/rap.sh data/conduit/rap/\2.\3.\4.0.grib2 \2 \3 \4 0
 
 CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFD)/([14]000) m HGHT!
-	FILE	data/conduit/\1/\2.\3.\4\5.0.grib2
+	FILE	data/conduit/rap/\2.\3.\4\5.0.grib2
 
 CONDUIT	^data/nccf/com/(rap/prod/rap.[0-9]*)/rap.t([0-9][0-9])z.awp252pgrb[af][0-9nl]*.grib2 !grib2/ncep/RUC2/#000/[0-9]*F0([0-9]*)/(REFD)/([14]000) m HGHT!
-	EXEC	/usr/local/bin/rap.sh data/conduit/\1/\2.\3.\4\5.0.grib2 \2 \3 \4\5 0
+	EXEC	/usr/local/bin/rap.sh data/conduit/rap/\2.\3.\4\5.0.grib2 \2 \3 \4\5 0
 
 
 

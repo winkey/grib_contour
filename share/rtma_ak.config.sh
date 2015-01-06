@@ -74,4 +74,8 @@ runs="latest Latest
 22 22Z
 23 23Z"
 
+#rtma_ak
+prodmap="   plot,       TMPK,       t,      1,      01, ,
+            plot,       DWPK,       dp,     10,     01, ,
+            windplot,   UREL,       wind,   5,      01, ,   VREL"
 

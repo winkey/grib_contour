@@ -185,7 +185,7 @@ windplot () {
 	local interval=$6
 	local timee=$7
 	local incr=$8
-	local extra="$7"
+	local extra="$9"
 
     local zip
     local kml

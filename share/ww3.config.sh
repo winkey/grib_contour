@@ -38,4 +38,12 @@ runs="latest Latest
 12 12Z
 18 18Z"
 
+##### ww3
+
+prodmap="   plot,       wnd_wav_ht, hghtww, .5,     03, ,
+            plot,      wnd_wav_per, perdww, 1,      03, ,
+            plot,       sig_wav_ht, htsgw,  .5      03, ,
+            plot       swl_wav_ht, hghtswl, .5      03, ,
+            plot      swl_wav_per, perdswl, 1       03, ,"
+
 

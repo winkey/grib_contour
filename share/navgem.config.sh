@@ -81,3 +81,14 @@ runs="latest Latest
 12 12Z"
 
 
+#navgem
+prodmap="   plot,       geop_ht,    hgt,    20,     03, -h,
+            diffplot,   geop_ht,    thk,    20,     03, ,   geop_ht
+            plot,       air_temp,   t,      1,      03, ,
+            plot,       rltv_hum,   rh,     10,     03, ,
+            windplot,   wnd_ucmp,   wind,   5,      03, ,   wnd_vcmp
+            plot,       ttl_prcp,   pcp,    4,      03, -I,
+            plot,       pres,       pmsl,   200,    03, -h,"
+
+
+
