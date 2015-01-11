@@ -5,14 +5,12 @@ wwwdisk = @WWWDISK@
 bin_SCRIPTS = \
 	kml.bash \
 	generic2.sh \
-	gfs.sh \
 	sst.sh \
 	nam_west.sh \
 	nam_east.sh \
 	nam_hi.sh \
 	nam_ak.sh \
 	nam_pr.sh \
-	nam_conus.sh \
 	hrrr.sh \
 	makekey.sh \
 	mkkml.sh \
@@ -25,18 +23,9 @@ bin_SCRIPTS = \
 	mkkml_nolevel-latest.sh \
 	checkpqact.conf.sh \
 	forecaster.sh \
-	rap.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
-	navgem.sh \
-	coamps_cent_am.sh \
-	coamps_ne_pac.sh \
-	coamps_w_atl.sh \
-	coamps_socal.sh \
-	coamps_cencoos.sh \
-	ocean.sh \
 	ww.sh \
-	ww3.sh \
 	ecmwf.sh \
 	ukmet.sh
 
@@ -47,14 +36,12 @@ CLEANFILES = $(bin_SCRIPTS)
 EXTRA_DIST = \
 	kml.bash.in \
 	generic2.in \
-	gfs.in \
 	sst.in \
 	nam_west.in \
 	nam_east.in \
 	nam_hi.in \
 	nam_ak.in \
 	nam_pr.in \
-	nam_conus.in \
 	hrrr.in \
 	makekey.in \
 	mkkml.in \
@@ -66,18 +53,9 @@ EXTRA_DIST = \
 	mkkml_nolevel.in \
 	mkkml_nolevel-latest.in \
 	forecaster.in \
-	rap.in \
 	rtma_ak.in \
 	rtma_conus.in \
-	navgem.in \
-	coamps_cent_am.in \
-	coamps_ne_pac.in \
-	coamps_w_atl.in \
-	coamps_socal.in \
-	coamps_cencoos.in \
-	ocean.in \
 	ww.in \
-	ww3.in \
 	ecmwf.in \
 	ukmet.in
 
@@ -88,14 +66,12 @@ EXTRA_DIST = \
 dist_bin_SCRIPTS = \
 	kml.bash \
 	generic2.sh \
-	gfs.sh \
 	sst.sh \
 	nam_west.sh \
 	nam_east.sh \
 	nam_hi.sh \
 	nam_ak.sh \
 	nam_pr.sh \
-	nam_conus.sh \
 	hrrr.sh \
 	makekey.sh \
 	mkkml.sh \
@@ -108,18 +84,9 @@ dist_bin_SCRIPTS = \
 	mkkml_nolevel-latest.sh \
 	checkpqact.conf.sh \
 	forecaster.sh \
-	rap.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
 	ww.sh \
-	ww3.sh \
-	navgem.sh \
-	coamps_cent_am.sh \
-	coamps_ne_pac.sh \
-	coamps_w_atl.sh \
-	coamps_socal.sh \
-	coamps_cencoos.sh \
-	ocean.sh \
 	ecmwf.sh \
 	ukmet.sh 
 
@@ -137,10 +104,6 @@ kml.bash: kml.bash.in Makefile
 generic2.sh: generic2.in Makefile
 	$(do_subst) < $(srcdir)/generic2.in > generic2.sh
 	chmod +x generic2.sh
-
-gfs.sh: gfs.in Makefile
-	$(do_subst) < $(srcdir)/gfs.in > gfs.sh
-	chmod +x gfs.sh
 
 sst.sh: sst.in Makefile
 	$(do_subst) < $(srcdir)/sst.in > sst.sh
@@ -166,17 +129,9 @@ nam_ak.sh: nam_ak.in Makefile
 	$(do_subst) < $(srcdir)/nam_ak.in > nam_ak.sh
 	chmod +x nam_ak.sh
 
-nam_conus.sh: nam_conus.in Makefile
-	$(do_subst) < $(srcdir)/nam_conus.in > nam_conus.sh
-	chmod +x nam_conus.sh
-
 hrrr.sh: hrrr.in Makefile
 	$(do_subst) < $(srcdir)/hrrr.in > hrrr.sh
 	chmod +x hrrr.sh
-
-rap.sh: rap.in Makefile
-	$(do_subst) < $(srcdir)/rap.in > rap.sh
-	chmod +x rap.sh
 
 forecaster.sh: forecaster.in Makefile
 	$(do_subst) < $(srcdir)/forecaster.in > forecaster.sh
@@ -197,38 +152,6 @@ rtma_conus.sh: rtma_conus.in Makefile
 ww.sh: ww.in Makefile
 	$(do_subst) < $(srcdir)/ww.in > ww.sh
 	chmod +x ww.sh
-
-ww3.sh: ww3.in Makefile
-	$(do_subst) < $(srcdir)/ww3.in > ww3.sh
-	chmod +x ww3.sh
-
-navgem.sh: navgem.in Makefile
-	$(do_subst) < $(srcdir)/navgem.in > navgem.sh
-	chmod +x navgem.sh
-
-coamps_cent_am.sh: coamps_cent_am.in Makefile
-	$(do_subst) < $(srcdir)/coamps_cent_am.in > coamps_cent_am.sh
-	chmod +x coamps_cent_am.sh
-
-coamps_ne_pac.sh: coamps_ne_pac.in Makefile
-	$(do_subst) < $(srcdir)/coamps_ne_pac.in > coamps_ne_pac.sh
-	chmod +x coamps_ne_pac.sh
-
-coamps_w_atl.sh: coamps_w_atl.in Makefile
-	$(do_subst) < $(srcdir)/coamps_w_atl.in > coamps_w_atl.sh
-	chmod +x coamps_w_atl.sh
-
-coamps_socal.sh: coamps_socal.in Makefile
-	$(do_subst) < $(srcdir)/coamps_socal.in > coamps_socal.sh
-	chmod +x coamps_socal.sh
-
-coamps_cencoos.sh: coamps_cencoos.in Makefile
-	$(do_subst) < $(srcdir)/coamps_cencoos.in > coamps_cencoos.sh
-	chmod +x coamps_cencoos.sh
-
-ocean.sh: ocean.in Makefile
-	$(do_subst) < $(srcdir)/ocean.in > ocean.sh
-	chmod +x ocean.sh
 
 ecmwf.sh: ecmwf.in Makefile
 	$(do_subst) < $(srcdir)/ecmwf.in > ecmwf.sh
