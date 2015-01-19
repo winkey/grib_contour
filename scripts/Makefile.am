@@ -11,12 +11,9 @@ bin_SCRIPTS = \
 	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
-	mklatest.sh \
 	NewWorld.bash \
 	mknewworld.sh \
-	mkkml-latest.sh \
 	mkkml_nolevel.sh \
-	mkkml_nolevel-latest.sh \
 	checkpqact.conf.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
@@ -37,12 +34,9 @@ EXTRA_DIST = \
 	makekey.in \
 	mkkml.in \
 	mkmaster.in \
-	mklatest.in \
 	NewWorld.bash.in \
 	mknewworld.in \
-	mkkml-latest.in \
 	mkkml_nolevel.in \
-	mkkml_nolevel-latest.in \
 	rtma_ak.in \
 	rtma_conus.in \
 	ww.in \
@@ -62,12 +56,9 @@ dist_bin_SCRIPTS = \
 	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
-	mklatest.sh \
 	NewWorld.bash \
 	mknewworld.sh \
-	mkkml-latest.sh \
 	mkkml_nolevel.sh \
-	mkkml_nolevel-latest.sh \
 	checkpqact.conf.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
@@ -154,10 +145,6 @@ mkmaster.sh: mkmaster.in Makefile
 	$(do_subst) < $(srcdir)/mkmaster.in > mkmaster.sh
 	chmod +x mkmaster.sh
 
-mklatest.sh: mklatest.in Makefile
-	$(do_subst) < $(srcdir)/mklatest.in > mklatest.sh
-	chmod +x mklatest.sh
-
 NewWorld.bash: NewWorld.bash.in Makefile
 	$(do_subst) < $(srcdir)/NewWorld.bash.in > NewWorld.bash
 	chmod +x NewWorld.bash
@@ -166,16 +153,8 @@ mknewworld.sh: mknewworld.in Makefile
 	$(do_subst) < $(srcdir)/mknewworld.in > mknewworld.sh
 	chmod +x mknewworld.sh
 
-mkkml-latest.sh: mkkml-latest.in Makefile
-	$(do_subst) < $(srcdir)/mkkml-latest.in > mkkml-latest.sh
-	chmod +x mkkml-latest.sh
-
 mkkml_nolevel.sh: mkkml_nolevel.in Makefile
 	$(do_subst) < $(srcdir)/mkkml_nolevel.in > mkkml_nolevel.sh
 	chmod +x mkkml_nolevel.sh
-
-mkkml_nolevel-latest.sh: mkkml_nolevel-latest.in Makefile
-	$(do_subst) < $(srcdir)/mkkml_nolevel-latest.in > mkkml_nolevel-latest.sh
-	chmod +x mkkml_nolevel-latest.sh
 
 
