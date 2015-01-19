@@ -187,6 +187,8 @@ EXTRA_DIST = \
 	ecmwf.in \
 	ukmet.in
 
+
+#fixme i am not built and can be cleaned scripts/checkpqact.conf.sh
 dist_bin_SCRIPTS = \
 	kml.bash \
 	generic2.sh \
@@ -194,11 +196,8 @@ dist_bin_SCRIPTS = \
 	scour_contour.sh \
 	sst.sh \
 	makekey.sh \
-	mkkml.sh \
-	mkmaster.sh \
 	NewWorld.bash \
 	mknewworld.sh \
-	mkkml_nolevel.sh \
 	checkpqact.conf.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \

@@ -42,6 +42,7 @@ pkgdata_DATA = \
 	refc.scale \
 	refd1000.scale \
 	refd4000.scale \
+	configs.sh \
 	maxrefd1000.scale
 	
 	
@@ -75,7 +76,6 @@ dist_pkgdata_DATA = \
 	htsgw.scale \
 	hghtswl.scale \
 	perdswl.scale \
-	configs.sh \
 	forecaster.config.sh \
 	gfs.config.sh \
 	nam_conus.config.sh \

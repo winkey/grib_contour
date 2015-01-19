@@ -45,7 +45,7 @@ EXTRA_DIST = \
 
 
 
-
+#fixme i am not built and can be cleaned scripts/checkpqact.conf.sh
 
 dist_bin_SCRIPTS = \
 	kml.bash \
@@ -54,11 +54,8 @@ dist_bin_SCRIPTS = \
 	scour_contour.sh \
 	sst.sh \
 	makekey.sh \
-	mkkml.sh \
-	mkmaster.sh \
 	NewWorld.bash \
 	mknewworld.sh \
-	mkkml_nolevel.sh \
 	checkpqact.conf.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
