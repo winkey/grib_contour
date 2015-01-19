@@ -4,24 +4,6 @@
 
 
 
-
-
-
-
-
-
-
-
-#rtma_ak
-prodmap="   plot,       TMPK,       t,      1,      01, ,
-            plot,       DWPK,       dp,     10,     01, ,
-            windplot,   UREL,       wind,   5,      01, ,   VREL"
-
-
-
-
-
-
 path="$1"
 run="$2"
 hour="$3"
@@ -30,7 +12,7 @@ level="$5"
 config="$6"
 tmp="/tmp"
 
-##### fixme the config mus tbe loaded  #####
+
 
 source @PKGDATADIR@/${config}.config.sh
 source @bindir@/generic2.sh
@@ -40,10 +22,10 @@ then
     level=""
 fi
 
-if [[ "$hour" == "" ]]
-then
-	hour="00"
-fi
+##### remove leading 0's, this also fixes "" #####
+
+hour=$((10#${hour}))
+
 
 ################################################################################
 # fixme list
@@ -102,6 +84,29 @@ thick2() {
 }
 
 ################################################################################
+# function to figure out the time a frame is valid for
+################################################################################
+
+validtime() {
+    curent="$1"
+    validmap="$2"
+    
+    while read til length
+        if ((curent <= til))
+        then
+            break
+        fi
+    done << $(tr "|" "\n" <<< "$validmap")
+
+    echo "$length"
+
+    if ((curent > til))
+    then
+        return 1
+    fi
+}
+
+################################################################################
 # main
 ################################################################################
 
@@ -114,7 +119,7 @@ do_generic() {
     ##### loop over the product map #####
 
 
-    IFS=$IFS, while read plottype feed_n our_n interval valid extra deps
+    IFS=',' while read plottype feed_n our_n interval valid extra deps
     do
 
         ##### product match? #####
@@ -217,11 +222,44 @@ do_generic() {
 
 
 
-    done
+    done <<< "$prodmap"
 
 
     
 
 }
-do_generic
 
+
+dofile () {
+
+    while read lev_n lev_fn
+    do
+
+        IFS=$IFS, while read plottype feed_n our_n interval valid extra deps
+        do
+
+        done <<< "$prodmap"
+
+    done <<< "$levels"$'\n'"$levels2"
+
+}
+
+do_fromsite() {
+
+
+
+
+
+
+
+
+
+
+
+
+if [ -n "$baseurl" ]
+then
+    do_fromsite "$@"
+else
+    do_generic "$@"
+}

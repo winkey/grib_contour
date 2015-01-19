@@ -13,7 +13,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-name=nam_ak
+name=nam_ak_hires
 fullname="5 km Resolution Alaska NAM Forecast Model"
 
 description='Data from <a href=\"http://www.ncep.noaa.gov/\">
@@ -81,8 +81,34 @@ frez 1 Hour Total Freezing Precipitation
 pellet 1 Hour Total Pellet Precipitation"
 
 times="latest Latest
+00 00Z
+06 06Z
+12 12Z
 18 18Z"
 
-runs="18 18Z"
+runs="latest Latest
+00 00Z
+06 06Z
+12 12Z
+18 18Z"
+
+prodmap="   plot,       HGT,        hgt,    20,     03, -h,
+            diffplot,   HGT,        thk,    20,     03, ,   HGHT
+            plot,       TMP,        t,      1,      03, ,
+            plot,       RH,         rh,     10,     03, ,
+            windplot,   UGRD,       wind,   5,      03, ,   VGRD
+            plot,       CAPE,       cape,   200,    03, ,
+            plot,       PWAT,       pwat,   4,      03, -I,
+            plot,       P03M,       pcp,    4,      03, -I,
+            andplot,    WXTS,       snow,   4,      03, -I, P03M
+            andplot,    WXTZ,       frez,   4,      03, -I, P03M
+            andplot,    WXTR,       rain,   4,      03, -I, P03M
+            andplot,    WXTP,       pellet, 4,      03, -I, P03M
+            plot,       PRMSL,       pmsl,   200,    03, -h,
+            plot,       POPF03,     popf,   10,     03, ,
+            plot,       TSTM03,     tstm,   10,     03, ,
+            plot,       POP03,      pop,    10,     03, ,
+            plot,       POPZ03,     popz,   10,     03, ,"
+
 
 

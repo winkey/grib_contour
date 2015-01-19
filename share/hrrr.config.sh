@@ -20,21 +20,10 @@ National Centers for Environmental Prediction</a>
 generated four times daily is contoured and converted to kml
 for forecast hours 0-15 in 1 hour increments.'
 
-levels="200 200 mb
-300 300 mb
-500 500 mb
+levels="500 500 mb
 700 700 mb
 850 850 mb
-925 925 mb
 1000 1000 mb"
-
-products200="wind Wind
-t Temperature
-hgt Heights"
-
-products300="wind Wind
-t Temperature
-hgt Heights"
 
 products500="wind Wind
 t Temperature
@@ -53,7 +42,6 @@ thk Thickness"
 
 products925="wind Wind
 t Temperature
-hgt Heights
 thk Thickness"
 
 products1000="wind Wind
@@ -124,17 +112,17 @@ runs="latest Latest
 
 ##### HRRR MAPPING #####
 
-prodmap="   plot,       HGHT,       hgt,    20,     01, -h,
-            diffplot,   HGHT,       thk,    20,     01, ,   HGHT
-            plot,       TMPK,       t,      1,      01, ,
-            plot,       RELH,       rh,     10,     01, ,
-            windplot,   UREL,       wind,   5,      01, ,   VREL
-            plot,       CAPE,       cape,   200,    01, ,
-            plot,       PWTR,       pwat,   4,      01, -I,
-            plot,       P01M,       pcp,    4,      01, -I,
-            plot,       PMSL,       pmsl,   200,    01, -h,
-            plot,       REFD1000    refd1000,   5,  01, ,
-            plot,       MAXREF1000  maxrefd1000,   5,  01, ,"
+prodmap="   plot,       HGHT,       hgt,    20,     15 1,   -h,
+            diffplot,   HGHT,       thk,    20,     15 1,     ,   HGHT
+            plot,       TMPK,       t,      1,      15 1,     ,
+            plot,       RELH,       rh,     10,     15 1,     ,
+            windplot,   UREL,       wind,   5,      15 1,     ,   VREL
+            plot,       CAPE,       cape,   200,    15 1,     ,
+            plot,       PWTR,       pwat,   4,      15 1,   -I,
+            plot,       P01M,       pcp,    4,      15 1,   -I,
+            plot,       PMSL,       pmsl,   200,    15 1,   -h,
+            plot,       REFD        refd1000,   5,      15 1,     ,
+            plot,       MAXREF1000  maxrefd1000,   5,  15 1, ,"
 
 
   

@@ -92,20 +92,23 @@ runs="latest Latest
 12 12Z
 18 18Z"
 
+
+
 ##### GFS MAPPING #####
 
-#plottype feed_name  our_name interval time_valid extra_args dependancys
-prodmap="   plot,       HGHT,       hgt,    20,     03, -h,
-            diffplot,   HGHT,       thk,    20,     03, ,   HGHT
-            plot,       TMPK,       t,      1,      03, ,
-            plot,       RELH,       rh,     10,     03, ,
-            windplot,   UREL;VREL,  wind,   5,      03, ,
-            plot,       CAPE,       cape,   200,    03, ,
-            plot,       PWTR,       pwat,   4,      03, -I,
-            plot,       P06M,       pcp,    4,      06, -I,
-            andplot,    WXTS06,     snow,   4,      06, -I, P06M
-            andplot,    WXTZ06,     frez,   4,      06, -I, P06M
-            andplot,    WXTR06,     rain,   4,      06, -I, P06M
-            andplot,    WXTP06,     pellet, 4,      06, -I, P06M
-            plot,       PMSL,       pmsl,   200,    03, -h,"
+#plottype            feed_name   our_name  interval time_valid    extra_args dependancys
+prodmap="   plot,       HGHT,       hgt,    20,     237 03|384 12,  -h, 
+            diffplot,   HGHT,       thk,    20,     237 03|384 12,    , HGHT
+            plot,       TMPK,       t,      1,      237 03|384 12,    ,
+            plot,       RELH,       rh,     10,     237 03|384 12,    ,
+            windplot,   UREL;VREL,  wind,   5,      237 03|384 12,    ,
+            plot,       CAPE,       cape,   200,    237 03|384 12,    ,
+            plot,       PWTR,       pwat,   4,      237 03|384 12,  -I,
+            plot,       P06M,       pcp,    4,      240 06,         -I,
+            andplot,    WXTS06,     snow,   4,      240 06,         -I, P06M
+            andplot,    WXTZ06,     frez,   4,      240 06,         -I, P06M
+            andplot,    WXTR06,     rain,   4,      240 06,         -I, P06M
+            andplot,    WXTP06,     pellet, 4,      240 06,         -I, P06M
+            plot,       PMSL,       pmsl,   200,    237 03|384 12,  -h,"
+
 

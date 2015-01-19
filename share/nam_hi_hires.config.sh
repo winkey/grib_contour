@@ -12,8 +12,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
 
-name=nam_pr
-fullname="0.045 Degree Resolution puerto Rico NAM Forecast Model"
+name=nam_hi_hires
+fullname="0.045 Degree Resolution Hawaii NAM Forecast Model"
 
 description='Data from <a href=\"http://www.ncep.noaa.gov/\">
 National Centers for Environmental Prediction</a> 
@@ -80,11 +80,35 @@ frez 1 Hour Total Freezing Precipitation
 pellet 1 Hour Total Pellet Precipitation"
 
 times="latest Latest
+00 00Z
 06 06Z
+12 12Z
 18 18Z"
 
 runs="latest Latest
+00 00Z
 06 06Z
+12 12Z
 18 18Z"
+
+
+prodmap="   plot,       HGHT,       hgt,    20,     03, -h,
+            diffplot,   HGHT,       thk,    20,     03, ,   HGHT
+            plot,       TMPK,       t,      1,      03, ,
+            plot,       RELH,       rh,     10,     03, ,
+            windplot,   UREL,       wind,   5,      03, ,   VREL
+            plot,       CAPE,       cape,   200,    03, ,
+            plot,       PWTR,       pwat,   4,      03, -I,
+            plot,       P03M,       pcp,    4,      03, -I,
+            andplot,    WXTS,       snow,   4,      03, -I, P03M
+            andplot,    WXTZ,       frez,   4,      03, -I, P03M
+            andplot,    WXTR,       rain,   4,      03, -I, P03M
+            andplot,    WXTP,       pellet, 4,      03, -I, P03M
+            plot,       PMSL,       pmsl,   200,    03, -h,
+            plot,       POPF03,     popf,   10,     03, ,
+            plot,       TSTM03,     tstm,   10,     03, ,
+            plot,       POP03,      pop,    10,     03, ,
+            plot,       POPZ03,     popz,   10,     03, ,"
+
 
 

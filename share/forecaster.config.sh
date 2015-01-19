@@ -36,4 +36,6 @@ runs="latest Latest
 12 12Z
 18 18Z"
 
-
+prodmap="   plot,       17,     prob17,     5,      120 6, ,
+            plot,       25,     prob25,     5,      120 06, ,
+            plot,       32,     prob32,     5,      120 06, ,"

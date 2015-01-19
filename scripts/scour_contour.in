@@ -1,0 +1,74 @@
+#!/bin/bash
+
+
+
+##### our own scour to do mins not days, we want to use ramdisk ####
+
+
+
+
+
+
+export PATH=/bin:/usr/bin
+CONFFILE=/usr/local/ldm/etc/scour.conf            # default, if no args
+
+
+while [ "$1" != "" ]
+do
+    case "$1" in
+    -*)
+        $LOGGER "unrecognized flag ($1)"
+        ERRS=1
+        ;;
+    *)
+        if [ $# -ne 1 ]
+        then
+            $LOGGER "only 1 conf file argument permitted"
+            ERRS=1
+        fi
+        CONFFILE=$1
+        ;;
+    esac
+    shift
+done
+
+
+while read dir age pattern
+do
+    if [[ "x${dir}" == "x" ]]    # ignore blank lines
+    then
+        continue
+    fi
+
+    case $dir in
+    \#*)         # ignore comments
+        continue
+        ;;
+    *)
+        if [[ "x${pattern}" = "x" ]]
+        then
+            pattern="*"
+        fi
+        ;;
+    esac
+
+
+    # Convert directory specification to absolute pathname: follow symbolic
+    # links (because find(1) doesn't) and perform tilde-expansion.
+
+
+    if ! edir=($(cd "$dir" 2>/dev/null && /bin/pwd) )
+    then
+        continue
+    fi
+
+    (
+        if cd $edir
+        then
+             find . -type f -mtime "+${age}" -name "$pattern" -exec rm -f {} \;
+        fi
+    )
+
+done < "$CONFFILE"
+
+

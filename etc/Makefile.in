@@ -152,11 +152,13 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 sysconf_DATA = \
-	pqact.grib_contour.conf
+	pqact.grib_contour.conf \
+	scour.grib_contour.conf
 
 CLEANFILES = $(sysconf_DATA)
 EXTRA_DIST = \
-	pqact.grib_contour.conf.in
+	pqact.grib_contour.conf.in \
+	scour.grib_contour.conf.in
 
 do_subst = sed -e 's,[@]bindir[@],$(bindir),g'
 all: all-am
@@ -355,6 +357,9 @@ uninstall-am: uninstall-sysconfDATA
 
 pqact.grib_contour.conf: pqact.grib_contour.conf.in Makefile
 	$(do_subst) < $(srcdir)/pqact.grib_contour.conf.in > pqact.grib_contour.conf
+
+scour.grib_contour.conf: scour.grib_contour.conf.in Makefile
+	$(do_subst) < $(srcdir)/scour.grib_contour.conf.in > scour.grib_contour.conf
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

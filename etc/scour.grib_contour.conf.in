@@ -1,0 +1,31 @@
+# Configuration file for our own "scour" utility, to delete all files older than a
+# specified number of days from specified directories and all their
+# subdirectories.  Scour should be invoked periodically by cron(8).
+#
+# Each line consists of a directory, a retention time (in days), and
+# (optionally) a shell filename pattern for files to be deleted.  If no
+# filename pattern is specified, "*" representing all files not beginning
+# with "." is assumed.
+#
+# A hash in column one indicates a comment line.
+
+# Directory		        	    mins-old    Optional-filename-pattern
+
+data/HDS/ecmwf/                 60
+data/HDS/ukmet/                 60
+data/conduit/gfs/               60
+data/conduit/rap/               30
+data/fnmoc/coamps_cencoos/      60
+data/fnmoc/coamps_cent_am/      60
+data/fnmoc/coamps_ne_pac/       60
+data/fnmoc/coamps_socal/        60
+data/fnmoc/coamps_w_atl/        60
+data/fnmoc/navgem/              60
+data/fnmoc/ocean/               60
+data/fnmoc/ww3/                 60
+data/ngrid/forecaster/          60
+data/ngrid/hrrr/                30
+data/ngrid/nam/                 60
+data/ngrid/rtma/197/            60
+data/ngrid/rtma/255/            60
+

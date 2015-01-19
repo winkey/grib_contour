@@ -5,13 +5,14 @@ wwwdisk = @WWWDISK@
 bin_SCRIPTS = \
 	kml.bash \
 	generic2.sh \
+	generic_contour.sh \
+	scour_contour.sh \
 	sst.sh \
 	nam_west.sh \
 	nam_east.sh \
 	nam_hi.sh \
 	nam_ak.sh \
 	nam_pr.sh \
-	hrrr.sh \
 	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
@@ -22,7 +23,6 @@ bin_SCRIPTS = \
 	mkkml_nolevel.sh \
 	mkkml_nolevel-latest.sh \
 	checkpqact.conf.sh \
-	forecaster.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
 	ww.sh \
@@ -36,13 +36,14 @@ CLEANFILES = $(bin_SCRIPTS)
 EXTRA_DIST = \
 	kml.bash.in \
 	generic2.in \
+	generic_contour.in \
+	scour_contour.in \
 	sst.in \
 	nam_west.in \
 	nam_east.in \
 	nam_hi.in \
 	nam_ak.in \
 	nam_pr.in \
-	hrrr.in \
 	makekey.in \
 	mkkml.in \
 	mkmaster.in \
@@ -52,7 +53,6 @@ EXTRA_DIST = \
 	mkkml-latest.in \
 	mkkml_nolevel.in \
 	mkkml_nolevel-latest.in \
-	forecaster.in \
 	rtma_ak.in \
 	rtma_conus.in \
 	ww.in \
@@ -66,13 +66,14 @@ EXTRA_DIST = \
 dist_bin_SCRIPTS = \
 	kml.bash \
 	generic2.sh \
+	generic_contour.sh \
+	scour_contour.sh \
 	sst.sh \
 	nam_west.sh \
 	nam_east.sh \
 	nam_hi.sh \
 	nam_ak.sh \
 	nam_pr.sh \
-	hrrr.sh \
 	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
@@ -83,7 +84,6 @@ dist_bin_SCRIPTS = \
 	mkkml_nolevel.sh \
 	mkkml_nolevel-latest.sh \
 	checkpqact.conf.sh \
-	forecaster.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
 	ww.sh \
@@ -104,6 +104,14 @@ kml.bash: kml.bash.in Makefile
 generic2.sh: generic2.in Makefile
 	$(do_subst) < $(srcdir)/generic2.in > generic2.sh
 	chmod +x generic2.sh
+
+generic_contour.sh: generic_contour.in Makefile
+	$(do_subst) < $(srcdir)/generic_contour.in > generic_contour.sh
+	chmod +x generic_contour.sh
+
+scour_contour.sh: scour_contour.in Makefile
+	$(do_subst) < $(srcdir)/scour_contour.in > scour_contour.sh
+	chmod +x scour_contour.sh
 
 sst.sh: sst.in Makefile
 	$(do_subst) < $(srcdir)/sst.in > sst.sh
@@ -128,14 +136,6 @@ nam_hi.sh: nam_hi.in Makefile
 nam_ak.sh: nam_ak.in Makefile
 	$(do_subst) < $(srcdir)/nam_ak.in > nam_ak.sh
 	chmod +x nam_ak.sh
-
-hrrr.sh: hrrr.in Makefile
-	$(do_subst) < $(srcdir)/hrrr.in > hrrr.sh
-	chmod +x hrrr.sh
-
-forecaster.sh: forecaster.in Makefile
-	$(do_subst) < $(srcdir)/forecaster.in > forecaster.sh
-	chmod +x forecaster.sh
 
 makekey.sh: makekey.in Makefile
 	$(do_subst) < $(srcdir)/makekey.in > makekey.sh

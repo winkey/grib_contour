@@ -40,10 +40,10 @@ runs="latest Latest
 
 ##### ww3
 
-prodmap="   plot,       wnd_wav_ht, hghtww, .5,     03, ,
-            plot,      wnd_wav_per, perdww, 1,      03, ,
-            plot,       sig_wav_ht, htsgw,  .5      03, ,
-            plot       swl_wav_ht, hghtswl, .5      03, ,
-            plot      swl_wav_per, perdswl, 1       03, ,"
+prodmap="   plot,       wnd_wav_ht, hghtww, .5,     180 6, ,
+            plot,      wnd_wav_per, perdww, 1,      180 6, ,
+            plot,       sig_wav_ht, htsgw,  .5      180 6, ,
+            plot       swl_wav_ht, hghtswl, .5      180 6, ,
+            plot      swl_wav_per, perdswl, 1       180 6, ,"
 
 

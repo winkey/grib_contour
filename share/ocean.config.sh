@@ -31,7 +31,8 @@ runs="latest Latest
 12 12Z"
 
 
+
 #ocean
-prodmap="   plot,       sea_temp,   sst,    .5,     12, ,
-            plot,       ice_cvrg,   ice,    1,      12, ,"
+prodmap="   plot,       sea_temp,   sst,    .5,     0 12, ,
+            plot,       ice_cvrg,   ice,    1,      0 12, ,"
 

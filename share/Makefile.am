@@ -81,11 +81,11 @@ dist_pkgdata_DATA = \
 	nam_conus.config.sh \
 	hrrr.config.sh \
 	rap.config.sh \
-	nam_ak.config.sh \
-	nam_east.config.sh \
-	nam_hi.config.sh \
-	nam_pr.config.sh \
-	nam_west.config.sh \
+	nam_ak_hires.config.sh \
+	nam_conus_hires.config.sh \
+	nam_firewx_hires.config.sh \
+	nam_hi_hires.config.sh \
+	nam_pr_hires.config.sh \
 	windwave.config.sh \
 	navgem.config.sh \
 	ocean.config.sh \
