@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source @bindir@/NewWorld.bash
-source @PKGDATADIR@/configs.sh
+source ../scripts/NewWorld.bash
+source ../share/configs.sh
 
 
 #call me in a subshell
