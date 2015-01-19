@@ -430,7 +430,7 @@ nam_ak_hires-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_ak_hires.config
 nam_conus_hires.kml: ../scripts/mkkml.sh ../share/nam_conus_hires.config.sh Makefile
 	../scripts/mkkml.sh ../share/nam_conus_hires.config.sh
 
-nam_conus_hires-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_cunus_hires.config.sh Makefile
+nam_conus_hires-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_conus_hires.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/nam_conus_hires.config.sh
 
 nam_hi_hires.kml: ../scripts/mkkml.sh ../share/nam_hi_hires.config.sh Makefile
