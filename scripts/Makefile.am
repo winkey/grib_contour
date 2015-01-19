@@ -8,11 +8,6 @@ bin_SCRIPTS = \
 	generic_contour.sh \
 	scour_contour.sh \
 	sst.sh \
-	nam_west.sh \
-	nam_east.sh \
-	nam_hi.sh \
-	nam_ak.sh \
-	nam_pr.sh \
 	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
@@ -39,11 +34,6 @@ EXTRA_DIST = \
 	generic_contour.in \
 	scour_contour.in \
 	sst.in \
-	nam_west.in \
-	nam_east.in \
-	nam_hi.in \
-	nam_ak.in \
-	nam_pr.in \
 	makekey.in \
 	mkkml.in \
 	mkmaster.in \
@@ -69,11 +59,6 @@ dist_bin_SCRIPTS = \
 	generic_contour.sh \
 	scour_contour.sh \
 	sst.sh \
-	nam_west.sh \
-	nam_east.sh \
-	nam_hi.sh \
-	nam_ak.sh \
-	nam_pr.sh \
 	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
