@@ -165,16 +165,16 @@ www_DATA = \
 	hrrr-latest.kml \
 	rap.kml \
 	rap-latest.kml \
-	nam_ak.kml \
-	nam_ak-latest.kml \
-	nam_east.kml \
-	nam_east-latest.kml \
-	nam_hi.kml \
-	nam_hi-latest.kml \
-	nam_pr.kml \
-	nam_pr-latest.kml \
-	nam_west.kml \
-	nam_west-latest.kml \
+	nam_ak_hires.kml \
+	nam_ak_hires-latest.kml \
+	nam_conus_hires.kml \
+	nam_conus_hires-latest.kml \
+	nam_hi_hires.kml \
+	nam_hi_hires-latest.kml \
+	nam_pr_hires.kml \
+	nam_pr_hires-latest.kml \
+	nam_firewx_hires.kml \
+	nam_firewx_hires-latest.kml \
 	master.kml \
 	latest.kml \
 	rtma_conus.kml \
@@ -421,35 +421,35 @@ hrrr.kml: ../scripts/mkkml.sh ../share/hrrr.config.sh Makefile
 hrrr-latest.kml: ../scripts/mkkml-latest.sh ../share/hrrr.config.sh Makefile
 	../scripts/mkkml-latest.sh ../share/hrrr.config.sh
 
-nam_ak.kml: ../scripts/mkkml.sh ../share/nam_ak.config.sh Makefile
-	../scripts/mkkml.sh ../share/nam_ak.config.sh
+nam_ak_hires.kml: ../scripts/mkkml.sh ../share/nam_ak_hires.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_ak_hires.config.sh
 
-nam_ak-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_ak.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/nam_ak.config.sh
+nam_ak_hires-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_ak_hires.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_ak_hires.config.sh
 
-nam_east.kml: ../scripts/mkkml.sh ../share/nam_east.config.sh Makefile
-	../scripts/mkkml.sh ../share/nam_east.config.sh
+nam_conus_hires.kml: ../scripts/mkkml.sh ../share/nam_conus_hires.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_conus_hires.config.sh
 
-nam_east-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_east.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/nam_east.config.sh
+nam_conus_hires-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_cunus_hires.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_conus_hires.config.sh
 
-nam_hi.kml: ../scripts/mkkml.sh ../share/nam_hi.config.sh Makefile
-	../scripts/mkkml.sh ../share/nam_hi.config.sh
+nam_hi_hires.kml: ../scripts/mkkml.sh ../share/nam_hi_hires.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_hi_hires.config.sh
 
-nam_hi-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_hi.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/nam_hi.config.sh
+nam_hi_hires-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_hi_hires.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_hi_hires.config.sh
 
-nam_pr.kml: ../scripts/mkkml.sh ../share/nam_pr.config.sh Makefile
-	../scripts/mkkml.sh ../share/nam_pr.config.sh
+nam_pr_hires.kml: ../scripts/mkkml.sh ../share/nam_pr_hires.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_pr_hires.config.sh
 
-nam_pr-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_pr.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/nam_pr.config.sh
+nam_pr_hires-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_pr_hires.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_pr_hires.config.sh
 
-nam_west.kml: ../scripts/mkkml.sh ../share/nam_west.config.sh Makefile
-	../scripts/mkkml.sh ../share/nam_west.config.sh
+nam_firewx_hires.kml: ../scripts/mkkml.sh ../share/nam_firewx_hires.config.sh Makefile
+	../scripts/mkkml.sh ../share/nam_firewx_hires.config.sh
 
-nam_west-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_west.config.sh Makefile
-	../scripts/mkkml-latest.sh ../share/nam_west.config.sh
+nam_firewx_hires-latest.kml: ../scripts/mkkml-latest.sh ../share/nam_firewx_hires.config.sh Makefile
+	../scripts/mkkml-latest.sh ../share/nam_firewx_hires.config.sh
 
 rap.kml: ../scripts/mkkml.sh ../share/rap.config.sh Makefile
 	../scripts/mkkml.sh ../share/rap.config.sh
