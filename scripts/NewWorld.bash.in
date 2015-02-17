@@ -364,7 +364,7 @@ appendNewWorld () {
 ## @param run       the run of the model "00"
 
 ###############################################################################
-a=({1..10}); printf -v s ",'%s'" "${a[@]}"; echo "${s:1}"
+
 get_tree() {
     local name="$1"
     local run="$2"
