@@ -335,4 +335,42 @@ getgrib () {
 	wget "${dir}${file}" -O "${ddir}/${file}"
 }
 
+###############################################################################
+## @brief find a product in a grib file
+##
+## @arg file    the path and ilename
+## @arg name    product name
+## @arg level   product level
+###############################################################################
+
+findingrib() {
+    local file="$1"
+    local name="$2"
+    local level="$3"
+
+
+    degrib -in "$file" -I |\
+     awk -v name="$name" \
+         -v level="$level" \
+         -F '"*, "*' \
+         '(($4 ~ "^" name ) && ($5 ~ "^" level )) { print $1 ; exit}'
+
+
+}
+
+percentsub() {
+
+    awk -v date8="$1" \
+        -v run2="$2" \
+        -v hour2="$3" \
+        '{
+            sub( /%date8%/, date8);
+            sub( /%run2%/, run2);
+            sub( /%hour2%/, hour2);
+            print
+        }'
+
+}
+
+
 

@@ -16,6 +16,10 @@
 name=nam_ak_hires
 fullname="5 km Resolution Alaska NAM Forecast Model"
 
+baseurl="ftp://ftp.ncep.noaa.gov/pub/data/nccf/com/nam/prod/nam.%date8%/"
+
+pattern="nam.t%run2%z.alaskanest.hiresf%hour2%.tm00.grib2"
+
 description='Data from <a href=\"http://www.ncep.noaa.gov/\">
 National Centers for Environmental Prediction</a> 
 generated once daily is contoured and converted to kml
@@ -92,23 +96,14 @@ runs="latest Latest
 12 12Z
 18 18Z"
 
-prodmap="   plot,       HGT,        hgt,    20,     03, -h,
-            diffplot,   HGT,        thk,    20,     03, ,   HGHT
-            plot,       TMP,        t,      1,      03, ,
-            plot,       RH,         rh,     10,     03, ,
-            windplot,   UGRD,       wind,   5,      03, ,   VGRD
-            plot,       CAPE,       cape,   200,    03, ,
-            plot,       PWAT,       pwat,   4,      03, -I,
-            plot,       P03M,       pcp,    4,      03, -I,
-            andplot,    WXTS,       snow,   4,      03, -I, P03M
-            andplot,    WXTZ,       frez,   4,      03, -I, P03M
-            andplot,    WXTR,       rain,   4,      03, -I, P03M
-            andplot,    WXTP,       pellet, 4,      03, -I, P03M
-            plot,       PRMSL,       pmsl,   200,    03, -h,
-            plot,       POPF03,     popf,   10,     03, ,
-            plot,       TSTM03,     tstm,   10,     03, ,
-            plot,       POP03,      pop,    10,     03, ,
-            plot,       POPZ03,     popz,   10,     03, ,"
+prodmap="   plot,       HGT,        hgt,    20,     36 1|60 3,  -h,
+            diffplot,   HGT,        thk,    20,     36 1|60 3,    , HGHT
+            plot,       TMP,        t,      1,      36 1|60 3,    ,
+            plot,       RH,         rh,     10,     36 1|60 3,    ,
+            windplot,   UGRD,       wind,   5,      36 1|60 3,    , VGRD
+            plot,       CAPE,       cape,   200,    36 1|60 3,    ,
+            plot,       PWAT,       pwat,   4,      36 1|60 3,  -I,
+            plot,       PRMSL,      pmsl,   200,    36 1|60 3, -h,"
 
 
 

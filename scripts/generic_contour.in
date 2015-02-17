@@ -232,12 +232,114 @@ do_generic() {
 
 dofile () {
 
+    path="$1"
+
     while read lev_n lev_fn
     do
 
-        IFS=$IFS, while read plottype feed_n our_n interval valid extra deps
+        IFS=',' while read plottype feed_n our_n interval valid extra deps
         do
 
+            msg=$(findingrib "$path" "$feed_n" "$lev_n")
+
+            IF [
+            depmsg=$(findingrib "$path" "$feed_n" "$lev_n")
+
+
+            ##### hard code in a thickness fix #####
+            
+            if [[ "$our_n" == "thk" ]]
+            then
+                ##### plot thickness #####
+	
+            	if [[ $level == 1000 ]]
+            	then
+		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 925
+		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 850
+		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 700
+		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 500
+	            else
+		            if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
+		            then
+			
+			            thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" $level
+		            fi
+            	fi
+            
+            ##### does it have any deps? #####
+
+            elif [ -n "$deps" ]
+            then
+
+                ##### do we have the dep yet? #####
+
+                ppath=$(echo "$path" | sed "s/${prod}/${deps}/")
+	            if [[ -f "$ppath" ]]
+            	then
+
+
+                case "$plottype" in
+                    andplot)
+                        andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$valid" "$extra"
+                        ;;
+                    windplot)
+                        windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                        ;;
+                    diffplot)
+                        diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+                        ;;
+                    *)
+                        ;;
+                esac
+
+                ##### fixme is it safe to delete both files? #####
+            
+            ##### no deps #####
+
+            else
+
+                ##### fixme what if its a huge grib with multiple messages #####
+    ..
+
+                case "$plottype" in
+                    plot)
+                        plot "$path" "${level}$our_n" 1 $interval $hour "$valid"  "$extra"
+                        ;;
+                    windplot)
+                        windplot "$path" "$path" "${level}wind" 1.0 1.1 $interval $hour "$valid" "$extra"
+                        ;;
+                    *)
+                        ;;
+                esac
+          
+                ##### fixme does anything else need this file? #####
+
+            fi
+
+        ##### does the dep match? #####
+
+        elif [[ "$deps" == "$prod" ]]
+        then
+            ppath=$(echo "$path" | sed "s/${prod}/${feed_n}/")
+	        if [[ -f "$ppath" ]]
+            	then
+                
+                case "$plottype" in
+                    andplot)
+                        andplot  "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                        ;;
+                    windplot)
+                        windplot "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                        ;;
+                    diffplot)
+                        diffplot "$ppath" "$path" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+                        ;;
+                    *)
+                        ;;
+                esac
+      	fi
+
+            findingrib "$file" "$feed_n" 
         done <<< "$prodmap"
 
     done <<< "$levels"$'\n'"$levels2"
@@ -246,8 +348,11 @@ dofile () {
 
 do_fromsite() {
 
+#get the file list
+#
+findingrib
 
-
+}
 
 
 
@@ -262,4 +367,4 @@ then
     do_fromsite "$@"
 else
     do_generic "$@"
-}
+fi
