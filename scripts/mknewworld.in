@@ -99,9 +99,9 @@ mknewworld_ds() {
         echo
     else
         mkgid
-        addtogroup  "$NewWorld_uid" $NewWorld_gid
         NewWorld_gid=$(getgid | tr -d '[[:space:]]')
         echo "gid is $NewWorld_gid"
+        addtogroup  "$NewWorld_uid" "$NewWorld_gid"
     fi
 
     # fixme we should test if its made
