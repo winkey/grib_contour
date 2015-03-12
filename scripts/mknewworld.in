@@ -81,7 +81,7 @@ mknewworld_ds() {
     NewWorld_uid=$(getuid)
     if [ is_number $NewWorld_uid ]
     then
-        ;;
+        echo
     else
         mkuid
         NewWorld_uid=$(getuid)
@@ -90,9 +90,9 @@ mknewworld_ds() {
     ##### get the gid and add the group if nessasary #####
 
     NewWorld_gid=$(getgid)
-    if [ is_number $NewWorld_gid ]
+    if ! [ is_number $NewWorld_gid ]
     then
-        ;;
+        echo
     else
         mkgid
         addtogroup  $NewWorld_uid $NewWorld_gid
