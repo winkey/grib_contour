@@ -92,7 +92,7 @@ mknewworld_ds() {
 
     NewWorld_gid=$(getgid | tr -d '[[:space:]]')
     echo "gid is $NewWorld_gid"
-    if ! is_number "$NewWorld_gid"
+    if is_number "$NewWorld_gid"
     then
         echo
     else
