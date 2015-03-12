@@ -326,6 +326,7 @@ appendNewWorld () {
 
     NewWorld_uid=$(getuid)
     if ! is_number $NewWorld_uid
+    then
         mkuid
         NewWorld_uid=$(getuid)
     fi
@@ -334,6 +335,7 @@ appendNewWorld () {
 
     NewWorld_gid=$(getgid)
     if ! is_number $NewWorld_gid
+    then
         mkgid
         addtogroup  $NewWorld_uid $NewWorld_gid
     fi
