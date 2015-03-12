@@ -19,8 +19,8 @@ pghost='67.58.51.110'
 pguser='atmos'
 pgdb='NewWorld'
 
-NewWorld_uid="NULL"
-NewWorld_gid="NULL"
+#NewWorld_uid="NULL"
+#NewWorld_gid="NULL"
 
 
 mypsql() {
