@@ -81,7 +81,7 @@ EOF
 is_number() {
     number="$1"
 
-    if [ $number  == $( bc <<< $number) ]
+    if ! [ -z "$number" ] && [ $number  == $( bc <<< $number) ]
     then
         true
     else
