@@ -213,28 +213,36 @@ EOF
 mkrootNewWorld() {
     local $name="$1"
 
-    # perhaps check if the tree exssists
-    # create the tree?
+    ########## run folder ##########
+
+    #perhaps check if the tree exssists
+    #create the tree?
 
     local tree=$(get_tree "$name" "$run")
     
     local pid=$(layers_search "$tree" 0)
-    if ! is_number "$pid"
-    then
-        ;;
-    fi
+
+    #if ! is_number "$pid"
+    #then
+    #    ;;
+    #fi
     
     ##### delete the old layers #####
 
     layers_delete_all_contents_by_name "$tree"
 
+
+    ########## latest folder ##########
+
+
     tree=$(get_tree "$name" "latest")
 
     pid=$(layers_search "$tree" 0)
-    if ! is_number "$pid"
-    then
-        ;;
-    fi
+    #if ! is_number "$pid"
+    #then
+    #    ;;
+    #fi
+
     ##### delete the old layers #####
 
     layers_delete_all_contents_by_name "$tree"
