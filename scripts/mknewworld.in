@@ -10,7 +10,7 @@ mknewworld_ds() {
 
     source $1
 
-
+    add_layers_folder "'LayerTree', 'weather'" "$NewWorld_uid" "$NewWorld_gid" "$name" "$fullname" "$description"
      ##### add all the sub product folders #####
 
     ##### one level only #####
@@ -19,15 +19,15 @@ mknewworld_ds() {
     then
         while read lev_n lev_fn
         do
-            add_layers_folder "'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$lev_fn" "$lev_fn" ""
+            add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$lev_fn" "$lev_fn" ""
 
             ref="products$lev_n"
             while read prod_n prod_fn
             do
-                add_layers_radio "'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
+                add_layers_radio "'LayerTree', 'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
                 while read run_n run_fn
                 do
-                    add_layers_animation "'weather', '$name', '$lev_fn', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "$run_fn" "$run_fn" ""
+                    add_layers_animation "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "$run_fn" "$run_fn" ""
                 
                 done <<< "$run"
             done <<< "${!ref}"
@@ -40,14 +40,14 @@ mknewworld_ds() {
     then
         while read lev_n lev_fn
         do
-            add_layers_folder "'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$lev_fn" "$lev_fn" ""
+            add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$lev_fn" "$lev_fn" ""
 
             while read prod_n prod_fn
             do
-                add_layers_radio "'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
+                add_layers_radio "'LayerTree', 'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
                 while read run
                 do
-                    add_layers_animation "'weather', '$name', '$lev_fn', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "$run" "$run" ""
+                    add_layers_animation "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "$run" "$run" ""
                 
                 done <<< "$run"
             done <<< "$products2"
@@ -60,10 +60,10 @@ mknewworld_ds() {
     then
         while read prod_n prod_fn
         do
-            add_layers_radio "'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
+            add_layers_radio "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
             while read run
             do
-                add_layers_animation "'weather', '$name', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "$run" "$run" ""
+                add_layers_animation "'LayerTree', 'weather', '$name', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "$run" "$run" ""
             
             done <<< "$run"
         done <<< "$products"
@@ -86,6 +86,8 @@ mknewworld_ds() {
     else
         mkuid
         NewWorld_uid=$(getuid)
+        NewWorld_uid=$(getuid | tr -d '[[:space:]]')
+        echo "uid is $NewWorld_uid"
     fi
 
     ##### get the gid and add the group if nessasary #####
@@ -98,12 +100,14 @@ mknewworld_ds() {
     else
         mkgid
         addtogroup  "$NewWorld_uid" $NewWorld_gid
+        NewWorld_gid=$(getgid | tr -d '[[:space:]]')
+        echo "gid is $NewWorld_gid"
     fi
 
     # fixme we should test if its made
     ##### add the main folder fpor the product #####
 
-    add_layers_folder "'weather'" "$NewWorld_uid" "$NewWorld_gid" "$name" "$fullname" "$description"
+    add_layers_folder "'LayerTree'" "$NewWorld_uid" "$NewWorld_gid" "weather" "weather" "$description"
 
 
    
