@@ -71,7 +71,7 @@ EOF
 addtogroup () {
     
 mypsql << EOF
-insert into from auth_user_groups (
+insert into auth_user_groups (
     user_id,
     group_id 
 ) values ( $1, $2)
