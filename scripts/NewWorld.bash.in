@@ -19,6 +19,9 @@ pghost='67.58.51.110'
 pguser='atmos'
 pgdb='NewWorld'
 
+NewWorld_uid="NULL"
+NewWorld_gid="NULL"
+
 
 mypsql() {
     psql -h "$pghost" -U "$pguser" "$pgdb" $@
@@ -136,6 +139,26 @@ add_layers_radio() {
     mypsql << EOF
 
     select  layers_add_radio_by_name(array[$1], $2, $3, '$4', '$5', '$6');
+    
+
+EOF
+}
+################################################################################
+## function to add a animation folder
+# @param layeraray
+# @param owner_id    the owner id of this new node (CAN BE NULL)
+# @param groups_id   the group id of this new node (CAN BE NULL)
+# @param name        the name of the node to add
+# @param tooltip
+# @param metadata
+
+################################################################################
+
+add_layers_animation() {
+
+    mypsql << EOF
+
+    select  layers_add_animation_by_name(array[$1], $2, $3, '$4', '$5', '$6');
     
 
 EOF
