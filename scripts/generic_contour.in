@@ -346,7 +346,7 @@ dofile () {
 #        done <<< "$prodmap"
 #
 #    done <<< "$levels"$'\n'"$levels2"
-
+ echo
 }
 
 do_fromsite() {
