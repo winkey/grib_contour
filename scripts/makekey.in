@@ -28,12 +28,12 @@ len=0;
 
 while read value color
 do
-	count=$((count + 1))
-	if [ `echo -n $value | wc -c` -gt "$len"  ]
-	then
-		len=`echo -n $value | wc -c`
-	fi
-		
+    count=$((count + 1))
+    if [ `echo -n $value | wc -c` -gt "$len"  ]
+    then
+        len=`echo -n $value | wc -c`
+    fi
+        
 done < $scale
 
 ##### figure out width of image #####
@@ -42,8 +42,8 @@ width=$((count*$cwidth+15))
 
 if [ "$width" -gt "720" ]
 then
-	cwidth=$((720/$count))
-	width=$((count*$cwidth+15))
+    cwidth=$((720/$count))
+    width=$((count*$cwidth+15))
 fi
 
 ##### get label start pos #####
@@ -58,22 +58,22 @@ args=(-size ${width}x36 xc:white )
 
 while read value color
 do
-	xx=$(($x+$cwidth))
-	
-	##### draw color #####
-	
-	args=("${args[@]}" -fill "#$color" -stroke black -draw "rectangle $x,5 $xx,18")
-	
-	##### draw value #####
-	mylen=`echo -n $value | wc -c`
-	if [ "$(($xx-4-$len*4))" -gt "$last" ] && [ "$(($xx+4+$len*4))" -lt "$stx" ]
-	then
-		tx=$(($xx-4*$mylen))
-		args=("${args[@]}" -pointsize 14 -fill black -draw "text ${tx},34 '${value}'")
-		last=$(($xx+4*$len))
-	fi
-	
-	x=$xx
+    xx=$(($x+$cwidth))
+    
+    ##### draw color #####
+    
+    args=("${args[@]}" -fill "#$color" -stroke black -draw "rectangle $x,5 $xx,18")
+    
+    ##### draw value #####
+    mylen=`echo -n $value | wc -c`
+    if [ "$(($xx-4-$len*4))" -gt "$last" ] && [ "$(($xx+4+$len*4))" -lt "$stx" ]
+    then
+        tx=$(($xx-4*$mylen))
+        args=("${args[@]}" -pointsize 14 -fill black -draw "text ${tx},34 '${value}'")
+        last=$(($xx+4*$len))
+    fi
+    
+    x=$xx
 done < $scale
 
 ##### draw label #####

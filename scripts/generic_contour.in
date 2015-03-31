@@ -54,13 +54,13 @@ thick() {
     local deps="$7"
     local tlevel="$8"
 
-	ppath="${path/HGHT.1000/HGHT.${1}}"
-	if [[ -f $ppath ]]
-	then
+    ppath="${path/HGHT.1000/HGHT.${1}}"
+    if [[ -f $ppath ]]
+    then
 
-		diffplot "$ppath" "$path" "${tlevel}${our_n}" 1 1 $interval $hour "$valid" "$extra"
-		
-	fi
+        diffplot "$ppath" "$path" "${tlevel}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+        
+    fi
 }
 
 thick2() {
@@ -73,14 +73,14 @@ thick2() {
     local deps="$7"
     local tlevel="$8"
 
-	ppath="${path/HGHT.${1}/HGHT.1000}"
-	if [[ -f $ppath ]]
-	then
+    ppath="${path/HGHT.${1}/HGHT.1000}"
+    if [[ -f $ppath ]]
+    then
 
-		diffplot "$path" "$ppath" "${tlevel}${our_n}" 1 1 $interval $hour "$valid" "$extra"
-		
-		
-	fi
+        diffplot "$path" "$ppath" "${tlevel}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+        
+        
+    fi
 }
 
 ################################################################################
@@ -133,20 +133,20 @@ do_generic() {
             if [[ "$our_n" == "thk" ]]
             then
                 ##### plot thickness #####
-	
-            	if [[ $level == 1000 ]]
-            	then
-		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 925
-		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 850
-		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 700
-		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 500
-	            else
-		            if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
-		            then
-			
-			            thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" $level
-		            fi
-            	fi
+    
+                if [[ $level == 1000 ]]
+                then
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 925
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 850
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 700
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 500
+                else
+                    if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
+                    then
+            
+                        thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" $level
+                    fi
+                fi
             
             ##### does it have any deps? #####
 
@@ -156,8 +156,8 @@ do_generic() {
                 ##### do we have the dep yet? #####
 
                 ppath=$(echo "$path" | sed "s/${prod}/${deps}/")
-	            if [[ -f "$ppath" ]]
-            	then
+                if [[ -f "$ppath" ]]
+                then
 
 
                     case "$plottype" in
@@ -203,7 +203,7 @@ do_generic() {
         elif [[ "$deps" == "$prod" ]]
         then
             ppath=$(echo "$path" | sed "s/${prod}/${feed_n}/")
-	        if [[ -f "$ppath" ]]
+            if [[ -f "$ppath" ]]
             then
                 
                 case "$plottype" in
@@ -220,7 +220,7 @@ do_generic() {
                         ;;
                 esac
             fi
-      	fi
+          fi
 
 
 
@@ -239,7 +239,7 @@ dofile () {
     while read lev_n lev_fn
     do
 
-        IFS=',' while read plottype feed_n our_n interval valid extra deps
+        while read IFS=',' plottype feed_n our_n interval valid extra deps
         do
 
             msg=$(findingrib "$path" "$feed_n" "$lev_n")
@@ -253,20 +253,20 @@ dofile () {
             if [[ "$our_n" == "thk" ]]
             then
                 ##### plot thickness #####
-	
-            	if [[ $level == 1000 ]]
-            	then
-		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 925
-		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 850
-		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 700
-		            thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 500
-	            else
-		            if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
-		            then
-			
-			            thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" $level
-		            fi
-            	fi
+    
+                if [[ $level == 1000 ]]
+                then
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 925
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 850
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 700
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 500
+                else
+                    if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
+                    then
+            
+                        thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" $level
+                    fi
+                fi
             
             ##### does it have any deps? #####
 
@@ -276,24 +276,24 @@ dofile () {
                 ##### do we have the dep yet? #####
 
                 ppath=$(echo "$path" | sed "s/${prod}/${deps}/")
-	            if [[ -f "$ppath" ]]
-            	then
+                if [[ -f "$ppath" ]]
+                then
 
 
-                case "$plottype" in
-                    andplot)
-                        andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$valid" "$extra"
-                        ;;
-                    windplot)
-                        windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
-                        ;;
-                    diffplot)
-                        diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
-                        ;;
-                    *)
-                        ;;
-                esac
-
+                    case "$plottype" in
+                        andplot)
+                            andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$valid" "$extra"
+                            ;;
+                        windplot)
+                            windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                            ;;
+                        diffplot)
+                            diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+                            ;;
+                        *)
+                            ;;
+                    esac
+                fi
                 ##### fixme is it safe to delete both files? #####
             
             ##### no deps #####
@@ -323,8 +323,8 @@ dofile () {
         elif [[ "$deps" == "$prod" ]]
         then
             ppath=$(echo "$path" | sed "s/${prod}/${feed_n}/")
-	        if [[ -f "$ppath" ]]
-            	then
+            if [[ -f "$ppath" ]]
+              then
                 
                 case "$plottype" in
                     andplot)
@@ -339,7 +339,8 @@ dofile () {
                     *)
                         ;;
                 esac
-      	fi
+            fi
+          fi
 
             findingrib "$file" "$feed_n" 
         done <<< "$prodmap"

@@ -31,18 +31,18 @@ www="@www@"
 ###############################################################################
 
 mkrootkml () {
-	local name="$1"
-	
-	frames=${wwwdisk}/kml/${dsname}/${run}/${name}.kml
-	
-	cat > $frames << EOF
+    local name="$1"
+    
+    frames=${wwwdisk}/kml/${dsname}/${run}/${name}.kml
+    
+    cat > $frames << EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.2">
 <Folder>
   <ScreenOverlay>
     <name>Key</name>
     <visibility>1</visibility>
-		<Icon>
+        <Icon>
       <href>${www}/kml/images/${name}.png</href>
     </Icon>
     <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
@@ -59,14 +59,14 @@ EOF
 ##### FIXME we need to archive the kmls and use symlinks
     #FIXME this should probably go someplace else
     
-	##### check the latest link #####
-	
-	if [ -h "${wwwdisk}/kml/${dsname}/latest" ]
-	then
-		rm "${wwwdisk}/kml/${dsname}/latest"
-	fi
+    ##### check the latest link #####
+    
+    if [ -h "${wwwdisk}/kml/${dsname}/latest" ]
+    then
+        rm "${wwwdisk}/kml/${dsname}/latest"
+    fi
 
-	ln -s "${wwwdisk}/kml/${dsname}/${run}" -T "${wwwdisk}/kml/${dsname}/latest"
+    ln -s "${wwwdisk}/kml/${dsname}/${run}" -T "${wwwdisk}/kml/${dsname}/latest"
 }
 
 
@@ -81,7 +81,7 @@ EOF
 ##
 ## @details
 ## global vars
-## @param wwwdisk   the base web dir to write to "/var/www/html/"			
+## @param wwwdisk   the base web dir to write to "/var/www/html/"            
 ## @param run       the run of the model "00"
 ## @param www       the base url for the website
 ## @param dsname    name of the dataset
@@ -89,33 +89,33 @@ EOF
 ###############################################################################
 
 appendkml () {
-	local name="$1"
-	local hr="$2"
-	local incr="$3"
-	local grid="$4"
-	
-	local frames="${wwwdisk}/kml/${dsname}/${run}/${name}.kml"
-	
-	if ! [ -f "$frames" ]
-	then
+    local name="$1"
+    local hr="$2"
+    local incr="$3"
+    local grid="$4"
+    
+    local frames="${wwwdisk}/kml/${dsname}/${run}/${name}.kml"
+    
+    if ! [ -f "$frames" ]
+    then
         mkrootkml "${name}"
     fi
     
     ##### lock the file #####
-	
-	local lock="$locdir/$script.$run.$name.kml.lock"
-	echo lock $lock
-	while ! mkdir "$lock" > /dev/null
-	do
-		sleep 1
-	done
-	
+    
+    local lock="$locdir/$script.$run.$name.kml.lock"
+    echo lock $lock
+    while ! mkdir "$lock" > /dev/null
+    do
+        sleep 1
+    done
+    
     ##### test if the kml is older than 6 hours #####
     
-	local frametime;
+    local frametime;
     local nowtime;
     
-	frametime=$(stat --printf "%Y\n" "$frames")
+    frametime=$(stat --printf "%Y\n" "$frames")
     nowtime=$(date "+%s")
     
     if (( frametime + 21600 < nowtime))
@@ -123,17 +123,17 @@ appendkml () {
         mkrootkml "${name}"
     fi
     
-	if [[ "$grid" != "" ]]
-	then
-		zip="${www}/kml/${dsname}/${run}/${grid}.${name}${hr}.kmz"
-	else
-		zip="${www}/kml/${dsname}/${run}/${name}${hr}.kmz"
-	fi
+    if [[ "$grid" != "" ]]
+    then
+        zip="${www}/kml/${dsname}/${run}/${grid}.${name}${hr}.kmz"
+    else
+        zip="${www}/kml/${dsname}/${run}/${name}${hr}.kmz"
+    fi
 
 
-	
-	begin=$(date -d "$run GMT $hr hours" "+%FT%TZ" -u)
-	end=$(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u)
+    
+    begin=$(date -d "$run GMT $hr hours" "+%FT%TZ" -u)
+    end=$(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u)
 
 ed -s $frames << EOF
 $ -2
@@ -154,8 +154,8 @@ a
 w
 EOF
 
-	##### remove the lock #####
-	
-	rmdir "$lock"
+    ##### remove the lock #####
+    
+    rmdir "$lock"
 
 }

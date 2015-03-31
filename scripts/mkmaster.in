@@ -26,7 +26,7 @@ cat << EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.2">
 <Document>
-	<name>x@www@</name>
+    <name>x@www@</name>
   <ScreenOverlay>
     <name>logo</name>
     <visibility>1</visibility>
@@ -49,8 +49,8 @@ EOF
 
 echo "$configs" | while read conf
 do
-	source $conf
-	cat << EOF
+    source $conf
+    cat << EOF
   <NetworkLink>
     <name>$fullname</name>
     <visibility>0</visibility>

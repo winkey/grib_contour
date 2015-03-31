@@ -31,8 +31,8 @@ source @bindir@/generic2.sh
 if [[ "$prod" == "TMPK" ]]
 then
 
-	plot "$path" "t" 1 1.5 00 01
-	rm "$path"
+    plot "$path" "t" 1 1.5 00 01
+    rm "$path"
 fi
 
 ##### plot dewpoint #####
@@ -40,32 +40,32 @@ fi
 if [[ "$prod" == "DWPK" ]]
 then
 
-	plot "$path" "dp" 1 1.5 00 01
-	rm "$path"
+    plot "$path" "dp" 1 1.5 00 01
+    rm "$path"
 fi
 
 ##### plot wind #####
 
 if [[ "$prod" == "UREL" ]]
 then
-	vpath=$(echo $path | sed s/UREL/VREL/)
-	if [[ -f $vpath ]]
-	then
+    vpath=$(echo $path | sed s/UREL/VREL/)
+    if [[ -f $vpath ]]
+    then
 
-		windplot "$path" "$vpath" "wind" 1.0 1.0 5 00 01
-		rm "$path"
-		rm "$vpath"
-	fi
+        windplot "$path" "$vpath" "wind" 1.0 1.0 5 00 01
+        rm "$path"
+        rm "$vpath"
+    fi
 fi
 
 if [[ "$prod" == "VREL" ]]
 then
-	upath=$(echo $path | sed s/VREL/UREL/)
-	if [[ -f upath ]]
-	then
+    upath=$(echo $path | sed s/VREL/UREL/)
+    if [[ -f upath ]]
+    then
 
-		windplot "$upath" "$path" "wind" 1.0 1.0 5 00 01
-		rm "$path"
-		rm "$upath"
-	fi
+        windplot "$upath" "$path" "wind" 1.0 1.0 5 00 01
+        rm "$path"
+        rm "$upath"
+    fi
 fi

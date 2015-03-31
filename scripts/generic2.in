@@ -35,16 +35,16 @@ script=$(basename ${0})
 
 if [ "$2" == "" ]
 then
-	datee=`date -u "+%Y%m%d"`
+    datee=`date -u "+%Y%m%d"`
 else
-	datee=$2
+    datee=$2
 fi
 
 ##### make the run dir #####
 
 if [[ ! -d "${wwwdisk}/kml/${name}/${run}" ]]
 then
-	mkdir -p "${wwwdisk}/kml/${name}/${run}"
+    mkdir -p "${wwwdisk}/kml/${name}/${run}"
 fi
 
 ##### get the number of cpu's #####
@@ -59,51 +59,51 @@ cpus=$(cat /proc/cpuinfo | grep "^processor" | wc -l)
 
 function do_jobs {
 
-	for job in "${joblist[@]}"
-	do
-		while [[ $(jobs | wc -l) -ge $cpus ]]
-		do
-			sleep 2
-		done
-	
-		$job &
-	done
+    for job in "${joblist[@]}"
+    do
+        while [[ $(jobs | wc -l) -ge $cpus ]]
+        do
+            sleep 2
+        done
+    
+        $job &
+    done
 
 }
-	
+    
 ################################################################################
-#	function to make a dir for the temporary files
+#    function to make a dir for the temporary files
 #
-#	args:
-#					$1	the dir to create
+#    args:
+#                    $1    the dir to create
 ################################################################################
 
 function mktempfiledir {
-	if [ -d "$1" ]
-	then
-		rm -r "$1"
-	else
-		mkdir "$1"
-	fi
+    if [ -d "$1" ]
+    then
+        rm -r "$1"
+    else
+        mkdir "$1"
+    fi
 }
 
 
 
 
 ################################################################################
-#	function to make a fifo
+#    function to make a fifo
 #
-#	args:
-#					$1	the filename of the fifo
+#    args:
+#                    $1    the filename of the fifo
 #
 ################################################################################
 
 function my_mkfifo {
-	if [ -p "$1" ]
-	then 
-		rm "$1"
-	fi
-	mknod "$1" p
+    if [ -p "$1" ]
+    then 
+        rm "$1"
+    fi
+    mknod "$1" p
 }
 
 ###############################################################################
@@ -126,33 +126,33 @@ function my_mkfifo {
 ###############################################################################
 
 plot () {
-	local gribfile=$1
-	local name="$2"
-	local grbmsg=$3
-	local interval=$4
-	local timee=$5
-	local incr=$6
-	local extra="$7"
+    local gribfile=$1
+    local name="$2"
+    local grbmsg=$3
+    local interval=$4
+    local timee=$5
+    local incr=$6
+    local extra="$7"
 
     local zip
     local kml
-	zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
-	kml="${name}${timee}.kml"
-	
-	if [[ -f "$zip" ]]
-	then
-		rm "$zip"
-	fi
-	
-	nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg \
-													-i $interval -s $name \
-													-k $kml -z "$zip" \
-													$extra
-	
-	appendkml $name $timee $incr $grid
-	#appendgeoext $name $timee $incr $grid
-	#appendmapfile "$name" "$zip"
-	
+    zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
+    kml="${name}${timee}.kml"
+    
+    if [[ -f "$zip" ]]
+    then
+        rm "$zip"
+    fi
+    
+    nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg \
+                                                    -i $interval -s $name \
+                                                    -k $kml -z "$zip" \
+                                                    $extra
+    
+    appendkml $name $timee $incr $grid
+    #appendgeoext $name $timee $incr $grid
+    #appendmapfile "$name" "$zip"
+    
 }
 
 ###############################################################################
@@ -177,35 +177,35 @@ plot () {
 ###############################################################################
 
 windplot () {
-	local ufile="$1"
-	local vfile="$2"
-	local name="$3"
-	local umsg=$4
-	local vmsg=$5
-	local interval=$6
-	local timee=$7
-	local incr=$8
-	local extra="$9"
+    local ufile="$1"
+    local vfile="$2"
+    local name="$3"
+    local umsg=$4
+    local vmsg=$5
+    local interval=$6
+    local timee=$7
+    local incr=$8
+    local extra="$9"
 
     local zip
     local kml
-	zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
-	kml="${name}${timee}.kml"
-	
-	if [[ -f "$zip" ]]
-	then
-		rm "$zip"
-	fi
-	
-	nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" \
-													-U $umsg -V $vmsg \
-													-i $interval -s $name \
-													-k $kml -z "$zip" \
-													$extra
-	
-	appendkml $name $timee $incr $grid
-	#appendgeoext $name $timee $incr $grid
-	#appendmapfile "$name" "$zip"
+    zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
+    kml="${name}${timee}.kml"
+    
+    if [[ -f "$zip" ]]
+    then
+        rm "$zip"
+    fi
+    
+    nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" \
+                                                    -U $umsg -V $vmsg \
+                                                    -i $interval -s $name \
+                                                    -k $kml -z "$zip" \
+                                                    $extra
+    
+    appendkml $name $timee $incr $grid
+    #appendgeoext $name $timee $incr $grid
+    #appendmapfile "$name" "$zip"
 
 }
 
@@ -231,36 +231,36 @@ windplot () {
 ###############################################################################
 
 andplot () {
-	local ufile="$1"
-	local vfile="$2"
-	local name="$3"
-	local umsg=$4
-	local vmsg=$5
-	local interval=$6
-	local timee=$7
-	local incr=$8
-	local extra="$7"
-	
+    local ufile="$1"
+    local vfile="$2"
+    local name="$3"
+    local umsg=$4
+    local vmsg=$5
+    local interval=$6
+    local timee=$7
+    local incr=$8
+    local extra="$7"
+    
     local zip
     local kml
-	zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
-	kml="${name}${timee}.kml"
-	
-	if [[ -f "$zip" ]]
-	then
-		rm "$zip"
-	fi
-	
-	nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" \
-													-U $umsg -V $vmsg \
-													-i $interval -s $name \
-													-k $kml -z "$zip" \
-													$extra
-	
-	appendkml $name $timee $incr $grid
-	#appendgeoext $name $timee $incr $grid
-	#appendmapfile "$name" "$zip"
-	
+    zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
+    kml="${name}${timee}.kml"
+    
+    if [[ -f "$zip" ]]
+    then
+        rm "$zip"
+    fi
+    
+    nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" \
+                                                    -U $umsg -V $vmsg \
+                                                    -i $interval -s $name \
+                                                    -k $kml -z "$zip" \
+                                                    $extra
+    
+    appendkml $name $timee $incr $grid
+    #appendgeoext $name $timee $incr $grid
+    #appendmapfile "$name" "$zip"
+    
 }
 
 ###############################################################################
@@ -285,35 +285,35 @@ andplot () {
 ###############################################################################
 
 diffplot () {
-	local ufile="$1"
-	local vfile="$2"
-	local name="$3"
-	local umsg=$4
-	local vmsg=$5
-	local interval=$6
-	local timee=$7
-	local incr=$8
-	local extra="$9"
-	
+    local ufile="$1"
+    local vfile="$2"
+    local name="$3"
+    local umsg=$4
+    local vmsg=$5
+    local interval=$6
+    local timee=$7
+    local incr=$8
+    local extra="$9"
+    
     local zip
     local kml
-	zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
-	kml="${name}${timee}.kml"
-	
-	if [[ -f "$zip" ]]
-	then
-		rm "$zip"
-	fi
-	
-	nice -n 10 grib_contour -d -u "${ufile}" -v "${vfile}" \
-													-U $umsg -V $vmsg \
-													-i $interval -s $name \
-													-k $kml -z "$zip" \
-													$extra
-	
-	appendkml $name $timee $incr $grid
+    zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
+    kml="${name}${timee}.kml"
+    
+    if [[ -f "$zip" ]]
+    then
+        rm "$zip"
+    fi
+    
+    nice -n 10 grib_contour -d -u "${ufile}" -v "${vfile}" \
+                                                    -U $umsg -V $vmsg \
+                                                    -i $interval -s $name \
+                                                    -k $kml -z "$zip" \
+                                                    $extra
+    
+    appendkml $name $timee $incr $grid
     #appendgeoext $name $timee $incr $grid
-	#appendmapfile "$name" "$zip"
+    #appendmapfile "$name" "$zip"
 
 }
  
@@ -328,11 +328,11 @@ diffplot () {
 ###############################################################################
 
 getgrib () {
-	local dir=$1
-	local file=$2
-	local ddir=$3
-	
-	wget "${dir}${file}" -O "${ddir}/${file}"
+    local dir=$1
+    local file=$2
+    local ddir=$3
+    
+    wget "${dir}${file}" -O "${ddir}/${file}"
 }
 
 ###############################################################################

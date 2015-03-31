@@ -28,14 +28,14 @@ source @bindir@/generic2.sh
 
 if [[ "$hour" == "" ]]
 then
-	hour="00"
+    hour="00"
 fi
 
 if [[ "${hour#0}" -gt "69" ]]
 then
-	period="06"
+    period="06"
 else
-	period="03"
+    period="03"
 fi
 
 
@@ -45,9 +45,9 @@ fi
 if [[ "$prod" == "HGHTWW" ]]
 then
 
-	
-	plot "$path" "hghtww" 1 .5 $hour $period
-#	rm "$path"
+    
+    plot "$path" "hghtww" 1 .5 $hour $period
+#    rm "$path"
 fi
 
 ##### Mean period of wind waves #####
@@ -55,9 +55,9 @@ fi
 if [[ "$prod" == "PERDWW" ]]
 then
 
-	
-	plot "$path" "perdww" 1 1 $hour $period
-#	rm "$path"
+    
+    plot "$path" "perdww" 1 1 $hour $period
+#    rm "$path"
 fi
 
 ##### Sig hght of comb wind waves/swell #####
@@ -65,40 +65,40 @@ fi
 if [[ "$prod" == "HTSGW" ]]
 then
 
-	
-	plot "$path" "htsgw" 1 1 $hour $period
-#	rm "$path"
+    
+    plot "$path" "htsgw" 1 1 $hour $period
+#    rm "$path"
 fi
 
 ##### plot wind #####
 
 if [[ "$prod" == "UREL" ]]
 then
-	vpath=$(echo "$path" | sed s/UREL/VREL/)
-	
-	if [[ -f "$vpath" ]]
-	then
+    vpath=$(echo "$path" | sed s/UREL/VREL/)
+    
+    if [[ -f "$vpath" ]]
+    then
 
-		
-		windplot "$path" "$vpath" "wind" 1.0 1.0 5 $hour $period
+        
+        windplot "$path" "$vpath" "wind" 1.0 1.0 5 $hour $period
 
-#		rm "$path"
-#		rm "$vpath"
-	fi
+#        rm "$path"
+#        rm "$vpath"
+    fi
 fi
 
 if [[ "$prod" == "VREL" ]]
 then
-	upath=$(echo "$path" | sed s/VREL/UREL/)
-	
-	if [[ -f "$upath" ]]
-	then
+    upath=$(echo "$path" | sed s/VREL/UREL/)
+    
+    if [[ -f "$upath" ]]
+    then
 
-		
-		windplot "$upath" "$path" "wind" 1.0 1.0 5 $hour $period
-		
-#		rm "$path"
-#		rm "$upath"
-	fi
+        
+        windplot "$upath" "$path" "wind" 1.0 1.0 5 $hour $period
+        
+#        rm "$path"
+#        rm "$upath"
+    fi
 fi
 

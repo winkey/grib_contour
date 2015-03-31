@@ -50,22 +50,22 @@ appendmapfile () {
     local kmlfile="$2"
     local grid="$3"
     
-	local mapfile="${wwwdisk}/kml/${dsname}/${dsname}.map"
-	local myname="${name}"
+    local mapfile="${wwwdisk}/kml/${dsname}/${dsname}.map"
+    local myname="${name}"
     local group=""
-	local groupmeta=""
-	
-	##### lock the file #####
-	
-	local lock="$locdir/$script.$dsname.lock"
+    local groupmeta=""
     
-	while ! mkdir "$lock" > /dev/null
-	do
-		sleep 1
-	done
-	
-	##### if the mapfile is not created, create one #####
-	
+    ##### lock the file #####
+    
+    local lock="$locdir/$script.$dsname.lock"
+    
+    while ! mkdir "$lock" > /dev/null
+    do
+        sleep 1
+    done
+    
+    ##### if the mapfile is not created, create one #####
+    
     if ! [ -f "$mapfile" ]
     then
         mkrootmapfile
@@ -83,8 +83,8 @@ appendmapfile () {
 
 
 
-	###### just contours? #####
-	
+    ###### just contours? #####
+    
     if ! ogrinfo "$kmlfile" -so | grep -q HiLo
     then
         
@@ -240,8 +240,8 @@ EOF
     fi
     
     ##### remove the lock #####
-	
-	rmdir "$lock"
+    
+    rmdir "$lock"
     
 }
 
@@ -287,8 +287,8 @@ EOF
 ###############################################################################
 
 mkrootmapfile () {
-	local name="$1"
-	
+    local name="$1"
+    
     local wms="${www}/cgi-bin/${dsname}_wms"
     
 

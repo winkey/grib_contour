@@ -32,7 +32,7 @@ source @bindir@/generic2.sh
 
 if ! getgrib "${servb}/sst.${datee}/" "$gribfile" "/tmp"
 then
-	exit
+    exit
 fi
 
 gribfile="/tmp/${gribfile}"

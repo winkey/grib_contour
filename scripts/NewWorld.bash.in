@@ -314,7 +314,7 @@ mkrootNewWorld() {
     layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn, 'Archive', '$year'" 0 ||\
         add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn', 'Archive'" "$NewWorld_uid" "$NewWorld_gid" "$year" "$year" ""
 
-	local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
+    local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
     layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn, 'Archive', '$year', '$month'" 0 ||\
         add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn', 'Archive', '$year'" "$NewWorld_uid" "$NewWorld_gid" "$month" "$month" ""
 
@@ -353,7 +353,7 @@ mkrootNewWorld() {
 ##
 ## @details
 ## global vars
-## @param wwwdisk   the base web dir to write to "/var/www/html/"			
+## @param wwwdisk   the base web dir to write to "/var/www/html/"            
 ## @param run       the run of the model "00"
 ## @param www       the base url for the website
 ## @param dsname    name of the dataset
@@ -362,10 +362,10 @@ mkrootNewWorld() {
 
 appendNewWorld () {
 
-	local name="$1"
-	local hr="$2"
-	local incr="$3"
-	local grid="$4"
+    local name="$1"
+    local hr="$2"
+    local incr="$3"
+    local grid="$4"
 
     local frames="${wwwdisk}/kml/${dsname}/${run}/${name}.kml"
 
@@ -399,21 +399,21 @@ appendNewWorld () {
 
 
     ##### lock the file #####
-	
-	local lock="$locdir/$script.$run.$name.pg.lock"
-	echo lock $lock
-	while ! mkdir "$lock" > /dev/null
-	do
-		sleep 1
-	done
-	
+    
+    local lock="$locdir/$script.$run.$name.pg.lock"
+    echo lock $lock
+    while ! mkdir "$lock" > /dev/null
+    do
+        sleep 1
+    done
+    
     ##### test if the kml is older than 6 hours #####
     ##### fixme we should be testing the map in postgres #####
 
-	local frametime;
+    local frametime;
     local nowtime;
     
-	frametime=$(stat --printf "%Y\n" "$frames")
+    frametime=$(stat --printf "%Y\n" "$frames")
     nowtime=$(date "+%s")
     
     if (( frametime + 21600 < nowtime))

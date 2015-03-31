@@ -41,7 +41,7 @@ EOF
   
   ##### products #####
 
-	ref="products$lev_n"
+    ref="products$lev_n"
   echo "${!ref}" | while read prod_n prod_fn
   do
 
