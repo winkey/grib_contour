@@ -34,7 +34,7 @@ mknewworld_ds() {
 
                 ##### note run gets added when the project loads, it should be a link type to a date #####
                 
-                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn, 'Archive'" 0 ||\
+                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn', 'Archive'" 0 ||\
                     add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn' " "$NewWorld_uid" "$NewWorld_gid" "Archive" "Archive" ""
 
             done <<< "${!ref}"
@@ -57,7 +57,7 @@ mknewworld_ds() {
                 
                 ##### note run gets added when the project loads, it should be a link type to a date #####
                 
-                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn, 'Archive'" 0 ||\
+                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn', 'Archive'" 0 ||\
                     add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "Archive" "Archive" ""
 
             done <<< "$products2"
@@ -75,7 +75,7 @@ mknewworld_ds() {
 
             ##### note run gets added when the project loads, it should be a link type to a date #####
                 
-                layers_exist_by_name "'LayerTree', 'weather', '$name', '$prod_fn, 'Archive'" 0 ||\
+                layers_exist_by_name "'LayerTree', 'weather', '$name', '$prod_fn', 'Archive'" 0 ||\
                     add_layers_folder "'LayerTree', 'weather', '$name', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "Archive" "Archive" ""
 
   
