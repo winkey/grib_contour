@@ -120,7 +120,7 @@ do_generic() {
     ##### loop over the product map #####
 
 
-    IFS=',' while read plottype feed_n our_n interval valid extra deps
+    while IFS=',' read plottype feed_n our_n interval valid extra deps
     do
 
         ##### product match? #####
