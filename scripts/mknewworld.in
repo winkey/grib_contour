@@ -10,8 +10,12 @@ mknewworld_ds() {
 
     source $1
 
-    add_layers_folder "'LayerTree', 'weather'" "$NewWorld_uid" "$NewWorld_gid" "$name" "$fullname" "$description"
-     ##### add all the sub product folders #####
+
+
+    layers_exist_by_name "'LayerTree', 'weather', '$name'" 0 ||\
+        add_layers_folder "'LayerTree', 'weather'" "$NewWorld_uid" "$NewWorld_gid" "$name" "$fullname" "$description"
+    
+    ##### add all the sub product folders #####
 
     ##### one level only #####
 
@@ -19,17 +23,20 @@ mknewworld_ds() {
     then
         while read lev_n lev_fn
         do
-            add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$lev_fn" "$lev_fn" ""
+            layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn'" 0 ||\
+                add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$lev_fn" "$lev_fn" ""
 
             ref="products$lev_n"
             while read prod_n prod_fn
             do
-                add_layers_radio "'LayerTree', 'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
-                while read run_n run_fn
-                do
-                    add_layers_animation "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "$run_fn" "$run_fn" ""
+                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn" 0 ||\
+                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
+
+                ##### note run gets added when the project loads, it should be a link type to a date #####
                 
-                done <<< "$run"
+                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn, 'Archive'" 0 ||\
+                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn' " "$NewWorld_uid" "$NewWorld_gid" "Archive" "Archive" ""
+
             done <<< "${!ref}"
         done  <<< "$levels"
     fi
@@ -40,16 +47,19 @@ mknewworld_ds() {
     then
         while read lev_n lev_fn
         do
-            add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$lev_fn" "$lev_fn" ""
+            layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn'" 0 ||\
+                add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$lev_fn" "$lev_fn" ""
 
             while read prod_n prod_fn
             do
-                add_layers_radio "'LayerTree', 'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
-                while read run
-                do
-                    add_layers_animation "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "$run" "$run" ""
+                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn" 0 ||\
+                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
                 
-                done <<< "$run"
+                ##### note run gets added when the project loads, it should be a link type to a date #####
+                
+                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn, 'Archive'" 0 ||\
+                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "Archive" "Archive" ""
+
             done <<< "$products2"
         done  <<< "$levels2"
     fi
@@ -60,12 +70,15 @@ mknewworld_ds() {
     then
         while read prod_n prod_fn
         do
-            add_layers_radio "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
-            while read run
-            do
-                add_layers_animation "'LayerTree', 'weather', '$name', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "$run" "$run" ""
-            
-            done <<< "$run"
+            layers_exist_by_name "'LayerTree', 'weather', '$name', '$prod_fn" 0 ||\
+                add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
+
+            ##### note run gets added when the project loads, it should be a link type to a date #####
+                
+                layers_exist_by_name "'LayerTree', 'weather', '$name', '$prod_fn, 'Archive'" 0 ||\
+                    add_layers_folder "'LayerTree', 'weather', '$name', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "Archive" "Archive" ""
+
+  
         done <<< "$products"
     fi
 }
@@ -107,7 +120,8 @@ mknewworld_ds() {
     # fixme we should test if its made
     ##### add the main folder fpor the product #####
 
-    add_layers_folder "'LayerTree'" "$NewWorld_uid" "$NewWorld_gid" "weather" "weather" "$description"
+    layers_exist_by_name "'LayerTree', 'weather'" 0 ||\
+        add_layers_folder "'LayerTree'" "$NewWorld_uid" "$NewWorld_gid" "weather" "weather" "$description"
 
 
    

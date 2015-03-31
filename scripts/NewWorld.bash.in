@@ -104,6 +104,7 @@ EOF
 }
 
 
+
 ################################################################################
 ## function to add a folder
 # @param layeraray
@@ -150,7 +151,6 @@ EOF
 # @param groups_id   the group id of this new node (CAN BE NULL)
 # @param name        the name of the node to add
 # @param tooltip
-# @param metadata
 
 ################################################################################
 
@@ -158,7 +158,51 @@ add_layers_animation() {
 
     mypsql << EOF
 
-    select  layers_add_animation_by_name(array[$1], $2, $3, '$4', '$5', '$6');
+    select  layers_add_animation_by_name(array[$1], $2, $3, '$4', '$5', '$6' );
+    
+
+EOF
+}
+
+################################################################################
+## function to add a link folder
+# @param layeraray
+# @param owner_id    the owner id of this new node (CAN BE NULL)
+# @param groups_id   the group id of this new node (CAN BE NULL)
+# @param name        the name of the node to add
+# @param tooltip
+# @param metadata
+# @param target     an int id
+
+################################################################################
+
+add_layers_link() {
+
+    mypsql << EOF
+
+    select  layers_add_link_by_name(array[$1], $2, $3, '$4', '$5', '$6', $7 );
+    
+
+EOF
+}
+
+
+################################################################################
+# function to update a link
+# @param parent          an aray that describes the parent by name
+# @param name        the name of the node to add
+# @param tooltip
+# @param metadata
+# @param target
+# @return nothing
+################################################################################
+
+update_layers_link() {
+
+
+    mypsql << EOF
+
+    select  layers_update_link_by_name(array[$1], $2, $3, '$4', $5 );
     
 
 EOF
@@ -222,6 +266,22 @@ EOF
 
 #mktree()
 
+layers_exist_by_name() {
+    layers_search "$1" "$2" |\
+     sed 's/[ (,)]*//g' |\
+     grep -q -E '^.+$'
+
+}
+
+layers_get_id_by_name() {
+
+    mypsql -t -q <<< "select id from search_layers( array[$1], $2 );" |\
+     sed 's/ //g' |\
+     grep -e [0-9] |\
+     head -n 1
+
+}
+
 
 ###############################################################################
 ## @brief 
@@ -236,8 +296,6 @@ EOF
 mkrootNewWorld() {
     local $name="$1"
 
-    ########## run folder ##########
-
     #perhaps check if the tree exssists
     #create the tree?
 
@@ -250,25 +308,38 @@ mkrootNewWorld() {
     #    ;;
     #fi
     
-    ##### delete the old layers #####
 
-    layers_delete_all_contents_by_name "$tree"
+    ##### year and month archive folders #####
+    local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
+    layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn, 'Archive', '$year'" 0 ||\
+        add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn', 'Archive'" "$NewWorld_uid" "$NewWorld_gid" "$year" "$year" ""
 
+	local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
+    layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn, 'Archive', '$year', '$month'" 0 ||\
+        add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn', 'Archive', '$year'" "$NewWorld_uid" "$NewWorld_gid" "$month" "$month" ""
 
-    ########## latest folder ##########
+    ###### add the animation folder #####
 
+    local mydate=$(date -d "18 GMT" "+%Y-%m-%d" -u)
 
-    tree=$(get_tree "$name" "latest")
+    local tree=$(get_tree_archive "$name" "$year" "$month" )
+    layers_exist_by_name "$tree, '$date ${run}z'" 0 ||\
+        add_layers_folder "$tree" "$NewWorld_uid" "$NewWorld_gid" "$date ${run}z" "$month" "$date ${run}z"
 
-    pid=$(layers_search "$tree" 0)
-    #if ! is_number "$pid"
-    #then
-    #    ;;
-    #fi
+    local id=$( layers_get_id_by_name "$tree, '$date ${run}z'" 0 )
 
-    ##### delete the old layers #####
+    ##### add the link #####
 
-    layers_delete_all_contents_by_name "$tree"
+    local tree=$(get_tree "$name" "$year" "$month" )
+    if ! layers_exist_by_name "$tree, '$date ${run}z'" 0
+    then
+        add_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$date ${run}z" "$date ${run}z" $id
+
+        ##### mod existing #####
+
+    else
+        add_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$date ${run}z" "$date ${run}z" $id
+    fi
 
 }
 
@@ -290,6 +361,7 @@ mkrootNewWorld() {
 ###############################################################################
 
 appendNewWorld () {
+
 	local name="$1"
 	local hr="$2"
 	local incr="$3"
@@ -297,6 +369,33 @@ appendNewWorld () {
 
     local frames="${wwwdisk}/kml/${dsname}/${run}/${name}.kml"
 
+    ##### get the uid and add the user if nessasary #####
+
+    NewWorld_uid=$(getuid | tr -d '[[:space:]]')
+    echo "uid is $NewWorld_uid"
+    if is_number "$NewWorld_uid"
+    then
+        echo
+    else
+        mkuid
+        NewWorld_uid=$(getuid)
+        NewWorld_uid=$(getuid | tr -d '[[:space:]]')
+        echo "uid is $NewWorld_uid"
+    fi
+
+    ##### get the gid and add the group if nessasary #####
+
+    NewWorld_gid=$(getgid | tr -d '[[:space:]]')
+    echo "gid is $NewWorld_gid"
+    if is_number "$NewWorld_gid"
+    then
+        echo
+    else
+        mkgid
+        NewWorld_gid=$(getgid | tr -d '[[:space:]]')
+        echo "gid is $NewWorld_gid"
+        addtogroup  "$NewWorld_uid" "$NewWorld_gid"
+    fi
 
 
     ##### lock the file #####
@@ -322,24 +421,6 @@ appendNewWorld () {
         mkrootNewWorld "${name}"
     fi
     
-    ##### get the uid and add the user if nessasary #####
-
-    NewWorld_uid=$(getuid)
-    if ! is_number $NewWorld_uid
-    then
-        mkuid
-        NewWorld_uid=$(getuid)
-    fi
-
-    ##### get the gid and add the group if nessasary #####
-
-    NewWorld_gid=$(getgid)
-    if ! is_number $NewWorld_gid
-    then
-        mkgid
-        addtogroup  $NewWorld_uid $NewWorld_gid
-    fi
-
     ##### add the layer to the current run folder #####
 
     local tree=$(get_tree "$name" "$run")
@@ -388,7 +469,6 @@ appendNewWorld () {
                     0 \
                     0
 
-
 }
 
 ###############################################################################
@@ -400,7 +480,41 @@ appendNewWorld () {
 
 ###############################################################################
 
-get_tree() {
+get_tree_archive() {
+    local name="$1"
+    local year="$2"
+    local month="$3"
+
+    local level=${name%%[^0-9]*}
+    
+    local prod_fn=$(getprod_fn "$name")
+    local lev_fn=$(getlev_fn "$name")
+    local run_fn=$(getrun_fn "$run")
+
+    local tree
+
+
+    if [ -n "$lev_fn" ]
+    then
+        tree="'weather', '$name', '$lev_fn', '$prod_fn', 'Archive', '$year', '$month'"
+
+    else
+        tree="'weather', '$name', '$prod_fn', 'Archive', '$year', '$month'"
+    fi
+
+    echo "$tree"
+}
+
+###############################################################################
+## @brief function to figure out the array to pass to postgres that descripes a
+##  location ibn the layer tree
+##
+## @param name  the name of the product ie: 925hgt
+## @param run       the run of the model "00"
+
+###############################################################################
+
+get_tree_link() {
     local name="$1"
     local run="$2"
 
@@ -431,7 +545,6 @@ get_tree() {
 
     echo "$tree"
 }
-
 ################################################################################
 # function to get the product fullname from input like 450t
 ################################################################################
