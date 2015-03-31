@@ -97,7 +97,7 @@ validtime() {
         then
             break
         fi
-    done << $(tr "|" "\n" <<< "$validmap")
+    done <<< $(tr "|" "\n" <<< "$validmap")
 
     echo "$length"
 
