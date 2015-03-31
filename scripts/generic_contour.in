@@ -160,20 +160,20 @@ do_generic() {
             	then
 
 
-                case "$plottype" in
-                    andplot)
-                        andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$valid" "$extra"
-                        ;;
-                    windplot)
-                        windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
-                        ;;
-                    diffplot)
-                        diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
-                        ;;
-                    *)
-                        ;;
-                esac
-
+                    case "$plottype" in
+                        andplot)
+                            andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$valid" "$extra"
+                            ;;
+                        windplot)
+                            windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                            ;;
+                        diffplot)
+                            diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+                            ;;
+                        *)
+                            ;;
+                    esac
+                fi
                 ##### fixme is it safe to delete both files? #####
             
             ##### no deps #####
@@ -204,7 +204,7 @@ do_generic() {
         then
             ppath=$(echo "$path" | sed "s/${prod}/${feed_n}/")
 	        if [[ -f "$ppath" ]]
-            	then
+            then
                 
                 case "$plottype" in
                     andplot)
@@ -219,6 +219,7 @@ do_generic() {
                     *)
                         ;;
                 esac
+            fi
       	fi
 
 
