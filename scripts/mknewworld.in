@@ -29,7 +29,7 @@ mknewworld_ds() {
             ref="products$lev_n"
             while read prod_n prod_fn
             do
-                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn" 0 ||\
+                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" 0 ||\
                     add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
 
                 ##### note run gets added when the project loads, it should be a link type to a date #####
@@ -52,7 +52,7 @@ mknewworld_ds() {
 
             while read prod_n prod_fn
             do
-                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn" 0 ||\
+                layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" 0 ||\
                     add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
                 
                 ##### note run gets added when the project loads, it should be a link type to a date #####
@@ -70,7 +70,7 @@ mknewworld_ds() {
     then
         while read prod_n prod_fn
         do
-            layers_exist_by_name "'LayerTree', 'weather', '$name', '$prod_fn" 0 ||\
+            layers_exist_by_name "'LayerTree', 'weather', '$name', '$prod_fn'" 0 ||\
                 add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
 
             ##### note run gets added when the project loads, it should be a link type to a date #####
