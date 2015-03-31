@@ -259,7 +259,7 @@ EOF
 
 layers_search() {
     mypsql -t -q << EOF
-search_layers( array[$1], $2 );
+select search_layers( array[$1], $2 );
 EOF
 
 }
