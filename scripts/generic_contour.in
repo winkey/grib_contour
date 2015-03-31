@@ -92,6 +92,7 @@ validtime() {
     validmap="$2"
     
     while read til length
+    do
         if ((curent <= til))
         then
             break
