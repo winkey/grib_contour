@@ -224,7 +224,7 @@ do_generic() {
 
 
 
-    done <<< "$prodmap"
+    done < <( awk  ' BEGIN { FS=OFS="," } {for (i=1; i<=NF; i++) gsub(/^[ \t]*|[ \t]*$/,"",$i)}; 1' <<< "$prodmap" )
 
 
     
