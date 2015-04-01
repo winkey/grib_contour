@@ -181,7 +181,7 @@ do_generic() {
             else
 
                 ##### fixme what if its a huge grib with multiple messages #####
-    ..
+    
 
                 case "$plottype" in
                     plot)
