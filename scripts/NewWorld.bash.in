@@ -400,7 +400,7 @@ appendNewWorld () {
 
     ##### lock the file #####
     
-    local lock="$locdir/$script.$run.$name.pg.lock"
+    local lock="$locdir/$script.$name.$run.$prod.pg.lock"
     echo lock $lock
     while ! mkdir "$lock" > /dev/null
     do
