@@ -296,6 +296,12 @@ layers_get_id_by_name() {
 mkrootNewWorld() {
     local $prod="$1"
 
+    if [ -n "$DEBUG" ]
+    then
+        printf "mkrootNewWorld\n prod=%s\n" \
+               "$prod"
+    fi
+
     #perhaps check if the tree exssists
     #create the tree?
 
@@ -366,6 +372,15 @@ appendNewWorld () {
     local hr="$2"
     local incr="$3"
     local grid="$4"
+
+    if [ -n "$DEBUG" ]
+    then
+        printf "appendNewWorld\n prod=%s\n hr=%s\n incr=%s\n grid=%s\n" \
+               "$prod" \
+               "$hr" \
+               "$incr "\
+               "$grid"
+    fi
 
     local frames="${wwwdisk}/kml/${name}/${run}/${prod}.kml"
 

@@ -25,6 +25,7 @@ fi
 
 locdir=/tmp
 
+DEBUG=true  #comment out to turn off
 
 source @bindir@/kml.bash
 source @bindir@/NewWorld.bash
@@ -134,6 +135,18 @@ plot () {
     local incr=$6
     local extra="$7"
 
+    if [ -n "$DEBUG" ]
+    then
+        printf "plot\n gribfile=%s\n prod=%s\n grbmsg=%s\n interval=%s\n timee=%s\n incr=%s\n extra=%s\n" \
+               "$gribfile" \
+               "$prod "\
+               "$grbmsg" \
+               "$interval" \
+               "$timee" \
+               "$incr" \
+               "$extra"
+    fi
+         
     local zip
     local kml
     zip="${wwwdisk}/kml/${name}/${run}/${prod}${timee}.kmz"
@@ -187,6 +200,20 @@ windplot () {
     local timee=$7
     local incr=$8
     local extra="$9"
+
+    if [ -n "$DEBUG" ]
+    then
+        printf "windplot\n ufile=%s\n vfile=%s\n prod=%s\n umsg=%s\n vmsg=%s\n interval=%s\n timee=%s\n incr=%s\n extra=%s\n" \
+               "$ufile" \
+               "$vfile" \
+               "$prod "\
+               "$umsg" \
+               "$vmsg" \
+               "$interval" \
+               "$timee" \
+               "$incr" \
+               "$extra"
+    fi
 
     local zip
     local kml
@@ -243,6 +270,20 @@ andplot () {
     local incr=$8
     local extra="$7"
     
+    if [ -n "$DEBUG" ]
+    then
+        printf "windplot\n ufile=%s\n vfile=%s\n prod=%s\n umsg=%s\n vmsg=%s\n interval=%s\n timee=%s\n incr=%s\n extra=%s\n" \
+               "$ufile" \
+               "$vfile" \
+               "$prod "\
+               "$umsg" \
+               "$vmsg" \
+               "$interval" \
+               "$timee" \
+               "$incr" \
+               "$extra"
+    fi
+
     local zip
     local kml
     zip="${wwwdisk}/kml/${name}/${run}/${prod}${timee}.kmz"
@@ -298,6 +339,20 @@ diffplot () {
     local incr=$8
     local extra="$9"
     
+    if [ -n "$DEBUG" ]
+    then
+        printf "windplot\n ufile=%s\n vfile=%s\n prod=%s\n umsg=%s\n vmsg=%s\n interval=%s\n timee=%s\n incr=%s\n extra=%s\n" \
+               "$ufile" \
+               "$vfile" \
+               "$prod "\
+               "$umsg" \
+               "$vmsg" \
+               "$interval" \
+               "$timee" \
+               "$incr" \
+               "$extra"
+    fi
+
     local zip
     local kml
     zip="${wwwdisk}/kml/${name}/${run}/${prod}${timee}.kmz"
