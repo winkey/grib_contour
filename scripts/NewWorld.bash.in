@@ -144,6 +144,7 @@ add_layers_radio() {
 
 EOF
 }
+
 ################################################################################
 ## function to add a animation folder
 # @param layeraray
@@ -385,7 +386,7 @@ appendNewWorld () {
     ##### get the uid and add the user if nessasary #####
 
     NewWorld_uid=$(getuid | tr -d '[[:space:]]')
-    echo "uid is $NewWorld_uid"
+
     if is_number "$NewWorld_uid"
     then
         echo
@@ -393,20 +394,17 @@ appendNewWorld () {
         mkuid
         NewWorld_uid=$(getuid)
         NewWorld_uid=$(getuid | tr -d '[[:space:]]')
-        echo "uid is $NewWorld_uid"
     fi
 
     ##### get the gid and add the group if nessasary #####
 
     NewWorld_gid=$(getgid | tr -d '[[:space:]]')
-    echo "gid is $NewWorld_gid"
     if is_number "$NewWorld_gid"
     then
         echo
     else
         mkgid
         NewWorld_gid=$(getgid | tr -d '[[:space:]]')
-        echo "gid is $NewWorld_gid"
         addtogroup  "$NewWorld_uid" "$NewWorld_gid"
     fi
 
@@ -414,7 +412,6 @@ appendNewWorld () {
     ##### lock the file #####
     
     local lock="$locdir/$script.$name.$run.$prod.pg.lock"
-    echo lock $lock
     while ! mkdir "$lock" > /dev/null
     do
         sleep 1
@@ -444,7 +441,7 @@ appendNewWorld () {
     add_layers_wms  "$tree, '$year', '$month'" \
                     $NewWorld_uid \
                     $NewWorld_gid \
-                    null \
+                    "" \
                     $(date -d "$run GMT $hr hours" "+%FT%TZ" -u) \
                     $(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u) \
                     1 \
@@ -461,8 +458,6 @@ appendNewWorld () {
                     0 \
                     0
 
-
-                    0
 
     ##### RM THE LOCK #####
 
