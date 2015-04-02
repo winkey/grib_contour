@@ -49,7 +49,7 @@ thick() {
     local feed_n="$2"
     local our_n="$3"
     local interval="$4"
-    local valid="$5"
+    local incr="$5"
     local extra="$6"
     local deps="$7"
     local tlevel="$8"
@@ -58,7 +58,7 @@ thick() {
     if [[ -f $ppath ]]
     then
 
-        diffplot "$ppath" "$path" "${tlevel}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+        diffplot "$ppath" "$path" "${tlevel}${our_n}" 1 1 $interval $hour "$incr" "$extra"
         
     fi
 }
@@ -68,7 +68,7 @@ thick2() {
     local feed_n="$2"
     local our_n="$3"
     local interval="$4"
-    local valid="$5"
+    local incr="$5"
     local extra="$6"
     local deps="$7"
     local tlevel="$8"
@@ -77,7 +77,7 @@ thick2() {
     if [[ -f $ppath ]]
     then
 
-        diffplot "$path" "$ppath" "${tlevel}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+        diffplot "$path" "$ppath" "${tlevel}${our_n}" 1 1 $interval $hour "$incr" "$extra"
         
         
     fi
@@ -106,6 +106,7 @@ validtime() {
         return 1
     fi
 }
+ 
 
 ################################################################################
 # main
@@ -116,12 +117,22 @@ do_generic() {
 
     local num_matches=0
     local num_depmatches=0
+    
+    local plottype 
+    local feed_n 
+    local our_n 
+    local interval 
+    local validmap 
+    local extra 
+    local deps
 
     ##### loop over the product map #####
 
 
-    while IFS=',' read plottype feed_n our_n interval valid extra deps
+    while IFS=',' read plottype feed_n our_n interval validmap extra deps
     do
+
+        incr=$(validtime "$hour" "$validmap")
 
         ##### product match? #####
 
@@ -136,15 +147,15 @@ do_generic() {
     
                 if [[ $level == 1000 ]]
                 then
-                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 925
-                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 850
-                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 700
-                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 500
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 925
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 850
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 700
+                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 500
                 else
                     if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
                     then
             
-                        thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" $level
+                        thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" $level
                     fi
                 fi
             
@@ -162,13 +173,13 @@ do_generic() {
 
                     case "$plottype" in
                         andplot)
-                            andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$valid" "$extra"
+                            andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$incr" "$extra"
                             ;;
                         windplot)
-                            windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                            windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
                             ;;
                         diffplot)
-                            diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+                            diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$incr" "$extra"
                             ;;
                         *)
                             ;;
@@ -185,10 +196,10 @@ do_generic() {
 
                 case "$plottype" in
                     plot)
-                        plot "$path" "${level}$our_n" 1 $interval $hour "$valid"  "$extra"
+                        plot "$path" "${level}$our_n" 1 $interval $hour "$incr"  "$extra"
                         ;;
                     windplot)
-                        windplot "$path" "$path" "${level}wind" 1.0 1.1 $interval $hour "$valid" "$extra"
+                        windplot "$path" "$path" "${level}wind" 1.0 1.1 $interval $hour "$incr" "$extra"
                         ;;
                     *)
                         ;;
@@ -208,13 +219,13 @@ do_generic() {
                 
                 case "$plottype" in
                     andplot)
-                        andplot  "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                        andplot  "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
                         ;;
                     windplot)
-                        windplot "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+                        windplot "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
                         ;;
                     diffplot)
-                        diffplot "$ppath" "$path" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+                        diffplot "$ppath" "$path" "${level}${our_n}" 1 1 $interval $hour "$incr" "$extra"
                         ;;
                     *)
                         ;;
@@ -239,9 +250,9 @@ dofile () {
 #    while read lev_n lev_fn
 #    do
 #
-#        while read IFS=',' plottype feed_n our_n interval valid extra deps
+#        while read IFS=',' plottype feed_n our_n interval validmap extra deps
 #        do
-#
+#            incr=$(validtime "$hour" "$validmap")
 #            msg=$(findingrib "$path" "$feed_n" "$lev_n")
 #
 #            IF [
@@ -256,15 +267,15 @@ dofile () {
 #    
 #                if [[ $level == 1000 ]]
 #                then
-#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 925
-#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 850
-#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 700
-#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" 500
+#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 925
+#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 850
+#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 700
+#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 500
 #                else
 #                    if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
 #                    then
 #            
-#                        thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$valid" "$extra" "$deps" $level
+#                        thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" $level
 #                    fi
 #                fi
 #            
@@ -282,13 +293,13 @@ dofile () {
 #
 #                    case "$plottype" in
 #                        andplot)
-#                            andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$valid" "$extra"
+#                            andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$incr" "$extra"
 #                            ;;
 #                        windplot)
-#                            windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+#                            windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
 #                            ;;
 #                        diffplot)
-#                            diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+#                            diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$incr" "$extra"
 #                            ;;
 #                        *)
 #                            ;;
@@ -305,10 +316,10 @@ dofile () {
 #
 #                case "$plottype" in
 #                    plot)
-#                        plot "$path" "${level}$our_n" 1 $interval $hour "$valid"  "$extra"
+#                        plot "$path" "${level}$our_n" 1 $interval $hour "$incr"  "$extra"
 #                        ;;
 #                    windplot)
-#                        windplot "$path" "$path" "${level}wind" 1.0 1.1 $interval $hour "$valid" "$extra"
+#                        windplot "$path" "$path" "${level}wind" 1.0 1.1 $interval $hour "$incr" "$extra"
 #                        ;;
 #                    *)
 #                        ;;
@@ -328,13 +339,13 @@ dofile () {
 #                    
 #                    case "$plottype" in
 #                        andplot)
-#                            andplot  "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+#                            andplot  "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
 #                            ;;
 #                        windplot)
-#                            windplot "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$valid" "$extra"
+#                            windplot "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
 #                            ;;
 #                        diffplot)
-#                            diffplot "$ppath" "$path" "${level}${our_n}" 1 1 $interval $hour "$valid" "$extra"
+#                            diffplot "$ppath" "$path" "${level}${our_n}" 1 1 $interval $hour "$incr" "$extra"
 #                            ;;
 #                        *)
 #                            ;;
