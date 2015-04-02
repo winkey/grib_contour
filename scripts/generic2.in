@@ -27,6 +27,7 @@ locdir=/tmp
 
 
 source @bindir@/kml.bash
+source @bindir@/NewWorld.bash
 
 export PATH="$PATH:@bindir@"
 
