@@ -19,21 +19,21 @@ www="@www@"
 ###############################################################################
 ## @brief function to create the root kml file
 ##
-## @param name  the name of the product ie: 925hgt
+## @param prod  the name of the product ie: 925hgt
 ##
 ## @details
 ## global vars
 ## @param wwwdisk   the base web dir to write to "/var/www/html/"
 ## @param run       the run of the model "00"
 ## @param www       the base url for the website
-## @param dsname    name of the dataset
+## @param name    name of the dataset
 ##
 ###############################################################################
 
 mkrootkml () {
-    local name="$1"
+    local prod="$1"
     
-    frames=${wwwdisk}/kml/${dsname}/${run}/${name}.kml
+    frames=${wwwdisk}/kml/${name}/${run}/${prod}.kml
     
     cat > $frames << EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -43,7 +43,7 @@ mkrootkml () {
     <name>Key</name>
     <visibility>1</visibility>
         <Icon>
-      <href>${www}/kml/images/${name}.png</href>
+      <href>${www}/kml/images/${prod}.png</href>
     </Icon>
     <overlayXY x="0" y="1" xunits="fraction" yunits="fraction"/>
     <screenXY x="0" y="1" xunits="fraction" yunits="fraction"/>
@@ -61,12 +61,12 @@ EOF
     
     ##### check the latest link #####
     
-    if [ -h "${wwwdisk}/kml/${dsname}/latest" ]
+    if [ -h "${wwwdisk}/kml/${name}/latest" ]
     then
-        rm "${wwwdisk}/kml/${dsname}/latest"
+        rm "${wwwdisk}/kml/${name}/latest"
     fi
 
-    ln -s "${wwwdisk}/kml/${dsname}/${run}" -T "${wwwdisk}/kml/${dsname}/latest"
+    ln -s "${wwwdisk}/kml/${name}/${run}" -T "${wwwdisk}/kml/${name}/latest"
 }
 
 
@@ -74,7 +74,7 @@ EOF
 ###############################################################################
 ## @brief function to append the new frame to the root kml
 ##
-## @param name  the name of the product ie: 925hgt
+## @param prod  the name of the product ie: 925hgt
 ## @param hr    the forcast hour in the run
 ## @param incr  how many hours apart the frames are
 ## @param grid  optional name to prefix onto the kml name
@@ -84,26 +84,26 @@ EOF
 ## @param wwwdisk   the base web dir to write to "/var/www/html/"            
 ## @param run       the run of the model "00"
 ## @param www       the base url for the website
-## @param dsname    name of the dataset
+## @param name    name of the dataset
 ##
 ###############################################################################
 
 appendkml () {
-    local name="$1"
+    local prod="$1"
     local hr="$2"
     local incr="$3"
     local grid="$4"
     
-    local frames="${wwwdisk}/kml/${dsname}/${run}/${name}.kml"
+    local frames="${wwwdisk}/kml/${name}/${run}/${prod}.kml"
     
     if ! [ -f "$frames" ]
     then
-        mkrootkml "${name}"
+        mkrootkml "${prod}"
     fi
     
     ##### lock the file #####
     
-    local lock="$locdir/$script.$run.$name.kml.lock"
+    local lock="$locdir/$script.$run.$prod.kml.lock"
     echo lock $lock
     while ! mkdir "$lock" > /dev/null
     do
@@ -120,14 +120,14 @@ appendkml () {
     
     if (( frametime + 21600 < nowtime))
     then
-        mkrootkml "${name}"
+        mkrootkml "${prod}"
     fi
     
     if [[ "$grid" != "" ]]
     then
-        zip="${www}/kml/${dsname}/${run}/${grid}.${name}${hr}.kmz"
+        zip="${www}/kml/${name}/${run}/${grid}.${prod}${hr}.kmz"
     else
-        zip="${www}/kml/${dsname}/${run}/${name}${hr}.kmz"
+        zip="${www}/kml/${name}/${run}/${prod}${hr}.kmz"
     fi
 
 
@@ -139,7 +139,7 @@ ed -s $frames << EOF
 $ -2
 a
   <NetworkLink>
-    <name>${run}Z + ${hr} ${grid}.${name}</name>
+    <name>${run}Z + ${hr} ${grid}.${prod}</name>
     <TimeSpan>
       <begin>${begin}</begin>
       <end>${end}</end>

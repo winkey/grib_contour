@@ -286,7 +286,7 @@ layers_get_id_by_name() {
 ###############################################################################
 ## @brief 
 ##
-## @param name  the name of the product ie: 925hgt
+## @param prod  the name of the product ie: 925hgt
 ##
 ## @details
 ## global vars
@@ -294,12 +294,12 @@ layers_get_id_by_name() {
 ###############################################################################
 
 mkrootNewWorld() {
-    local $name="$1"
+    local $prod="$1"
 
     #perhaps check if the tree exssists
     #create the tree?
 
-    local tree=$(get_tree "$name" "$run")
+    local tree=$(get_tree "$prod" "$run")
     
     local pid=$(layers_search "$tree" 0)
 
@@ -322,7 +322,7 @@ mkrootNewWorld() {
 
     local mydate=$(date -d "18 GMT" "+%Y-%m-%d" -u)
 
-    local tree=$(get_tree_archive "$name" "$year" "$month" )
+    local tree=$(get_tree_archive "$prod" "$year" "$month" )
     layers_exist_by_name "$tree, '$date ${run}z'" 0 ||\
         add_layers_folder "$tree" "$NewWorld_uid" "$NewWorld_gid" "$date ${run}z" "$month" "$date ${run}z"
 
@@ -330,7 +330,7 @@ mkrootNewWorld() {
 
     ##### add the link #####
 
-    local tree=$(get_tree "$name" "$year" "$month" )
+    local tree=$(get_tree "$prod" "$year" "$month" )
     if ! layers_exist_by_name "$tree, '$date ${run}z'" 0
     then
         add_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$date ${run}z" "$date ${run}z" $id
@@ -346,7 +346,7 @@ mkrootNewWorld() {
 ###############################################################################
 ## @brief function to add the new framre to the NewWorld Animation
 ##
-## @param name  the name of the product ie: 925hgt
+## @param prod  the name of the product ie: 925hgt
 ## @param hr    the forcast hour in the run
 ## @param incr  how many hours apart the frames are
 ## @param grid  optional name to prefix onto the kml name
@@ -356,18 +356,18 @@ mkrootNewWorld() {
 ## @param wwwdisk   the base web dir to write to "/var/www/html/"            
 ## @param run       the run of the model "00"
 ## @param www       the base url for the website
-## @param dsname    name of the dataset
+## @param name    name of the dataset
 ##
 ###############################################################################
 
 appendNewWorld () {
 
-    local name="$1"
+    local prod="$1"
     local hr="$2"
     local incr="$3"
     local grid="$4"
 
-    local frames="${wwwdisk}/kml/${dsname}/${run}/${name}.kml"
+    local frames="${wwwdisk}/kml/${name}/${run}/${prod}.kml"
 
     ##### get the uid and add the user if nessasary #####
 
@@ -418,12 +418,12 @@ appendNewWorld () {
     
     if (( frametime + 21600 < nowtime))
     then
-        mkrootNewWorld "${name}"
+        mkrootNewWorld "${prod}"
     fi
     
     ##### add the layer to the current run folder #####
 
-    local tree=$(get_tree "$name" "$run")
+    local tree=$(get_tree "$prod" "$run")
 
     add_layers_wms  "$tree" \
                     $NewWorld_uid \
@@ -432,22 +432,22 @@ appendNewWorld () {
                     $(date -d "$run GMT $hr hours" "+%FT%TZ" -u) \
                     $(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u) \
                     1 \
-                    "${name}${hr}" \
+                    "${prod}${hr}" \
                     "" \
                     "" \
-                    "${www}/cgi-bin/${dsname}_wms?HOUR=${hr}&RUN=${run}" \
-                    "$name" \
+                    "${www}/cgi-bin/${name}_wms?HOUR=${hr}&RUN=${run}" \
+                    "$prod" \
                     "image/png" \
                     1 \
                     null \
                     1 \
-                    "<img src='${www}/kml/images/${name}.png' />" \
+                    "<img src='${www}/kml/images/${prod}.png' />" \
                     0 \
                     0
 
     ##### add the layer to the latest run folder #####
 
-    local tree=$(get_tree "$name" "latest")
+    local tree=$(get_tree "$prod" "latest")
 
     add_layers_wms  "$tree" \
                     $NewWorld_uid \
@@ -456,16 +456,16 @@ appendNewWorld () {
                     $(date -d "$run GMT $hr hours" "+%FT%TZ" -u) \
                     $(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u) \
                     1 \
-                    "${name}${hr}" \
+                    "${prod}${hr}" \
                     "" \
                     "" \
-                    "${www}/cgi-bin/${dsname}_wms?HOUR=${hr}&RUN=${run}" \
-                    "$name" \
+                    "${www}/cgi-bin/${name}_wms?HOUR=${hr}&RUN=${run}" \
+                    "$prod" \
                     "image/png" \
                     1 \
                     null \
                     1 \
-                    "<img src='${www}/kml/images/${name}.png' />" \
+                    "<img src='${www}/kml/images/${prod}.png' />" \
                     0 \
                     0
 
@@ -475,20 +475,20 @@ appendNewWorld () {
 ## @brief function to figure out the array to pass to postgres that descripes a
 ##  location ibn the layer tree
 ##
-## @param name  the name of the product ie: 925hgt
+## @param prod  the name of the product ie: 925hgt
 ## @param run       the run of the model "00"
 
 ###############################################################################
 
 get_tree_archive() {
-    local name="$1"
+    local prod="$1"
     local year="$2"
     local month="$3"
 
-    local level=${name%%[^0-9]*}
+    local level=${prod%%[^0-9]*}
     
-    local prod_fn=$(getprod_fn "$name")
-    local lev_fn=$(getlev_fn "$name")
+    local prod_fn=$(getprod_fn "$prod")
+    local lev_fn=$(getlev_fn "$prod")
     local run_fn=$(getrun_fn "$run")
 
     local tree
@@ -509,19 +509,19 @@ get_tree_archive() {
 ## @brief function to figure out the array to pass to postgres that descripes a
 ##  location ibn the layer tree
 ##
-## @param name  the name of the product ie: 925hgt
+## @param prod  the name of the product ie: 925hgt
 ## @param run       the run of the model "00"
 
 ###############################################################################
 
 get_tree_link() {
-    local name="$1"
+    local prod="$1"
     local run="$2"
 
-    local level=${name%%[^0-9]*}
+    local level=${prod%%[^0-9]*}
     
-    local prod_fn=$(getprod_fn "$name")
-    local lev_fn=$(getlev_fn "$name")
+    local prod_fn=$(getprod_fn "$prod")
+    local lev_fn=$(getlev_fn "$prod")
     local run_fn=$(getrun_fn "$run")
 
     local tree
@@ -573,8 +573,8 @@ getrun_fn() {
 ################################################################################
 
 getlev_fn() {
-    local name="$1"
-    local level="${name%%[^0-9]*}"
+    local prod="$1"
+    local level="${prod%%[^0-9]*}"
     
     if [ -n "$level" ]
     then
@@ -616,14 +616,14 @@ getlev_fn() {
 
 getprod_fn() {
 
-    local name="$1"
-    local level="${name%%[^0-9]*}"
+    local prod="$1"
+    local level="${prod%%[^0-9]*}"
     local prod_n
     local prod_fn
 
     if [ -n "$level" ]
     then
-        prod="${name##*[0-9]}"
+        prod="${prod##*[0-9]}"
 
         ref="products$lev_n"
         while read prod_n prod_fn
@@ -639,7 +639,7 @@ getprod_fn() {
     then
         while read prod_n prod_fn
         do
-            if [[ "$prod_n" == "$name" ]]
+            if [[ "$prod_n" == "$prod" ]]
             then
                 echo "$prod_fn"
                 return
@@ -650,7 +650,7 @@ getprod_fn() {
     then
         while read prod_n prod_fn
         do
-           if [[ "$prod_n" == "$name" ]]
+           if [[ "$prod_n" == "$prod" ]]
             then
                 echo "$prod_fn"
                 return

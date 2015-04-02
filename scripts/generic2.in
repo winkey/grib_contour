@@ -25,7 +25,6 @@ fi
 
 locdir=/tmp
 
-dsname="${name}"
 
 source @bindir@/kml.bash
 
@@ -110,7 +109,7 @@ function my_mkfifo {
 ## @brief function to plot the data
 ##
 ## @param gribfile  full path to the grib file to plot
-## @param name      name of the product ie: 925hgt
+## @param prod      name of the product ie: 925hgt
 ## @param gribmsg   the grib msg #
 ## @param interval  interval apart the contours are
 ## @param timee     the forcast hour in the run
@@ -121,13 +120,13 @@ function my_mkfifo {
 ## global vars
 ## @param wwwdisk   the base web dir to write to "/var/www/html/"
 ## @param run       the run of the model "00"
-## @param dsname    name of the dataset
+## @param name    name of the dataset
 ##
 ###############################################################################
 
 plot () {
     local gribfile=$1
-    local name="$2"
+    local prod="$2"
     local grbmsg=$3
     local interval=$4
     local timee=$5
@@ -136,8 +135,8 @@ plot () {
 
     local zip
     local kml
-    zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
-    kml="${name}${timee}.kml"
+    zip="${wwwdisk}/kml/${name}/${run}/${prod}${timee}.kmz"
+    kml="${prod}${timee}.kml"
     
     if [[ -f "$zip" ]]
     then
@@ -145,13 +144,13 @@ plot () {
     fi
     
     nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg \
-                                                    -i $interval -s $name \
+                                                    -i $interval -s $prod \
                                                     -k $kml -z "$zip" \
                                                     $extra
     
-    appendkml $name $timee $incr $grid
-    #appendgeoext $name $timee $incr $grid
-    #appendmapfile "$name" "$zip"
+    appendkml $prod $timee $incr $grid
+    #appendgeoext $prod $timee $incr $grid
+    #appendmapfile "$prod" "$zip"
     
 }
 
@@ -160,7 +159,7 @@ plot () {
 ##
 ## @param ufile     full path to the u grib file to plot
 ## @param vfile     full path to the u grib file to plot
-## @param name      name of the product ie: 925hgt
+## @param prod      name of the product ie: 925hgt
 ## @param umsg      the u grib msg #
 ## @param vmsg      the v grib msg #
 ## @param interval  interval apart the contours are
@@ -172,14 +171,14 @@ plot () {
 ## global vars
 ## @param wwwdisk   the base web dir to write to "/var/www/html/"
 ## @param run       the run of the model "00"
-## @param dsname    name of the dataset
+## @param name    name of the dataset
 ##
 ###############################################################################
 
 windplot () {
     local ufile="$1"
     local vfile="$2"
-    local name="$3"
+    local prod="$3"
     local umsg=$4
     local vmsg=$5
     local interval=$6
@@ -189,8 +188,8 @@ windplot () {
 
     local zip
     local kml
-    zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
-    kml="${name}${timee}.kml"
+    zip="${wwwdisk}/kml/${name}/${run}/${prod}${timee}.kmz"
+    kml="${prod}${timee}.kml"
     
     if [[ -f "$zip" ]]
     then
@@ -199,13 +198,13 @@ windplot () {
     
     nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" \
                                                     -U $umsg -V $vmsg \
-                                                    -i $interval -s $name \
+                                                    -i $interval -s $prod \
                                                     -k $kml -z "$zip" \
                                                     $extra
     
-    appendkml $name $timee $incr $grid
-    #appendgeoext $name $timee $incr $grid
-    #appendmapfile "$name" "$zip"
+    appendkml $prod $timee $incr $grid
+    #appendgeoext $prod $timee $incr $grid
+    #appendmapfile "$prod" "$zip"
 
 }
 
@@ -214,7 +213,7 @@ windplot () {
 ##
 ## @param ufile     full path to the u grib file to plot
 ## @param vfile     full path to the u grib file to plot
-## @param name      name of the product ie: 925hgt
+## @param prod      name of the product ie: 925hgt
 ## @param umsg      the u grib msg #
 ## @param vmsg      the v grib msg #
 ## @param interval  interval apart the contours are
@@ -226,14 +225,14 @@ windplot () {
 ## global vars
 ## @param wwwdisk   the base web dir to write to "/var/www/html/"
 ## @param run       the run of the model "00"
-## @param dsname    name of the dataset
+## @param name    name of the dataset
 ##
 ###############################################################################
 
 andplot () {
     local ufile="$1"
     local vfile="$2"
-    local name="$3"
+    local prod="$3"
     local umsg=$4
     local vmsg=$5
     local interval=$6
@@ -243,8 +242,8 @@ andplot () {
     
     local zip
     local kml
-    zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
-    kml="${name}${timee}.kml"
+    zip="${wwwdisk}/kml/${name}/${run}/${prod}${timee}.kmz"
+    kml="${prod}${timee}.kml"
     
     if [[ -f "$zip" ]]
     then
@@ -253,13 +252,13 @@ andplot () {
     
     nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" \
                                                     -U $umsg -V $vmsg \
-                                                    -i $interval -s $name \
+                                                    -i $interval -s $prod \
                                                     -k $kml -z "$zip" \
                                                     $extra
     
-    appendkml $name $timee $incr $grid
-    #appendgeoext $name $timee $incr $grid
-    #appendmapfile "$name" "$zip"
+    appendkml $prod $timee $incr $grid
+    #appendgeoext $prod $timee $incr $grid
+    #appendmapfile "$prod" "$zip"
     
 }
 
@@ -268,7 +267,7 @@ andplot () {
 ##
 ## @param ufile     full path to the u grib file to plot
 ## @param vfile     full path to the v grib file to plot
-## @param name      name of the product ie: 925hgt
+## @param prod      name of the product ie: 925hgt
 ## @param umsg      the u grib msg #
 ## @param vmsg      the v grib msg #
 ## @param interval  interval apart the contours are
@@ -280,14 +279,14 @@ andplot () {
 ## global vars
 ## @param wwwdisk   the base web dir to write to "/var/www/html/"
 ## @param run       the run of the model "00"
-## @param dsname    name of the dataset
+## @param name    name of the dataset
 ##
 ###############################################################################
 
 diffplot () {
     local ufile="$1"
     local vfile="$2"
-    local name="$3"
+    local prod="$3"
     local umsg=$4
     local vmsg=$5
     local interval=$6
@@ -297,8 +296,8 @@ diffplot () {
     
     local zip
     local kml
-    zip="${wwwdisk}/kml/${dsname}/${run}/${name}${timee}.kmz"
-    kml="${name}${timee}.kml"
+    zip="${wwwdisk}/kml/${name}/${run}/${prod}${timee}.kmz"
+    kml="${prod}${timee}.kml"
     
     if [[ -f "$zip" ]]
     then
@@ -307,13 +306,13 @@ diffplot () {
     
     nice -n 10 grib_contour -d -u "${ufile}" -v "${vfile}" \
                                                     -U $umsg -V $vmsg \
-                                                    -i $interval -s $name \
+                                                    -i $interval -s $prod \
                                                     -k $kml -z "$zip" \
                                                     $extra
     
-    appendkml $name $timee $incr $grid
-    #appendgeoext $name $timee $incr $grid
-    #appendmapfile "$name" "$zip"
+    appendkml $prod $timee $incr $grid
+    #appendgeoext $prod $timee $incr $grid
+    #appendmapfile "$prod" "$zip"
 
 }
  
@@ -339,21 +338,21 @@ getgrib () {
 ## @brief find a product in a grib file
 ##
 ## @arg file    the path and ilename
-## @arg name    product name
+## @arg prod    product name
 ## @arg level   product level
 ###############################################################################
 
 findingrib() {
     local file="$1"
-    local name="$2"
+    local prod="$2"
     local level="$3"
 
 
     degrib -in "$file" -I |\
-     awk -v name="$name" \
+     awk -v prod="$prod" \
          -v level="$level" \
          -F '"*, "*' \
-         '(($4 ~ "^" name ) && ($5 ~ "^" level )) { print $1 ; exit}'
+         '(($4 ~ "^" prod ) && ($5 ~ "^" level )) { print $1 ; exit}'
 
 
 }
