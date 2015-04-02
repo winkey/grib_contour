@@ -149,6 +149,7 @@ plot () {
                                                     $extra
     
     appendkml $prod $timee $incr $grid
+    appendNewWorld $prod $timee $incr $grid
     #appendgeoext $prod $timee $incr $grid
     #appendmapfile "$prod" "$zip"
     
@@ -203,6 +204,7 @@ windplot () {
                                                     $extra
     
     appendkml $prod $timee $incr $grid
+    appendNewWorld $prod $timee $incr $grid
     #appendgeoext $prod $timee $incr $grid
     #appendmapfile "$prod" "$zip"
 
@@ -257,6 +259,7 @@ andplot () {
                                                     $extra
     
     appendkml $prod $timee $incr $grid
+    appendNewWorld $prod $timee $incr $grid
     #appendgeoext $prod $timee $incr $grid
     #appendmapfile "$prod" "$zip"
     
@@ -311,6 +314,7 @@ diffplot () {
                                                     $extra
     
     appendkml $prod $timee $incr $grid
+    appendNewWorld $prod $timee $incr $grid
     #appendgeoext $prod $timee $incr $grid
     #appendmapfile "$prod" "$zip"
 
