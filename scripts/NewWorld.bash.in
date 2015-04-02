@@ -305,7 +305,7 @@ mkrootNewWorld() {
     #perhaps check if the tree exssists
     #create the tree?
 
-    local tree=$(get_tree "$prod" "$run")
+    local tree=$(get_tree_archive "$prod")
     
     local pid=$(layers_search "$tree" 0)
 
@@ -314,37 +314,35 @@ mkrootNewWorld() {
     #    ;;
     #fi
     
-
     ##### year and month archive folders #####
+
     local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
-    layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn, 'Archive', '$year'" 0 ||\
-        add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn', 'Archive'" "$NewWorld_uid" "$NewWorld_gid" "$year" "$year" ""
+    layers_exist_by_name "$tree, 'Archive', '$year'" 0 ||\
+        add_layers_folder "$tree" 'Archive', "$NewWorld_uid" "$NewWorld_gid" "$year" "$year" ""
 
     local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
-    layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn, 'Archive', '$year', '$month'" 0 ||\
-        add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn', 'Archive', '$year'" "$NewWorld_uid" "$NewWorld_gid" "$month" "$month" ""
+    layers_exist_by_name "$tree, 'Archive', '$year', '$month'" 0 ||\
+        add_layers_folder "$tree, 'Archive', '$year'" "$NewWorld_uid" "$NewWorld_gid" "$month" "$month" ""
 
     ###### add the animation folder #####
 
-    local mydate=$(date -d "18 GMT" "+%Y-%m-%d" -u)
+    local mydate=$(date -d "$run GMT" "+%Y-%m-%d" -u)
 
-    local tree=$(get_tree_archive "$prod" "$year" "$month" )
-    layers_exist_by_name "$tree, '$date ${run}z'" 0 ||\
-        add_layers_folder "$tree" "$NewWorld_uid" "$NewWorld_gid" "$date ${run}z" "$month" "$date ${run}z"
+    layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$date ${run}z'" 0 ||\
+        add_layers_folder "$tree, 'Archive', '$year', '$month'" "$NewWorld_uid" "$NewWorld_gid" "$date ${run}z" "$mydate ${run}z" ""
 
-    local id=$( layers_get_id_by_name "$tree, '$date ${run}z'" 0 )
+    local id=$( layers_get_id_by_name "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" 0 )
 
     ##### add the link #####
 
-    local tree=$(get_tree "$prod" "$year" "$month" )
-    if ! layers_exist_by_name "$tree, '$date ${run}z'" 0
+    if ! layers_exist_by_name "$tree, '$mydate ${run}z'" 0
     then
-        add_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$date ${run}z" "$date ${run}z" $id
+        add_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" $id
 
         ##### mod existing #####
 
     else
-        add_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$date ${run}z" "$date ${run}z" $id
+        update_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" $id
     fi
 
 }
@@ -436,11 +434,14 @@ appendNewWorld () {
         mkrootNewWorld "${prod}"
     fi
     
-    ##### add the layer to the current run folder #####
+    ##### add the layer to the folder #####
 
-    local tree=$(get_tree "$prod" "$run")
+    local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
+    local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
 
-    add_layers_wms  "$tree" \
+    local tree=$(get_tree_link "$prod")
+
+    add_layers_wms  "$tree, '$year', '$month'" \
                     $NewWorld_uid \
                     $NewWorld_gid \
                     null \
@@ -456,32 +457,11 @@ appendNewWorld () {
                     1 \
                     null \
                     1 \
-                    "<img src='${www}/kml/images/${prod}.png' />" \
+                    "<img src="${www}/kml/images/${prod}.png" />" \
                     0 \
                     0
 
-    ##### add the layer to the latest run folder #####
 
-    local tree=$(get_tree "$prod" "latest")
-
-    add_layers_wms  "$tree" \
-                    $NewWorld_uid \
-                    $NewWorld_gid \
-                    null \
-                    $(date -d "$run GMT $hr hours" "+%FT%TZ" -u) \
-                    $(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u) \
-                    1 \
-                    "${prod}${hr}" \
-                    "" \
-                    "" \
-                    "${www}/cgi-bin/${name}_wms?HOUR=${hr}&RUN=${run}" \
-                    "$prod" \
-                    "image/png" \
-                    1 \
-                    null \
-                    1 \
-                    "<img src='${www}/kml/images/${prod}.png' />" \
-                    0 \
                     0
 
     ##### RM THE LOCK #####
@@ -489,19 +469,17 @@ appendNewWorld () {
     rmdir "$lock"
 }
 
-###############################################################################
+##############################################################################
 ## @brief function to figure out the array to pass to postgres that descripes a
 ##  location ibn the layer tree
 ##
 ## @param prod  the name of the product ie: 925hgt
-## @param run       the run of the model "00"
+
 
 ###############################################################################
 
 get_tree_archive() {
     local prod="$1"
-    local year="$2"
-    local month="$3"
 
     local level=${prod%%[^0-9]*}
     
@@ -514,27 +492,29 @@ get_tree_archive() {
 
     if [ -n "$lev_fn" ]
     then
-        tree="'weather', '$name', '$lev_fn', '$prod_fn', 'Archive', '$year', '$month'"
+        tree="'weather', '$name', '$lev_fn', '$prod_fn', 'Archive'"
 
     else
-        tree="'weather', '$name', '$prod_fn', 'Archive', '$year', '$month'"
+        tree="'weather', '$name', '$prod_fn', 'Archive'"
     fi
 
     echo "$tree"
 }
+
 
 ###############################################################################
 ## @brief function to figure out the array to pass to postgres that descripes a
 ##  location ibn the layer tree
 ##
 ## @param prod  the name of the product ie: 925hgt
+
+## @details global
 ## @param run       the run of the model "00"
 
 ###############################################################################
 
-get_tree_link() {
+get_tree() {
     local prod="$1"
-    local run="$2"
 
     local level=${prod%%[^0-9]*}
     
@@ -545,18 +525,10 @@ get_tree_link() {
     local tree
 
 
-    if [ -n "$lev_fn" ] && [ -n "$run_fn" ]
-    then
-        tree="'weather', '$name', '$lev_fn', '$prod_fn', '$run_fn'"
-
-    elif [ -n "$lev_fn" ]
+    if [ -n "$lev_fn" ]
     then
         tree="'weather', '$name', '$lev_fn', '$prod_fn'"
 
-    elif [ -n "$run_fn" ]
-    then
-        tree="'weather', '$name', '$prod_fn', '$run_fn'"
-    
     else
         tree="'weather', '$name', '$prod_fn'"
     fi
