@@ -439,7 +439,7 @@ appendNewWorld () {
     local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
     local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
 
-    local tree=$(get_tree_link "$prod")
+    local tree=$(get_tree "$prod")
 
     add_layers_wms  "$tree, '$year', '$month'" \
                     $NewWorld_uid \

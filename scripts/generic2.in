@@ -157,14 +157,15 @@ plot () {
         rm "$zip"
     fi
     
-    nice -n 10 grib_contour -g "${gribfile}" -m $grbmsg \
-                                                    -i $interval -s $prod \
-                                                    -k $kml -z "$zip" \
-                                                    $extra
+    grib_contour -g "${gribfile}" \
+                 -m "$grbmsg" \
+                 -i "$interval" -s "$prod" \
+                 -k "$kml" -z "$zip" \
+                 $extra
     
-    appendkml $prod $timee $incr $grid
-    appendNewWorld $prod $timee $incr $grid
-    #appendgeoext $prod $timee $incr $grid
+    appendkml "$prod" "$timee" "$incr" "$grid"
+    appendNewWorld "$prod" "$timee" "$incr" "$grid"
+    #appendgeoext "$prod" "$timee" "$incr" "$grid"
     #appendmapfile "$prod" "$zip"
     
 }
@@ -225,15 +226,15 @@ windplot () {
         rm "$zip"
     fi
     
-    nice -n 10 grib_contour -w -u "${ufile}" -v "${vfile}" \
-                                                    -U $umsg -V $vmsg \
-                                                    -i $interval -s $prod \
-                                                    -k $kml -z "$zip" \
-                                                    $extra
+    grib_contour -w -u "${ufile}" -v "${vfile}" \
+                    -U "$umsg" -V "$vmsg" \
+                    -i "$interval" -s "$prod" \
+                    -k "$kml" -z "$zip" \
+                    $extra
     
-    appendkml $prod $timee $incr $grid
-    appendNewWorld $prod $timee $incr $grid
-    #appendgeoext $prod $timee $incr $grid
+    appendkml "$prod" "$timee" "$incr" "$grid"
+    appendNewWorld "$prod" "$timee" "$incr" "$grid"
+    #appendgeoext "$prod" "$timee" "$incr" "$grid"
     #appendmapfile "$prod" "$zip"
 
 }
@@ -294,15 +295,15 @@ andplot () {
         rm "$zip"
     fi
     
-    nice -n 10 grib_contour -a -u "${ufile}" -v "${vfile}" \
-                                                    -U $umsg -V $vmsg \
-                                                    -i $interval -s $prod \
-                                                    -k $kml -z "$zip" \
-                                                    $extra
+    grib_contour -a -u "${ufile}" -v "${vfile}" \
+                    -U "$umsg" -V "$vmsg" \
+                    -i "$interval" -s "$prod" \
+                    -k "$kml" -z "$zip" \
+                    $extra
     
-    appendkml $prod $timee $incr $grid
-    appendNewWorld $prod $timee $incr $grid
-    #appendgeoext $prod $timee $incr $grid
+    appendkml "$prod" "$timee" "$incr" "$grid"
+    appendNewWorld "$prod" "$timee" "$incr" "$grid"
+    #appendgeoext "$prod" "$timee" "$incr" "$grid"
     #appendmapfile "$prod" "$zip"
     
 }
@@ -363,15 +364,15 @@ diffplot () {
         rm "$zip"
     fi
     
-    nice -n 10 grib_contour -d -u "${ufile}" -v "${vfile}" \
-                                                    -U $umsg -V $vmsg \
-                                                    -i $interval -s $prod \
-                                                    -k $kml -z "$zip" \
-                                                    $extra
+    grib_contour -d -u "${ufile}" -v "${vfile}" \
+                    -U "$umsg" -V "$vmsg" \
+                    -i "$interval" -s "$prod" \
+                    -k "$kml" -z "$zip" \
+                    $extra
     
-    appendkml $prod $timee $incr $grid
-    appendNewWorld $prod $timee $incr $grid
-    #appendgeoext $prod $timee $incr $grid
+    appendkml "$prod" "$timee" "$incr" "$grid"
+    appendNewWorld "$prod" "$timee" "$incr" "$grid"
+    #appendgeoext "$prod" "$timee" "$incr" "$grid"
     #appendmapfile "$prod" "$zip"
 
 }
