@@ -327,7 +327,7 @@ mkrootNewWorld() {
     ##### year and month archive folders #####
 
     layers_exist_by_name "$tree, 'Archive', '$year'" 0 ||\
-        add_layers_folder "$tree" 'Archive', "$NewWorld_uid" "$NewWorld_gid" "$year" "$year" ""
+        add_layers_folder "$tree, 'Archive'" "$NewWorld_uid" "$NewWorld_gid" "$year" "$year" ""
 
     layers_exist_by_name "$tree, 'Archive', '$year', '$month'" 0 ||\
         add_layers_folder "$tree, 'Archive', '$year'" "$NewWorld_uid" "$NewWorld_gid" "$month" "$month" ""
