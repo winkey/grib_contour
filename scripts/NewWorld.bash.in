@@ -320,11 +320,6 @@ mkrootNewWorld() {
     
     local pid=$(layers_search "$tree" 0)
 
-    #if ! is_number "$pid"
-    #then
-    #    ;;
-    #fi
-    
     ##### year and month archive folders #####
 
     local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
@@ -427,28 +422,24 @@ appendNewWorld () {
         sleep 1
     done
     
-    ##### test if the kml is older than 6 hours #####
-    ##### fixme we should be testing the map in postgres #####
+    ##### get the year and month of this run #####
 
-    local frametime;
-    local nowtime;
-    
-    frametime=$(stat --printf "%Y\n" "$frames")
-    nowtime=$(date "+%s")
-    
-    if (( frametime + 21600 < nowtime))
-    then
+    local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
+    local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
+
+
+    ##### if the map folder dont exsist, make it #####
+
+    if ! layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$date ${run}z'"
         mkrootNewWorld "${prod}"
     fi
     
     ##### add the layer to the folder #####
 
-    local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
-    local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
 
     local tree=$(get_tree "$prod")
 
-    add_layers_wms  "$tree, '$year', '$month'" \
+    add_layers_wms  "$tree, 'Archive', '$year', '$month'" \
                     $NewWorld_uid \
                     $NewWorld_gid \
                     "NULL" \
@@ -628,7 +619,7 @@ getprod_fn() {
                 echo "$prod_fn"
                 return
             fi
-        done <<< "${!ref}"
+        done <<< "${ref}"
         
     elif [ -n "$levels2" ]
     then
