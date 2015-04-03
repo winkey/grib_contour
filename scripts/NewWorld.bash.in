@@ -313,8 +313,10 @@ mkrootNewWorld() {
 
     if [ -n "$DEBUG" ]
     then
-        printf "mkrootNewWorld\n prod=%s\n" \
-               "$prod"
+        printf "mkrootNewWorld\n prod=%s\n year=%s\n month=%s\n" \
+               "$prod"\
+               "$year"\
+               "$month" 
     fi
 
     #perhaps check if the tree exssists
