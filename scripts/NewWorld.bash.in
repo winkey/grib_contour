@@ -298,6 +298,8 @@ layers_get_id_by_name() {
 ## @brief 
 ##
 ## @param prod  the name of the product ie: 925hgt
+## @param year
+## @param month
 ##
 ## @details
 ## global vars
@@ -306,6 +308,8 @@ layers_get_id_by_name() {
 
 mkrootNewWorld() {
     local prod="$1"
+    local year="$2"
+    local month="$3"
 
     if [ -n "$DEBUG" ]
     then
@@ -320,11 +324,9 @@ mkrootNewWorld() {
     
     ##### year and month archive folders #####
 
-    local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
     layers_exist_by_name "$tree, 'Archive', '$year'" 0 ||\
         add_layers_folder "$tree" 'Archive', "$NewWorld_uid" "$NewWorld_gid" "$year" "$year" ""
 
-    local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
     layers_exist_by_name "$tree, 'Archive', '$year', '$month'" 0 ||\
         add_layers_folder "$tree, 'Archive', '$year'" "$NewWorld_uid" "$NewWorld_gid" "$month" "$month" ""
 
@@ -434,7 +436,7 @@ appendNewWorld () {
 
     if ! layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$date ${run}z'" 0
     then
-        mkrootNewWorld "${prod}"
+        mkrootNewWorld "${prod}" "$year" "$month"
     fi
     
     ##### add the layer to the folder #####
