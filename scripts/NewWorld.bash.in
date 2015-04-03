@@ -458,7 +458,7 @@ appendNewWorld () {
                     "${prod}${hr}" \
                     "" \
                     "" \
-                    "${www}/cgi-bin/${name}_wms?HOUR=${hr}&RUN=${run}" \
+                    "${www}/cgi-bin/${name}_wms?HOUR=${hr}&RUN=$(date -d "$run GMT" "+%Y%m%d" -u)${run}" \
                     "$prod" \
                     "image/png" \
                     "TRUE" \

@@ -20,6 +20,7 @@ www="@www@"
 ## @brief function to create the root kml file
 ##
 ## @param prod  the name of the product ie: 925hgt
+## @param frames 
 ##
 ## @details
 ## global vars
@@ -32,8 +33,7 @@ www="@www@"
 
 mkrootkml () {
     local prod="$1"
-    
-    frames=${wwwdisk}/kml/${name}/${run}/${prod}.kml
+    local frames="$2"
     
     cat > $frames << EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -56,9 +56,16 @@ mkrootkml () {
 </kml>
 EOF
 
-##### FIXME we need to archive the kmls and use symlinks
-    #FIXME this should probably go someplace else
+    local mydate=$(date -d "$run GMT" "+%Y%m%d" -u)
+
+    if [ -h "${wwwdisk}/kml/${name}/${run}" ]
+    then
+        rm "${wwwdisk}/kml/${name}/${run}"
+    fi
     
+    ln -s "${wwwdisk}/kml/${name}/${mydate}${run}" -T "${wwwdisk}/kml/${name}/${run}"
+
+
     ##### check the latest link #####
     
     if [ -h "${wwwdisk}/kml/${name}/latest" ]
@@ -94,11 +101,12 @@ appendkml () {
     local incr="$3"
     local grid="$4"
     
-    local frames="${wwwdisk}/kml/${name}/${run}/${prod}.kml"
+    local mydate=$(date -d "$run GMT" "+%Y%m%d" -u)
+    local frames="${wwwdisk}/kml/${name}/${mydate}${run}/${prod}.kml"
     
     if ! [ -f "$frames" ]
     then
-        mkrootkml "${prod}"
+        mkrootkml "${prod}" "$frames"
     fi
     
     ##### lock the file #####
@@ -110,28 +118,13 @@ appendkml () {
         sleep 1
     done
     
-    ##### test if the kml is older than 6 hours #####
-    
-    local frametime;
-    local nowtime;
-    
-    frametime=$(stat --printf "%Y\n" "$frames")
-    nowtime=$(date "+%s")
-    
-    if (( frametime + 21600 < nowtime))
-    then
-        mkrootkml "${prod}"
-    fi
-    
     if [[ "$grid" != "" ]]
     then
-        zip="${www}/kml/${name}/${run}/${grid}.${prod}${hr}.kmz"
+        zip="${www}/kml/${name}/${mydate}${run}/${grid}.${prod}${hr}.kmz"
     else
-        zip="${www}/kml/${name}/${run}/${prod}${hr}.kmz"
+        zip="${www}/kml/${name}/${mydate}${run}/${prod}${hr}.kmz"
     fi
 
-
-    
     begin=$(date -d "$run GMT $hr hours" "+%FT%TZ" -u)
     end=$(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u)
 

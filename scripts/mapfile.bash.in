@@ -33,7 +33,7 @@ myprojection='
 ###############################################################################
 ## @brief function to add a layer to the mapfile
 ##
-## @param name      the name of the product ie: 925hgt
+## @param prod      the name of the product ie: 925hgt
 ## @param kmlfile   kml file to test for hilo
 ## @param grid      optional name to prefix onto the kml name
 ##
@@ -41,23 +41,23 @@ myprojection='
 ## global vars
 ## @param wwwdisk   the base web dir to write to "/var/www/html/"
 ## @param www       the base url for the website
-## @param dsname    name of the dataset
+## @param name    name of the dataset
 ##
 ###############################################################################
 
 appendmapfile () {
-    local name="$1"
+    local prod="$1"
     local kmlfile="$2"
     local grid="$3"
     
-    local mapfile="${wwwdisk}/kml/${dsname}/${dsname}.map"
-    local myname="${name}"
+    local mapfile="${wwwdisk}/kml/${name}/${name}.map"
+    local myprod="${prod}"
     local group=""
     local groupmeta=""
     
     ##### lock the file #####
     
-    local lock="$locdir/$script.$dsname.lock"
+    local lock="$locdir/$script.$name.lock"
     
     while ! mkdir "$lock" > /dev/null
     do
@@ -92,25 +92,25 @@ appendmapfile () {
         
         if [ -n "$grid" ]
         then
-            groupmeta="'wms_group_title'  '${name}'"
-            group="GROUP '${name}'"
-            myname="${name}_${grid}"
+            groupmeta="'wms_group_title'  '${prod}'"
+            group="GROUP '${prod}'"
+            myprod="${prod}_${grid}"
         fi
         
         ##### is the layer already in there? #####
         
-        if ! grep "$mapfile" -e "NAME \"${myname}\""
+        if ! grep "$mapfile" -e "NAME \"${myprod}\""
         then
                 
             ed -s "$mapfile" << EOF
 ${linenum}-1a
  
   LAYER
-    NAME "${myname}"
+    NAME "${myprod}"
     STATUS ON
     TYPE LINE
     CONNECTIONTYPE OGR
-    CONNECTION "%RUN%/${myname}%HOUR%.kmz"
+    CONNECTION "%RUN%/${myprod}%HOUR%.kmz"
 
     DATA "contour"
     
@@ -122,7 +122,7 @@ ${linenum}-1a
     ${group}
     
     METADATA
-      'wms_title'        '${myname}'
+      'wms_title'        '${myprod}'
       'wms_srs'          '${wms_srs}'
       'wms_extent'       '-180 -90 180 90'
       $groupmeta
@@ -149,30 +149,30 @@ EOF
     elif ogrinfo "$kmlfile" -so | grep -q HiLo
     then
         
-        groupmeta="'wms_group_title'  '${name}'"
-        group="GROUP '${name}'"
+        groupmeta="'wms_group_title'  '${prod}'"
+        group="GROUP '${prod}'"
         
         ##### grid set? #####
         
         if [ -n "$grid" ]
         then
-            myname="${name}_${grid}"
+            myprod="${prod}_${grid}"
         fi
         
         ##### is the layer already in there? #####
         
-        if ! grep "$mapfile" -e "NAME \"${myname}_c\""
+        if ! grep "$mapfile" -e "NAME \"${myprod}_c\""
         then
             
             ed -s "$mapfile" << EOF
 ${linenum}-1a
 
   LAYER
-    NAME "${myname}_c"
+    NAME "${myprod}_c"
     STATUS ON
     TYPE LINE
     CONNECTIONTYPE OGR
-    CONNECTION "%RUN%/${myname}%HOUR%.kmz"
+    CONNECTION "%RUN%/${myprod}%HOUR%.kmz"
     VALIDATION
       'run'     '^([0-9]+|latest)$'
       'hour'    '^[0-9]+$'
@@ -183,7 +183,7 @@ ${linenum}-1a
     $group
     
     METADATA
-      'wms_title'        '${myname}_c'
+      'wms_title'        '${myprod}_c'
       'wms_srs'          '${wms_srs}'
       'wms_extent'       '-180 -90 180 90'
       $groupmeta
@@ -201,11 +201,11 @@ ${linenum}-1a
   END  # layer
 
   LAYER
-    NAME "${myname}_h"
+    NAME "${myprod}_h"
     STATUS ON
     TYPE POINT
     CONNECTIONTYPE OGR
-    CONNECTION "%RUN%/${myname}%HOUR%.kmz"
+    CONNECTION "%RUN%/${myprod}%HOUR%.kmz"
     VALIDATION
       'run'     '^([0-9]+|latest)$'
       'hour'    '^[0-9]+$'
@@ -216,7 +216,7 @@ ${linenum}-1a
     $group
 
     METADATA
-      'wms_title'        '${myname}_h'
+      'wms_title'        '${myprod}_h'
       'wms_srs'          '${wms_srs}'
       'wms_extent'       '-180 -90 180 90'
       $groupmeta
@@ -252,11 +252,11 @@ EOF
 
 mkcgibin () {
 
-    cat > "${wwwdisk}../cgi-bin/${dsname}_wms" << EOF
+    cat > "${wwwdisk}../cgi-bin/${name}_wms" << EOF
 
-MS_MAPFILE="${wwwdisk}/kml/${dsname}/${dsname}.map"
+MS_MAPFILE="${wwwdisk}/kml/${name}/${name}.map"
 
-#MS_ERRORFILE=""${wwwdisk}/kml/${dsname}/mapserver.error"
+#MS_ERRORFILE=""${wwwdisk}/kml/${name}/mapserver.error"
 #MS_DEBUGLEVEL="5"
 
 LIBKML_WRAPDATELINE=yes
@@ -282,23 +282,25 @@ EOF
 ## global vars
 ## @param wwwdisk   the base web dir to write to "/var/www/html/"
 ## @param www       the base url for the website
-## @param dsname    name of the dataset
+## @param name    name of the dataset
 ##
 ###############################################################################
 
 mkrootmapfile () {
-    local name="$1"
+    local prod="$1"
     
-    local wms="${www}/cgi-bin/${dsname}_wms"
+    local wms="${www}/cgi-bin/${name}_wms"
     
 
-    cat > "${wwwdisk}/kml/${dsname}/${dsname}.map" << EOF
+    cat > "${wwwdisk}/kml/${name}/${name}.map" << EOF
 MAP
-  NAME "${dsname}"
+  NAME "${name}"
   # Map image size
 
   SIZE 512 512
   UNITS dd
+
+  MAXSIZE 8192
 
 ########  WEST       SOUTH     EAST      NORTH
 
@@ -355,7 +357,7 @@ MAP
 
     # WMS server settings
     METADATA
-      'wms_title'           '${dsname}'
+      'wms_title'           '${name}'
       'wms_onlineresource'  '${wms}?SERVICE=WMS'
       'wms_srs'             '${wms_srs}'
       "ows_enable_request"   "*"
