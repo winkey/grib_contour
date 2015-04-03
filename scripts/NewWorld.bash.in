@@ -612,7 +612,7 @@ getprod_fn() {
     then
         prod="${prod##*[0-9]}"
 
-        ref="products$lev_n"
+        ref="products$level"
         while read prod_n prod_fn
         do
             if [[ "$prod_n" == "$prod" ]]
@@ -620,7 +620,7 @@ getprod_fn() {
                 echo "$prod_fn"
                 return
             fi
-        done <<< "${ref}"
+        done <<< "${!ref}"
         
     elif [ -n "$levels2" ]
     then
