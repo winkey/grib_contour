@@ -305,7 +305,7 @@ layers_get_id_by_name() {
 ###############################################################################
 
 mkrootNewWorld() {
-    local $prod="$1"
+    local prod="$1"
 
     if [ -n "$DEBUG" ]
     then
