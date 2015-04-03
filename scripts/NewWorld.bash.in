@@ -342,7 +342,7 @@ mkrootNewWorld() {
     local mydate=$(date -d "$run GMT" "+%Y-%m-%d" -u)
 
     layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$date ${run}z'" 0 ||\
-        add_layers_folder "$tree, 'Archive', '$year', '$month'" "$NewWorld_uid" "$NewWorld_gid" "$date ${run}z" "$mydate ${run}z" ""
+        add_layers_folder "$tree, 'Archive', '$year', '$month'" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" ""
 
     local id=$( layers_get_id_by_name "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" 0 )
 
