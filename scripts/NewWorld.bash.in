@@ -238,12 +238,18 @@ add_layers_wms() {
 
     mypsql << EOF
 
-    select  layers_add_wms_by_name( array[$1], $2, $3, '$4', '$5' , '$6' , $7,
-                                    '$8', '$9', '${10}', '${11}', '${12}',
-                                    '${13}', ${14}, ${15}, ${16}, '${17}',
-                                    ${18}, ${19} );
+select  layers_add_wms_by_name( 
+    array[$1], $2, $3,
+    TIMESTAMP WITH TIME ZONE '$4',
+    TIMESTAMP WITH TIME ZONE '$5',
+    TIMESTAMP WITH TIME ZONE '$6',
+    $7, '$8', '$9', '${10}', '${11}', '${12}', '${13}', ${14},
+    ${15}, ${16}, '${17}', ${18}, ${19} 
+);
     
 EOF
+
+
 }
 
 ################################################################################
@@ -444,18 +450,18 @@ appendNewWorld () {
                     "" \
                     $(date -d "$run GMT $hr hours" "+%FT%TZ" -u) \
                     $(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u) \
-                    1 \
+                    "TRUE" \
                     "${prod}${hr}" \
                     "" \
                     "" \
                     "${www}/cgi-bin/${name}_wms?HOUR=${hr}&RUN=${run}" \
                     "$prod" \
                     "image/png" \
-                    1 \
-                    null \
-                    1 \
+                    "TRUE" \
+                    100.0 \
+                    "TRUE" \
                     "<img src="${www}/kml/images/${prod}.png" />" \
-                    0 \
+                    "FALSE" \
                     0
 
 
