@@ -316,7 +316,7 @@ mkrootNewWorld() {
     #perhaps check if the tree exssists
     #create the tree?
 
-    local tree=$(get_tree_archive "$prod")
+    local tree=$(get_tree "$prod")
     
     local pid=$(layers_search "$tree" 0)
 
@@ -422,6 +422,10 @@ appendNewWorld () {
         sleep 1
     done
     
+    ##### get the base tree path for this layer #####
+
+    local tree=$(get_tree "$prod")
+
     ##### get the year and month of this run #####
 
     local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
@@ -438,7 +442,6 @@ appendNewWorld () {
     ##### add the layer to the folder #####
 
 
-    local tree=$(get_tree "$prod")
 
     add_layers_wms  "$tree, 'Archive', '$year', '$month'" \
                     $NewWorld_uid \
