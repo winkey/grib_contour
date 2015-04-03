@@ -341,8 +341,8 @@ mkrootNewWorld() {
 
     local mydate=$(date -d "$run GMT" "+%Y-%m-%d" -u)
 
-    layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$date ${run}z'" 0 ||\
-        add_layers_folder "$tree, 'Archive', '$year', '$month'" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" ""
+    layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" 0 ||\
+        add_layers_animation "$tree, 'Archive', '$year', '$month'" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" ""
 
     local id=$( layers_get_id_by_name "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" 0 )
 
@@ -437,11 +437,11 @@ appendNewWorld () {
 
     local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
     local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
-
+    local mydate=$(date -d "$run GMT" "+%Y-%m-%d" -u)
 
     ##### if the map folder dont exsist, make it #####
 
-    if ! layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$date ${run}z'" 0
+    if ! layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" 0
     then
         mkrootNewWorld "${prod}" "$year" "$month"
     fi
