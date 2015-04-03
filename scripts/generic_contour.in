@@ -380,5 +380,5 @@ if [ -n "$baseurl" ]
 then
     do_fromsite "$@"
 else
-    do_generic "$@"
+    do_generic "$@" 2>> /tmp/gribcontour_log 1>> /tmp/gribcontour_log
 fi

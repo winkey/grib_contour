@@ -239,16 +239,20 @@ add_layers_wms() {
     mypsql << EOF
 
 select  layers_add_wms_by_name( 
-    array[$1], $2, $3,
-    TIMESTAMP WITH TIME ZONE '$4',
-    TIMESTAMP WITH TIME ZONE '$5',
-    TIMESTAMP WITH TIME ZONE '$6',
-    $7, '$8', '$9', '${10}', '${11}', '${12}', '${13}', ${14},
-    ${15}, ${16}, '${17}', ${18}, ${19} 
+    array[$1], $2, $3, $4, $5, $6, $7, '$8', '$9', '${10}', '${11}', '${12}',
+    '${13}', ${14}, ${15}, ${16}, '${17}', ${18}, ${19} 
 );
     
 EOF
 
+    cat << EOF
+
+select  layers_add_wms_by_name( 
+    array[$1], $2, $3, $4, $5, $6, $7, '$8', '$9', '${10}', '${11}', '${12}',
+    '${13}', ${14}, ${15}, ${16}, '${17}', ${18}, ${19} 
+);
+    
+EOF
 
 }
 
@@ -447,9 +451,9 @@ appendNewWorld () {
     add_layers_wms  "$tree, '$year', '$month'" \
                     $NewWorld_uid \
                     $NewWorld_gid \
-                    "" \
-                    $(date -d "$run GMT $hr hours" "+%FT%TZ" -u) \
-                    $(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u) \
+                    "NULL" \
+                    "TIMESTAMP WITH TIME ZONE '$(date -d "$run GMT $hr hours" "+%FT%TZ" -u)'" \
+                    "TIMESTAMP WITH TIME ZONE '$(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u)'" \
                     "TRUE" \
                     "${prod}${hr}" \
                     "" \
