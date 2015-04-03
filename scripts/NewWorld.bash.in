@@ -350,7 +350,7 @@ mkrootNewWorld() {
 
     if ! layers_exist_by_name "$tree, '$mydate ${run}z'" 0
     then
-        add_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" $id
+        add_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" "" $id
 
         ##### mod existing #####
 
