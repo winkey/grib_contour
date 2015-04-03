@@ -123,6 +123,11 @@ add_layers_folder() {
 select  layers_add_folder_by_name(array[$1], $2, $3, '$4', '$5', '$6');
 
 EOF
+    mypsql << EOF
+
+select  layers_add_folder_by_name(array[$1], $2, $3, '$4', '$5', '$6');
+
+EOF
 }
 ################################################################################
 ## function to add a radio folder
@@ -529,10 +534,10 @@ get_tree() {
 
     if [ -n "$lev_fn" ]
     then
-        tree="'weather', '$name', '$lev_fn', '$prod_fn'"
+        tree="'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'"
 
     else
-        tree="'weather', '$name', '$prod_fn'"
+        tree="'LayerTree', 'weather', '$name', '$prod_fn'"
     fi
 
     echo "$tree"
