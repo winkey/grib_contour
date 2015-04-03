@@ -448,9 +448,7 @@ appendNewWorld () {
     
     ##### add the layer to the folder #####
 
-
-
-    add_layers_wms  "$tree, 'Archive', '$year', '$month'" \
+    add_layers_wms  "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" \
                     $NewWorld_uid \
                     $NewWorld_gid \
                     "NULL" \
