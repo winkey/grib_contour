@@ -318,8 +318,6 @@ mkrootNewWorld() {
 
     local tree=$(get_tree "$prod")
     
-    local pid=$(layers_search "$tree" 0)
-
     ##### year and month archive folders #####
 
     local year=$(date -d "$run GMT $hr hours" "+%Y" -u)
@@ -434,7 +432,7 @@ appendNewWorld () {
 
     ##### if the map folder dont exsist, make it #####
 
-    if ! layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$date ${run}z'"
+    if ! layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$date ${run}z' 0"
     then
         mkrootNewWorld "${prod}"
     fi
