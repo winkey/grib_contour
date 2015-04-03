@@ -431,6 +431,7 @@ appendNewWorld () {
     ##### if the map folder dont exsist, make it #####
 
     if ! layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$date ${run}z'"
+    then
         mkrootNewWorld "${prod}"
     fi
     
