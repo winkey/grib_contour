@@ -29,6 +29,7 @@ DEBUG=true  #comment out to turn off
 
 source @bindir@/kml.bash
 source @bindir@/NewWorld.bash
+source @bindir@/mapfile.bash
 
 export PATH="$PATH:@bindir@"
 
