@@ -12,6 +12,7 @@ bin_SCRIPTS = \
 	mkkml.sh \
 	mkmaster.sh \
 	NewWorld.bash \
+	mapfile.bash \
 	mknewworld.sh \
 	mkkml_nolevel.sh \
 	checkpqact.conf.sh \
@@ -35,6 +36,7 @@ EXTRA_DIST = \
 	mkkml.in \
 	mkmaster.in \
 	NewWorld.bash.in \
+	mapfile.bash.in \
 	mknewworld.in \
 	mkkml_nolevel.in \
 	rtma_ak.in \
@@ -55,6 +57,7 @@ dist_bin_SCRIPTS = \
 	sst.sh \
 	makekey.sh \
 	NewWorld.bash \
+	mapfile.bash \
 	mknewworld.sh \
 	checkpqact.conf.sh \
 	rtma_ak.sh \
@@ -145,6 +148,10 @@ mkmaster.sh: mkmaster.in Makefile
 NewWorld.bash: NewWorld.bash.in Makefile
 	$(do_subst) < $(srcdir)/NewWorld.bash.in > NewWorld.bash
 	chmod +x NewWorld.bash
+
+mapfile.bash: mapfile.bash.in Makefile
+	$(do_subst) < $(srcdir)/mapfile.bash.in > mapfile.bash
+	chmod +x mapfile.bash
 
 mknewworld.sh: mknewworld.in Makefile
 	$(do_subst) < $(srcdir)/mknewworld.in > mknewworld.sh
