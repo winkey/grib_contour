@@ -153,6 +153,7 @@ EOF
 # @param groups_id   the group id of this new node (CAN BE NULL)
 # @param name        the name of the node to add
 # @param tooltip
+# @param metadata
 
 ################################################################################
 
@@ -204,7 +205,7 @@ update_layers_link() {
 
     mypsql << EOF
 
-    select  layers_update_link_by_name(array[$1], $2, $3, '$4', $5 );
+    select  layers_update_link_by_name(array[$1], '$2', '$3', '$4', $5 );
     
 
 EOF
@@ -343,7 +344,7 @@ mkrootNewWorld() {
         ##### mod existing #####
 
     else
-        update_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" $id
+        update_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" "" $id
     fi
 
 }
