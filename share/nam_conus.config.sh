@@ -96,7 +96,7 @@ runs="latest Latest
 
 
 
-prodmap="   plot,       HGHT,       hgt,    20,     84 3, -h,
+prodmap="   plot,       HGHT,       hgt,    20,     84 3, -H,
             diffplot,   HGHT,       thk,    20,     84 3, ,   HGHT
             plot,       TMPK,       t,      1,      84 3, ,
             plot,       RELH,       rh,     10,     84 3, ,
@@ -108,7 +108,7 @@ prodmap="   plot,       HGHT,       hgt,    20,     84 3, -h,
             andplot,    WXTZ,       frez,   4,      84 3, -I, P03M
             andplot,    WXTR,       rain,   4,      84 3, -I, P03M
             andplot,    WXTP,       pellet, 4,      84 3, -I, P03M
-            plot,       PMSL,       pmsl,   200,    84 3, -h,
+            plot,       PMSL,       pmsl,   200,    84 3, -H,
             plot,       POPF03,     popf,   10,     84 3, ,
             plot,       TSTM03,     tstm,   10,     84 3, ,
             plot,       POP03,      pop,    10,     84 3, ,

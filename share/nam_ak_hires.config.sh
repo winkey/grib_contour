@@ -96,14 +96,14 @@ runs="latest Latest
 12 12Z
 18 18Z"
 
-prodmap="   plot,       HGT,        hgt,    20,     36 1|60 3,  -h,
+prodmap="   plot,       HGT,        hgt,    20,     36 1|60 3,  -H,
             diffplot,   HGT,        thk,    20,     36 1|60 3,    , HGHT
             plot,       TMP,        t,      1,      36 1|60 3,    ,
             plot,       RH,         rh,     10,     36 1|60 3,    ,
             windplot,   UGRD,       wind,   5,      36 1|60 3,    , VGRD
             plot,       CAPE,       cape,   200,    36 1|60 3,    ,
             plot,       PWAT,       pwat,   4,      36 1|60 3,  -I,
-            plot,       PRMSL,      pmsl,   200,    36 1|60 3, -h,"
+            plot,       PRMSL,      pmsl,   200,    36 1|60 3, -H,"
 
 
 

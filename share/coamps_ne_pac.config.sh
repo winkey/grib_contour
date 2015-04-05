@@ -70,11 +70,11 @@ runs="latest Latest
 
 
 #coamps_ne_pac
-prodmap="   plot,       geop_ht,    hgt,    20,     48 06,  -h,
+prodmap="   plot,       geop_ht,    hgt,    20,     48 06,  -H,
             diffplot,   geop_ht,    thk,    20,     48 06,    , geop_ht
             plot,       air_temp,   t,      1,      48 06,    ,
             plot,       rltv_hum,   rh,     10,     48 06,    ,
             windplot,   wnd_ucmp,   wind,   5,      48 06,    , wnd_vcmp
             plot,       ttl_prcp,   pcp,    4,      48 06,  -I,
-            plot,       pres,       pmsl,   200,    48 06,  -h,"
+            plot,       pres,       pmsl,   200,    48 06,  -H,"
 

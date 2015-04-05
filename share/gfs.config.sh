@@ -97,7 +97,7 @@ runs="latest Latest
 ##### GFS MAPPING #####
 
 #plottype            feed_name   our_name  interval time_valid    extra_args dependancys
-prodmap="   plot,       HGHT,       hgt,    20,     237 03|384 12,  -h, 
+prodmap="   plot,       HGHT,       hgt,    20,     237 03|384 12,  -H, 
             diffplot,   HGHT,       thk,    20,     237 03|384 12,    , HGHT
             plot,       TMPK,       t,      1,      237 03|384 12,    ,
             plot,       RELH,       rh,     10,     237 03|384 12,    ,
@@ -109,6 +109,6 @@ prodmap="   plot,       HGHT,       hgt,    20,     237 03|384 12,  -h,
             andplot,    WXTZ06,     frez,   4,      240 06,         -I, P06M
             andplot,    WXTR06,     rain,   4,      240 06,         -I, P06M
             andplot,    WXTP06,     pellet, 4,      240 06,         -I, P06M
-            plot,       PMSL,       pmsl,   200,    237 03|384 12,  -h,"
+            plot,       PMSL,       pmsl,   200,    237 03|384 12,  -H,"
 
 

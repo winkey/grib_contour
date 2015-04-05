@@ -117,7 +117,7 @@ runs="latest Latest
 
 ##### rap MAPPING #####
 
-prodmap="   plot,       HGHT,       hgt,    20,     18 1,   -h,
+prodmap="   plot,       HGHT,       hgt,    20,     18 1,   -H,
             diffplot,   HGHT,       thk,    20,     18 1,     ,   HGHT
             plot,       TMPK,       t,      1,      18 1,     ,
             plot,       RELH,       rh,     10,     18 1,     ,
@@ -125,7 +125,7 @@ prodmap="   plot,       HGHT,       hgt,    20,     18 1,   -h,
             plot,       CAPE,       cape,   200,    18 1,     ,
             plot,       PWTR,       pwat,   4,      18 1,   -I,
             plot,       PR03,       pcp,    4,      18 1,   -I,
-            plot,       MMSL,       pmsl,   200,    18 1,   -h,
+            plot,       MMSL,       pmsl,   200,    18 1,   -H,
             plot,       REFC        refc,   5,      18 1,     ,
             plot,       REFD1000    refd1000,   5,  18 1,     ,
             plot,       REFD4000    refd4000,   5,  18 1,     ,"
