@@ -6,12 +6,12 @@
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2.0p50.f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300|200) [h]*Pa PRES!
 	FILE	data/conduit/gfs0p5/\2.\3.\4.\5.grib2
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2.0p50.f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(HGHT|TMPK|RELH|UREL;VREL)/(1000|925|850|700|500|300|200) [h]*Pa PRES!
-	EXEC	@bindir@/generic_contour.sh data/conduit/gfs0p5/\2.\3.\4.\5.grib2 \2 \3 \4 \5 gfs0p5
+	EXEC	@bindir@/generic_contour.sh data/conduit/gfs0p5/\2.\3.\4.\5.grib2 \2 \3 \4 \5 gfs
 
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2.0p50.f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS06|WXTZ06|WXTR06|WXTP06|P06M|PMSL)/(0) - NONE!
 	FILE	data/conduit/gfs0p5/\2.\3.\4.\5.grib2
 CONDUIT	^data/nccf/com/(gfs/prod/gfs.[0-9]*)/gfs.t([0-9][0-9])z.pgrb2.0p50.f([0-9]*) !grib2/ncep/.*GFS/#000/.*/(CAPE|PWTR|WXTS06|WXTZ06|WXTR06|WXTP06|P06M|PMSL)/(0) - NONE!
-	EXEC	@bindir@/generic_contour.sh data/conduit/gfs0p5/\2.\3.\4.\5.grib2 \2 \3 \4 \5 gfs0p5
+	EXEC	@bindir@/generic_contour.sh data/conduit/gfs0p5/\2.\3.\4.\5.grib2 \2 \3 \4 \5 gfs
 
 
 ################################################################################
