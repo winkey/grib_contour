@@ -10,7 +10,7 @@
 
 
 export PATH=/bin:/usr/bin
-CONFFILE=/usr/local/ldm/etc/scour.conf            # default, if no args
+CONFFILE=/home/ldm/etc/scour.conf            # default, if no args
 
 
 while [ "$1" != "" ]
@@ -52,20 +52,10 @@ do
         ;;
     esac
 
-
-    # Convert directory specification to absolute pathname: follow symbolic
-    # links (because find(1) doesn't) and perform tilde-expansion.
-
-
-    if ! edir=($(cd "$dir" 2>/dev/null && /bin/pwd) )
-    then
-        continue
-    fi
-
     (
-        if cd $edir
+        if cd $dir
         then
-             find . -type f -mtime "+${age}" -name "$pattern" -exec rm -f {} \;
+             find . -type f -mmin "+${age}" -name "$pattern" -exec rm -f {} \;
         fi
     )
 
