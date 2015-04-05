@@ -88,16 +88,19 @@ thick2() {
 ################################################################################
 
 validtime() {
-    curent="$1"
-    validmap="$2"
+    local curent="$1"
+    local validmap="$2"
     
+    local til
+    local length
+
     while read til length
     do
         if ((curent <= til))
         then
             break
         fi
-    done <<< $(tr "|" "\n" <<< "$validmap")
+    done < <(tr "|" "\n" <<< "$validmap")
 
     echo "$length"
 
