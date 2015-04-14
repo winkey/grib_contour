@@ -1,0 +1,39 @@
+
+
+maplayers links are not re wrote because there the whole date and run, to simplify we should go back to 00, 06... and latest links
+
+add a with maplayers build option
+
+change Newworld refrances to "maplayers"
+
+
+
+
+pqact should be built from config files for simplicity of editing, easer to think about if the info is together
+
+fix download type products like nam hires, etc. the genereic mec for this is broke and commented out
+
+gfs wind plots broken
+
+nam_conus 3 hour precipt products are broke
+
+hrrr 1 hour total precip and both reflectivity products broke
+
+
+rap all 3 reflectivity products broke
+
+sst broke
+
+ww3 both swell broducts broke
+
+no coamps rh outpu
+
+coamps central america mslp broke
+
+coamps socal america mslp broke
+
+coamps products need better nameing in the map
+
+ecmwf broke
+ukmet broke
+
