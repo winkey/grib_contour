@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ../scripts/NewWorld.bash
+source ../scripts/MapLayers.bash
 source ../share/configs.sh
 
 
@@ -13,7 +13,7 @@ mknewworld_ds() {
 
 
     layers_exist_by_name "'LayerTree', 'weather', '$name'" 0 ||\
-        add_layers_folder "'LayerTree', 'weather'" "$NewWorld_uid" "$NewWorld_gid" "$name" "$fullname" "$description"
+        add_layers_folder "'LayerTree', 'weather'" "$MapLayers_uid" "$MapLayers_gid" "$name" "$fullname" "$description"
     
     ##### add all the sub product folders #####
 
@@ -24,18 +24,18 @@ mknewworld_ds() {
         while read lev_n lev_fn
         do
             layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn'" 0 ||\
-                add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$lev_fn" "$lev_fn" ""
+                add_layers_folder "'LayerTree', 'weather', '$name'" "$MapLayers_uid" "$MapLayers_gid" "$lev_fn" "$lev_fn" ""
 
             ref="products$lev_n"
             while read prod_n prod_fn
             do
                 layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" 0 ||\
-                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
+                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn'" "$MapLayers_uid" "$MapLayers_gid" "$prod_fn" "$prod_fn" ""
 
                 ##### note run gets added when the project loads, it should be a link type to a date #####
                 
                 layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn', 'Archive'" 0 ||\
-                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn' " "$NewWorld_uid" "$NewWorld_gid" "Archive" "Archive" ""
+                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn' " "$MapLayers_uid" "$MapLayers_gid" "Archive" "Archive" ""
 
             done <<< "${!ref}"
         done  <<< "$levels"
@@ -48,17 +48,17 @@ mknewworld_ds() {
         while read lev_n lev_fn
         do
             layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn'" 0 ||\
-                add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$lev_fn" "$lev_fn" ""
+                add_layers_folder "'LayerTree', 'weather', '$name'" "$MapLayers_uid" "$MapLayers_gid" "$lev_fn" "$lev_fn" ""
 
             while read prod_n prod_fn
             do
                 layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" 0 ||\
-                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
+                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn'" "$MapLayers_uid" "$MapLayers_gid" "$prod_fn" "$prod_fn" ""
                 
                 ##### note run gets added when the project loads, it should be a link type to a date #####
                 
                 layers_exist_by_name "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn', 'Archive'" 0 ||\
-                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "Archive" "Archive" ""
+                    add_layers_folder "'LayerTree', 'weather', '$name', '$lev_fn', '$prod_fn'" "$MapLayers_uid" "$MapLayers_gid" "Archive" "Archive" ""
 
             done <<< "$products2"
         done  <<< "$levels2"
@@ -71,12 +71,12 @@ mknewworld_ds() {
         while read prod_n prod_fn
         do
             layers_exist_by_name "'LayerTree', 'weather', '$name', '$prod_fn'" 0 ||\
-                add_layers_folder "'LayerTree', 'weather', '$name'" "$NewWorld_uid" "$NewWorld_gid" "$prod_fn" "$prod_fn" ""
+                add_layers_folder "'LayerTree', 'weather', '$name'" "$MapLayers_uid" "$MapLayers_gid" "$prod_fn" "$prod_fn" ""
 
             ##### note run gets added when the project loads, it should be a link type to a date #####
                 
                 layers_exist_by_name "'LayerTree', 'weather', '$name', '$prod_fn', 'Archive'" 0 ||\
-                    add_layers_folder "'LayerTree', 'weather', '$name', '$prod_fn'" "$NewWorld_uid" "$NewWorld_gid" "Archive" "Archive" ""
+                    add_layers_folder "'LayerTree', 'weather', '$name', '$prod_fn'" "$MapLayers_uid" "$MapLayers_gid" "Archive" "Archive" ""
 
   
         done <<< "$products"
@@ -91,37 +91,37 @@ mknewworld_ds() {
 
     ##### get the uid and add the user if nessasary #####
 
-    NewWorld_uid=$(getuid | tr -d '[[:space:]]')
-    echo "uid is $NewWorld_uid"
-    if is_number "$NewWorld_uid"
+    MapLayers_uid=$(getuid | tr -d '[[:space:]]')
+    echo "uid is $MapLayers_uid"
+    if is_number "$MapLayers_uid"
     then
         echo
     else
         mkuid
-        NewWorld_uid=$(getuid)
-        NewWorld_uid=$(getuid | tr -d '[[:space:]]')
-        echo "uid is $NewWorld_uid"
+        MapLayers_uid=$(getuid)
+        MapLayers_uid=$(getuid | tr -d '[[:space:]]')
+        echo "uid is $MapLayers_uid"
     fi
 
     ##### get the gid and add the group if nessasary #####
 
-    NewWorld_gid=$(getgid | tr -d '[[:space:]]')
-    echo "gid is $NewWorld_gid"
-    if is_number "$NewWorld_gid"
+    MapLayers_gid=$(getgid | tr -d '[[:space:]]')
+    echo "gid is $MapLayers_gid"
+    if is_number "$MapLayers_gid"
     then
         echo
     else
         mkgid
-        NewWorld_gid=$(getgid | tr -d '[[:space:]]')
-        echo "gid is $NewWorld_gid"
-        addtogroup  "$NewWorld_uid" "$NewWorld_gid"
+        MapLayers_gid=$(getgid | tr -d '[[:space:]]')
+        echo "gid is $MapLayers_gid"
+        addtogroup  "$MapLayers_uid" "$MapLayers_gid"
     fi
 
     # fixme we should test if its made
     ##### add the main folder fpor the product #####
 
     layers_exist_by_name "'LayerTree', 'weather'" 0 ||\
-        add_layers_folder "'LayerTree'" "$NewWorld_uid" "$NewWorld_gid" "weather" "weather" "$description"
+        add_layers_folder "'LayerTree'" "$MapLayers_uid" "$MapLayers_gid" "weather" "weather" "$description"
 
 
    

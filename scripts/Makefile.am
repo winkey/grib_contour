@@ -11,9 +11,9 @@ bin_SCRIPTS = \
 	makekey.sh \
 	mkkml.sh \
 	mkmaster.sh \
-	NewWorld.bash \
+	MapLayers.bash \
 	mapfile.bash \
-	mknewworld.sh \
+	mkMapLayers.sh \
 	mkkml_nolevel.sh \
 	checkpqact.conf.sh \
 	rtma_ak.sh \
@@ -35,9 +35,9 @@ EXTRA_DIST = \
 	makekey.in \
 	mkkml.in \
 	mkmaster.in \
-	NewWorld.bash.in \
+	MapLayers.bash.in \
 	mapfile.bash.in \
-	mknewworld.in \
+	mkMapLayers.in \
 	mkkml_nolevel.in \
 	rtma_ak.in \
 	rtma_conus.in \
@@ -56,9 +56,9 @@ dist_bin_SCRIPTS = \
 	scour_contour.sh \
 	sst.sh \
 	makekey.sh \
-	NewWorld.bash \
+	MapLayers.bash \
 	mapfile.bash \
-	mknewworld.sh \
+	mkMapLayers.sh \
 	checkpqact.conf.sh \
 	rtma_ak.sh \
 	rtma_conus.sh \
@@ -145,17 +145,17 @@ mkmaster.sh: mkmaster.in Makefile
 	$(do_subst) < $(srcdir)/mkmaster.in > mkmaster.sh
 	chmod +x mkmaster.sh
 
-NewWorld.bash: NewWorld.bash.in Makefile
-	$(do_subst) < $(srcdir)/NewWorld.bash.in > NewWorld.bash
-	chmod +x NewWorld.bash
+MapLayers.bash: MapLayers.bash.in Makefile
+	$(do_subst) < $(srcdir)/MapLayers.bash.in > MapLayers.bash
+	chmod +x MapLayers.bash
 
 mapfile.bash: mapfile.bash.in Makefile
 	$(do_subst) < $(srcdir)/mapfile.bash.in > mapfile.bash
 	chmod +x mapfile.bash
 
-mknewworld.sh: mknewworld.in Makefile
-	$(do_subst) < $(srcdir)/mknewworld.in > mknewworld.sh
-	chmod +x mknewworld.sh
+mkMapLayers.sh: mkMapLayers.in Makefile
+	$(do_subst) < $(srcdir)/mkMapLayers.in > mkMapLayers.sh
+	chmod +x mkMapLayers.sh
 
 mkkml_nolevel.sh: mkkml_nolevel.in Makefile
 	$(do_subst) < $(srcdir)/mkkml_nolevel.in > mkkml_nolevel.sh

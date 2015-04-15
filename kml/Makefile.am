@@ -112,7 +112,7 @@ ukmet.kml: ../scripts/mkkml.sh ../share/ukmet.config.sh Makefile
 
 master.kml: ../scripts/mkmaster.sh Makefile
 	../scripts/mkmaster.sh > master.kml
-	../scripts/mknewworld.sh
+	../scripts/mkMapLayers.sh
 
 
 

@@ -17,10 +17,10 @@ username='grib_contour'
 group='software'
 pghost='67.58.51.110'
 pguser='atmos'
-pgdb='NewWorld'
+pgdb='MapLayers'
 
-#NewWorld_uid="NULL"
-#NewWorld_gid="NULL"
+#MapLayers_uid="NULL"
+#MapLayers_gid="NULL"
 
 
 mypsql() {
@@ -300,14 +300,14 @@ layers_get_id_by_name() {
 ## @param run       the run of the model "00"
 ###############################################################################
 
-mkrootNewWorld() {
+mkrootMapLayers() {
     local prod="$1"
     local year="$2"
     local month="$3"
 
     if [ -n "$DEBUG" ]
     then
-        printf "mkrootNewWorld\n prod=%s\n year=%s\n month=%s\n" \
+        printf "mkrootMapLayers\n prod=%s\n year=%s\n month=%s\n" \
                "$prod"\
                "$year"\
                "$month" 
@@ -321,36 +321,48 @@ mkrootNewWorld() {
     ##### year and month archive folders #####
 
     layers_exist_by_name "$tree, 'Archive', '$year'" 0 ||\
-        add_layers_folder "$tree, 'Archive'" "$NewWorld_uid" "$NewWorld_gid" "$year" "$year" ""
+        add_layers_folder "$tree, 'Archive'" "$MapLayers_uid" "$MapLayers_gid" "$year" "$year" ""
 
     layers_exist_by_name "$tree, 'Archive', '$year', '$month'" 0 ||\
-        add_layers_folder "$tree, 'Archive', '$year'" "$NewWorld_uid" "$NewWorld_gid" "$month" "$month" ""
+        add_layers_folder "$tree, 'Archive', '$year'" "$MapLayers_uid" "$MapLayers_gid" "$month" "$month" ""
 
     ###### add the animation folder #####
 
     local mydate=$(date -d "$run GMT" "+%Y-%m-%d" -u)
 
     layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" 0 ||\
-        add_layers_animation "$tree, 'Archive', '$year', '$month'" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" ""
+        add_layers_animation "$tree, 'Archive', '$year', '$month'" "$MapLayers_uid" "$MapLayers_gid" "$mydate ${run}z" "$mydate ${run}z" ""
 
     local id=$( layers_get_id_by_name "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" 0 )
 
     ##### add the link #####
 
-    if ! layers_exist_by_name "$tree, '$mydate ${run}z'" 0
+    if ! layers_exist_by_name "$tree, '${run}z'" 0
     then
-        add_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" "" $id
+        add_layers_link "$tree" "$MapLayers_uid" "$MapLayers_gid" "${run}z" "$mydate ${run}z" "" $id
 
         ##### mod existing #####
 
     else
-        update_layers_link "$tree" "$NewWorld_uid" "$NewWorld_gid" "$mydate ${run}z" "$mydate ${run}z" "" $id
+        update_layers_link "$tree" "$MapLayers_uid" "$MapLayers_gid" "${run}z" "$mydate ${run}z" "" $id
+    fi
+
+    ##### add the latest link #####
+
+    if ! layers_exist_by_name "$tree, 'Latest'" 0
+    then
+        add_layers_link "$tree" "$MapLayers_uid" "$MapLayers_gid" "Latest" "$mydate ${run}z" "" $id
+
+        ##### mod existing #####
+
+    else
+        update_layers_link "$tree" "$MapLayers_uid" "$MapLayers_gid" "Latest" "$mydate ${run}z" "" $id
     fi
 
 }
 
 ###############################################################################
-## @brief function to add the new framre to the NewWorld Animation
+## @brief function to add the new framre to the MapLayers Animation
 ##
 ## @param prod  the name of the product ie: 925hgt
 ## @param hr    the forcast hour in the run
@@ -366,7 +378,7 @@ mkrootNewWorld() {
 ##
 ###############################################################################
 
-appendNewWorld () {
+appendMapLayers () {
 
     local prod="$1"
     local hr="$2"
@@ -375,7 +387,7 @@ appendNewWorld () {
 
     if [ -n "$DEBUG" ]
     then
-        printf "appendNewWorld\n prod=%s\n hr=%s\n incr=%s\n grid=%s\n" \
+        printf "appendMapLayers\n prod=%s\n hr=%s\n incr=%s\n grid=%s\n" \
                "$prod" \
                "$hr" \
                "$incr "\
@@ -386,27 +398,27 @@ appendNewWorld () {
 
     ##### get the uid and add the user if nessasary #####
 
-    NewWorld_uid=$(getuid | tr -d '[[:space:]]')
+    MapLayers_uid=$(getuid | tr -d '[[:space:]]')
 
-    if is_number "$NewWorld_uid"
+    if is_number "$MapLayers_uid"
     then
         echo
     else
         mkuid
-        NewWorld_uid=$(getuid)
-        NewWorld_uid=$(getuid | tr -d '[[:space:]]')
+        MapLayers_uid=$(getuid)
+        MapLayers_uid=$(getuid | tr -d '[[:space:]]')
     fi
 
     ##### get the gid and add the group if nessasary #####
 
-    NewWorld_gid=$(getgid | tr -d '[[:space:]]')
-    if is_number "$NewWorld_gid"
+    MapLayers_gid=$(getgid | tr -d '[[:space:]]')
+    if is_number "$MapLayers_gid"
     then
         echo
     else
         mkgid
-        NewWorld_gid=$(getgid | tr -d '[[:space:]]')
-        addtogroup  "$NewWorld_uid" "$NewWorld_gid"
+        MapLayers_gid=$(getgid | tr -d '[[:space:]]')
+        addtogroup  "$MapLayers_uid" "$MapLayers_gid"
     fi
 
 
@@ -432,14 +444,14 @@ appendNewWorld () {
 
     if ! layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" 0
     then
-        mkrootNewWorld "${prod}" "$year" "$month"
+        mkrootMapLayers "${prod}" "$year" "$month"
     fi
     
     ##### add the layer to the folder #####
 
     add_layers_wms  "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" \
-                    $NewWorld_uid \
-                    $NewWorld_gid \
+                    $MapLayers_uid \
+                    $MapLayers_gid \
                     "NULL" \
                     "TIMESTAMP WITH TIME ZONE '$(date -d "$run GMT $hr hours" "+%FT%TZ" -u)'" \
                     "TIMESTAMP WITH TIME ZONE '$(date -d "$run GMT $hr hours $incr hours" "+%FT%TZ" -u)'" \

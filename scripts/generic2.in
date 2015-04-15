@@ -28,7 +28,7 @@ locdir=/tmp
 DEBUG=true  #comment out to turn off
 
 source @bindir@/kml.bash
-source @bindir@/NewWorld.bash
+source @bindir@/MapLayers.bash
 source @bindir@/mapfile.bash
 
 export PATH="$PATH:@bindir@"
@@ -162,7 +162,7 @@ plot () {
                  $extra
     
     appendkml "$prod" "$timee" "$incr" "$grid"
-    appendNewWorld "$prod" "$timee" "$incr" "$grid"
+    appendMapLayers "$prod" "$timee" "$incr" "$grid"
     appendmapfile "$prod" "$zip"
     
 }
@@ -224,7 +224,7 @@ windplot () {
                     $extra
     
     appendkml "$prod" "$timee" "$incr" "$grid"
-    appendNewWorld "$prod" "$timee" "$incr" "$grid"
+    appendMapLayers "$prod" "$timee" "$incr" "$grid"
     appendmapfile "$prod" "$zip"
 
 }
@@ -286,7 +286,7 @@ andplot () {
                     $extra
     
     appendkml "$prod" "$timee" "$incr" "$grid"
-    appendNewWorld "$prod" "$timee" "$incr" "$grid"
+    appendMapLayers "$prod" "$timee" "$incr" "$grid"
     appendmapfile "$prod" "$zip"
     
 }
@@ -353,7 +353,7 @@ diffplot () {
                     $extra
     
     appendkml "$prod" "$timee" "$incr" "$grid"
-    appendNewWorld "$prod" "$timee" "$incr" "$grid"
+    appendMapLayers "$prod" "$timee" "$incr" "$grid"
     appendmapfile "$prod" "$zip"
 
 }

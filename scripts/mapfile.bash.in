@@ -361,6 +361,11 @@ MAP
       'wms_onlineresource'  '${wms}?SERVICE=WMS'
       'wms_srs'             '${wms_srs}'
       "ows_enable_request"   "*"
+      'wms_contactperson'   ''
+      'wms_contactorganization'  ''
+      'wms_contactposition'  ''
+      'wms_contactelectronicmailaddres' ''
+
     END
 
   END
