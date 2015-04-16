@@ -4,9 +4,9 @@
 
 add a with maplayers build option
 
-change Newworld refrances to "maplayers"
-
-
+get rid of mkmaplayers script, this should be done at runtime
+perhaps mkkml too 
+it should be easty to add new products without getting rid of anythoing old
 
 
 pqact should be built from config files for simplicity of editing, easer to think about if the info is together

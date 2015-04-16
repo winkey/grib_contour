@@ -454,7 +454,7 @@ ukmet.kml: ../scripts/mkkml.sh ../share/ukmet.config.sh Makefile
 
 master.kml: ../scripts/mkmaster.sh Makefile
 	../scripts/mkmaster.sh > master.kml
-	../scripts/mknewworld.sh
+	../scripts/mkMapLayers.sh
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
