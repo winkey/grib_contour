@@ -293,6 +293,7 @@ layers_add_tilecache_cgf_by_id() {
     mypsql << EOF
 layers_add_tilecache_cgf_by_id($1);
 EOF
+}
 
 
 ###############################################################################
