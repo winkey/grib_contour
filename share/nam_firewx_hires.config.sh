@@ -15,10 +15,14 @@
 name=nam_firewx_hires
 fullname="5 km Resolution Western CONUS NAM Forecast Model"
 
+baseurl="ftp://ftp.ncep.noaa.gov/pub/data/nccf/com/nam/prod/nam.%date8%/"
+
+pattern="nam.t%run2%z.firewxnest.hiresf%hour2%.tm00.grib2"
+
 description='Data from <a href=\"http://www.ncep.noaa.gov/\">
 National Centers for Environmental Prediction</a> 
 generated once daily is contoured and converted to kml
-for forecast hours 0-48 in 1 hour increments.
+for forecast hours 0-36 in 1 hour increments, and 36-60 in 3 hour increments.
 <h3>NOTE: This product may be preempted by the National Hurricane Center</h3>'
 
 levels="200 200 mb
@@ -72,12 +76,8 @@ levels2="0 0 - none"
 
 products2="pwat Perceptible Water
 pmsl Mean Sea Level Pressure
-cape Convective Available Potential Energy
-pcp 1 Hour Total Precipitation
-rain 1 Hour Total Rain Precipitation
-snow 1 Hour Total Snow Precipitation
-frez 1 Hour Total Freezing Precipitation
-pellet 1 Hour Total Pellet Precipitation"
+cape Convective Available Potential Energy"
+
 
 times="latest Latest
 00 00Z
@@ -90,23 +90,17 @@ runs="latest Latest
 06 06Z
 12 12Z
 18 18Z"
-prodmap="   plot,       HGHT,       hgt,    20,     03, -H,
-            diffplot,   HGHT,       thk,    20,     03, ,   HGHT
-            plot,       TMPK,       t,      1,      03, ,
-            plot,       RELH,       rh,     10,     03, ,
-            windplot,   UREL,       wind,   5,      03, ,   VREL
-            plot,       CAPE,       cape,   200,    03, ,
-            plot,       PWTR,       pwat,   4,      03, -I,
-            plot,       P03M,       pcp,    4,      03, -I,
-            andplot,    WXTS,       snow,   4,      03, -I, P03M
-            andplot,    WXTZ,       frez,   4,      03, -I, P03M
-            andplot,    WXTR,       rain,   4,      03, -I, P03M
-            andplot,    WXTP,       pellet, 4,      03, -I, P03M
-            plot,       PMSL,       pmsl,   200,    03, -H,
-            plot,       POPF03,     popf,   10,     03, ,
-            plot,       TSTM03,     tstm,   10,     03, ,
-            plot,       POP03,      pop,    10,     03, ,
-            plot,       POPZ03,     popz,   10,     03, ,"
 
+hours="36 1
+60 3"
+
+prodmap="   plot,       HGT,        hgt,    20,     36 1|60 3,  -H,
+            diffplot,   HGT,        thk,    20,     36 1|60 3,    , HGHT
+            plot,       TMP,        t,      1,      36 1|60 3,    ,
+            plot,       RH,         rh,     10,     36 1|60 3,    ,
+            windplot,   UGRD,       wind,   5,      36 1|60 3,    , VGRD
+            plot,       CAPE,       cape,   200,    36 1|60 3,    ,
+            plot,       PWAT,       pwat,   4,      36 1|60 3,  -I,
+            plot,       PRMSL,      pmsl,   200,    36 1|60 3, -H,"
 
 

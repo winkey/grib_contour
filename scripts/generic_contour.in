@@ -2,6 +2,8 @@
 
 #plottype feed_name  our_name interval time_valid extra_args dependancys
 
+# for site type
+# * 7 * * * /usr/local/bin/generic_contour "" 06 "" "" "" nam_firewx_hires
 
 
 path="$1"
@@ -27,6 +29,8 @@ fi
 hour=$((10#${hour}))
 
 
+
+
 ################################################################################
 # fixme list
 #
@@ -43,54 +47,37 @@ hour=$((10#${hour}))
 # fixme what if its a huge grib with multiple messages
 ################################################################################
 
+################################################################################
+#
+# @brief function to remove the extra spaces from the product map
+#
+#
 
-thick() {
-    local plottype="$1"
-    local feed_n="$2"
-    local our_n="$3"
-    local interval="$4"
-    local incr="$5"
-    local extra="$6"
-    local deps="$7"
-    local tlevel="$8"
+################################################################################
 
-    ppath="${path/HGHT.1000/HGHT.${1}}"
-    if [[ -f $ppath ]]
-    then
+generic_clean_prodmap () {
 
-        diffplot "$ppath" "$path" "${tlevel}${our_n}" 1 1 $interval $hour "$incr" "$extra"
-        
-    fi
-}
+    awk  '
+BEGIN {
+    FS=OFS=","
+} {
+    for (i=1 ; i<=NF ; i++)
+        gsub(/^[ \t]*|[ \t]*$/,"",$i)};
+        1
+'
 
-thick2() {
-    local plottype="$1"
-    local feed_n="$2"
-    local our_n="$3"
-    local interval="$4"
-    local incr="$5"
-    local extra="$6"
-    local deps="$7"
-    local tlevel="$8"
-
-    ppath="${path/HGHT.${1}/HGHT.1000}"
-    if [[ -f $ppath ]]
-    then
-
-        diffplot "$path" "$ppath" "${tlevel}${our_n}" 1 1 $interval $hour "$incr" "$extra"
-        
-        
-    fi
 }
 
 ################################################################################
 # function to figure out the time a frame is valid for
 ################################################################################
 
+#FIXME this dont work with a single time onky ie "03"
+
 validtime() {
     local curent="$1"
     local validmap="$2"
-    
+
     local til
     local length
 
@@ -109,8 +96,83 @@ validtime() {
         return 1
     fi
 }
- 
 
+################################################################################
+# function 
+################################################################################
+
+generic_deps_match() {
+
+    local plottype = "$1"
+    local path_a = "$2"
+    local path_b = "$3"
+    local name = "$4"
+    local msg_a = "$5"
+    local msg_b = "$6"
+    local interval = "$7"
+    local hour = "$8"
+    local incr = "$9"
+    local extra = "${10}"
+
+    case "$plottype" in
+        andplot)
+            andplot  "$path_a" "$path_b" "${level}${our_n}" "$msg_a" "$msg_b"\
+                     $interval $hour "$incr" "$extra"
+            ;;
+        windplot)
+            windplot "$path_a" "$path_b" "${level}${our_n}" "$msg_a" "$msg_b"\
+                     $interval $hour "$incr" "$extra"
+            ;;
+        diffplot)
+            diffplot "$path_a" "$path_b" "${level}${our_n}" "$msg_a" "$msg_b"\
+                     $interval $hour "$incr" "$extra"
+            ;;
+        *)
+            ;;
+    esac
+
+}
+
+################################################################################
+# function 
+################################################################################
+
+generic_nodeps() {
+
+    local plottype = "$1"
+    local path = "$2"
+    local name = "$3"
+    local msg_a = "$4"
+    local msg_b = "$5"
+    local interval = "$6"
+    local hour = "$7"
+    local incr = "$8"
+    local extra = "$9"
+
+    case "$plottype" in
+        plot)
+            plot "$path" "${level}$our_n" "$msg_a" $interval $hour "$incr"  "$extra"
+            ;;
+        windplot)
+            windplot "$path" "$path" "${level}wind" "$msg_a" "$msg_a" $interval $hour "$incr" "$extra"
+            ;;
+        *)
+            ;;
+    esac
+}
+
+################################################################################
+# function 
+################################################################################
+
+generic_string_sub
+    local string = "$1"
+    local search = "$2"
+    local replace = "$3"
+
+    echo "${string/${search}/${replace}}"
+
+}
 ################################################################################
 # main
 ################################################################################
@@ -141,27 +203,52 @@ do_generic() {
 
         if [[ "$feed_n" == "$prod" ]]
         then
-            
+
             ##### hard code in a thickness fix #####
-            
+
             if [[ "$our_n" == "thk" ]]
             then
                 ##### plot thickness #####
     
-                if [[ $level == 1000 ]]
+                if [[ "$level" == "1000" ]]
                 then
-                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 925
-                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 850
-                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 700
-                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 500
-                else
-                    if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
+
+                    local lev_n
+                    local lev_fn
+                    while read lev_n lev_fn
+                    do 
+                        ##### skip self #####
+
+                        if [[ "$lev_n" == "1000" ]]
+                        then
+                            continue;
+                        fi
+
+                        ##### do we have the dep yet? #####
+
+                        ppath="$(generic_string_sub "$path" "HGHT.1000" "HGHT.${lev_n}")"
+                        if [[ -f "$ppath" ]]
+                        then
+                            generic_deps_match "$plottype" "$path" "$ppath" "${level}" 
+                                               "$our_n" 1.0 1.0 "$interval" "$hour" 
+                                               "$incr" "$extra"
+                        fi
+                    done <<< "$levels"
+
+                else 
+
+                    ##### do we have the dep yet? #####
+
+                    ppath="$(generic_string_sub "$path" "HGHT.${level}" "HGHT.1000")"
+                    if [[ -f "$ppath" ]]
                     then
-            
-                        thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" $level
+                        generic_deps_match "$plottype" "$ppath" "$path" "${level}" 
+                                           "$our_n" 1.0 1.0 "$interval" "$hour" 
+                                           "$incr" "$extra"
                     fi
+
                 fi
-            
+
             ##### does it have any deps? #####
 
             elif [ -n "$deps" ]
@@ -169,45 +256,28 @@ do_generic() {
 
                 ##### do we have the dep yet? #####
 
-                ppath=$(echo "$path" | sed "s/${prod}/${deps}/")
+                ppath="$(generic_string_sub "$path" "${prod}" "${deps}")"
                 if [[ -f "$ppath" ]]
                 then
 
+                    generic_deps_match "$plottype" "$path" "$ppath" "${level}$our_n" 
+                                       1.0 1.0 "$interval" "$hour" 
+                                       "$incr" "$extra"
 
-                    case "$plottype" in
-                        andplot)
-                            andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$incr" "$extra"
-                            ;;
-                        windplot)
-                            windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
-                            ;;
-                        diffplot)
-                            diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$incr" "$extra"
-                            ;;
-                        *)
-                            ;;
-                    esac
                 fi
+
                 ##### fixme is it safe to delete both files? #####
-            
+
             ##### no deps #####
 
             else
 
                 ##### fixme what if its a huge grib with multiple messages #####
-    
 
-                case "$plottype" in
-                    plot)
-                        plot "$path" "${level}$our_n" 1 $interval $hour "$incr"  "$extra"
-                        ;;
-                    windplot)
-                        windplot "$path" "$path" "${level}wind" 1.0 1.1 $interval $hour "$incr" "$extra"
-                        ;;
-                    *)
-                        ;;
-                esac
-          
+                generic_nodeps "$plottype" "$path" "${level}$our_n"
+                               1.0 1.0 "$interval" "$hour" 
+                               "$incr" "$extra"
+
                 ##### fixme does anything else need this file? #####
 
             fi
@@ -216,158 +286,143 @@ do_generic() {
 
         elif [[ "$deps" == "$prod" ]]
         then
-            ppath=$(echo "$path" | sed "s/${prod}/${feed_n}/")
+            ppath="$(generic_string_sub "$path" "${prod}" "${feed_n}")"
             if [[ -f "$ppath" ]]
             then
-                
-                case "$plottype" in
-                    andplot)
-                        andplot  "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
-                        ;;
-                    windplot)
-                        windplot "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
-                        ;;
-                    diffplot)
-                        diffplot "$ppath" "$path" "${level}${our_n}" 1 1 $interval $hour "$incr" "$extra"
-                        ;;
-                    *)
-                        ;;
-                esac
+                generic_deps_match "$plottype" "$ppath" "$path" "${level}$our_n"
+                                   1.0 1.1 "$interval" "$hour" 
+                                   "$incr" "$extra"
             fi
-          fi
+        fi
 
 
 
-    done < <( awk  ' BEGIN { FS=OFS="," } {for (i=1; i<=NF; i++) gsub(/^[ \t]*|[ \t]*$/,"",$i)}; 1' <<< "$prodmap" )
-
-
-    
+    done < <(  generic_clean_prodmap <<< "$prodmap" )
 
 }
 
+################################################################################
+#
+# @brief Fuction deal with gribs downloaded from a site
+#
+################################################################################
 
 dofile () {
-#
-#    path="$1"
-#
-#    while read lev_n lev_fn
-#    do
-#
-#        while read IFS=',' plottype feed_n our_n interval validmap extra deps
-#        do
-#            incr=$(validtime "$hour" "$validmap")
-#            msg=$(findingrib "$path" "$feed_n" "$lev_n")
-#
-#            IF [
-#            depmsg=$(findingrib "$path" "$feed_n" "$lev_n")
-#
-#
-#            ##### hard code in a thickness fix #####
-#            
-#            if [[ "$our_n" == "thk" ]]
-#            then
-#                ##### plot thickness #####
-#    
-#                if [[ $level == 1000 ]]
-#                then
-#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 925
-#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 850
-#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 700
-#                    thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 500
-#                else
-#                    if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
-#                    then
-#            
-#                        thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" $level
-#                    fi
-#                fi
-#            
-#            ##### does it have any deps? #####
-#
-#            elif [ -n "$deps" ]
-#            then
-#
-#                ##### do we have the dep yet? #####
-#
-#                ppath=$(echo "$path" | sed "s/${prod}/${deps}/")
-#                if [[ -f "$ppath" ]]
-#                then
-#
-#
-#                    case "$plottype" in
-#                        andplot)
-#                            andplot "$path" "$ppath" "${level}$our_n" 1.0 1.0 $interval $hour "$incr" "$extra"
-#                            ;;
-#                        windplot)
-#                            windplot "$path" "$ppath" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
-#                            ;;
-#                        diffplot)
-#                            diffplot "$path" "$ppath" "${level}${our_n}" 1 1 $interval $hour "$incr" "$extra"
-#                            ;;
-#                        *)
-#                            ;;
-#                    esac
-#                fi
-#                ##### fixme is it safe to delete both files? #####
-#            
-#            ##### no deps #####
-#
-#            else
-#
-#                ##### fixme what if its a huge grib with multiple messages #####
-#    ..
-#
-#                case "$plottype" in
-#                    plot)
-#                        plot "$path" "${level}$our_n" 1 $interval $hour "$incr"  "$extra"
-#                        ;;
-#                    windplot)
-#                        windplot "$path" "$path" "${level}wind" 1.0 1.1 $interval $hour "$incr" "$extra"
-#                        ;;
-#                    *)
-#                        ;;
-#                esac
-#          
-#                ##### fixme does anything else need this file? #####
-#
-#            fi
-#
-#            ##### does the dep match? #####
-#
-#            if [[ "$deps" == "$prod" ]]
-#            then
-#                ppath=$(echo "$path" | sed "s/${prod}/${feed_n}/")
-#                if [[ -f "$ppath" ]]
-#                then
-#                    
-#                    case "$plottype" in
-#                        andplot)
-#                            andplot  "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
-#                            ;;
-#                        windplot)
-#                            windplot "$ppath" "$path" "${level}${our_n}" 1.0 1.0 $interval $hour "$incr" "$extra"
-#                            ;;
-#                        diffplot)
-#                            diffplot "$ppath" "$path" "${level}${our_n}" 1 1 $interval $hour "$incr" "$extra"
-#                            ;;
-#                        *)
-#                            ;;
-#                    esac
-#                    fi
-#            fi
-#
-#            findingrib "$file" "$feed_n" 
-#        done <<< "$prodmap"
-#
-#    done <<< "$levels"$'\n'"$levels2"
- echo
+
+    local lev_n
+    local lev_fn
+    while read lev_n lev_fn
+    do
+        local prod_n 
+        local prod_fn
+        local ref="products$lev_n"
+        while read prod_n prod_fn
+        do
+
+            while read IFS=',' plottype feed_n our_n interval validmap extra deps
+            do
+
+                if [[ "$prod_n" != "$our_n" ]]
+                then
+                    continue;
+                fi
+
+                incr=$(validtime "$hour" "$validmap")
+                msg=$(findingrib "$path" "$feed_n" "$lev_n")
+
+                ##### hard code in a thickness fix #####
+
+                if [[ "$our_n" == "thk" ]]
+                then
+                    ##### plot thickness #####
+
+                    if [[ $level == 1000 ]]
+                    then
+                        thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 925
+                        thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 850
+                        thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 700
+                        thick "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" 500
+                    else
+                        if [[ $level == 925 || $level == 850 || $level == 700 || $level == 500 ]]
+                        then
+
+                            thick2 "$plottype" "$feed_n" "$our_n" "$interval" "$incr" "$extra" "$deps" $level
+                        fi
+                    fi
+
+                ##### does it have any deps? #####
+
+                elif [ -n "$deps" ]
+                then
+                    depmsg=$(findingrib "$path" "$deps" "$lev_n")
+
+                    generic_deps_match "$plottype" "$path" "$path" "${level}$our_n"
+                                       "$msg" "$depmsg" "$interval"
+                                       "$hour" "$incr" "$extra"
+
+                ##### no deps #####
+
+                else
+
+                    generic_nodeps "$plottype" "$path" "${level}$our_n"
+                                   "$msg" 1.1 "$interval" "$hour" 
+                                   "$incr" "$extra"
+
+                fi
+
+            done < <( generic_clean_prodmap <<< "$prodmap" )
+        done <<< "${!ref}"
+    done <<< "$levels"$'\n'"$levels2"
+
 }
+
+
+################################################################################
+#
+# @brief function to loop over the files when fetching from a site
+#
+################################################################################
 
 do_fromsite() {
 
-#get the file list
-#
-findingrib
+
+    ##fixme this assumes 2 digit hours only
+
+    local til
+    local length
+    
+    ##note hour is a global
+    ((hour=0))
+
+    while read til length
+    do
+        til = ${til#0}
+        length = ${length#0}
+        
+        for (( ; hour < til ; hour += length ))
+        do
+        
+            local hour2 = $(printf "%02d\n" $hour)
+
+            local date8=$(date -d "$run GMT" "+%Y%m%d%H" -u)
+
+            local gribdir = "$( percentsub "$date8" "$run" "$hour2" <<< "$baseurl")"
+            local gribfile = "$( percentsub "$date8" "$run" "$hour2" <<< "$pattern")"
+
+            ##### notee path is a global #####
+            path = "${tmp}/${gribfile}"
+
+            if getgrib "$gribdir" "$gribfile" "${tmp}"
+            then
+                
+                dofile
+
+                rm -f "$path"
+
+            fi
+        done
+    done <<<"$hours"
+
 
 }
 
@@ -381,6 +436,7 @@ findingrib
 
 if [ -n "$baseurl" ]
 then
+
     do_fromsite "$@"
 else
     do_generic "$@" 2>> /tmp/gribcontour_log 1>> /tmp/gribcontour_log

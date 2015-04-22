@@ -1,5 +1,8 @@
 
 
+a crontabbed script to poll the ncep site for completed data would be nice
+
+job control!!!!
 
 
 add a with maplayers build option
@@ -13,7 +16,7 @@ pqact should be built from config files for simplicity of editing, easer to thin
 
 fix download type products like nam hires, etc. the genereic mec for this is broke and commented out
 
-gfs wind plots broken
+gfs wind plots broken, is this msg number related? 1 and 2 vrs 1 and 1.1?
 
 nam_conus 3 hour precipt products are broke
 

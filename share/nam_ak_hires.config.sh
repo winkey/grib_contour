@@ -23,7 +23,7 @@ pattern="nam.t%run2%z.alaskanest.hiresf%hour2%.tm00.grib2"
 description='Data from <a href=\"http://www.ncep.noaa.gov/\">
 National Centers for Environmental Prediction</a> 
 generated once daily is contoured and converted to kml
-for forecast hours 0-48 in 1 hour increments.
+for forecast hours 0-36 in 1 hour increments, and 36-60 in 3 hour increments.
 <h3>NOTE: This product may be preempted by the National Hurricane Center</h3>'
 
 levels="200 200 mb
@@ -77,12 +77,8 @@ levels2="0 0 - none"
 
 products2="pwat Perceptible Water
 pmsl Mean Sea Level Pressure
-cape Convective Available Potential Energy
-pcp 1 Hour Total Precipitation
-rain 1 Hour Total Rain Precipitation
-snow 1 Hour Total Snow Precipitation
-frez 1 Hour Total Freezing Precipitation
-pellet 1 Hour Total Pellet Precipitation"
+cape Convective Available Potential Energy"
+
 
 times="latest Latest
 00 00Z
@@ -95,6 +91,9 @@ runs="latest Latest
 06 06Z
 12 12Z
 18 18Z"
+
+hours="36 1
+60 3"
 
 prodmap="   plot,       HGT,        hgt,    20,     36 1|60 3,  -H,
             diffplot,   HGT,        thk,    20,     36 1|60 3,    , HGHT
