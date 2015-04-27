@@ -106,7 +106,7 @@ generic_deps_match() {
     local plottype="$1"
     local path_a="$2"
     local path_b="$3"
-    local name="$4"
+    local level="$4"
     local msg_a="$5"
     local msg_b="$6"
     local interval="$7"
@@ -141,7 +141,7 @@ generic_nodeps() {
 
     local plottype="$1"
     local path="$2"
-    local name="$3"
+    local level="$3"
     local msg_a="$4"
     local msg_b="$5"
     local interval="$6"
