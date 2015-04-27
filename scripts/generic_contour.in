@@ -75,8 +75,8 @@ BEGIN {
 #FIXME this dont work with a single time onky ie "03"
 
 validtime() {
-    local curent="$1"
-    local validmap="$2"
+    local curent = "$1"
+    local validmap = "$2"
 
     local til
     local length
@@ -229,8 +229,8 @@ do_generic() {
                         ppath="$(generic_string_sub "$path" "HGHT.1000" "HGHT.${lev_n}")"
                         if [[ -f "$ppath" ]]
                         then
-                            generic_deps_match "$plottype" "$path" "$ppath" "${level}" 
-                                               "$our_n" 1.0 1.0 "$interval" "$hour" 
+                            generic_deps_match "$plottype" "$path" "$ppath" "${level}" \
+                                               "$our_n" 1.0 1.0 "$interval" "$hour" \
                                                "$incr" "$extra"
                         fi
                     done <<< "$levels"
@@ -242,8 +242,8 @@ do_generic() {
                     ppath="$(generic_string_sub "$path" "HGHT.${level}" "HGHT.1000")"
                     if [[ -f "$ppath" ]]
                     then
-                        generic_deps_match "$plottype" "$ppath" "$path" "${level}" 
-                                           "$our_n" 1.0 1.0 "$interval" "$hour" 
+                        generic_deps_match "$plottype" "$ppath" "$path" "${level}" \
+                                           "$our_n" 1.0 1.0 "$interval" "$hour" \
                                            "$incr" "$extra"
                     fi
 
@@ -260,8 +260,8 @@ do_generic() {
                 if [[ -f "$ppath" ]]
                 then
 
-                    generic_deps_match "$plottype" "$path" "$ppath" "${level}$our_n" 
-                                       1.0 1.0 "$interval" "$hour" 
+                    generic_deps_match "$plottype" "$path" "$ppath" "${level}$our_n" \
+                                       1.0 1.0 "$interval" "$hour" \
                                        "$incr" "$extra"
 
                 fi
@@ -274,8 +274,8 @@ do_generic() {
 
                 ##### fixme what if its a huge grib with multiple messages #####
 
-                generic_nodeps "$plottype" "$path" "${level}$our_n"
-                               1.0 1.0 "$interval" "$hour" 
+                generic_nodeps "$plottype" "$path" "${level}$our_n" \
+                               1.0 1.0 "$interval" "$hour" \
                                "$incr" "$extra"
 
                 ##### fixme does anything else need this file? #####
@@ -289,8 +289,8 @@ do_generic() {
             ppath="$(generic_string_sub "$path" "${prod}" "${feed_n}")"
             if [[ -f "$ppath" ]]
             then
-                generic_deps_match "$plottype" "$ppath" "$path" "${level}$our_n"
-                                   1.0 1.1 "$interval" "$hour" 
+                generic_deps_match "$plottype" "$ppath" "$path" "${level}$our_n" \
+                                   1.0 1.1 "$interval" "$hour" \
                                    "$incr" "$extra"
             fi
         fi
@@ -356,16 +356,16 @@ dofile () {
                 then
                     depmsg=$(findingrib "$path" "$deps" "$lev_n")
 
-                    generic_deps_match "$plottype" "$path" "$path" "${level}$our_n"
-                                       "$msg" "$depmsg" "$interval"
+                    generic_deps_match "$plottype" "$path" "$path" "${level}$our_n" \
+                                       "$msg" "$depmsg" "$interval" \
                                        "$hour" "$incr" "$extra"
 
                 ##### no deps #####
 
                 else
 
-                    generic_nodeps "$plottype" "$path" "${level}$our_n"
-                                   "$msg" 1.1 "$interval" "$hour" 
+                    generic_nodeps "$plottype" "$path" "${level}$our_n" \
+                                   "$msg" 1.1 "$interval" "$hour" \
                                    "$incr" "$extra"
 
                 fi
