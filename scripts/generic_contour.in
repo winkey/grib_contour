@@ -154,7 +154,7 @@ generic_nodeps() {
             plot "$path" "${level}$our_n" "$msg_a" $interval $hour "$incr"  "$extra"
             ;;
         windplot)
-            windplot "$path" "$path" "${level}wind" "$msg_a" "$msg_a" $interval $hour "$incr" "$extra"
+            windplot "$path" "$path" "${level}wind" "$msg_a" "$msg_b" $interval $hour "$incr" "$extra"
             ;;
         *)
             ;;
