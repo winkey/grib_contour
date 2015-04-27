@@ -165,7 +165,7 @@ generic_nodeps() {
 # function 
 ################################################################################
 
-generic_string_sub()
+generic_string_sub() {
     local string = "$1"
     local search = "$2"
     local replace = "$3"
