@@ -75,8 +75,8 @@ BEGIN {
 #FIXME this dont work with a single time onky ie "03"
 
 validtime() {
-    local curent = "$1"
-    local validmap = "$2"
+    local curent="$1"
+    local validmap="$2"
 
     local til
     local length
@@ -103,16 +103,16 @@ validtime() {
 
 generic_deps_match() {
 
-    local plottype = "$1"
-    local path_a = "$2"
-    local path_b = "$3"
-    local name = "$4"
-    local msg_a = "$5"
-    local msg_b = "$6"
-    local interval = "$7"
-    local hour = "$8"
-    local incr = "$9"
-    local extra = "${10}"
+    local plottype="$1"
+    local path_a="$2"
+    local path_b="$3"
+    local name="$4"
+    local msg_a="$5"
+    local msg_b="$6"
+    local interval="$7"
+    local hour="$8"
+    local incr="$9"
+    local extra="${10}"
 
     case "$plottype" in
         andplot)
@@ -139,15 +139,15 @@ generic_deps_match() {
 
 generic_nodeps() {
 
-    local plottype = "$1"
-    local path = "$2"
-    local name = "$3"
-    local msg_a = "$4"
-    local msg_b = "$5"
-    local interval = "$6"
-    local hour = "$7"
-    local incr = "$8"
-    local extra = "$9"
+    local plottype="$1"
+    local path="$2"
+    local name="$3"
+    local msg_a="$4"
+    local msg_b="$5"
+    local interval="$6"
+    local hour="$7"
+    local incr="$8"
+    local extra="$9"
 
     case "$plottype" in
         plot)
@@ -166,9 +166,9 @@ generic_nodeps() {
 ################################################################################
 
 generic_string_sub() {
-    local string = "$1"
-    local search = "$2"
-    local replace = "$3"
+    local string="$1"
+    local search="$2"
+    local replace="$3"
 
     echo "${string/${search}/${replace}}"
 
@@ -396,21 +396,21 @@ do_fromsite() {
 
     while read til length
     do
-        til = ${til#0}
-        length = ${length#0}
+        til=${til#0}
+        length=${length#0}
         
         for (( ; hour < til ; hour += length ))
         do
         
-            local hour2 = $(printf "%02d\n" $hour)
+            local hour2=$(printf "%02d\n" $hour)
 
             local date8=$(date -d "$run GMT" "+%Y%m%d%H" -u)
 
-            local gribdir = "$( percentsub "$date8" "$run" "$hour2" <<< "$baseurl")"
-            local gribfile = "$( percentsub "$date8" "$run" "$hour2" <<< "$pattern")"
+            local gribdir="$( percentsub "$date8" "$run" "$hour2" <<< "$baseurl")"
+            local gribfile="$( percentsub "$date8" "$run" "$hour2" <<< "$pattern")"
 
             ##### notee path is a global #####
-            path = "${tmp}/${gribfile}"
+            path="${tmp}/${gribfile}"
 
             if getgrib "$gribdir" "$gribfile" "${tmp}"
             then
