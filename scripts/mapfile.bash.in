@@ -111,6 +111,10 @@ ${linenum}-1a
     TYPE LINE
     CONNECTIONTYPE OGR
     CONNECTION "%RUN%/${myprod}%HOUR%.kmz"
+    VALIDATION
+      'run'     '^([0-9]+|latest)$'
+      'hour'    '^[0-9]+$'
+    END
 
     DATA "contour"
     
