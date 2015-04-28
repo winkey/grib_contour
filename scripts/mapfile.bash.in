@@ -256,7 +256,13 @@ EOF
 
 mkcgibin () {
 
-    cat > "${wwwdisk}../cgi-bin/${name}_wms" << EOF
+    local dotdot=( 
+        cd ${wwwdisk}
+        cd ..
+        pwd
+    )
+
+    cat > "${dotdot}/cgi-bin/${name}_wms" << EOF
 
 MS_MAPFILE="${wwwdisk}/kml/${name}/${name}.map"
 
