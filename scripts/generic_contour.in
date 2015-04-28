@@ -141,7 +141,7 @@ generic_nodeps() {
 
     local plottype="$1"
     local path="$2"
-    local level="$3"
+    local ourname="$3"
     local msg_a="$4"
     local msg_b="$5"
     local interval="$6"
@@ -151,10 +151,10 @@ generic_nodeps() {
 
     case "$plottype" in
         plot)
-            plot "$path" "${level}$our_n" "$msg_a" $interval $hour "$incr"  "$extra"
+            plot "$path" "$ourname" "$msg_a" $interval $hour "$incr"  "$extra"
             ;;
         windplot)
-            windplot "$path" "$path" "${level}wind" "$msg_a" "$msg_b" $interval $hour "$incr" "$extra"
+            windplot "$path" "$path" "$ourname" "$msg_a" "$msg_b" $interval $hour "$incr" "$extra"
             ;;
         *)
             ;;
