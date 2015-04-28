@@ -263,7 +263,7 @@ mkcgibin () {
     )
 
     cat > "${dotdot}/cgi-bin/${name}_wms" << EOF
-
+#!/bin/bash
 MS_MAPFILE="${wwwdisk}/kml/${name}/${name}.map"
 
 #MS_ERRORFILE=""${wwwdisk}/kml/${name}/mapserver.error"
@@ -282,6 +282,8 @@ export MS_MAPFILE
 
 ./mapserv
 EOF
+
+chmod a+x "${dotdot}/cgi-bin/${name}_wms"
 
 }
 
