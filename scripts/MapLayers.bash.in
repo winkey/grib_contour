@@ -287,11 +287,11 @@ layers_get_id_by_name() {
 
 }
 
-layers_add_tilecache_cgf_by_id() {
+layers_add_tilecache_cfg_by_id() {
 
 
     mypsql << EOF
-select layers_add_tilecache_cgf_by_id($1);
+select layers_add_tilecache_cfg_by_id($1);
 EOF
 }
 
@@ -478,7 +478,7 @@ appendMapLayers () {
                     0
 
     local id=$( layers_get_id_by_name "$tree, 'Archive', '$year', '$month', '$mydate ${run}z', '${prod}${hr}'" 0 )
-    layers_add_tilecache_cgf_by_id $id
+    layers_add_tilecache_cfg_by_id $id
 
     ##### RM THE LOCK #####
 
