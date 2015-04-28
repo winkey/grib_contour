@@ -106,7 +106,7 @@ generic_deps_match() {
     local plottype="$1"
     local path_a="$2"
     local path_b="$3"
-    local level="$4"
+    local ourname="$4"
     local msg_a="$5"
     local msg_b="$6"
     local interval="$7"
@@ -116,15 +116,15 @@ generic_deps_match() {
 
     case "$plottype" in
         andplot)
-            andplot  "$path_a" "$path_b" "${level}${our_n}" "$msg_a" "$msg_b"\
+            andplot  "$path_a" "$path_b" "$ourname" "$msg_a" "$msg_b"\
                      $interval $hour "$incr" "$extra"
             ;;
         windplot)
-            windplot "$path_a" "$path_b" "${level}${our_n}" "$msg_a" "$msg_b"\
+            windplot "$path_a" "$path_b" "$ourname" "$msg_a" "$msg_b"\
                      $interval $hour "$incr" "$extra"
             ;;
         diffplot)
-            diffplot "$path_a" "$path_b" "${level}${our_n}" "$msg_a" "$msg_b"\
+            diffplot "$path_a" "$path_b" "$ourname" "$msg_a" "$msg_b"\
                      $interval $hour "$incr" "$extra"
             ;;
         *)
@@ -229,8 +229,9 @@ do_generic() {
                         ppath="$(generic_string_sub "$path" "HGHT.1000" "HGHT.${lev_n}")"
                         if [[ -f "$ppath" ]]
                         then
-                            generic_deps_match "$plottype" "$path" "$ppath" "${level}" \
-                                               "$our_n" 1.0 1.0 "$interval" "$hour" \
+                            generic_deps_match "$plottype" "$path" "$ppath" \
+                                               "${level}${our_n}" 1.0 1.0 \
+                                               "$interval" "$hour" \
                                                "$incr" "$extra"
                         fi
                     done <<< "$levels"
@@ -242,8 +243,9 @@ do_generic() {
                     ppath="$(generic_string_sub "$path" "HGHT.${level}" "HGHT.1000")"
                     if [[ -f "$ppath" ]]
                     then
-                        generic_deps_match "$plottype" "$ppath" "$path" "${level}" \
-                                           "$our_n" 1.0 1.0 "$interval" "$hour" \
+                        generic_deps_match "$plottype" "$ppath" "$path" \
+                                           "${level}${our_n}" 1.0 1.0 \
+                                           "$interval" "$hour" \
                                            "$incr" "$extra"
                     fi
 
