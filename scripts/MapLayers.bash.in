@@ -448,16 +448,18 @@ appendMapLayers () {
     local month=$(date -d "$run GMT $hr hours $incr hours" "+%m" -u)
     local mydate=$(date -d "$run GMT" "+%Y-%m-%d" -u)
 
+    local runyear=$(date -d "$run GMT" "+%Y" -u)
+    local runmonth=$(date -d "$run GMT" "+%m" -u)
     ##### if the map folder dont exsist, make it #####
 
-    if ! layers_exist_by_name "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" 0
+    if ! layers_exist_by_name "$tree, 'Archive', '$runyear', '$runmonth', '$mydate ${run}z'" 0
     then
-        mkrootMapLayers "${prod}" "$year" "$month"
+        mkrootMapLayers "${prod}" "$runyear" "$runmonth"
     fi
     
     ##### add the layer to the folder #####
 
-    add_layers_wms  "$tree, 'Archive', '$year', '$month', '$mydate ${run}z'" \
+    add_layers_wms  "$tree, 'Archive', '$runyear', '$runmonth', '$mydate ${run}z'" \
                     $MapLayers_uid \
                     $MapLayers_gid \
                     "NULL" \
