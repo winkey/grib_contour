@@ -432,11 +432,11 @@ appendMapLayers () {
 
     ##### lock the file #####
     
-    local lock="$locdir/$script.$name.$run.$prod.pg.lock"
-    while ! mkdir "$lock" > /dev/null
-    do
-        sleep 1
-    done
+    #local lock="$locdir/$script.$name.$run.$prod.pg.lock"
+    #while ! mkdir "$lock" > /dev/null
+    #do
+    #    sleep 1
+    #done
     
     ##### get the base tree path for this layer #####
 

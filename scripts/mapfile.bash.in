@@ -57,7 +57,7 @@ appendmapfile () {
     
     ##### lock the file #####
     
-    local lock="$locdir/$script.$name.lock"
+    local lock="$locdir/$script.$name.mapfile.lock"
     
     while ! mkdir "$lock" > /dev/null
     do

@@ -111,7 +111,7 @@ appendkml () {
     
     ##### lock the file #####
     
-    local lock="$locdir/$script.$run.$prod.kml.lock"
+    local lock="$locdir/$script.$name.${mydate}$run.$prod.kml.lock"
     echo lock $lock
     while ! mkdir "$lock" > /dev/null
     do
