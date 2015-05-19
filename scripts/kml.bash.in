@@ -101,14 +101,6 @@ appendkml () {
     local incr="$3"
     local grid="$4"
     
-    local mydate=$(date -d "$run GMT" "+%Y%m%d" -u)
-    local frames="${wwwdisk}/kml/${name}/${mydate}${run}/${prod}.kml"
-    
-    if ! [ -f "$frames" ]
-    then
-        mkrootkml "${prod}" "$frames"
-    fi
-    
     ##### lock the file #####
     
     local lock="$locdir/$script.$name.${mydate}$run.$prod.kml.lock"
@@ -117,6 +109,16 @@ appendkml () {
     do
         sleep 1
     done
+
+    local mydate=$(date -d "$run GMT" "+%Y%m%d" -u)
+    local frames="${wwwdisk}/kml/${name}/${mydate}${run}/${prod}.kml"
+    
+    if ! [ -f "$frames" ]
+    then
+        mkrootkml "${prod}" "$frames"
+    fi
+    
+    
     
     if [[ "$grid" != "" ]]
     then
