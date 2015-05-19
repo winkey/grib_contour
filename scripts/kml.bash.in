@@ -103,6 +103,9 @@ appendkml () {
     
     ##### lock the file #####
     
+    local mydate=$(date -d "$run GMT" "+%Y%m%d" -u)
+    local frames="${wwwdisk}/kml/${name}/${mydate}${run}/${prod}.kml"
+
     local lock="$locdir/$script.$name.${mydate}$run.$prod.kml.lock"
     echo lock $lock
     while ! mkdir "$lock" > /dev/null
@@ -110,8 +113,7 @@ appendkml () {
         sleep 1
     done
 
-    local mydate=$(date -d "$run GMT" "+%Y%m%d" -u)
-    local frames="${wwwdisk}/kml/${name}/${mydate}${run}/${prod}.kml"
+
     
     if ! [ -f "$frames" ]
     then
